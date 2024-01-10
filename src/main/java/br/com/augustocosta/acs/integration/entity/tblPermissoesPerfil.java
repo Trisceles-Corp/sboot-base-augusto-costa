@@ -26,12 +26,6 @@ public class tblPermissoesPerfil {
     @JoinColumn(name = "PermissaoId", referencedColumnName = "PermissaoId")
     private tblPermissoes permissao;
 
-    @Column(name = "Descricao")
-    private String Descricao;
-
-    @Column(name = "Ativo", nullable = false)
-    private Boolean ativo;
-
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
 

@@ -7,7 +7,7 @@ import java.time.*;
 
 @Entity
 @Table(name = "tbl_usuario")
-@Getter(lazy = true) // Cria automaticamente os getters para todos os campos
+@Getter // Cria automaticamente os getters para todos os campos
 @Setter // Cria automaticamente os setters para todos os campos
 @ToString
 @NoArgsConstructor // Cria um construtor sem argumentos
