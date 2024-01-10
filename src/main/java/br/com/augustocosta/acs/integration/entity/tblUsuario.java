@@ -3,6 +3,7 @@ package br.com.augustocosta.acs.integration.entity;
 import lombok.*;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.time.*;
 
 @Entity
 @Table(name = "tbl_usuario")
@@ -11,7 +12,7 @@ import java.util.Date;
 @ToString
 @NoArgsConstructor // Cria um construtor sem argumentos
 @AllArgsConstructor // Cria um construtor com todos os argumentos
-public class Usuario {
+public class tblUsuario {
 
     @Id @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,20 +69,20 @@ public class Usuario {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CargoId")
-    private Cargo cargo;
+    private tblCargo cargo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PerfilId", nullable = false)
-    private Perfil perfil;
+    private tblPerfil perfil;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
-    private Date dataCriacao;
+    private LocalDateTime dataCriacao;
 
     @Column(name = "DataAlteracao", nullable = false)
-    private Date dataAlteracao;
+    private LocalDateTime dataAlteracao;
 
     @Column(name = "CriadoPor", nullable = false)
     private Integer criadoPor;

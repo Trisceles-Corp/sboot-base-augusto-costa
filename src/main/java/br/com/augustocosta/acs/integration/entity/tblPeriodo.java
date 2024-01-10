@@ -2,20 +2,20 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbl_cargo")
-@Getter(lazy = true) // Cria automaticamente os getters para todos os campos
+@Table(name = "tbl_periodo")
+@Getter // Cria automaticamente os getters para todos os campos
 @Setter // Cria automaticamente os setters para todos os campos
 @ToString
 @NoArgsConstructor // Cria um construtor sem argumentos
 @AllArgsConstructor // Cria um construtor com todos os argumentos
-public class Cargo {
+public class tblPeriodo {
 
     @Id @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CargoId")
+    @Column(name = "PeriodoId")
     private Integer id;
 
     @Column(name = "Nome", nullable = false)
@@ -25,10 +25,10 @@ public class Cargo {
     private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
-    private Date dataCriacao;
+    private LocalDateTime dataCriacao;
 
     @Column(name = "DataAlteracao", nullable = false)
-    private Date dataAlteracao;
+    private LocalDateTime dataAlteracao;
 
     @Column(name = "CriadoPor", nullable = false)
     private Integer criadoPor;
