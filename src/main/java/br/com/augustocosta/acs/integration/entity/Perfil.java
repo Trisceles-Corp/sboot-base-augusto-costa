@@ -1,21 +1,22 @@
 package br.com.augustocosta.acs.integration.entity;
 
+import lombok.*;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "tbl_perfil")
+@Getter(lazy = true) // Cria automaticamente os getters para todos os campos
+@Setter // Cria automaticamente os setters para todos os campos
+@ToString
+@NoArgsConstructor // Cria um construtor sem argumentos
+@AllArgsConstructor // Cria um construtor com todos os argumentos
 public class Perfil {
 
-    @Id
+    @Id @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PerfilId")
-    private int id;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PerfilId")
-    private Integer perfilId;
+    private Integer id;
 
     @Column(name = "Nome", nullable = false)
     private String nome;
@@ -28,10 +29,10 @@ public class Perfil {
     private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
-    private LocalDateTime dataCriacao;
+    private Date dataCriacao;
 
     @Column(name = "DataAlteracao", nullable = false)
-    private LocalDateTime dataAlteracao;
+    private Date dataAlteracao;
 
     @Column(name = "CriadoPor", nullable = false)
     private Integer criadoPor;
