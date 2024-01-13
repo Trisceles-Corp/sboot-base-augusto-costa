@@ -1,12 +1,16 @@
 package br.com.augustocosta.acs.persistence.repository;
 
 import br.com.augustocosta.acs.integration.entity.tblTipo;
+import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface TipoRepository extends JpaRepository<tblTipo, Integer> {
-    Optional<tblTipo> findByDesc(String descricao);
+    List<tblTipo> findByDescricao(String descricao);
+    List<tblTipo> findByIdAndAtivo(Integer id, Boolean ativo);
+    List<tblTipo> findByAtivoTrue();
+    List<tblTipo> findByAtivoFalse();
 }

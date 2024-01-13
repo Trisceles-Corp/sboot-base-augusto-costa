@@ -5,22 +5,32 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-@Table(name = "tbl_venda")
+@Table(name = "tbl_movimentacaoProduto")
 @Getter // Cria automaticamente os getters para todos os campos
 @Setter // Cria automaticamente os setters para todos os campos
 @ToString
 @NoArgsConstructor // Cria um construtor sem argumentos
 @AllArgsConstructor // Cria um construtor com todos os argumentos
-public class tblVenda {
+public class tblMovimentacaoProduto {
 
-    @Id @Setter(AccessLevel.PROTECTED)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "VendaId")
-    private Integer id;
+    @EmbeddedId
+    private MovimentacaoProduto id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "AgendamentoId", nullable = false)
-    private tblAgendamento agendamento;
+    @ManyToOne
+    @MapsId("movimentacaoId")
+    @JoinColumn(name = "MovimentacaoId", referencedColumnName = "MovimentacaoId")
+    private tblMovimentacao movimentacao;
+
+    @ManyToOne
+    @MapsId("produtoId")
+    @JoinColumn(name = "ProdutoId", referencedColumnName = "ProdutoId")
+    private tblProduto produto;
+
+    @Column(name = "ValorUnitario", nullable = false)
+    private Double valorUnitario;
+
+    @Column(name = "Quantidade", nullable = false)
+    private Integer quantidade;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
@@ -34,3 +44,4 @@ public class tblVenda {
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
 }
+

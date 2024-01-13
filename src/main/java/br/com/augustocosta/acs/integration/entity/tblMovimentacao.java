@@ -26,13 +26,10 @@ public class tblMovimentacao {
     @JoinColumn(name = "VendaId", nullable = false)
     private tblVenda venda;
 
-    @Column(name = "Quantidade")
-    private Integer quantidade;
-
     @Column(name = "Observacao")
     private String observacao;
 
-    @Column(name = "Valor", nullable = false)
+    @Column(name = "ValorTotal", nullable = false)
     private Double valor;
 
     @Column(name = "NrNotaFiscal", nullable = false)

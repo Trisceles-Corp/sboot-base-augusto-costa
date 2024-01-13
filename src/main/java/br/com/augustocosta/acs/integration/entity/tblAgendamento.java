@@ -38,7 +38,7 @@ public class tblAgendamento {
     private LocalTime horaAgendamento;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BloqueioId", nullable = false)
+    @JoinColumn(name = "BloqueioId")
     private tblBloqueio bloqueio;
 
     @Column(name = "Ativo", nullable = false)

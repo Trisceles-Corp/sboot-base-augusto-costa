@@ -27,13 +27,13 @@ public class tblServico {
     @Column(name = "Valor", nullable = false)
     private double valor;
 
-    @Column(name = "Observacao", nullable = false)
+    @Column(name = "Observacao")
     private String observacao;
 
-    @Column(name = "Desconto", nullable = false)
+    @Column(name = "Desconto")
     private double desconto;
 
-    @Column(name = "Comissao", nullable = false)
+    @Column(name = "Comissao")
     private double comissao;
 
     @Column(name = "Ativo", nullable = false)

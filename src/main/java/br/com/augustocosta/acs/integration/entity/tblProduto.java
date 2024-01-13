@@ -43,10 +43,6 @@ public class tblProduto {
     private Double comissao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LocalEstoqueId")
-    private tblLocalEstoque localEstoque;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MarcaId")
     private tblMarca marca;
 

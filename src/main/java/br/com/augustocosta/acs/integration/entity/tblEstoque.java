@@ -22,11 +22,19 @@ public class tblEstoque {
     @JoinColumn(name = "ProdutoId", nullable = false)
     private tblProduto produto;
 
-    @Column(name = "Quantidade")
-    private Integer quantidade;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LocalEstoqueId", nullable = false)
+    private tblLocalEstoque localEstoque;
 
-    @Column(name = "ValorEstoque", nullable = false)
-    private Double valorEstoque;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MovimentacaoId", nullable = false)
+    private tblMovimentacao movimentacao;
+
+    @Column(name = "Nome", nullable = false)
+    private String nome;
+
+    @Column(name = "Quantidade", nullable = false)
+    private Integer quantidade;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
