@@ -1,7 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/coastcrm
+    url: jdbc:mariadb://localhost:3306/costacrm
     username: root
     password:
-    driver-class-name: org.mariadb.jdbc.Driver
-
