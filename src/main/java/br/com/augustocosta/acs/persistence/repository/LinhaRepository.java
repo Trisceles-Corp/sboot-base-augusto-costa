@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface LinhaRepository extends JpaRepository<tblLinha, Integer> {
-    List<tblLinha> findByDescricaoLinha(String DescricaoLinha);
+    List<tblLinha> findByNome(String DescricaoLinha);
     List<tblLinha> findByAtivoTrue();
     List<tblLinha> findByAtivoFalse();
 }

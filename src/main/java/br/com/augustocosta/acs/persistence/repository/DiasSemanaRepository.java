@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface DiasSemanaRepository extends JpaRepository<tblDiasSemana, Integer> {
-    List<tblDiasSemana> findByDiasSemana(String diasSemana);
+    List<tblDiasSemana> findByNome(String diasSemana);
     List<tblDiasSemana> findByAtivoTrue();
     List<tblDiasSemana> findByAtivoFalse();
 }

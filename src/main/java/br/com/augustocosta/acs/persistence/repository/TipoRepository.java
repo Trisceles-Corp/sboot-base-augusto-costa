@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface TipoRepository extends JpaRepository<tblTipo, Integer> {
     List<tblTipo> findByDescricao(String descricao);
-    List<tblTipo> findByIdAndAtivo(Integer id, Boolean ativo);
     List<tblTipo> findByAtivoTrue();
     List<tblTipo> findByAtivoFalse();
 }

@@ -1,7 +1,8 @@
 package br.com.augustocosta.acs.business.service;
 
-import br.com.augustocosta.acs.integration.entity.tblCargo;
-import br.com.augustocosta.acs.persistence.repository.CargoRepository;
+
+import br.com.augustocosta.acs.integration.entity.tblServico;
+import br.com.augustocosta.acs.persistence.repository.ServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,42 +10,42 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CargoService {
+public class ServicoService {
 
-    private final CargoRepository repository;
+    private final ServicoRepository repository;
 
     @Autowired
-    public CargoService(CargoRepository repository) {
+    public ServicoService(ServicoRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public tblCargo salvar(tblCargo table) {
+    public tblServico salvar(tblServico table) {
         return repository.save(table);
     }
 
-    public Optional<tblCargo> buscarPorId(Integer id) {
+    public Optional<tblServico> buscarPorId(Integer id) {
         return repository.findById(id);
     }
 
-    public List<tblCargo> buscarPorNome(String nome) {
+    public List<tblServico> buscarPorNome(String nome) {
         return repository.findByNome(nome);
     }
 
-    public List<tblCargo> listarTodos() {
+    public List<tblServico> listarTodos() {
         return repository.findAll();
     }
 
-    public List<tblCargo> listarAtivos() {
+    public List<tblServico> listarAtivos() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblCargo> listarInativos() {
+    public List<tblServico> listarInativos() {
         return repository.findByAtivoFalse();
     }
 
     @Transactional
-    public tblCargo atualizar(tblCargo table) {
+    public tblServico atualizar(tblServico table) {
         return repository.save(table);
     }
 
@@ -54,7 +55,7 @@ public class CargoService {
     }
 
     public boolean isAtivo(Integer id) {
-        Optional<tblCargo> cargo = repository.findById(id);
-        return cargo.map(tblCargo::getAtivo).orElse(false);
+        Optional<tblServico> table = repository.findById(id);
+        return table.map(tblServico::getAtivo).orElse(false);
     }
 }

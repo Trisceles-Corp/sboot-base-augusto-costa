@@ -17,7 +17,7 @@
 </head>
 <body>
 
-<form:form id="cargoForm" modelAttribute="cargo" action="${pageContext.request.contextPath}/cargos/salvar" method="POST">
+<form:form id="cargoForm" modelAttribute="tblCargo" action="${pageContext.request.contextPath}/cargos/salvar" method="POST">
     <form:hidden path="id" />
     <table>
         <tr>
