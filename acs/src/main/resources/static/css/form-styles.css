@@ -1,0 +1,24 @@
+/* form-styles.css */
+.button-bar {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.button-bar a,
+.button-bar input[type="submit"] {
+    margin-right: 10px;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    color: #333;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.button-bar a:hover,
+.button-bar input[type="submit"]:hover {
+    background-color: #e7e7e7;
+}
