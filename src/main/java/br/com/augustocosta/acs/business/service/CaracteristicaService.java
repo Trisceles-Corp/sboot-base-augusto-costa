@@ -35,7 +35,7 @@ public class CaracteristicaService {
     }
 
     public List<tblCaracteristica> getByDescricao(String descricao) {
-        return repository.findByNome(descricao);
+        return repository.findByDescricaoCaracteristica(descricao);
     }
 
     public List<tblCaracteristica> getAtivas() {
