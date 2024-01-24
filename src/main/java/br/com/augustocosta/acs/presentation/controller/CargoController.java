@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/cargos")
+@RequestMapping("/cargo")
 public class CargoController {
 
     @Autowired
@@ -17,26 +17,26 @@ public class CargoController {
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblCargo", new tblCargo());
-        return "cargos";
+        return "cargo";
     }
 
     @GetMapping
     public String listarCargos(Model model) {
-        model.addAttribute("cargos", service.listarTodos());
+        model.addAttribute("cargo", service.listarTodos());
         model.addAttribute("cargo", new tblCargo());
-        return "cargos"; // Nome do arquivo JSP para a página
+        return "cargo"; // Nome do arquivo JSP para a página
     }
 
     @PostMapping("/salvar")
     public String salvarCargo(@ModelAttribute tblCargo cargo) {
         service.salvar(cargo);
-        return "redirect:/cargos";
+        return "redirect:/cargo";
     }
 
     @GetMapping("/novo")
     public String novoCargo(Model model) {
         model.addAttribute("cargo", new tblCargo());
-        return "cargos";
+        return "cargo";
     }
 
     // Implemente os métodos para visualizar, editar e excluir conforme necessário
