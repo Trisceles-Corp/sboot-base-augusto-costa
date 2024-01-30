@@ -57,11 +57,11 @@ public class ProdutoService {
         return repository.findByCaracteristica(caracteristica);
     }
 
-    public List<tblProduto> getAtivos() {
+    public List<tblProduto> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblProduto> getInativos() {
+    public List<tblProduto> getInactives() {
         return repository.findByAtivoFalse();
     }
 
@@ -96,5 +96,10 @@ public class ProdutoService {
         table.setAlteradoPor(alteradoPor);
 
         repository.save(table);
+    }
+
+    public boolean isAtivo(Integer id) {
+        Optional<tblProduto> table = repository.findById(id);
+        return table.map(tblProduto::getAtivo).orElse(false);
     }
 }

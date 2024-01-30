@@ -6,11 +6,11 @@ import java.time.*;
 
 @Entity
 @Table(name = "tbl_permissoes")
-@Getter // Cria automaticamente os getters para todos os campos
-@Setter // Cria automaticamente os setters para todos os campos
+@Getter
+@Setter
 @ToString
-@NoArgsConstructor // Cria um construtor sem argumentos
-@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor
+@AllArgsConstructor
 public class tblPermissoes {
 
     @Id @Setter(AccessLevel.PROTECTED)
@@ -19,10 +19,10 @@ public class tblPermissoes {
     private Integer id;
 
     @Column(name = "Nome", nullable = false)
-    private String Nome;
+    private String nome;
 
     @Column(name = "Descricao")
-    private String Descricao;
+    private String descricao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

@@ -2,10 +2,12 @@ package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblCargo;
 import br.com.augustocosta.acs.integration.entity.tblPerfil;
+import br.com.augustocosta.acs.integration.entity.tblPermissoes;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +38,18 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
+    public List<tblUsuario> getByName(String nome) {
+        return repository.findByNome(nome);
+    }
+
+    public List<tblUsuario> getByLastName(String sobrenome) {
+        return repository.findBySobrenome(sobrenome);
+    }
+
+    public List<tblUsuario> getByCPF(String cpf) {
+        return repository.findByCPF(cpf);
+    }
+
     public List<tblUsuario> getByEmail(String email) {
         return repository.findByEmail(email);
     }
@@ -48,11 +62,11 @@ public class UsuarioService {
         return repository.findByPerfil(perfil);
     }
 
-    public List<tblUsuario> getAtivos() {
+    public List<tblUsuario> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblUsuario> getInativos() {
+    public List<tblUsuario> getInactives() {
         return repository.findByAtivoFalse();
     }
 
@@ -85,15 +99,21 @@ public class UsuarioService {
         return repository.save(table);
     }
 
-    public void delete(Integer id) {
+    @Transactional
+    public void delete(Integer id, int alteradoPor) {
         tblUsuario table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com id: " + id));
 
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());
-        // Defina o usuário que alterou o perfil, se aplicável
-        // table.setAlteradoPor(usuarioId); // Isso normalmente seria passado como um argumento para o método
+        table.setAlteradoPor(alteradoPor);
 
         repository.save(table);
     }
+
+    public boolean isAtivo(Integer id) {
+        Optional<tblUsuario> table = repository.findById(id);
+        return table.map(tblUsuario::getAtivo).orElse(false);
+    }
+
 }

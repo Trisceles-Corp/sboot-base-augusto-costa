@@ -10,6 +10,5 @@ import java.time.*;
 
 @Repository
 public interface VendaRepository extends JpaRepository<tblVenda, Integer> {
-    List<tblVenda> findByDescricaoMovimentacao(String descricaoMovimentacao);
     List<tblVenda> findByAgendamento(tblAgendamento agendamento);
 }

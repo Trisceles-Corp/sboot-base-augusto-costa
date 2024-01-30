@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface LocalEstoqueRepository extends JpaRepository<tblLocalEstoque, Integer> {
-    List<tblLocalEstoque> findByNome(String DescricaoLocal);
+    List<tblLocalEstoque> findByDescricaoLocal(String DescricaoLocal);
     List<tblLocalEstoque> findByAtivoTrue();
     List<tblLocalEstoque> findByAtivoFalse();
 }

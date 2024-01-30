@@ -35,19 +35,19 @@ public class PerfilService {
         return repository.findById(id);
     }
 
-    public List<tblPerfil> getByNome(String nome) {
+    public List<tblPerfil> getByName(String nome) {
         return repository.findByNome(nome);
     }
 
-    public List<tblPerfil> getByTipo(tblTipo tipo) {
+    public List<tblPerfil> getByType(tblTipo tipo) {
         return repository.findByTipo(tipo);
     }
 
-    public List<tblPerfil> getAtivos() {
+    public List<tblPerfil> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblPerfil> getInativos() {
+    public List<tblPerfil> getInactives() {
         return repository.findByAtivoFalse();
     }
 
@@ -73,4 +73,10 @@ public class PerfilService {
 
         repository.save(table);
     }
+
+    public boolean isAtivo(Integer id) {
+        Optional<tblPerfil> table = repository.findById(id);
+        return table.map(tblPerfil::getAtivo).orElse(false);
+    }
+
 }

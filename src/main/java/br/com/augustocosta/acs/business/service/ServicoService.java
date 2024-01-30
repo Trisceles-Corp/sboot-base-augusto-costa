@@ -1,11 +1,11 @@
 package br.com.augustocosta.acs.business.service;
 
-
 import br.com.augustocosta.acs.integration.entity.tblServico;
 import br.com.augustocosta.acs.persistence.repository.ServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,38 +20,59 @@ public class ServicoService {
     }
 
     @Transactional
-    public tblServico salvar(tblServico table) {
+    public tblServico create(tblServico table) {
+        table.setDataCriacao(LocalDateTime.now());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAtivo(true);
         return repository.save(table);
     }
 
-    public Optional<tblServico> buscarPorId(Integer id) {
+    public Optional<tblServico> getById(Integer id) {
         return repository.findById(id);
     }
 
-    public List<tblServico> buscarPorNome(String nome) {
+    public List<tblServico> getByName(String nome) {
         return repository.findByNome(nome);
     }
 
-    public List<tblServico> listarTodos() {
+    public List<tblServico> getAll() {
         return repository.findAll();
     }
 
-    public List<tblServico> listarAtivos() {
+    public List<tblServico> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblServico> listarInativos() {
+    public List<tblServico> getInactives() {
         return repository.findByAtivoFalse();
     }
 
-    @Transactional
-    public tblServico atualizar(tblServico table) {
+    public tblServico update(Integer id, tblServico dados) {
+        tblServico table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setNome(dados.getNome());
+        table.setTempo(dados.getTempo());
+        table.setObservacao(dados.getObservacao());
+        table.setDesconto(dados.getDesconto());
+        table.setComissao(dados.getComissao());
+        table.setAtivo(dados.getAtivo());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(dados.getAlteradoPor());
+
         return repository.save(table);
     }
 
     @Transactional
-    public void deletar(Integer id) {
-        repository.deleteById(id);
+    public void delete(Integer id, int alteradoPor) {
+        tblServico table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setAtivo(false);
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(alteradoPor);
+
+        repository.save(table);
     }
 
     public boolean isAtivo(Integer id) {

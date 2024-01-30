@@ -5,6 +5,7 @@ import br.com.augustocosta.acs.persistence.repository.PeriodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,38 +20,56 @@ public class PeriodoService {
     }
 
     @Transactional
-    public tblPeriodo salvar(tblPeriodo table) {
+    public tblPeriodo create(tblPeriodo table) {
+        table.setDataCriacao(LocalDateTime.now());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAtivo(true);
         return repository.save(table);
     }
 
-    public Optional<tblPeriodo> buscarPorId(Integer id) {
+    public Optional<tblPeriodo> getById(Integer id) {
         return repository.findById(id);
     }
 
-    public List<tblPeriodo> buscarPorNome(String nome) {
+    public List<tblPeriodo> getByName(String nome) {
         return repository.findByNome(nome);
     }
 
-    public List<tblPeriodo> listarTodos() {
+    public List<tblPeriodo> getAll() {
         return repository.findAll();
     }
 
-    public List<tblPeriodo> listarAtivos() {
+    public List<tblPeriodo> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblPeriodo> listarInativos() {
+    public List<tblPeriodo> getInactives() {
         return repository.findByAtivoFalse();
     }
 
     @Transactional
-    public tblPeriodo atualizar(tblPeriodo table) {
+    public tblPeriodo update(Integer id, tblPeriodo dados) {
+        tblPeriodo table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setNome(dados.getNome());
+        table.setAtivo(dados.getAtivo());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(dados.getAlteradoPor());
+
         return repository.save(table);
     }
 
     @Transactional
-    public void deletar(Integer id) {
-        repository.deleteById(id);
+    public void delete(Integer id, int alteradoPor) {
+        tblPeriodo table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Periodo não encontrado com id: " + id));
+
+        table.setAtivo(false);
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(alteradoPor);
+
+        repository.save(table);
     }
 
     public boolean isAtivo(Integer id) {

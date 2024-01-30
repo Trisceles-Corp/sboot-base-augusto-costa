@@ -34,15 +34,15 @@ public class CaracteristicaService {
         return repository.findById(id);
     }
 
-    public List<tblCaracteristica> getByDescricao(String descricao) {
+    public List<tblCaracteristica> getByName(String descricao) {
         return repository.findByDescricaoCaracteristica(descricao);
     }
 
-    public List<tblCaracteristica> getAtivas() {
+    public List<tblCaracteristica> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblCaracteristica> getInativas() {
+    public List<tblCaracteristica> getInactives() {
         return repository.findByAtivoFalse();
     }
 
@@ -67,5 +67,10 @@ public class CaracteristicaService {
         table.setAlteradoPor(alteradoPor);
 
         repository.save(table);
+    }
+
+    public boolean isAtivo(Integer id) {
+        Optional<tblCaracteristica> table = repository.findById(id);
+        return table.map(tblCaracteristica::getAtivo).orElse(false);
     }
 }

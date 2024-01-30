@@ -11,6 +11,10 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<tblUsuario, Integer> {
+
+    List<tblUsuario> findByNome(String nome);
+    List<tblUsuario> findBySobrenome(String sobrenome);
+    List<tblUsuario> findByCPF(String cpf);
     List<tblUsuario> findByEmail(String email);
     List<tblUsuario> findByCargo(tblCargo cargo);
     List<tblUsuario> findByPerfil(tblPerfil perfil);

@@ -7,11 +7,11 @@ import java.time.*;
 
 @Entity
 @Table(name = "tbl_bloqueio")
-@Getter // Cria automaticamente os getters para todos os campos
-@Setter // Cria automaticamente os setters para todos os campos
+@Getter
+@Setter
 @ToString
-@NoArgsConstructor // Cria um construtor sem argumentos
-@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor
+@AllArgsConstructor
 public class tblBloqueio {
 
     @Id @Setter(AccessLevel.PROTECTED)

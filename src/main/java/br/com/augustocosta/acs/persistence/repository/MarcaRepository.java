@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface MarcaRepository extends JpaRepository<tblMarca, Integer> {
-    List<tblMarca> findByNome(String DescricaoMarca);
+    List<tblMarca> findByDescricaoMarca(String DescricaoMarca);
     List<tblMarca> findByAtivoTrue();
     List<tblMarca> findByAtivoFalse();
 }

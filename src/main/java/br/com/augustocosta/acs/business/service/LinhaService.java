@@ -5,6 +5,7 @@ import br.com.augustocosta.acs.persistence.repository.LinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,38 +20,56 @@ public class LinhaService {
     }
 
     @Transactional
-    public tblLinha salvar(tblLinha table) {
+    public tblLinha create(tblLinha table) {
+        table.setDataCriacao(LocalDateTime.now());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAtivo(true);
         return repository.save(table);
     }
 
-    public Optional<tblLinha> buscarPorId(Integer id) {
+    public Optional<tblLinha> getById(Integer id) {
         return repository.findById(id);
     }
 
-    public List<tblLinha> buscarPorNome(String nome) {
-        return repository.findByNome(nome);
+    public List<tblLinha> getByName(String nome) {
+        return repository.findByDescricaoLinha(nome);
     }
 
-    public List<tblLinha> listarTodos() {
+    public List<tblLinha> getAll() {
         return repository.findAll();
     }
 
-    public List<tblLinha> listarAtivos() {
+    public List<tblLinha> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblLinha> listarInativos() {
+    public List<tblLinha> getInactives() {
         return repository.findByAtivoFalse();
     }
 
     @Transactional
-    public tblLinha atualizar(tblLinha table) {
+    public tblLinha update(Integer id, tblLinha dados) {
+        tblLinha table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setDescricaoLinha(dados.getDescricaoLinha());
+        table.setAtivo(dados.getAtivo());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(dados.getAlteradoPor());
+
         return repository.save(table);
     }
 
     @Transactional
-    public void deletar(Integer id) {
-        repository.deleteById(id);
+    public void delete(Integer id, int alteradoPor) {
+        tblLinha table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setAtivo(false);
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(alteradoPor);
+
+        repository.save(table);
     }
 
     public boolean isAtivo(Integer id) {

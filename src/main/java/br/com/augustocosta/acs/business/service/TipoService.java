@@ -5,6 +5,7 @@ import br.com.augustocosta.acs.persistence.repository.TipoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,38 +20,57 @@ public class TipoService {
     }
 
     @Transactional
-    public tblTipo salvar(tblTipo table) {
+    public tblTipo create(tblTipo table) {
+        table.setDataCriacao(LocalDateTime.now());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAtivo(true);
         return repository.save(table);
     }
 
-    public Optional<tblTipo> buscarPorId(Integer id) {
+    public Optional<tblTipo> getById(Integer id) {
         return repository.findById(id);
     }
 
-    public List<tblTipo> buscarPorNome(String nome) {
+    public List<tblTipo> getByName(String nome) {
         return repository.findByDescricao(nome);
     }
 
-    public List<tblTipo> listarTodos() {
+    public List<tblTipo> getAll() {
         return repository.findAll();
     }
 
-    public List<tblTipo> listarAtivos() {
+    public List<tblTipo> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblTipo> listarInativos() {
+    public List<tblTipo> getInactives() {
         return repository.findByAtivoFalse();
     }
 
     @Transactional
-    public tblTipo atualizar(tblTipo table) {
+    public tblTipo update(Integer id, tblTipo dados) {
+        tblTipo table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Tipo não encontrado com id: " + id));
+
+        table.setDescricao(dados.getDescricao());
+        table.setDescricao(dados.getDescricao());
+        table.setAtivo(dados.getAtivo());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(dados.getAlteradoPor());
+
         return repository.save(table);
     }
 
     @Transactional
-    public void deletar(Integer id) {
-        repository.deleteById(id);
+    public void delete(Integer id, int alteradoPor) {
+        tblTipo table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Tipo não encontrado com id: " + id));
+
+        table.setAtivo(false);
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(alteradoPor);
+
+        repository.save(table);
     }
 
     public boolean isAtivo(Integer id) {

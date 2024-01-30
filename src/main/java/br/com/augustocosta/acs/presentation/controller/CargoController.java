@@ -22,14 +22,14 @@ public class CargoController {
 
     @GetMapping
     public String listarCargos(Model model) {
-        model.addAttribute("cargo", service.listarTodos());
+        model.addAttribute("cargo", service.getAll());
         model.addAttribute("cargo", new tblCargo());
         return "cargo"; // Nome do arquivo JSP para a página
     }
 
     @PostMapping("/salvar")
     public String salvarCargo(@ModelAttribute tblCargo cargo) {
-        service.salvar(cargo);
+        service.create(cargo);
         return "redirect:/cargo";
     }
 
