@@ -45,8 +45,8 @@ public class UsuarioService {
         return repository.findBySobrenome(sobrenome);
     }
 
-    public List<tblUsuario> getByCPF(String cpf) {
-        return repository.findByCPF(cpf);
+    public List<tblUsuario> getByCPF(Double cpf) {
+        return repository.findByCpf(cpf);
     }
 
     public List<tblUsuario> getByEmail(String email) {
