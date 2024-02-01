@@ -5,60 +5,75 @@ import br.com.augustocosta.acs.persistence.repository.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CargoService {
 
-    private final CargoRepository cargoRepository;
+    private final CargoRepository repository;
 
     @Autowired
-    public CargoService(CargoRepository cargoRepository) {
-        this.cargoRepository = cargoRepository;
+    public CargoService(CargoRepository repository) {
+        this.repository = repository;
     }
 
-    // Método para criar ou atualizar um cargo
     @Transactional
-    public tblCargo salvarCargo(tblCargo cargo) {
-        return cargoRepository.save(cargo);
+    public tblCargo create(tblCargo table) {
+        table.setDataCriacao(LocalDateTime.now());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAtivo(true);
+        return repository.save(table);
     }
 
-    // Método para buscar um cargo pelo ID
-    public Optional<tblCargo> buscarCargoPorId(Integer id) {
-        return cargoRepository.findById(id);
+    public Optional<tblCargo> getById(Integer id) {
+        return repository.findById(id);
     }
 
-    // Método para buscar todos os cargos
-    public List<tblCargo> listarTodosCargos() {
-        return cargoRepository.findAll();
+    public List<tblCargo> getByName(String nome) {
+        return repository.findByNome(nome);
     }
 
-    // Método para buscar cargos ativos
-    public List<tblCargo> listarCargosAtivos() {
-        return cargoRepository.findByAtivoTrue();
+    public List<tblCargo> getAll() {
+        return repository.findAll();
     }
 
-    // Método para buscar cargos inativos
-    public List<tblCargo> listarCargosInativos() {
-        return cargoRepository.findByAtivoFalse();
+    public List<tblCargo> getActives() {
+        return repository.findByAtivoTrue();
     }
 
-    // Método para atualizar um cargo
+    public List<tblCargo> getInactives() {
+        return repository.findByAtivoFalse();
+    }
+
     @Transactional
-    public tblCargo atualizarCargo(tblCargo cargo) {
-        return cargoRepository.save(cargo);
+    public tblCargo update(Integer id, tblCargo dados) {
+        tblCargo table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setNome(dados.getNome());
+        table.setAtivo(dados.getAtivo());
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(dados.getAlteradoPor());
+
+        return repository.save(table);
     }
 
-    // Método para deletar um cargo
     @Transactional
-    public void deletarCargo(Integer id) {
-        cargoRepository.deleteById(id);
+    public void delete(Integer id, int alteradoPor) {
+        tblCargo table = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+
+        table.setAtivo(false);
+        table.setDataAlteracao(LocalDateTime.now());
+        table.setAlteradoPor(alteradoPor);
+
+        repository.save(table);
     }
 
-    // Método para verificar se um cargo com um determinado ID está ativo
-    public boolean isCargoAtivo(Integer id) {
-        Optional<tblCargo> cargo = cargoRepository.findById(id);
+    public boolean isAtivo(Integer id) {
+        Optional<tblCargo> cargo = repository.findById(id);
         return cargo.map(tblCargo::getAtivo).orElse(false);
     }
 }

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: ck_aa
+Build-Jdk: Oracle OpenJDK version 21.0.1
+Implementation-Title: acs
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: br.com.augustocosta
+Main-Class: ${start-class}
+

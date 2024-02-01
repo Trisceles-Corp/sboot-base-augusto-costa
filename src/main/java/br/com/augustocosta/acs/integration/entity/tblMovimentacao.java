@@ -6,11 +6,11 @@ import java.time.*;
 
 @Entity
 @Table(name = "tbl_movimentacao")
-@Getter // Cria automaticamente os getters para todos os campos
-@Setter // Cria automaticamente os setters para todos os campos
+@Getter
+@Setter
 @ToString
-@NoArgsConstructor // Cria um construtor sem argumentos
-@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor
+@AllArgsConstructor
 public class tblMovimentacao {
 
     @Id @Setter(AccessLevel.PROTECTED)
@@ -30,13 +30,16 @@ public class tblMovimentacao {
     private String observacao;
 
     @Column(name = "ValorTotal", nullable = false)
-    private Double valor;
+    private Double valorTotal;
 
     @Column(name = "NrNotaFiscal", nullable = false)
     private Integer nrNotaFiscal;
 
     @Column(name = "SerieNotaFiscal", nullable = false)
     private String serieNotaFiscal;
+
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;

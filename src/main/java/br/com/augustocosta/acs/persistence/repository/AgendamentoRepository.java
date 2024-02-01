@@ -7,12 +7,10 @@ import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Repository
 public interface AgendamentoRepository extends JpaRepository<tblAgendamento, Integer> {
-    List<tblAgendamento> findByIdAndAtivo(Integer id, Boolean ativo);
     List<tblAgendamento> findByColaborador(tblUsuario colaborador);
     List<tblAgendamento> findByCliente(tblUsuario cliente);
     List<tblAgendamento> findByServico(tblServico servico);

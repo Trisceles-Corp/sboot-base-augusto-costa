@@ -7,11 +7,11 @@ import java.time.*;
 
 @Entity
 @Table(name = "tbl_bloqueio")
-@Getter // Cria automaticamente os getters para todos os campos
-@Setter // Cria automaticamente os setters para todos os campos
+@Getter
+@Setter
 @ToString
-@NoArgsConstructor // Cria um construtor sem argumentos
-@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor
+@AllArgsConstructor
 public class tblBloqueio {
 
     @Id @Setter(AccessLevel.PROTECTED)
@@ -25,7 +25,7 @@ public class tblBloqueio {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DiasSemanaId", nullable = false)
-    private tblDiasSemana diassemana;
+    private tblDiasSemana diasSemana;
 
     @Column(name = "DataBloqueio", nullable = false)
     private Date dataBloqueio;
@@ -38,6 +38,9 @@ public class tblBloqueio {
 
     @Column(name = "MotivoBloqueio", nullable = false)
     private String motivoBloqueio;
+
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;

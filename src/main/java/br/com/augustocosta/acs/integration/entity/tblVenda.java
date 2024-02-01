@@ -6,11 +6,11 @@ import java.time.*;
 
 @Entity
 @Table(name = "tbl_venda")
-@Getter // Cria automaticamente os getters para todos os campos
-@Setter // Cria automaticamente os setters para todos os campos
+@Getter
+@Setter
 @ToString
-@NoArgsConstructor // Cria um construtor sem argumentos
-@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor
+@AllArgsConstructor
 public class tblVenda {
 
     @Id @Setter(AccessLevel.PROTECTED)
@@ -21,6 +21,9 @@ public class tblVenda {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AgendamentoId", nullable = false)
     private tblAgendamento agendamento;
+
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;

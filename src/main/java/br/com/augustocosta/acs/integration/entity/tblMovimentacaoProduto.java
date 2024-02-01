@@ -3,14 +3,15 @@ package br.com.augustocosta.acs.integration.entity;
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_movimentacaoProduto")
-@Getter // Cria automaticamente os getters para todos os campos
-@Setter // Cria automaticamente os setters para todos os campos
+@Getter
+@Setter
 @ToString
-@NoArgsConstructor // Cria um construtor sem argumentos
-@AllArgsConstructor // Cria um construtor com todos os argumentos
+@NoArgsConstructor
+@AllArgsConstructor
 public class tblMovimentacaoProduto {
 
     @EmbeddedId
@@ -44,4 +45,3 @@ public class tblMovimentacaoProduto {
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
 }
-
