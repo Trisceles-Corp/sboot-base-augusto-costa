@@ -22,6 +22,9 @@ public class tblVenda {
     @JoinColumn(name = "AgendamentoId", nullable = false)
     private tblAgendamento agendamento;
 
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
+
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
 

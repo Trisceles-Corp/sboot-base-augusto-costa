@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.persistence.repository;
 
+import br.com.augustocosta.acs.integration.entity.tblMarca;
 import br.com.augustocosta.acs.integration.entity.tblVenda;
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,7 @@ import java.time.*;
 @Repository
 public interface VendaRepository extends JpaRepository<tblVenda, Integer> {
     List<tblVenda> findByAgendamento(tblAgendamento agendamento);
+    List<tblVenda> findByDataCriacao(LocalDateTime dataCriacao);
+    List<tblVenda> findByAtivoTrue();
+    List<tblVenda> findByAtivoFalse();
 }
