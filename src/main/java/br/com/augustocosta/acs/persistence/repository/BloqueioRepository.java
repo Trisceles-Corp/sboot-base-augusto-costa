@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface BloqueioRepository extends JpaRepository<tblBloqueio, Integer> {
     List<tblBloqueio> findByPeriodo(tblPeriodo periodo);
-
-    List<tblBloqueio> findByDiassemana(tblDiasSemana diassemana);
-
+    List<tblBloqueio> findByDiasSemana(tblDiasSemana diassemana);
     List<tblBloqueio> findByDataBloqueio(Date dataBloqueio);
+    List<tblBloqueio> findByAtivoTrue();
+    List<tblBloqueio> findByAtivoFalse();
 }
 

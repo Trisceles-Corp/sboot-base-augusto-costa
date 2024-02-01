@@ -45,4 +45,9 @@ public class PermissoesPerfilService {
 
         return repository.save(table);
     }
+
+    public void delete(Integer perfilId, Integer permissaoId) {
+        PermissoesPerfil id = new PermissoesPerfil(perfilId, permissaoId);
+        repository.deleteById(id);
+    }
 }

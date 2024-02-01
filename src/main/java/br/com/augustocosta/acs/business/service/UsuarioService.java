@@ -2,7 +2,6 @@ package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblCargo;
 import br.com.augustocosta.acs.integration.entity.tblPerfil;
-import br.com.augustocosta.acs.integration.entity.tblPermissoes;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

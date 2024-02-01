@@ -30,13 +30,16 @@ public class tblMovimentacao {
     private String observacao;
 
     @Column(name = "ValorTotal", nullable = false)
-    private Double valor;
+    private Double valorTotal;
 
     @Column(name = "NrNotaFiscal", nullable = false)
     private Integer nrNotaFiscal;
 
     @Column(name = "SerieNotaFiscal", nullable = false)
     private String serieNotaFiscal;
+
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;

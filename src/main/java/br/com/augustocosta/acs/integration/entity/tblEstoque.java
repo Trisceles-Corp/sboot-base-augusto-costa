@@ -36,6 +36,9 @@ public class tblEstoque {
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
 
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
+
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
 
