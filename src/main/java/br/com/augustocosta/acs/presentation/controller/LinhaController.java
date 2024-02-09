@@ -22,8 +22,8 @@ public class LinhaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("linha", service.getAll());
-        model.addAttribute("linha", new tblLinha());
+        model.addAttribute("listaLinhas", service.getAll());
+        model.addAttribute("tblLinha", new tblLinha());
         return "linha"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class LinhaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("linha", new tblLinha());
+        model.addAttribute("tblLinha", new tblLinha());
         return "linha";
     }
 

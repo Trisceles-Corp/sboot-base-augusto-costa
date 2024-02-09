@@ -22,8 +22,8 @@ public class TipoMovimentacaoController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("tipomovimentacao", service.getAll());
-        model.addAttribute("tipomovimentacao", new tblTipoMovimentacao());
+        model.addAttribute("listaTipoMovimentacao", service.getAll());
+        model.addAttribute("tblTipoMovimentacao", new tblTipoMovimentacao());
         return "tipomovimentacao"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class TipoMovimentacaoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("tipomovimentacao", new tblTipoMovimentacao());
+        model.addAttribute("tblTipoMovimentacao", new tblTipoMovimentacao());
         return "tipomovimentacao";
     }
 

@@ -22,8 +22,8 @@ public class LocalEstoqueController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("localestoque", service.getAll());
-        model.addAttribute("localestoque", new tblLocalEstoque());
+        model.addAttribute("listalocais", service.getAll());
+        model.addAttribute("tblLocalEstoque", new tblLocalEstoque());
         return "localestoque"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class LocalEstoqueController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("localestoque", new tblLocalEstoque());
+        model.addAttribute("tblLocalEstoque", new tblLocalEstoque());
         return "localestoque";
     }
 

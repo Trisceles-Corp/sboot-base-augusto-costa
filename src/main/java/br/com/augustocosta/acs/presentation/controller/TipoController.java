@@ -22,9 +22,9 @@ public class TipoController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("tipo", service.getAll());
-        model.addAttribute("tipo", new tblTipo());
-        return "tipo"; // Nome do arquivo JSP para a página
+        model.addAttribute("listaTipos", service.getAll());
+        model.addAttribute("tblTipo", new tblTipo());
+        return "tipo";
     }
 
     @PostMapping("/salvar")
@@ -35,7 +35,7 @@ public class TipoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("tipo", new tblTipo());
+        model.addAttribute("tblTipo", new tblTipo());
         return "tipo";
     }
 

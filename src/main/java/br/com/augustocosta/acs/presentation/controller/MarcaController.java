@@ -22,8 +22,8 @@ public class MarcaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("marca", service.getAll());
-        model.addAttribute("marca", new tblMarca());
+        model.addAttribute("listaMarcas", service.getAll());
+        model.addAttribute("tblMarca", new tblMarca());
         return "marca"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class MarcaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("marca", new tblMarca());
+        model.addAttribute("tblMarca", new tblMarca());
         return "marca";
     }
 

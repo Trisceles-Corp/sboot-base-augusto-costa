@@ -8,16 +8,16 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/form-styles.css'/>" />
 
     <script type="text/javascript">
-        function visualizarCliente(cargoId, nome, ativo) {
-            document.querySelector("input[name='cargo.id']").value = cargoId;
-            document.querySelector("input[name='cargo.nome']").value = nome;
-            document.querySelector("input[name='cargo.ativo']").checked = ativo === 'Sim';
+        function visualizarCargo(cargoId, nome, ativo) {
+            document.querySelector("input[name='tblCargo.id']").value = cargoId;
+            document.querySelector("input[name='tblCargo.nome']").value = nome;
+            document.querySelector("input[name='tblCargo.ativo']").checked = ativo === 'Sim';
         }
     </script>
 </head>
 <body>
 
-<form:form id="cargoForm" modelAttribute="tblCargo" action="${pageContext.request.contextPath}/cargos/salvar" method="POST">
+<form:form id="cargoForm" modelAttribute="tblCargo" action="${pageContext.request.contextPath}/cargo/salvar" method="POST">
     <form:hidden path="id" />
     <table>
         <tr>
@@ -28,7 +28,7 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/cargos/novo">Novo</a>
+        <a href="${pageContext.request.contextPath}/cargo/novo">Novo</a>
     </div>
 </form:form>
 
@@ -43,10 +43,10 @@
         <th>Data de Criação</th>
         <th>Criado Por</th>
     </tr>
-    <c:forEach var="cargo" items="${cargos}">
+    <c:forEach var="cargo" items="${listaCargos}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarCliente('${cargo.id}', '${cargo.nome}', '${cargo.ativo ? 'Sim' : 'Não'}'); return false;"
+                <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo ? 'Sim' : 'Não'}'); return false;"
                    title="Visualizar">
                     <img src="<c:url value='/static/images/view.png'/>" alt="Visualizar" />
                 </a>

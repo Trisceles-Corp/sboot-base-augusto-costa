@@ -22,8 +22,8 @@ public class CaracteristicaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("caracteristica", service.getAll());
-        model.addAttribute("caracteristica", new tblCaracteristica());
+        model.addAttribute("listaCaracteristica", service.getAll());
+        model.addAttribute("tblCaracteristica", new tblCaracteristica());
         return "caracteristica"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class CaracteristicaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("caracteristica", new tblCaracteristica());
+        model.addAttribute("tblCaracteristica", new tblCaracteristica());
         return "caracteristica";
     }
 

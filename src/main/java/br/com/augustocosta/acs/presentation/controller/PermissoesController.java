@@ -22,8 +22,8 @@ public class PermissoesController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("permissoes", service.getAll());
-        model.addAttribute("permissoes", new tblPermissoes());
+        model.addAttribute("listaPermissoes", service.getAll());
+        model.addAttribute("tblPermissoes", new tblPermissoes());
         return "permissoes"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class PermissoesController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("permissoes", new tblPermissoes());
+        model.addAttribute("tblPermissoes", new tblPermissoes());
         return "permissoes";
     }
 

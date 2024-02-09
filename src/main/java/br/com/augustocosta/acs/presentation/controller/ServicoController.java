@@ -22,8 +22,8 @@ public class ServicoController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("servico", service.getAll());
-        model.addAttribute("servico", new tblServico());
+        model.addAttribute("listaServicos", service.getAll());
+        model.addAttribute("tblServico", new tblServico());
         return "servico"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class ServicoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("servico", new tblServico());
+        model.addAttribute("tblServico", new tblServico());
         return "servico";
     }
 

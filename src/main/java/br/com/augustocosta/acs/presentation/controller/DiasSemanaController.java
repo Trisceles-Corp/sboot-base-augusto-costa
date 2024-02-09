@@ -22,8 +22,8 @@ public class DiasSemanaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("diasSemana", service.getAll());
-        model.addAttribute("diasSemana", new tblDiasSemana());
+        model.addAttribute("listaDiasSemana", service.getAll());
+        model.addAttribute("tblDiasSemana", new tblDiasSemana());
         return "diasSemana"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class DiasSemanaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("diasSemana", new tblDiasSemana());
+        model.addAttribute("tblDiasSemana", new tblDiasSemana());
         return "diasSemana";
     }
 

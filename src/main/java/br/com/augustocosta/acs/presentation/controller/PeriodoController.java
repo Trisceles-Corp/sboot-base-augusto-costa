@@ -22,8 +22,8 @@ public class PeriodoController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("periodo", service.getAll());
-        model.addAttribute("periodo", new tblPeriodo());
+        model.addAttribute("listaPeriodos", service.getAll());
+        model.addAttribute("tblPeriodo", new tblPeriodo());
         return "periodo"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class PeriodoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("periodo", new tblPeriodo());
+        model.addAttribute("tblPeriodo", new tblPeriodo());
         return "periodo";
     }
 

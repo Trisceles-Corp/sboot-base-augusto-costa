@@ -22,8 +22,8 @@ public class CargoController {
 
     @GetMapping
     public String listarCargos(Model model) {
-        model.addAttribute("cargo", service.getAll());
-        model.addAttribute("cargo", new tblCargo());
+        model.addAttribute("listaCargos", service.getAll());
+        model.addAttribute("tblCargo", new tblCargo());
         return "cargo"; // Nome do arquivo JSP para a página
     }
 
@@ -35,7 +35,7 @@ public class CargoController {
 
     @GetMapping("/novo")
     public String novoCargo(Model model) {
-        model.addAttribute("cargo", new tblCargo());
+        model.addAttribute("tblCargo", new tblCargo());
         return "cargo";
     }
 
