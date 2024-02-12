@@ -5,25 +5,21 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-@Table(name = "tbl_marca")
+@Table(name = "tbl_categoria")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblMarca {
+public class tblCategoria {
 
     @Id @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MarcaId")
+    @Column(name = "CategoriaId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CategoriaId", nullable = false)
-    private tblAgendamento categoria;
-
-    @Column(name = "DescricaoMarca", nullable = false)
-    private String descricaoMarca;
+    @Column(name = "Nome", nullable = false)
+    private String nome;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
