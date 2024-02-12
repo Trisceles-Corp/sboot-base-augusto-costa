@@ -31,7 +31,7 @@ public class CategoriaService {
         return repository.findById(id);
     }
 
-    public List<tblCategoria> betByName(String nome) {
+    public List<tblCategoria> getByName(String nome) {
         return repository.findByNome(nome);
     }
 
