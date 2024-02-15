@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Linha</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/form-styles.css'/>" />
+    <link rel="stylesheet" type="text/css" href="<c:url value='/src/main/resources/static/css/form-styles.css'/>" />
     <script type="text/javascript">
         function visualizarLinha(linhaId, descricao, ativo) {
             document.querySelector("input[name='tblLinha.id']").value = linhaId;
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarLinha('${linha.id}', '${linha.descricaoLinha}', '${linha.ativo}'); return false;" title="Visualizar">
-                    <img src="<c:url value='/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="<c:url value='/src/main/resources/static/images/view.png'/>" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

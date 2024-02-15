@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Serviços</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/form-styles.css'/>" />
+    <link rel="stylesheet" type="text/css" href="<c:url value='/src/main/resources/static/css/form-styles.css'/>" />
     <script type="text/javascript">
         function visualizarServico(servicoId, nome, tempo, valor, desconto, comissao, observacao, ativo) {
             document.querySelector("input[name='tblServico.id']").value = servicoId;
@@ -65,7 +65,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarServico('${servico.id}', '${servico.nome}', '${servico.tempo}', '${servico.valor}', '${servico.desconto}', '${servico.comissao}', '${servico.observacao}', '${servico.ativo}'); return false;" title="Visualizar">
-                    <img src="<c:url value='/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="<c:url value='/src/main/resources/static/images/view.png'/>" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

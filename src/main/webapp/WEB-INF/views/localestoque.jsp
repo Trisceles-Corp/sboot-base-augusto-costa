@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Local Estoque</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/static/css/form-styles.css'/>" />
+    <link rel="stylesheet" type="text/css" href="<c:url value='/src/main/resources/static/css/form-styles.css'/>" />
     <script type="text/javascript">
         function visualizarLocalEstoque(localEstoqueId, descricao, ativo) {
             document.querySelector("input[name='tblLocalEstoque.id']").value = localEstoqueId;
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarLocalEstoque('${localestoque.id}', '${localestoque.descricaoLocal}', '${localestoque.ativo}'); return false;" title="Visualizar">
-                    <img src="<c:url value='/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="<c:url value='/src/main/resources/static/images/view.png'/>" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

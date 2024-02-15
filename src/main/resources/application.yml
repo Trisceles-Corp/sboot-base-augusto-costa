@@ -9,5 +9,5 @@ spring:
 
   mvc:
     view:
-      prefix: /
+      prefix: /WEB-INF/views/
       suffix: .jsp
