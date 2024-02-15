@@ -6,3 +6,8 @@ spring:
 
   jpa:
     open-in-view: false
+
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp

@@ -18,6 +18,10 @@ public class tblMarca {
     @Column(name = "MarcaId")
     private Integer id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CategoriaId", nullable = false)
+    private tblAgendamento categoria;
+
     @Column(name = "DescricaoMarca", nullable = false)
     private String descricaoMarca;
 
