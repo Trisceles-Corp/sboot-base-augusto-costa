@@ -4,9 +4,7 @@
 <html>
 <head>
     <title>Cargos</title>
-
-    <link rel="stylesheet" type="text/css" href="<c:url value='/src/main/resources/static/css/form-styles.css'/>" />
-
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
         function visualizarCargo(cargoId, nome, ativo) {
             document.querySelector("input[name='tblCargo.id']").value = cargoId;
@@ -48,7 +46,7 @@
             <td>
                 <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo ? 'Sim' : 'Não'}'); return false;"
                    title="Visualizar">
-                    <img src="<c:url value='/src/main/resources/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="<c:url value='../src/main/resources/static/images/view.png'/>" alt="Visualizar" />
                 </a>
             </td>
             <td><c:out value="${cargo.id}" /></td>

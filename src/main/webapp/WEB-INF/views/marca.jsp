@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Marcas</title>
-    <link rel="stylesheet" type="text/css" href="<c:url value='/src/main/resources/static/css/form-styles.css'/>" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
         function visualizarMarca(marcaId, descricao, ativo) {
             document.querySelector("input[name='tblMarca.id']").value = marcaId;
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarMarca('${marca.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
-                    <img src="<c:url value='/src/main/resources/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
