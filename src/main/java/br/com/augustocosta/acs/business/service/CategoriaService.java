@@ -39,6 +39,10 @@ public class CategoriaService {
         return repository.findAll();
     }
 
+    public List<tblCategoria> getActivesByName() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblCategoria> getActives() {
         return repository.findByAtivoTrue();
     }
@@ -50,7 +54,7 @@ public class CategoriaService {
     @Transactional
     public tblCategoria update(Integer id, tblCategoria dados) {
         tblCategoria table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrado com id: " + id));
 
         table.setNome(dados.getNome());
         table.setAtivo(dados.getAtivo());
@@ -63,7 +67,7 @@ public class CategoriaService {
     @Transactional
     public void delete(Integer id, int alteradoPor) {
         tblCategoria table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrado com id: " + id));
 
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());

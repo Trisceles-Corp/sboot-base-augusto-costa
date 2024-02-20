@@ -13,7 +13,7 @@ import java.time.*;
 @AllArgsConstructor
 public class tblLocalEstoque {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LocalEstoqueId")
     private Integer id;

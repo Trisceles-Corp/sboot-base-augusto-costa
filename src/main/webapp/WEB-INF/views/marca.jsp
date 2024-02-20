@@ -9,7 +9,7 @@
         function visualizarMarca(marcaId, descricao, ativo) {
             document.querySelector("input[name='tblMarca.id']").value = marcaId;
             document.querySelector("textarea[name='tblMarca.descricaoMarca']").value = descricao;
-            document.querySelector("input[name='tblMarca.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblMarca.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

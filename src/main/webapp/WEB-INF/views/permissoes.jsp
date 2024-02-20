@@ -10,7 +10,7 @@
             document.querySelector("input[name='tblPermissoes.id']").value = permissaoId;
             document.querySelector("textarea[name='tblPermissoes.nome']").value = nome;
             document.querySelector("textarea[name='tblPermissoes.descricao']").value = descricao;
-            document.querySelector("input[name='tblPermissoes.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblPermissoes.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

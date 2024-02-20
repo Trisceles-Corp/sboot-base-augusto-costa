@@ -9,7 +9,7 @@
         function visualizarTipo(tipoId, descricao, ativo) {
             document.querySelector("input[name='tblTipo.id']").value = tipoId;
             document.querySelector("textarea[name='tblTipo.descricao']").value = descricao;
-            document.querySelector("input[name='tblTipo.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblTipo.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

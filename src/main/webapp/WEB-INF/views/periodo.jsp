@@ -9,7 +9,7 @@
         function visualizarPeriodo(periodoId, nome, ativo) {
             document.querySelector("input[name='tblPeriodo.id']").value = periodoId;
             document.querySelector("textarea[name='tblPeriodo.nome']").value = nome;
-            document.querySelector("input[name='tblPeriodo.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblPeriodo.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

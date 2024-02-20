@@ -14,7 +14,7 @@ import java.time.*;
 @AllArgsConstructor
 public class tblBloqueio {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BloqueioId")
     private Integer id;

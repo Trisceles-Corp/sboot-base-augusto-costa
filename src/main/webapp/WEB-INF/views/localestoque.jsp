@@ -9,7 +9,7 @@
         function visualizarLocalEstoque(localEstoqueId, descricao, ativo) {
             document.querySelector("input[name='tblLocalEstoque.id']").value = localEstoqueId;
             document.querySelector("textarea[name='tblLocalEstoque.descricaoLocal']").value = descricao;
-            document.querySelector("input[name='tblLocalEstoque.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblLocalEstoque.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

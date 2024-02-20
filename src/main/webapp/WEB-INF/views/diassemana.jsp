@@ -9,7 +9,7 @@
         function visualizarDiasSemana(diasSemanaId, descricao, ativo) {
             document.querySelector("input[name='tblDiasSemana.id']").value = diasSemanaId;
             document.querySelector("textarea[name='tblDiasSemana.diasSemana']").value = descricao;
-            document.querySelector("input[name='tblDiasSemana.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblDiasSemana.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarDiasSemana('${diassemana.id}', '${diassemana.diasSemana}', '${diassemana.ativo}'); return false;" title="Visualizar">
-                    <img src="<c:url value='../src/main/resources/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

@@ -9,7 +9,7 @@
         function visualizarCaracteristica(caracteristicaId, descricao, ativo) {
             document.querySelector("input[name='tblCaracteristica.id']").value = caracteristicaId;
             document.querySelector("textarea[name='tblCaracteristica.descricaoCaracteristica']").value = descricao;
-            document.querySelector("input[name='tblCaracteristica.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblCaracteristica.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

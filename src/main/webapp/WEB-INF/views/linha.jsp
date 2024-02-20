@@ -9,7 +9,7 @@
         function visualizarLinha(linhaId, descricao, ativo) {
             document.querySelector("input[name='tblLinha.id']").value = linhaId;
             document.querySelector("textarea[name='tblLinha.descricaoLinha']").value = descricao;
-            document.querySelector("input[name='tblLinha.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblLinha.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

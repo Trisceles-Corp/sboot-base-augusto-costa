@@ -14,7 +14,7 @@
             document.querySelector("textarea[name='tblServico.desconto']").value = desconto;
             document.querySelector("textarea[name='tblServico.comissao']").value = comissao;
             document.querySelector("textarea[name='tblServico.observacao']").value = observacao;
-            document.querySelector("input[name='tblServico.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblServico.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>

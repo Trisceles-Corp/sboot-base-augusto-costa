@@ -7,21 +7,21 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
         function visualizarCategoria(categoriaId, nome, ativo) {
-            document.querySelector("input[name='tblCategoria.id']").value = categoriaId;
-            document.querySelector("textarea[name='tblCategoria.nome']").value = nome;
-            document.querySelector("input[name='tblCategoria.ativo']").checked = ativo === 'Sim';
+            document.getElementById("field_Id").value = categoriaId;
+            document.getElementById("field_Name").value = nome;
+            document.getElementById("field_Active").checked = ativo === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblCategoria" action="${pageContext.request.contextPath}/categoria/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id" />
     <table>
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="nome" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" id="field_Active" label="Ativo" /></td>
         </tr>
     </table>
     <div class="button-bar">
@@ -35,7 +35,7 @@
 <table>
     <tr>
         <th>Ações</th>
-        <th>Id</th>
+        <th>ID</th>
         <th>Nome</th>
         <th>Ativo</th>
         <th>Data de Criação</th>
