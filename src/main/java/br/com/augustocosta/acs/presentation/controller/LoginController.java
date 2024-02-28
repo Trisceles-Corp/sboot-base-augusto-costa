@@ -20,6 +20,7 @@ public class LoginController {
         model.addAttribute("tblUsuario", new tblUsuario());
         return "login2";
     }
+
     @GetMapping
     public String loginPage() {
         return "login2";
