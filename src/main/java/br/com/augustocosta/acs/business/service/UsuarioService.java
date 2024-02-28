@@ -22,6 +22,7 @@ public class UsuarioService {
         this.repository = repository;
     }
 
+    @Transactional
     public tblUsuario create(tblUsuario table) {
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
@@ -115,4 +116,9 @@ public class UsuarioService {
         return table.map(tblUsuario::getAtivo).orElse(false);
     }
 
+    public boolean validateLogin(String email, String senha) {
+        return repository.findByEmail(email)
+                .stream()
+                .anyMatch(user -> user.getSenha().equals(senha) && user.getAtivo());
+    }
 }

@@ -46,7 +46,7 @@
             <td>
                 <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo ? 'Sim' : 'Não'}'); return false;"
                    title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
             </td>
             <td><c:out value="${cargo.id}" /></td>

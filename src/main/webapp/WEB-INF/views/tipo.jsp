@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarTipo('${tipo.id}', '${tipo.descricao}', '${tipo.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

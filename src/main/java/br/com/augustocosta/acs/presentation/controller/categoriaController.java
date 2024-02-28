@@ -2,7 +2,6 @@ package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.CategoriaService;
 import br.com.augustocosta.acs.integration.entity.tblCategoria;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +13,11 @@ import java.util.Optional;
 @RequestMapping("/categoria")
 public class categoriaController {
 
-    @Autowired
-    private CategoriaService service;
+    private final CategoriaService service;
+
+    public categoriaController(CategoriaService service) {
+        this.service = service;
+    }
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {

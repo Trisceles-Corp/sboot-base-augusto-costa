@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarLocalEstoque('${localestoque.id}', '${localestoque.descricaoLocal}', '${localestoque.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
