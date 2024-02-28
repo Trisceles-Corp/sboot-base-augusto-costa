@@ -21,37 +21,33 @@ FULL SCREEN MODE: http://salehriaz.com/404Page/404.html
 DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
 -->
             <body class="bg-purple">
-
-            <div class="stars">
-                <div class="central-body">
-                    <img class="image-404" src="${pageContext.request.contextPath}/img/muppers/404.svg" width="300px">
-                    <p></p>
-                    <h1>${errorTitle}</h1>
-                    <h2>Error Code: ${errorCode}</h2>
-                    <p>${errorMessage}</p>
-                    <a href="${pageContext.request.contextPath}/caracteristica" class="btn-go-home">Retornar</a>
-                </div>
-                <div class="objects">
-                    <img class="object_rocket" src="${pageContext.request.contextPath}/img/muppers/rocket.svg" width="40px">
-                    <div class="earth-moon">
-                        <img class="object_earth" src="${pageContext.request.contextPath}/img/muppers/earth.svg" width="100px">
-                        <img class="object_moon" src="${pageContext.request.contextPath}/img/muppers/moon.svg" width="80px">
+                <div class="stars">
+                    <div class="central-body">
+                        <img class="image-404" src="${pageContext.request.contextPath}/img/muppers/404.svg" width="300px">
+                        <p></p>
+                        <h1>${errorTitle}</h1>
+                        <h2>Error Code: ${errorCode}</h2>
+                        <p>${errorMessage}</p>
+                        <a href="${pageContext.request.contextPath}/caracteristica" class="btn-go-home">Retornar</a>
                     </div>
-                    <div class="box_astronaut">
-                        <img class="object_astronaut" src="${pageContext.request.contextPath}/img/muppers/astronaut.svg" width="140px">
+                    <div class="objects">
+                        <img class="object_rocket" src="${pageContext.request.contextPath}/img/muppers/rocket.svg" width="40px">
+                        <div class="earth-moon">
+                            <img class="object_earth" src="${pageContext.request.contextPath}/img/muppers/earth.svg" width="100px">
+                            <img class="object_moon" src="${pageContext.request.contextPath}/img/muppers/moon.svg" width="80px">
+                        </div>
+                        <div class="box_astronaut">
+                            <img class="object_astronaut" src="${pageContext.request.contextPath}/img/muppers/astronaut.svg" width="140px">
+                        </div>
+                    </div>
+                    <div class="glowing_stars">
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
+                        <div class="star"></div>
                     </div>
                 </div>
-                <div class="glowing_stars">
-                    <div class="star"></div>
-                    <div class="star"></div>
-                    <div class="star"></div>
-                    <div class="star"></div>
-                    <div class="star"></div>
-
-                </div>
-
-            </div>
-
             </body>
         </div>
     </section>
