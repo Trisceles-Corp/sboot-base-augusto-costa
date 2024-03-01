@@ -46,74 +46,6 @@
                                 </form>
                             </div>
                         </li>
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                    <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="me-3">
-                                        <div class="bg-primary icon-circle"><i class="fas fa-file-alt text-white"></i></div>
-                                    </div>
-                                    <div><span class="small text-gray-500">December 12, 2019</span>
-                                        <p>A new monthly report is ready to download!</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="me-3">
-                                        <div class="bg-success icon-circle"><i class="fas fa-donate text-white"></i></div>
-                                    </div>
-                                    <div><span class="small text-gray-500">December 7, 2019</span>
-                                        <p>$290.29 has been deposited into your account!</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="me-3">
-                                        <div class="bg-warning icon-circle"><i class="fas fa-exclamation-triangle text-white"></i></div>
-                                    </div>
-                                    <div><span class="small text-gray-500">December 2, 2019</span>
-                                        <p>Spending Alert: We've noticed unusually high spending for your account.</p>
-                                    </div>
-                                </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-                                <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-                                    <h6 class="dropdown-header">alerts center</h6><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle" src="${pageContext.request.contextPath}/img/avatars/avatar4.jpeg">
-                                        <div class="bg-success status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
-                                        <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle" src="${pageContext.request.contextPath}/img/avatars/avatar2.jpeg">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
-                                        <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle" src="${pageContext.request.contextPath}/img/avatars/avatar3.jpeg">
-                                        <div class="bg-warning status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Last month's report looks great, I am very happy with the progress so far, keep up the good work!</span></div>
-                                        <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
-                                    </div>
-                                </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image me-3"><img class="rounded-circle" src="${pageContext.request.contextPath}/img/avatars/avatar5.jpeg">
-                                        <div class="bg-success status-indicator"></div>
-                                    </div>
-                                    <div class="fw-bold">
-                                        <div class="text-truncate"><span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
-                                        <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
-                                    </div>
-                                </a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                                </div>
-                            </div>
-                            <div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-                        </li>
                         <div class="d-none d-sm-block topbar-divider"></div>
                         <li class="nav-item dropdown no-arrow">
                             <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Alexander Andrade</span></a>
@@ -134,20 +66,20 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="financeiroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Financeiro</a>
                                 <ul class="dropdown-menu" aria-labelledby="financeiroDropdown">
-                                    <li><a class="dropdown-item" href="#">Caixas Abertos</a></li>
-                                    <li><a class="dropdown-item" href="#">Comandas Abertos</a></li>
-                                    <li><a class="dropdown-item" href="#">Comissões</a></li>
-                                    <li><a class="dropdown-item" href="#">Entradas e Saídas</a></li>
+                                    <li><a class="dropdown-item" id="caixasabertos" href="#">Caixas Abertos</a></li>
+                                    <li><a class="dropdown-item" id="comandasabertas" href="#">Comandas Abertos</a></li>
+                                    <li><a class="dropdown-item" id="comissoes" href="#">Comissões</a></li>
+                                    <li><a class="dropdown-item" id="entradasaidas" href="#">Entradas e Saídas</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="estoqueDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
                                 <ul class="dropdown-menu" aria-labelledby="estoqueDropdown">
-                                    <li><a class="dropdown-item" href="#">Produtos</a></li>
-                                    <li><a class="dropdown-item" href="#">Fornecedores</a></li>
-                                    <li><a class="dropdown-item" href="#">Pedido de Compras</a></li>
-                                    <li><a class="dropdown-item" href="#">Inventário</a></li>
-                                    <li><a class="dropdown-item" href="#">Solicitação de Saídas</a></li>
+                                    <li><a class="dropdown-item" id="produtos" href="#">Produtos</a></li>
+                                    <li><a class="dropdown-item" id="forncecedores" href="#">Fornecedores</a></li>
+                                    <li><a class="dropdown-item" id="pedidocompras" href="#">Pedido de Compras</a></li>
+                                    <li><a class="dropdown-item" id="inventario" href="#">Inventário</a></li>
+                                    <li><a class="dropdown-item" id="solicitacaosaidas" href="#">Solicitação de Saídas</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link" id="dashboard" href="#">Dashboard </a></li>
@@ -155,17 +87,17 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cadastro</a>
                                 <ul class="dropdown-menu" aria-labelledby="cadastroDropdown">
-                                    <li><a class="dropdown-item" href="#">Característica</a></li>
-                                    <li><a class="dropdown-item" href="#">Cargo</a></li>
-                                    <li><a class="dropdown-item" href="#">Categoria</a></li>
-                                    <li><a class="dropdown-item" href="#">Clientes</a></li>
-                                    <li><a class="dropdown-item" href="#">Linha</a></li>
-                                    <li><a class="dropdown-item" href="#">Local Estoque</a></li>
-                                    <li><a class="dropdown-item" href="#">Marca</a></li>
-                                    <li><a class="dropdown-item" href="#">Perfil</a></li>
-                                    <li><a class="dropdown-item" href="#">Permissões</a></li>
-                                    <li><a class="dropdown-item" href="#">Serviços</a></li>
-                                    <li><a class="dropdown-item" href="#">Tipo</a></li>
+                                    <li><a class="dropdown-item" id="caracteristica" href="#">Característica</a></li>
+                                    <li><a class="dropdown-item" id="cargo" href="#">Cargo</a></li>
+                                    <li><a class="dropdown-item" id="categoria" href="#">Categoria</a></li>
+                                    <li><a class="dropdown-item" id="clientes" href="#">Clientes</a></li>
+                                    <li><a class="dropdown-item" id="linha" href="#">Linha</a></li>
+                                    <li><a class="dropdown-item" id="localestoque" href="#">Local Estoque</a></li>
+                                    <li><a class="dropdown-item" id="marca" href="#">Marca</a></li>
+                                    <li><a class="dropdown-item" id="perfil" href="#">Perfil</a></li>
+                                    <li><a class="dropdown-item" id="permissoes" href="#">Permissões</a></li>
+                                    <li><a class="dropdown-item" id="servico" href="#">Serviços</a></li>
+                                    <li><a class="dropdown-item" id="tipo" href="#">Tipo</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -173,12 +105,11 @@
                 </div>
             </nav>
             <div class="container-fluid" id="conteudoPrincipal">
-<%--                <h3 class="text-dark mb-1">Blank Page</h3>--%>
             </div>
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Augusto Costa 2024</span></div>
+                <div class="text-center my-auto copyright"><span>Copyright © Trisceles Corp 2024</span></div>
             </div>
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
