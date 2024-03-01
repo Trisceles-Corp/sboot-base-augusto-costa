@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface CaracteristicaRepository extends JpaRepository<tblCaracteristica, Integer> {
     List<tblCaracteristica> findByDescricaoCaracteristica(String descricaoCaracteristica);
+    List<tblCaracteristica> findByAtivoTrueOrderByDescricaoCaracteristicaAsc();
     List<tblCaracteristica> findByAtivoTrue();
     List<tblCaracteristica> findByAtivoFalse();
 }

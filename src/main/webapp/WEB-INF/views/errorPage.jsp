@@ -23,8 +23,6 @@ DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
             <body class="bg-purple">
                 <div class="stars">
                     <div class="central-body">
-                        <img class="image-404" src="${pageContext.request.contextPath}/img/muppers/404.svg" width="300px">
-                        <p></p>
                         <h1>${errorTitle}</h1>
                         <h2>Error Code: ${errorCode}</h2>
                         <p>${errorMessage}</p>

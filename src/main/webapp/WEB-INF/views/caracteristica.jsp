@@ -7,21 +7,21 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
         function visualizarCaracteristica(caracteristicaId, descricao, ativo) {
-            document.querySelector("input[name='tblCaracteristica.id']").value = caracteristicaId;
-            document.querySelector("textarea[name='tblCaracteristica.descricaoCaracteristica']").value = descricao;
-            document.querySelector("input[name='tblCaracteristica.ativo']").checked = ativo === 'true';
+            document.getElementById("field_Id").value = caracteristicaId;
+            document.getElementById("field_Descricao").value = descricao;
+            document.getElementById("field_Active").checked = ativo === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblCaracteristica" action="${pageContext.request.contextPath}/caracteristica/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricaoCaracteristica">Descrição:</form:label></td>
-            <td><form:input path="descricaoCaracteristica" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricaoCaracteristica" id="field_Descricao"/></td>
+            <td><form:checkbox path="ativo" id="field_Active" label="Ativo" /></td>
         </tr>
     </table>
     <div class="button-bar">
@@ -39,7 +39,6 @@
         <th>Descrição</th>
         <th>Ativo</th>
         <th>Data de Criação</th>
-        <th>Criado Por</th>
     </tr>
     <c:forEach var="caracteristica" items="${listaCaracteristica}">
         <tr>
@@ -53,7 +52,6 @@
             <td><c:out value="${caracteristica.descricaoCaracteristica}" /></td>
             <td><c:out value="${caracteristica.ativo ? 'Sim' : 'Não'}" /></td>
             <td><c:out value="${caracteristica.dataCriacao}" /></td>
-            <td><c:out value="${caracteristica.criadoPor}" /></td>
         </tr>
     </c:forEach>
 </table>

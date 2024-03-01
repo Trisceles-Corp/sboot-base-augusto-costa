@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -28,6 +29,5 @@
             <a class="forgot" href="#">Forgot your email or password?</a>
         </form:form>
     </section>
-    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
