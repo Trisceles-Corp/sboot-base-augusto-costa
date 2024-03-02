@@ -6,22 +6,22 @@
     <title>Dias da Semana</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarDiasSemana(diasSemanaId, descricao, ativo) {
-            document.querySelector("input[name='tblDiasSemana.id']").value = diasSemanaId;
-            document.querySelector("textarea[name='tblDiasSemana.diasSemana']").value = descricao;
-            document.querySelector("input[name='tblDiasSemana.ativo']").checked = ativo === 'true';
+        function visualizarDiasSemana(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblDiasSemana" action="${pageContext.request.contextPath}/diassemana/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="diasSemana">Descrição:</form:label></td>
-            <td><form:input path="diasSemana" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="diasSemana" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

@@ -6,22 +6,22 @@
     <title>Tipos Movimentação</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarDiasSemana(tipoMovimentacaoId, descricao, ativo) {
-            document.querySelector("input[name='tblTipoMovimentacao.id']").value = tipoMovimentacaoId;
-            document.querySelector("textarea[name='tblTipoMovimentacao.descricaoMovimentacao']").value = descricao;
-            document.querySelector("input[name='tblTipoMovimentacao.ativo']").checked = ativo === 'true';
+        function visualizarDiasSemana(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblTipoMovimentacao" action="${pageContext.request.contextPath}/tipomovimentacao/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricaoMovimentacao">Descrição:</form:label></td>
-            <td><form:input path="descricaoMovimentacao" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricaoMovimentacao" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

@@ -6,22 +6,22 @@
     <title>Cargos</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarCargo(cargoId, nome, ativo) {
-            document.querySelector("input[name='tblCargo.id']").value = cargoId;
-            document.querySelector("input[name='tblCargo.nome']").value = nome;
-            document.querySelector("input[name='tblCargo.ativo']").checked = ativo === 'true';
+        function visualizarCargo(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="cargoForm" modelAttribute="tblCargo" action="${pageContext.request.contextPath}/cargo/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="nome" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active" /></td>
         </tr>
     </table>
     <div class="button-bar">
@@ -44,7 +44,7 @@
     <c:forEach var="cargo" items="${listaCargos}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo ? 'Sim' : 'Não'}'); return false;"
+                <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo}'); return false;"
                    title="Visualizar">
                     <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>

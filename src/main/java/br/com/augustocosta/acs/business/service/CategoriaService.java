@@ -39,7 +39,7 @@ public class CategoriaService {
         return repository.findAll();
     }
 
-    public List<tblCategoria> getActivesByName() {
+    public List<tblCategoria> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByNomeAsc();
     }
 

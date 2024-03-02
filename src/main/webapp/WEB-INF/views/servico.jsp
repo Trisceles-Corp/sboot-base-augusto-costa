@@ -6,38 +6,37 @@
     <title>Serviços</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarServico(servicoId, nome, tempo, valor, desconto, comissao, observacao, ativo) {
-            document.querySelector("input[name='tblServico.id']").value = servicoId;
-            document.querySelector("textarea[name='tblServico.nome']").value = nome;
-            document.querySelector("textarea[name='tblServico.tempo']").value = tempo;
-            document.querySelector("textarea[name='tblServico.valor']").value = valor;
-            document.querySelector("textarea[name='tblServico.desconto']").value = desconto;
-            document.querySelector("textarea[name='tblServico.comissao']").value = comissao;
-            document.querySelector("textarea[name='tblServico.observacao']").value = observacao;
-            document.querySelector("input[name='tblServico.ativo']").checked = ativo === 'true';
+        function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao, ativo) {
+            document.getElementById("field_Id'").value = id;
+            document.getElementById("field_Nome").value = nome;
+            document.getElementById("field_Tempo").value = tempo;
+            document.getElementById("field_Valor").value = valor;
+            document.getElementById("field_Desconto").value = desconto;
+            document.getElementById("field_Comissao").value = comissao;
+            document.getElementById("field_Observacao").value = observacao;
+            document.getElementById("field_Ativo").checked = ativo === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblServico" action="${pageContext.request.contextPath}/servico/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" /></td>
+            <td><form:input path="nome" id="field_Nome"/></td>
             <td><form:label path="tempo">Tempo:</form:label></td>
-            <td><form:input path="tempo" /></td>
+            <td><form:input path="tempo" id="field_Tempo"/></td>
             <td><form:label path="valor">Valor:</form:label></td>
-            <td><form:input path="valor" /></td>
+            <td><form:input path="valor" id="field_Valor"/></td>
             <td><form:label path="desconto">Desconto:</form:label></td>
-            <td><form:input path="desconto" /></td>
+            <td><form:input path="desconto" id="field_Desconto"/></td>
             <td><form:label path="comissao">Comissão:</form:label></td>
-            <td><form:input path="comissao" /></td>
+            <td><form:input path="comissao" id="field_Comissao"/></td>
             <td><form:label path="observacao">Observacao:</form:label></td>
-            <td><form:input path="observacao" /></td>
-
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="observacao" id="field_Observacao"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Ativo"/></td>
         </tr>
     </table>
     <div class="button-bar">

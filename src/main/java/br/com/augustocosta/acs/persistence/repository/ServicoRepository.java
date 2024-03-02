@@ -10,6 +10,7 @@ import java.time.*;
 @Repository
 public interface ServicoRepository extends JpaRepository<tblServico, Integer> {
     List<tblServico> findByNome(String Nome);
+    List<tblServico> findByAtivoTrueOrderByNomeAsc();
     List<tblServico> findByAtivoTrue();
     List<tblServico> findByAtivoFalse();
 }

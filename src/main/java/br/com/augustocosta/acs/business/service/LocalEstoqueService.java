@@ -35,6 +35,10 @@ public class LocalEstoqueService {
         return repository.findByDescricaoLocal(nome);
     }
 
+    public List<tblLocalEstoque> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByDescricaoLocalAsc();
+    }
+
     public List<tblLocalEstoque> getAll() {
         return repository.findAll();
     }

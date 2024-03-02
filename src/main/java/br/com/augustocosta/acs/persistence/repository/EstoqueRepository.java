@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface EstoqueRepository extends JpaRepository<tblEstoque, Integer> {
     List<tblEstoque> findByNome(String nome);
+    List<tblEstoque> findByAtivoTrueOrderByNomeAsc();
     List<tblEstoque> findByProduto(tblProduto produto);
     List<tblEstoque> findByLocalEstoque(tblLocalEstoque localEstoque);
     List<tblEstoque> findByMovimentacao(tblMovimentacao movimentacao);

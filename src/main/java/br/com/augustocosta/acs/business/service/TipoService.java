@@ -35,6 +35,10 @@ public class TipoService {
         return repository.findByDescricao(nome);
     }
 
+    public List<tblTipo> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByDescricaoAsc();
+    }
+
     public List<tblTipo> getAll() {
         return repository.findAll();
     }

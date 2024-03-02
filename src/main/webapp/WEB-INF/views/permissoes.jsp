@@ -6,25 +6,25 @@
     <title>Permissões</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarPermissoes(permissaoId, nome, descricao, ativo) {
-            document.querySelector("input[name='tblPermissoes.id']").value = permissaoId;
-            document.querySelector("textarea[name='tblPermissoes.nome']").value = nome;
-            document.querySelector("textarea[name='tblPermissoes.descricao']").value = descricao;
-            document.querySelector("input[name='tblPermissoes.ativo']").checked = ativo === 'true';
+        function visualizarPermissoes(id, name, description, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Description").value = description;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblPermissoes" action="${pageContext.request.contextPath}/permissoes/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" /></td>
+            <td><form:input path="nome" id="field_Name"/></td>
             <td><form:label path="descricao">Descrição:</form:label></td>
-            <td><form:input path="descricao" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricao" id="field_Description"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

@@ -46,6 +46,10 @@ public class UsuarioService {
         return repository.findBySobrenome(sobrenome);
     }
 
+    public List<tblUsuario> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblUsuario> getByCPF(Double cpf) {
         return repository.findByCpf(cpf);
     }

@@ -6,22 +6,22 @@
     <title>Marcas</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarMarca(marcaId, descricao, ativo) {
-            document.querySelector("input[name='tblMarca.id']").value = marcaId;
-            document.querySelector("textarea[name='tblMarca.descricaoMarca']").value = descricao;
-            document.querySelector("input[name='tblMarca.ativo']").checked = ativo === 'true';
+        function visualizarMarca(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblMarca" action="${pageContext.request.contextPath}/marca/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricaoMarca">Descrição:</form:label></td>
-            <td><form:input path="descricaoMarca" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricaoMarca" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

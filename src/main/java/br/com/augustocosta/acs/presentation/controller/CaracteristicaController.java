@@ -26,7 +26,7 @@ public class CaracteristicaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaCaracteristica", service.getActivesByName());
+        model.addAttribute("listaCaracteristica", service.getActiveByNameAsc());
         model.addAttribute("tblCaracteristica", new tblCaracteristica());
         return "caracteristica"; // Nome do arquivo JSP para a página
     }

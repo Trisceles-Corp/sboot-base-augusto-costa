@@ -35,6 +35,10 @@ public class ServicoService {
         return repository.findByNome(nome);
     }
 
+    public List<tblServico> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblServico> getAll() {
         return repository.findAll();
     }

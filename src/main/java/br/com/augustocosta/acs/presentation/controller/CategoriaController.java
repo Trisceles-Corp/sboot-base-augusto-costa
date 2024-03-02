@@ -27,7 +27,7 @@ public class CategoriaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaCategorias", service.getActivesByName());
+        model.addAttribute("listaCategorias", service.getActiveByNameAsc());
         model.addAttribute("tblCategoria", new tblCategoria());
         return "categoria";
     }

@@ -35,6 +35,10 @@ public class PeriodoService {
         return repository.findByNome(nome);
     }
 
+    public List<tblPeriodo> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblPeriodo> getAll() {
         return repository.findAll();
     }

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/linha")
 public class LinhaController {
@@ -22,14 +25,31 @@ public class LinhaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaLinhas", service.getAll());
+        model.addAttribute("listaLinhas", service.getActiveByNameAsc());
         model.addAttribute("tblLinha", new tblLinha());
-        return "linha"; // Nome do arquivo JSP para a página
+        return "linha";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblLinha linha) {
-        service.create(linha);
+    public String salvar(@ModelAttribute tblLinha table) {
+        if (table.getId() != null && table.getId() != 0){
+            Optional<tblLinha> data = service.getById(table.getId());
+            table.setAtivo(table.getAtivo());
+            table.setDataCriacao(data.orElseThrow().getDataCriacao());
+            table.setCriadoPor(data.get().getCriadoPor());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.update(table.getId(), table);
+        }
+        else {
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.create(table);
+        }
+
         return "redirect:/linha";
     }
 

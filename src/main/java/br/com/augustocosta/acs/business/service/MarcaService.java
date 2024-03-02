@@ -31,10 +31,13 @@ public class MarcaService {
         return repository.findById(id);
     }
 
-    public List<tblMarca> betByName(String nome) {
+    public List<tblMarca> getByName(String nome) {
         return repository.findByDescricaoMarca(nome);
     }
 
+    public List<tblMarca> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByDescricaoMarcaAsc();
+    }
     public List<tblMarca> getAll() {
         return repository.findAll();
     }

@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface PerfilRepository extends JpaRepository<tblPerfil, Integer> {
     List<tblPerfil> findByNome(String nome);
+    List<tblPerfil> findByAtivoTrueOrderByNomeAsc();
     List<tblPerfil> findByTipo(tblTipo tipo);
     List<tblPerfil> findByAtivoTrue();
     List<tblPerfil> findByAtivoFalse();

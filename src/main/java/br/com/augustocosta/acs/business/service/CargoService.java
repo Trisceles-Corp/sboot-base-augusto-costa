@@ -35,6 +35,10 @@ public class CargoService {
         return repository.findByNome(nome);
     }
 
+    public List<tblCargo> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblCargo> getAll() {
         return repository.findAll();
     }

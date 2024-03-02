@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/cargo")
 public class CargoController {
@@ -22,14 +25,31 @@ public class CargoController {
 
     @GetMapping
     public String listarCargos(Model model) {
-        model.addAttribute("listaCargos", service.getAll());
+        model.addAttribute("listaCargos", service.getActiveByNameAsc());
         model.addAttribute("tblCargo", new tblCargo());
         return "cargo"; // Nome do arquivo JSP para a página
     }
 
     @PostMapping("/salvar")
-    public String salvarCargo(@ModelAttribute tblCargo cargo) {
-        service.create(cargo);
+    public String salvar(@ModelAttribute tblCargo table) {
+        if (table.getId() != null && table.getId() != 0){
+            Optional<tblCargo> data = service.getById(table.getId());
+            table.setAtivo(table.getAtivo());
+            table.setDataCriacao(data.orElseThrow().getDataCriacao());
+            table.setCriadoPor(data.get().getCriadoPor());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.update(table.getId(), table);
+        }
+        else {
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.create(table);
+        }
+
         return "redirect:/cargo";
     }
 

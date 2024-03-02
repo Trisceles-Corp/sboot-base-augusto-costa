@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/localestoque")
 public class LocalEstoqueController {
@@ -22,14 +25,31 @@ public class LocalEstoqueController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listalocais", service.getAll());
+        model.addAttribute("listalocais", service.getActiveByNameAsc());
         model.addAttribute("tblLocalEstoque", new tblLocalEstoque());
         return "localestoque"; // Nome do arquivo JSP para a página
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblLocalEstoque localestoque) {
-        service.create(localestoque);
+    public String salvar(@ModelAttribute tblLocalEstoque table) {
+        if (table.getId() != null && table.getId() != 0){
+            Optional<tblLocalEstoque> data = service.getById(table.getId());
+            table.setAtivo(table.getAtivo());
+            table.setDataCriacao(data.orElseThrow().getDataCriacao());
+            table.setCriadoPor(data.get().getCriadoPor());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.update(table.getId(), table);
+        }
+        else {
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.create(table);
+        }
+
         return "redirect:/localestoque";
     }
 

@@ -6,22 +6,22 @@
     <title>Linha</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarLinha(linhaId, descricao, ativo) {
-            document.querySelector("input[name='tblLinha.id']").value = linhaId;
-            document.querySelector("textarea[name='tblLinha.descricaoLinha']").value = descricao;
-            document.querySelector("input[name='tblLinha.ativo']").checked = ativo === 'true';
+        function visualizarLinha(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblLinha" action="${pageContext.request.contextPath}/linha/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricaoLinha">Descrição:</form:label></td>
-            <td><form:input path="descricaoLinha" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricaoLinha" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

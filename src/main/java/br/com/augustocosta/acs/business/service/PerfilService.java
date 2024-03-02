@@ -39,6 +39,10 @@ public class PerfilService {
         return repository.findByNome(nome);
     }
 
+    public List<tblPerfil> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblPerfil> getByType(tblTipo tipo) {
         return repository.findByTipo(tipo);
     }

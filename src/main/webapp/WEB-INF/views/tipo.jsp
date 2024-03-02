@@ -6,22 +6,22 @@
     <title>Tipos</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarTipo(tipoId, descricao, ativo) {
-            document.querySelector("input[name='tblTipo.id']").value = tipoId;
-            document.querySelector("textarea[name='tblTipo.descricao']").value = descricao;
-            document.querySelector("input[name='tblTipo.ativo']").checked = ativo === 'true';
+        function visualizarTipo(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblTipo" action="${pageContext.request.contextPath}/tipo/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricao">Descrição:</form:label></td>
-            <td><form:input path="descricao" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricao" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

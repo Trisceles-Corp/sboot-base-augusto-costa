@@ -35,6 +35,10 @@ public class TipoMovimentacaoService {
         return repository.findByDescricaoMovimentacao(nome);
     }
 
+    public List<tblTipoMovimentacao> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByDescricaoMovimentacaoAsc();
+    }
+
     public List<tblTipoMovimentacao> getAll() {
         return repository.findAll();
     }

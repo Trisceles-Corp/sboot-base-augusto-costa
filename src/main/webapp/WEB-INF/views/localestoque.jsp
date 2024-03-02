@@ -6,22 +6,22 @@
     <title>Local Estoque</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
-        function visualizarLocalEstoque(localEstoqueId, descricao, ativo) {
-            document.querySelector("input[name='tblLocalEstoque.id']").value = localEstoqueId;
-            document.querySelector("textarea[name='tblLocalEstoque.descricaoLocal']").value = descricao;
-            document.querySelector("input[name='tblLocalEstoque.ativo']").checked = ativo === 'true';
+        function visualizarLocalEstoque(id, name, active) {
+            document.getElementById("field_Id").value = id;
+            document.getElementById("field_Name").value = name;
+            document.getElementById("field_Active").checked = active === 'true';
         }
     </script>
 </head>
 <body>
 
 <form:form id="tipoForm" modelAttribute="tblLocalEstoque" action="${pageContext.request.contextPath}/localestoque/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricaoLocal">Descrição:</form:label></td>
-            <td><form:input path="descricaoLocal" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricaoLocal" id="field_Name"/></td>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">

@@ -10,6 +10,7 @@ import java.time.*;
 @Repository
 public interface PeriodoRepository extends JpaRepository<tblPeriodo, Integer> {
     List<tblPeriodo> findByNome(String nome);
+    List<tblPeriodo> findByAtivoTrueOrderByNomeAsc();
     List<tblPeriodo> findByAtivoTrue();
     List<tblPeriodo> findByAtivoFalse();
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface CargoRepository extends JpaRepository<tblCargo, Integer> {
     List<tblCargo> findByNome(String nome);
+    List<tblCargo> findByAtivoTrueOrderByNomeAsc();
     List<tblCargo> findByAtivoTrue();
     List<tblCargo> findByAtivoFalse();
 }

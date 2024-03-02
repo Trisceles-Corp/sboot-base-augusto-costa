@@ -41,8 +41,12 @@ public class ProdutoService {
         return repository.findByCodigoInterno(codigoInterno);
     }
 
-    public List<tblProduto> getByDescricao(String descricaoProduto) {
+    public List<tblProduto> getByName(String descricaoProduto) {
         return repository.findByDescricaoProduto(descricaoProduto);
+    }
+
+    public List<tblProduto> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByDescricaoProdutoAsc();
     }
 
     public List<tblProduto> getByMarca(tblMarca marca) {

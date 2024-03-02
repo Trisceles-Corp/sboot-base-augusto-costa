@@ -38,7 +38,7 @@ public class CaracteristicaService {
         return repository.findByDescricaoCaracteristica(descricao);
     }
 
-    public List<tblCaracteristica> getActivesByName() {
+    public List<tblCaracteristica> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByDescricaoCaracteristicaAsc();
     }
 

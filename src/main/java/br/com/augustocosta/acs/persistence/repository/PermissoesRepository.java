@@ -10,6 +10,7 @@ import java.time.*;
 @Repository
 public interface PermissoesRepository extends JpaRepository<tblPermissoes, Integer> {
     List<tblPermissoes> findByNome(String nome);
+    List<tblPermissoes> findByAtivoTrueOrderByNomeAsc();
     List<tblPermissoes> findByAtivoTrue();
     List<tblPermissoes> findByAtivoFalse();
 }

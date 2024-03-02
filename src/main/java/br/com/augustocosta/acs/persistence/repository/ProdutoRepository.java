@@ -13,6 +13,7 @@ import java.util.List;
 public interface ProdutoRepository extends JpaRepository<tblProduto, Integer> {
     List<tblProduto> findByCodigoInterno(Integer codigoInterno);
     List<tblProduto> findByDescricaoProduto(String descricaoProduto);
+    List<tblProduto> findByAtivoTrueOrderByDescricaoProdutoAsc();
     List<tblProduto> findByMarca(tblMarca marca);
     List<tblProduto> findByLinha(tblLinha linha);
     List<tblProduto> findByCaracteristica(tblCaracteristica caracteristica);

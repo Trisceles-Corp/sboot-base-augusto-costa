@@ -16,14 +16,67 @@
     <script src="${pageContext.request.contextPath}/js/theme.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        var contextPath = "${pageContext.request.contextPath}";
+
         $(document).ready(function() {
-            $("#conteudoPrincipal").load("${pageContext.request.contextPath}/agendamento");
+            $("#conteudoPrincipal").load(contextPath + "/agendamento");
         });
 
         function carregarAgendamento(event) {
             event.preventDefault();
-            $("#conteudoPrincipal").load("${pageContext.request.contextPath}/agendamento");
+            $("#conteudoPrincipal").load(contextPath + "/agendamento");
         }
+
+        function carregarCaracteristica(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/caracteristica");
+        }
+
+        function carregarCargo(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/cargo");
+        }
+
+        function carregarCAtegoria(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/categoria");
+        }
+
+        function carregarLinha(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/linha");
+        }
+
+        function carregarLocalEstoque(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/localestoque");
+        }
+
+        function carregarMarca(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/marca");
+        }
+
+        function carregarPerfil(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/perfil");
+        }
+
+        function carregarPermissoes(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/permissoes");
+        }
+
+        function carregarServico(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/servico");
+        }
+
+        function carregarTipo(event) {
+            event.preventDefault();
+            $("#conteudoPrincipal").load(contextPath + "/tipo");
+        }
+
     </script>
 </head>
 
@@ -66,20 +119,20 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="financeiroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Financeiro</a>
                                 <ul class="dropdown-menu" aria-labelledby="financeiroDropdown">
-                                    <li><a class="dropdown-item" id="caixasabertos" href="#">Caixas Abertos</a></li>
-                                    <li><a class="dropdown-item" id="comandasabertas" href="#">Comandas Abertos</a></li>
-                                    <li><a class="dropdown-item" id="comissoes" href="#">Comissões</a></li>
-                                    <li><a class="dropdown-item" id="entradasaidas" href="#">Entradas e Saídas</a></li>
+                                    <li><a class="dropdown-item" id="caixa" href="#" data-page="caixa">Caixas Abertos</a></li>
+                                    <li><a class="dropdown-item" id="comandas" href="#" data-page="comandas">Comandas Abertos</a></li>
+                                    <li><a class="dropdown-item" id="comissoes" href="#" data-page="comissoes">Comissões</a></li>
+                                    <li><a class="dropdown-item" id="entradasaidas" href="#" data-page="entradasaidas">Entradas e Saídas</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="estoqueDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
                                 <ul class="dropdown-menu" aria-labelledby="estoqueDropdown">
-                                    <li><a class="dropdown-item" id="produtos" href="#">Produtos</a></li>
-                                    <li><a class="dropdown-item" id="forncecedores" href="#">Fornecedores</a></li>
-                                    <li><a class="dropdown-item" id="pedidocompras" href="#">Pedido de Compras</a></li>
-                                    <li><a class="dropdown-item" id="inventario" href="#">Inventário</a></li>
-                                    <li><a class="dropdown-item" id="solicitacaosaidas" href="#">Solicitação de Saídas</a></li>
+                                    <li><a class="dropdown-item" id="produtos" href="#" data-page="produtos">Produtos</a></li>
+                                    <li><a class="dropdown-item" id="forncecedores" href="#" data-page="fornecedores">Fornecedores</a></li>
+                                    <li><a class="dropdown-item" id="pedidocompras" href="#" data-page="pedidocompras">Pedido de Compras</a></li>
+                                    <li><a class="dropdown-item" id="inventario" href="#" data-page="inventario">Inventário</a></li>
+                                    <li><a class="dropdown-item" id="solicitacaosaidas" href="#" data-page="solicitacaosaidas">Solicitação de Saídas</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link" id="dashboard" href="#">Dashboard </a></li>
@@ -87,17 +140,17 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="cadastroDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Cadastro</a>
                                 <ul class="dropdown-menu" aria-labelledby="cadastroDropdown">
-                                    <li><a class="dropdown-item" id="caracteristica" href="#">Característica</a></li>
-                                    <li><a class="dropdown-item" id="cargo" href="#">Cargo</a></li>
-                                    <li><a class="dropdown-item" id="categoria" href="#">Categoria</a></li>
-                                    <li><a class="dropdown-item" id="clientes" href="#">Clientes</a></li>
-                                    <li><a class="dropdown-item" id="linha" href="#">Linha</a></li>
-                                    <li><a class="dropdown-item" id="localestoque" href="#">Local Estoque</a></li>
-                                    <li><a class="dropdown-item" id="marca" href="#">Marca</a></li>
-                                    <li><a class="dropdown-item" id="perfil" href="#">Perfil</a></li>
-                                    <li><a class="dropdown-item" id="permissoes" href="#">Permissões</a></li>
-                                    <li><a class="dropdown-item" id="servico" href="#">Serviços</a></li>
-                                    <li><a class="dropdown-item" id="tipo" href="#">Tipo</a></li>
+                                    <li><a class="dropdown-item" id="caracteristica" href="#" onclick="carregarCaracteristica(event)">Característica</a></li>
+                                    <li><a class="dropdown-item" id="cargo" href="#" onclick="carregarCargo(event)">Cargo</a></li>
+                                    <li><a class="dropdown-item" id="categoria" href="#" onclick="carregarCategoria(event)">Categoria</a></li>
+                                    <li><a class="dropdown-item" id="clientes" href="#" onclick="carregarCargo(event)">Clientes</a></li>
+                                    <li><a class="dropdown-item" id="linha" href="#" onclick="carregarLinha(event)">Linha</a></li>
+                                    <li><a class="dropdown-item" id="localestoque" href="#" onclick="carregarLocalEstoque(event)">Local Estoque</a></li>
+                                    <li><a class="dropdown-item" id="marca" href="#" onclick="carregarMarca(event)">Marca</a></li>
+                                    <li><a class="dropdown-item" id="perfil" href="#" onclick="carregarPerfil(event)">Perfil</a></li>
+                                    <li><a class="dropdown-item" id="permissoes" href="#" onclick="carregarPermissoes(event)">Permissões</a></li>
+                                    <li><a class="dropdown-item" id="servico" href="#" onclick="carregarServico(event)">Serviços</a></li>
+                                    <li><a class="dropdown-item" id="tipo" href="#" onclick="carregarTipo(event)">Tipo</a></li>
                                 </ul>
                             </li>
                         </ul>
