@@ -21,6 +21,8 @@
         <tr>
             <td><form:label path="descricaoCaracteristica">Descrição:</form:label></td>
             <td><form:input path="descricaoCaracteristica" id="field_Descricao"/></td>
+        </tr>
+        <tr>
             <td><form:checkbox path="ativo" id="field_Active" label="Ativo" /></td>
         </tr>
     </table>

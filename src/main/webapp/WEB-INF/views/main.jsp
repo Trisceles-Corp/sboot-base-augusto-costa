@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Navigation-Menu.css">
     <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/theme.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
     <script>
         var contextPath = "${pageContext.request.contextPath}";
 
@@ -28,8 +29,9 @@
         }
 
         function carregarCaracteristica(event) {
+            console.log("Carregando Característica");
             event.preventDefault();
-            $("#conteudoPrincipal").load(contextPath + "/caracteristica");
+            $("#conteudoPrincipal").load("${pageContext.request.contextPath}/caracteristica");
         }
 
         function carregarCargo(event) {
@@ -78,6 +80,7 @@
         }
 
     </script>
+
 </head>
 
 <body id="page-top">

@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <script type="text/javascript">
         function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao, ativo) {
+            console.log(id);
             document.getElementById("field_Id'").value = id;
             document.getElementById("field_Nome").value = nome;
             document.getElementById("field_Tempo").value = tempo;
@@ -26,6 +27,8 @@
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
             <td><form:input path="nome" id="field_Nome"/></td>
+        </tr>
+        <tr>
             <td><form:label path="tempo">Tempo:</form:label></td>
             <td><form:input path="tempo" id="field_Tempo"/></td>
             <td><form:label path="valor">Valor:</form:label></td>
@@ -36,6 +39,8 @@
             <td><form:input path="comissao" id="field_Comissao"/></td>
             <td><form:label path="observacao">Observacao:</form:label></td>
             <td><form:input path="observacao" id="field_Observacao"/></td>
+        </tr>
+        <tr>
             <td><form:checkbox path="ativo" label="Ativo" id="field_Ativo"/></td>
         </tr>
     </table>
@@ -56,6 +61,7 @@
         <th>Valor</th>
         <th>Desconto</th>
         <th>Comissao</th>
+        <th>Observação</th>
         <th>Ativo</th>
         <th>Data de Criação</th>
         <th>Criado Por</th>
@@ -74,6 +80,7 @@
             <td><c:out value="${servico.valor}" /></td>
             <td><c:out value="${servico.desconto}" /></td>
             <td><c:out value="${servico.comissao}" /></td>
+            <td><c:out value="${servico.observacao}" /></td>
             <td><c:out value="${servico.ativo ? 'Sim' : 'Não'}" /></td>
             <td><c:out value="${servico.dataCriacao}" /></td>
             <td><c:out value="${servico.criadoPor}" /></td>

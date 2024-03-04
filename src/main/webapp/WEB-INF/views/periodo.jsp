@@ -21,6 +21,8 @@
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
             <td><form:input path="nome" id="field_Name"/></td>
+        </tr>
+        <tr>
             <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
