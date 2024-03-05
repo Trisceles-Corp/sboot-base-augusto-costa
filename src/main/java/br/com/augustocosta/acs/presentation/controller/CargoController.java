@@ -55,6 +55,7 @@ public class CargoController {
 
     @GetMapping("/novo")
     public String novoCargo(Model model) {
+        model.addAttribute("listaCargos", service.getActiveByNameAsc());
         model.addAttribute("tblCargo", new tblCargo());
         return "cargo";
     }

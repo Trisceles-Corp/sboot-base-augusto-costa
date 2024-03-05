@@ -5,15 +5,13 @@
 <head>
     <title>Tipos Movimentação</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarDiasSemana(id, name, active) {
-            document.getElementById("field_Id").value = id;
-            document.getElementById("field_Name").value = name;
-            document.getElementById("field_Active").checked = active === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
+<div class="pgHeader">
+    <p>Tipo movimentação</p>
+</div>
 
 <form:form id="tipoForm" modelAttribute="tblTipoMovimentacao" action="${pageContext.request.contextPath}/tipomovimentacao/salvar" method="POST">
     <form:hidden path="id" id="field_Id"/>

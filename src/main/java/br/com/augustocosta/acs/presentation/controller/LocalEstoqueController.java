@@ -55,6 +55,7 @@ public class LocalEstoqueController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listalocais", service.getActiveByNameAsc());
         model.addAttribute("tblLocalEstoque", new tblLocalEstoque());
         return "localestoque";
     }

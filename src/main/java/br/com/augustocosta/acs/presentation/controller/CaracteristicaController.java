@@ -56,6 +56,7 @@ public class CaracteristicaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaCaracteristica", service.getActiveByNameAsc());
         model.addAttribute("tblCaracteristica", new tblCaracteristica());
         return "caracteristica";
     }

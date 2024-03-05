@@ -55,6 +55,7 @@ public class DiasSemanaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaDiasSemana", service.getAll());
         model.addAttribute("tblDiasSemana", new tblDiasSemana());
         return "diasSemana";
     }

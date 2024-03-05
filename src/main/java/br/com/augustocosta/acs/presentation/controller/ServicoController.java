@@ -54,6 +54,7 @@ public class ServicoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaServicos", service.getActiveByNameAsc());
         model.addAttribute("tblServico", new tblServico());
         return "servico";
     }

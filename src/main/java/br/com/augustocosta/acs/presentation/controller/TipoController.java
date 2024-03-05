@@ -54,7 +54,8 @@ public class TipoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
-        model.addAttribute("tblTipo", new tblTipo());
+        model.addAttribute("listaTipos", service.getActiveByNameAsc());
+         model.addAttribute("tblTipo", new tblTipo());
         return "tipo";
     }
 

@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agendamento</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap DatePicker CSS -->
@@ -13,65 +14,55 @@
     <!-- FullCalendar -->
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
     <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
-    <style>
-        .color-box { width: 10px; height: 10px; display: inline-block; }
-        .blue { background-color: blue; }
-        .green { background-color: green; }
-        .red { background-color: red; }
-        .yellow { background-color: yellow; }
-    </style>
 </head>
 <body>
-<div class="container">
-    <div class="row mt-3">
-        <div class="col-md-4">
-            <!-- Calendário -->
-            <div id="calendar"></div>
-            <div class="form-group">
-                <div class="input-group date" id="datepicker">
-                    <input type="text" class="form-control">
-                    <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div>
-                </div>
+<div class="pgHeader">
+    <p>Agendamento</p>
+    <!-- Botões de Comando -->
+    <button type="button" class="btn btn-primary">Agendar</button>
+    <button type="button" class="btn btn-secondary">Bloquear</button>
+</div>
+<div class="pgNavigation">
+    <!-- Calendário -->
+    <div id="calendar"></div>
+    <div class="form-group">
+        <div class="input-group date" id="datepicker">
+            <input type="text" class="form-control">
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
             </div>
-
-            <!-- Radio Buttons -->
-            <div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="profissional" id="barbeiros" value="barbeiros">
-                    <label class="form-check-label" for="barbeiros">Barbeiros</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="profissional" id="cabeleireiros" value="cabeleireiros">
-                    <label class="form-check-label" for="cabeleireiros">Cabeleireiros</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="profissional" id="depiladoras" value="depiladoras">
-                    <label class="form-check-label" for="depiladoras">Depiladoras</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="profissional" id="manicures" value="manicures">
-                    <label class="form-check-label" for="manicures">Manicures</label>
-                </div>
-            </div>
-
-            <!-- Labels Informativos -->
-            <div class="mt-3">
-                <div><span class="color-box blue"></span> <label>Finalizado</label></div>
-                <div><span class="color-box green"></span> <label>Agendado</label></div>
-                <div><span class="color-box red"></span> <label>Em atendimento</label></div>
-                <div><span class="color-box yellow"></span> <label>Em espera</label></div>
-            </div>
-        </div>
-
-        <div class="col-md-8 text-right">
-            <!-- Botões de Comando -->
-            <button type="button" class="btn btn-primary">Agendar</button>
-            <button type="button" class="btn btn-secondary">Bloquear</button>
         </div>
     </div>
 
+    <!-- Radio Buttons -->
+    <div class="radio">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="profissional" id="barbeiros" value="barbeiros">
+            <label class="form-check-label" for="barbeiros">Barbeiros</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="profissional" id="cabeleireiros" value="cabeleireiros">
+            <label class="form-check-label" for="cabeleireiros">Cabeleireiros</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="profissional" id="depiladoras" value="depiladoras">
+            <label class="form-check-label" for="depiladoras">Depiladoras</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="profissional" id="manicures" value="manicures">
+            <label class="form-check-label" for="manicures">Manicures</label>
+        </div>
+    </div>
+
+    <!-- Labels Informativos -->
+    <div class="mt-3">
+        <div><span class="color-box blue"></span> <label>Finalizado</label></div>
+        <div><span class="color-box green"></span> <label>Agendado</label></div>
+        <div><span class="color-box red"></span> <label>Em atendimento</label></div>
+        <div><span class="color-box yellow"></span> <label>Em espera</label></div>
+    </div>
+</div>
+<div class="pgContent">
     <!-- Grid Central com JSTL -->
     <div class="row mt-3">
         <div class="col-md-12">

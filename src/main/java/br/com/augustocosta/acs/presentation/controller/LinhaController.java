@@ -55,6 +55,7 @@ public class LinhaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaLinhas", service.getActiveByNameAsc());
         model.addAttribute("tblLinha", new tblLinha());
         return "linha";
     }

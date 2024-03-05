@@ -5,16 +5,13 @@
 <head>
     <title>Permissões</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarPermissoes(id, name, description, active) {
-            document.getElementById("field_Id").value = id;
-            document.getElementById("field_Name").value = name;
-            document.getElementById("field_Description").value = description;
-            document.getElementById("field_Active").checked = active === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
+<div class="pgHeader">
+    <p>Permissões</p>
+</div>
 
 <form:form id="tipoForm" modelAttribute="tblPermissoes" action="${pageContext.request.contextPath}/permissoes/salvar" method="POST">
     <form:hidden path="id" id="field_Id"/>

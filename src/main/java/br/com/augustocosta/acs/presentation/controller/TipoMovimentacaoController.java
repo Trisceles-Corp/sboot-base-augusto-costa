@@ -54,6 +54,7 @@ public class TipoMovimentacaoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaTipoMovimentacao", service.getActiveByNameAsc());
         model.addAttribute("tblTipoMovimentacao", new tblTipoMovimentacao());
         return "tipomovimentacao";
     }

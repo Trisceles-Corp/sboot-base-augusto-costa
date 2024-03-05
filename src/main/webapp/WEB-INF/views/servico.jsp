@@ -5,21 +5,13 @@
 <head>
     <title>Serviços</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao, ativo) {
-            console.log(id);
-            document.getElementById("field_Id'").value = id;
-            document.getElementById("field_Nome").value = nome;
-            document.getElementById("field_Tempo").value = tempo;
-            document.getElementById("field_Valor").value = valor;
-            document.getElementById("field_Desconto").value = desconto;
-            document.getElementById("field_Comissao").value = comissao;
-            document.getElementById("field_Observacao").value = observacao;
-            document.getElementById("field_Ativo").checked = ativo === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
+<div class="pgHeader">
+    <p>Serviços</p>
+</div>
 
 <form:form id="tipoForm" modelAttribute="tblServico" action="${pageContext.request.contextPath}/servico/salvar" method="POST">
     <form:hidden path="id" id="field_Id"/>

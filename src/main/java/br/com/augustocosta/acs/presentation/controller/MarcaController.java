@@ -55,6 +55,7 @@ public class MarcaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaMarcas", service.getActiveByNameAsc());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca";
     }

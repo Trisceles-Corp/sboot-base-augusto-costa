@@ -5,16 +5,13 @@
 <head>
     <title>Categoria</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarCategoria(categoriaId, nome, ativo) {
-            document.getElementById("field_Id").value = categoriaId;
-            document.getElementById("field_Name").value = nome;
-            document.getElementById("field_Active").checked = ativo === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
-
+<div class="pgHeader">
+    <p>Categorias</p>
+</div>
 <form:form id="tipoForm" modelAttribute="tblCategoria" action="${pageContext.request.contextPath}/categoria/salvar" method="POST">
     <form:hidden path="id" id="field_Id" />
     <table>

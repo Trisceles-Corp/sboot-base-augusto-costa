@@ -57,6 +57,7 @@ public class CategoriaController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaCategorias", service.getActiveByNameAsc());
         model.addAttribute("tblCategoria", new tblCategoria());
         return "redirect:/categoria";
     }

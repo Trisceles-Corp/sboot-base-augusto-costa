@@ -54,6 +54,7 @@ public class PermissoesController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaPermissoes", service.getActiveByNameAsc());
         model.addAttribute("tblPermissoes", new tblPermissoes());
         return "permissoes";
     }

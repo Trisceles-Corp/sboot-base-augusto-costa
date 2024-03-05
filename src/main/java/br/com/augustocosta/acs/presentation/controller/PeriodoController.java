@@ -55,6 +55,7 @@ public class PeriodoController {
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaPeriodos", service.getActiveByNameAsc());
         model.addAttribute("tblPeriodo", new tblPeriodo());
         return "periodo";
     }
