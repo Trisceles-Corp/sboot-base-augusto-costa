@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class tblPeriodo {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PeriodoId")
     private Integer id;

@@ -13,7 +13,7 @@ import java.time.*;
 @AllArgsConstructor
 public class tblPermissoes {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PermissaoId")
     private Integer id;

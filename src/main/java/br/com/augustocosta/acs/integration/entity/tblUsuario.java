@@ -14,7 +14,7 @@ import java.time.*;
 @AllArgsConstructor
 public class tblUsuario {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UsuarioId")
     private Integer id;

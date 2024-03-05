@@ -9,7 +9,7 @@
         function visualizarMarca(marcaId, descricao, ativo) {
             document.querySelector("input[name='tblMarca.id']").value = marcaId;
             document.querySelector("textarea[name='tblMarca.descricaoMarca']").value = descricao;
-            document.querySelector("input[name='tblMarca.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblMarca.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarMarca('${marca.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

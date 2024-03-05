@@ -9,7 +9,7 @@
         function visualizarCargo(cargoId, nome, ativo) {
             document.querySelector("input[name='tblCargo.id']").value = cargoId;
             document.querySelector("input[name='tblCargo.nome']").value = nome;
-            document.querySelector("input[name='tblCargo.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblCargo.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -46,7 +46,7 @@
             <td>
                 <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo ? 'Sim' : 'Não'}'); return false;"
                    title="Visualizar">
-                    <img src="<c:url value='../src/main/resources/static/images/view.png'/>" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
             </td>
             <td><c:out value="${cargo.id}" /></td>

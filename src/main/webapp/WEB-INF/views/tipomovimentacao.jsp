@@ -9,7 +9,7 @@
         function visualizarDiasSemana(tipoMovimentacaoId, descricao, ativo) {
             document.querySelector("input[name='tblTipoMovimentacao.id']").value = tipoMovimentacaoId;
             document.querySelector("textarea[name='tblTipoMovimentacao.descricaoMovimentacao']").value = descricao;
-            document.querySelector("input[name='tblTipoMovimentacao.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblTipoMovimentacao.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarDiasSemana('${tipomovimentacao.id}', '${tipomovimentacao.descricaoMovimentacao}', '${tipomovimentacao.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

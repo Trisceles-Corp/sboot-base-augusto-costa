@@ -13,7 +13,7 @@ import java.time.*;
 @AllArgsConstructor
 public class tblLinha {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LinhaId")
     private Integer id;

@@ -10,7 +10,7 @@
             document.querySelector("input[name='tblPermissoes.id']").value = permissaoId;
             document.querySelector("textarea[name='tblPermissoes.nome']").value = nome;
             document.querySelector("textarea[name='tblPermissoes.descricao']").value = descricao;
-            document.querySelector("input[name='tblPermissoes.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblPermissoes.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -49,7 +49,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarPermissoes('${permissoes.id}', '${permissoes.nome}', '${permissoes.descricao}', '${permissoes.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

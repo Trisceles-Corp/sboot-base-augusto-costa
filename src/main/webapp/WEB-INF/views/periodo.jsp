@@ -9,7 +9,7 @@
         function visualizarPeriodo(periodoId, nome, ativo) {
             document.querySelector("input[name='tblPeriodo.id']").value = periodoId;
             document.querySelector("textarea[name='tblPeriodo.nome']").value = nome;
-            document.querySelector("input[name='tblPeriodo.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblPeriodo.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarPeriodo('${periodo.id}', '${periodo.nome}', '${periodo.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

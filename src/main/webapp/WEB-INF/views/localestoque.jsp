@@ -9,7 +9,7 @@
         function visualizarLocalEstoque(localEstoqueId, descricao, ativo) {
             document.querySelector("input[name='tblLocalEstoque.id']").value = localEstoqueId;
             document.querySelector("textarea[name='tblLocalEstoque.descricaoLocal']").value = descricao;
-            document.querySelector("input[name='tblLocalEstoque.ativo']").checked = ativo === 'Sim';
+            document.querySelector("input[name='tblLocalEstoque.ativo']").checked = ativo === 'true';
         }
     </script>
 </head>
@@ -45,7 +45,7 @@
         <tr>
             <td>
                 <a href="#" onclick="visualizarLocalEstoque('${localestoque.id}', '${localestoque.descricaoLocal}', '${localestoque.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/images/view.png" alt="Visualizar" />
+                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

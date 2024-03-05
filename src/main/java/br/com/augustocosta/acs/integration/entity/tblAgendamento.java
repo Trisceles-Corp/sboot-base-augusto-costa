@@ -14,7 +14,7 @@ import java.time.*;
 @AllArgsConstructor
 public class tblAgendamento {
 
-    @Id @Setter(AccessLevel.PROTECTED)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AgendamentoId")
     private Integer id;
