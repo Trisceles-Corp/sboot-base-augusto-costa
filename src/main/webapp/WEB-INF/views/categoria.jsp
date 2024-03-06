@@ -4,9 +4,11 @@
 <html>
 <head>
     <title>Categoria</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
+    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="pgHeader">
@@ -33,26 +35,31 @@
 
 <table>
     <tr>
-        <th>Ações</th>
+        <th colspan="2">Ações</th>
         <th>ID</th>
         <th>Nome</th>
         <th>Ativo</th>
         <th>Data de Criação</th>
-        <th>Criado Por</th>
     </tr>
     <c:forEach var="categoria" items="${listaCategorias}">
-        <tr>
+        <tr style="align-content: center">
             <td>
                 <a href="#" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}', '${categoria.ativo}'); return false;" title="Visualizar">
                     <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                 </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
+            </td>
+            <td>
+                <form action="${pageContext.request.contextPath}/categoria/delete/${categoria.id}" method="POST">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <button type="button" onclick="confirmarExclusao(event)" title="Excluir" style="border: none; background: none; cursor: pointer;">
+                        <img src="${pageContext.request.contextPath}/img/delete.png" alt="Excluir" />
+                    </button>
+                </form>
             </td>
             <td><c:out value="${categoria.id}" /></td>
             <td><c:out value="${categoria.nome}" /></td>
             <td><c:out value="${categoria.ativo ? 'Sim' : 'Não'}" /></td>
             <td><c:out value="${categoria.dataCriacao}" /></td>
-            <td><c:out value="${categoria.criadoPor}" /></td>
         </tr>
     </c:forEach>
 </table>

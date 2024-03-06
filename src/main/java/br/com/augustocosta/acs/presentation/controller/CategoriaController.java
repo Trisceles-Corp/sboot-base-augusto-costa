@@ -55,6 +55,12 @@ public class CategoriaController {
         return "redirect:/categoria";
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id);
+        return "redirect:/categoria";
+    }
+
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("listaCategorias", service.getActiveByNameAsc());

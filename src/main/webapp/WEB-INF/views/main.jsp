@@ -6,17 +6,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Augusto Costa</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/fontawesome5-overrides.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Navigation-Menu.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/theme.js"></script>
-    <script src="${pageContext.request.contextPath}/js/functions.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+
+    <!-- Bootstrap DatePicker CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+
+    <!-- FullCalendar -->
+    <link rel='stylesheet' type="text/css" href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' />
+    <link rel='stylesheet' type="text/css" href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' media='print' />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/fontawesome-all.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/fontawesome5-overrides.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/Navigation-Menu.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
     <script>
         var contextPath = "${pageContext.request.contextPath}";
@@ -111,7 +123,7 @@
                                     <li><a class="dropdown-item" id="perfil" href="#" onclick="carregarConteudo('perfil'); return false;">Perfil</a></li>
                                     <li><a class="dropdown-item" id="permissoes" href="#" onclick="carregarConteudo('permissoes'); return false;">Permissões</a></li>
                                     <li><a class="dropdown-item" id="servico" href="#" onclick="carregarConteudo('servico'); return false;">Serviços</a></li>
-                                    <li><a class="dropdown-item" id="tipo" href="#" onclick="carregarConteudo('tipo'); return false;">Tipo</a></li>
+                                    <li><a class="dropdown-item" id="tipoperfil" href="#" onclick="carregarConteudo('tipoperfil'); return false;">Tipo Perfil</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -121,7 +133,7 @@
             <div class="content" id="conteudoPrincipal">
             </div>
         </div>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
 </div>
 <div class="pgFooter">
     <div class="container my-auto">

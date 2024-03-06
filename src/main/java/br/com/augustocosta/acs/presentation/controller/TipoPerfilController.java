@@ -1,7 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
-import br.com.augustocosta.acs.business.service.TipoService;
-import br.com.augustocosta.acs.integration.entity.tblTipo;
+import br.com.augustocosta.acs.business.service.TipoPerfilService;
+import br.com.augustocosta.acs.integration.entity.tblTipoPerfil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,29 +10,29 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/tipo")
-public class TipoController {
+@RequestMapping("/tipoperfil")
+public class TipoPerfilController {
 
     @Autowired
-    private TipoService service;
+    private TipoPerfilService service;
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("tblTipo", new tblTipo());
-        return "tipo";
+        model.addAttribute("tblTipoPerfil", new tblTipoPerfil());
+        return "tipoperfil";
     }
 
     @GetMapping
     public String listarTodos(Model model) {
         model.addAttribute("listaTipos", service.getActiveByNameAsc());
-        model.addAttribute("tblTipo", new tblTipo());
-        return "tipo";
+        model.addAttribute("tblTipoPerfil", new tblTipoPerfil());
+        return "tipoperfil";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblTipo table) {
+    public String salvar(@ModelAttribute tblTipoPerfil table) {
         if (table.getId() != null && table.getId() != 0){
-            Optional<tblTipo> data = service.getById(table.getId());
+            Optional<tblTipoPerfil> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
@@ -49,15 +49,13 @@ public class TipoController {
             service.create(table);
         }
 
-        return "redirect:/tipo";
+        return "redirect:/tipoperfil";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("listaTipos", service.getActiveByNameAsc());
-         model.addAttribute("tblTipo", new tblTipo());
-        return "tipo";
+         model.addAttribute("tblTipoPerfil", new tblTipoPerfil());
+        return "tipoperfil";
     }
-
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
 }

@@ -22,8 +22,8 @@ public class tblPerfil {
     private String nome;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TipoId", nullable = false)
-    private tblTipo tipo;
+    @JoinColumn(name = "TipoPerfilId", nullable = false)
+    private tblTipoPerfil tipoPerfil;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

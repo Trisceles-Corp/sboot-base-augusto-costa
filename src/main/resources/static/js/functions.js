@@ -71,8 +71,23 @@ function visualizarTipo(id, name, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
+function visualizarPerfil(id, tipoperfilid, name, active) {
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_TipoPerfilId").value = tipoperfilid;
+    document.getElementById("field_Name").value = name;
+    document.getElementById("field_Active").checked = active === 'true';
+}
+
 function visualizarDiasSemana(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
+}
+
+function confirmarExclusao(event) {
+    event.preventDefault();
+    var confirmacao = confirm("Deseja excluir o registro?");
+    if (confirmacao) {
+        event.target.form.submit();
+    }
 }

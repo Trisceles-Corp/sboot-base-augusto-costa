@@ -5,8 +5,8 @@
 <head>
     <title>Características</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>

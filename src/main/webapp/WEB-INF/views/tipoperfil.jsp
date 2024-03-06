@@ -3,9 +3,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Tipos</title>
+    <title>Tipos de Perfil</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
@@ -13,7 +14,7 @@
     <p>Tipo</p>
 </div>
 
-<form:form id="tipoForm" modelAttribute="tblTipo" action="${pageContext.request.contextPath}/tipo/salvar" method="POST">
+<form:form id="tipoForm" modelAttribute="tblTipoPerfil" action="${pageContext.request.contextPath}/tipoperfil/salvar" method="POST">
     <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
@@ -26,7 +27,7 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/tipo/novo">Novo</a>
+        <a href="${pageContext.request.contextPath}/tipoperfil/novo">Novo</a>
     </div>
 </form:form>
 

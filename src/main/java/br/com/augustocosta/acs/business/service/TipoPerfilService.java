@@ -1,7 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
-import br.com.augustocosta.acs.integration.entity.tblTipo;
-import br.com.augustocosta.acs.persistence.repository.TipoRepository;
+import br.com.augustocosta.acs.integration.entity.tblTipoPerfil;
+import br.com.augustocosta.acs.persistence.repository.TipoPerfilRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,50 +10,50 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TipoService {
+public class TipoPerfilService {
 
-    private final TipoRepository repository;
+    private final TipoPerfilRepository repository;
 
     @Autowired
-    public TipoService(TipoRepository repository) {
+    public TipoPerfilService(TipoPerfilRepository repository) {
         this.repository = repository;
     }
 
     @Transactional
-    public tblTipo create(tblTipo table) {
+    public tblTipoPerfil create(tblTipoPerfil table) {
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAtivo(true);
         return repository.save(table);
     }
 
-    public Optional<tblTipo> getById(Integer id) {
+    public Optional<tblTipoPerfil> getById(Integer id) {
         return repository.findById(id);
     }
 
-    public List<tblTipo> getByName(String nome) {
+    public List<tblTipoPerfil> getByName(String nome) {
         return repository.findByDescricao(nome);
     }
 
-    public List<tblTipo> getActiveByNameAsc() {
+    public List<tblTipoPerfil> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByDescricaoAsc();
     }
 
-    public List<tblTipo> getAll() {
+    public List<tblTipoPerfil> getAll() {
         return repository.findAll();
     }
 
-    public List<tblTipo> getActives() {
+    public List<tblTipoPerfil> getActives() {
         return repository.findByAtivoTrue();
     }
 
-    public List<tblTipo> getInactives() {
+    public List<tblTipoPerfil> getInactives() {
         return repository.findByAtivoFalse();
     }
 
     @Transactional
-    public tblTipo update(Integer id, tblTipo dados) {
-        tblTipo table = repository.findById(id)
+    public tblTipoPerfil update(Integer id, tblTipoPerfil dados) {
+        tblTipoPerfil table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tipo não encontrado com id: " + id));
 
         table.setDescricao(dados.getDescricao());
@@ -67,7 +67,7 @@ public class TipoService {
 
     @Transactional
     public void delete(Integer id, int alteradoPor) {
-        tblTipo table = repository.findById(id)
+        tblTipoPerfil table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tipo não encontrado com id: " + id));
 
         table.setAtivo(false);
@@ -78,7 +78,7 @@ public class TipoService {
     }
 
     public boolean isAtivo(Integer id) {
-        Optional<tblTipo> table = repository.findById(id);
-        return table.map(tblTipo::getAtivo).orElse(false);
+        Optional<tblTipoPerfil> table = repository.findById(id);
+        return table.map(tblTipoPerfil::getAtivo).orElse(false);
     }
 }

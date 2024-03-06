@@ -1,8 +1,9 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblPerfil;
-import br.com.augustocosta.acs.integration.entity.tblTipo;
+import br.com.augustocosta.acs.integration.entity.tblTipoPerfil;
 import br.com.augustocosta.acs.persistence.repository.PerfilRepository;
+import br.com.augustocosta.acs.persistence.repository.TipoPerfilRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,12 @@ import java.util.Optional;
 public class PerfilService {
 
     private final PerfilRepository repository;
+    private final TipoPerfilRepository tipoPerfilRepository;
 
     @Autowired
-    public PerfilService(PerfilRepository repository) {
+    public PerfilService(PerfilRepository repository, TipoPerfilRepository tipoPerfilRepository) {
         this.repository = repository;
+        this.tipoPerfilRepository = tipoPerfilRepository;
     }
 
     public tblPerfil create(tblPerfil table) {
@@ -43,8 +46,8 @@ public class PerfilService {
         return repository.findByAtivoTrueOrderByNomeAsc();
     }
 
-    public List<tblPerfil> getByType(tblTipo tipo) {
-        return repository.findByTipo(tipo);
+    public List<tblTipoPerfil> getAllTipoPerfil() {
+        return tipoPerfilRepository.findByAtivoTrueOrderByDescricaoAsc();
     }
 
     public List<tblPerfil> getActives() {
@@ -60,7 +63,7 @@ public class PerfilService {
                 .orElseThrow(() -> new IllegalArgumentException("Perfil não encontrado com id: " + id));
 
         table.setNome(dados.getNome());
-        table.setTipo(dados.getTipo());
+        table.setTipoPerfil(dados.getTipoPerfil());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());
