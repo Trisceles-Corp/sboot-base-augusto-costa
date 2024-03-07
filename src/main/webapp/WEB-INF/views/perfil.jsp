@@ -4,55 +4,67 @@
 <html>
 <head>
     <title>Perfil</title>
-    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
-<div class="pgHeader">
-    <p>Perfil Usuário</p>
-</div>
-
-<div>
-    <form:form id="perfilForm" modelAttribute="tblPerfil" action="${pageContext.request.contextPath}/perfil/salvar" method="POST">
-        <form:hidden path="id" id="field_Id"/>
-        <table>
-            <tr>
-                <td><form:label path="nome">Nome:</form:label></td>
-                <td><form:input path="nome" id="field_Name"/></td>
-            </tr>
-            <tr>
-                <td><form:label path="tipoPerfil">Tipo de Perfil:</form:label></td>
-                <td>
-                    <form:select path="tipoPerfil" id="field_TipoPerfilId">
-                        <form:option value="" label="-- Selecione --"/>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="itemHeader">
+                <h3>Configuração - <small>Perfil</small></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form:form class="bootstrap-form-with-validation" id="perfilForm" modelAttribute="tblPerfil" action="${pageContext.request.contextPath}/perfil/salvar" method="POST">
+                <form:hidden path="id" id="field_Id"/>
+                <div class="form-group mb-3">
+                    <form:label path="nome" class="form-label" for="text-input">Nome:</form:label>
+                    <form:input path="nome" class="form-control" type="text" id="field_Name" />
+                </div>
+                <div class="form-group mb-3">
+                    <form:label path="tipoPerfil" class="form-label">Tipo de Perfil:</form:label>
+                    <form:select path="tipoPerfil" class="form-control" id="field_TipoPerfilId">
+                        <form:option value="" label=" Selecione "/>
                         <form:options items="${listaTiposPerfil}" itemValue="id" itemLabel="descricao"/>
                     </form:select>
-                </td>
-            </tr>
-            <tr>
-                <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
-            </tr>
-        </table>
-        <div class="button-bar">
-            <input type="submit" value="Salvar" />
-            <a href="${pageContext.request.contextPath}/perfil/novo">Novo</a>
+                </div>
+                <div class="form-group mb-3">
+                    <div class="form-check">
+                        <form:checkbox path="ativo" id="field_Active"/>
+                        <form:label path="ativo" class="form-check-label" for="field_Active">Ativo</form:label>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="submit" class="btn btn-primary" value="Salvar" />
+                    <button type="button" class="btn btn-secondary"><a href="${pageContext.request.contextPath}/perfil/novo"></a>Novo</button>
+                </div>
+            </form:form>
         </div>
-    </form:form>
+    </div>
 </div>
 
-<div>
-    <table>
-        <tr>
-            <th>Ações</th>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Tipo Perfil</th>
-            <th>Ativo</th>
-            <th>Data de Criação</th>
-        </tr>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ações</th>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Tipo Perfil</th>
+                <th>Ativo</th>
+                <th>Data de Criação</th>
+            </tr>
+        </thead>
         <c:forEach var="perfil" items="${listaPerfil}">
+        <tbody>
             <tr>
                 <td>
                     <a href="#" onclick="visualizarPerfil('${perfil.id}', '${perfil.tipoPerfil.id}', '${perfil.nome}', '${perfil.ativo}'); return false;" title="Visualizar">
@@ -66,6 +78,7 @@
                 <td><c:out value="${perfil.ativo ? 'Sim' : 'Não'}" /></td>
                 <td><c:out value="${perfil.dataCriacao}" /></td>
             </tr>
+        </tbody>
         </c:forEach>
     </table>
 </div>

@@ -15,7 +15,6 @@
 }
 
 .pgHeader{
-    /*position: absolute;*/
     padding: 10px;
     background-color: whitesmoke;
     height: 58px;
@@ -24,6 +23,18 @@
     top: 5px;
     left: 5px;
 }
+
+.itemHeader{
+    padding: 10px;
+    background-color: whitesmoke;
+    height: 58px;
+    width: 100%;
+    text-align: center;
+    vertical-align: center;
+    top: 5px;
+    left: 5px;
+}
+
 .dataFields{
     position: absolute;
     padding: 10px;

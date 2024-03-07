@@ -33,36 +33,42 @@
 
 <br/>
 
-<table>
-    <tr>
-        <th colspan="2">Ações</th>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Ativo</th>
-        <th>Data de Criação</th>
-    </tr>
-    <c:forEach var="categoria" items="${listaCategorias}">
-        <tr style="align-content: center">
-            <td>
-                <a href="#" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}', '${categoria.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
-                </a>
-            </td>
-            <td>
-                <form action="${pageContext.request.contextPath}/categoria/delete/${categoria.id}" method="POST">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <button type="button" onclick="confirmarExclusao(event)" title="Excluir" style="border: none; background: none; cursor: pointer;">
-                        <img src="${pageContext.request.contextPath}/img/delete.png" alt="Excluir" />
-                    </button>
-                </form>
-            </td>
-            <td><c:out value="${categoria.id}" /></td>
-            <td><c:out value="${categoria.nome}" /></td>
-            <td><c:out value="${categoria.ativo ? 'Sim' : 'Não'}" /></td>
-            <td><c:out value="${categoria.dataCriacao}" /></td>
-        </tr>
-    </c:forEach>
-</table>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="2">Ações</th>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Ativo</th>
+                <th>Data de Criação</th>
+            </tr>
+        </thead>
+        <c:forEach var="categoria" items="${listaCategorias}">
+        <tbody>
+            <tr>
+                <td>
+                    <a href="#" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}', '${categoria.ativo}'); return false;" title="Visualizar">
+                        <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                    </a>
+                </td>
+                <td>
+                    <form action="${pageContext.request.contextPath}/categoria/delete/${categoria.id}" method="POST">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <button type="button" onclick="confirmarExclusao(event)" title="Excluir" style="border: none; background: none; cursor: pointer;">
+                            <img src="${pageContext.request.contextPath}/img/delete.png" alt="Excluir" />
+                        </button>
+                    </form>
+                </td>
+                <td><c:out value="${categoria.id}" /></td>
+                <td><c:out value="${categoria.nome}" /></td>
+                <td><c:out value="${categoria.ativo ? 'Sim' : 'Não'}" /></td>
+                <td><c:out value="${categoria.dataCriacao}" /></td>
+            </tr>
+        </tbody>
+        </c:forEach>
+    </table>
+</div>
 
 </body>
 </html>
