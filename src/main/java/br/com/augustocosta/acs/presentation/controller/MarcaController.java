@@ -26,6 +26,7 @@ public class MarcaController {
     @GetMapping
     public String listarTodos(Model model) {
         model.addAttribute("listaMarcas", service.getActiveByNameAsc());
+        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca"; // Nome do arquivo JSP para a página
     }
@@ -56,9 +57,8 @@ public class MarcaController {
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("listaMarcas", service.getActiveByNameAsc());
+        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca";
     }
-
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
 }

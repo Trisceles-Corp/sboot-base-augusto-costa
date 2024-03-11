@@ -27,7 +27,6 @@
         </table>
         <div>
             <input class="btn btn-primary" type="submit" value="Salvar" />
-            <a class="btn btn-secondary" href="${pageContext.request.contextPath}/caracteristica/novo">Novo</a>
         </div>
     </form:form>
 </div>
@@ -43,10 +42,8 @@
         <c:forEach var="caracteristica" items="${listaCaracteristica}">
             <tr>
                 <td>
-                    <a href="#" onclick="visualizarCaracteristica('${caracteristica.id}', '${caracteristica.descricaoCaracteristica}', '${caracteristica.ativo}'); return false;" title="Visualizar">
-                        <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                    <a href="#" class="btn-visualizar" onclick="visualizarCaracteristica('${caracteristica.id}', '${caracteristica.descricaoCaracteristica}', '${caracteristica.ativo}'); return false;" title="Visualizar">
                     </a>
-                    <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
                 </td>
                 <td><c:out value="${caracteristica.id}" /></td>
                 <td><c:out value="${caracteristica.descricaoCaracteristica}" /></td>

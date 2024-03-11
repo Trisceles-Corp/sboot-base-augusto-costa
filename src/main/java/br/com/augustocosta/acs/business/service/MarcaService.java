@@ -1,6 +1,8 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblMarca;
+import br.com.augustocosta.acs.integration.entity.tblCategoria;
+import br.com.augustocosta.acs.persistence.repository.CategoriaRepository;
 import br.com.augustocosta.acs.persistence.repository.MarcaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class MarcaService {
 
     private final MarcaRepository repository;
+    private final CategoriaRepository categoriaRepository;
 
     @Autowired
-    public MarcaService(MarcaRepository repository) {
+    public MarcaService(MarcaRepository repository, CategoriaRepository categoriarepository) {
         this.repository = repository;
+        this.categoriaRepository = categoriarepository;
     }
 
     @Transactional
@@ -38,9 +42,12 @@ public class MarcaService {
     public List<tblMarca> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByDescricaoMarcaAsc();
     }
+
     public List<tblMarca> getAll() {
         return repository.findAll();
     }
+
+    public List<tblCategoria> getAllActivesCategories(){return categoriaRepository.findByAtivoTrueOrderByNomeAsc(); }
 
     public List<tblMarca> getActives() {
         return repository.findByAtivoTrue();
@@ -56,6 +63,7 @@ public class MarcaService {
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
 
         table.setDescricaoMarca(dados.getDescricaoMarca());
+        table.setCategoria(dados.getCategoria());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());

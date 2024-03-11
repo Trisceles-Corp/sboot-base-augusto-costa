@@ -48,7 +48,6 @@
                     console.error("Erro ao carregar a página:", error);
                 });
         }
-
     </script>
 
 </head>
@@ -101,7 +100,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="estoqueDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Estoque</a>
                                 <ul class="dropdown-menu" aria-labelledby="estoqueDropdown">
-                                    <li><a class="dropdown-item" id="produtos" href="#" onclick="carregarConteudo('produtos'); return false;">Produtos</a></li>
+                                    <li><a class="dropdown-item" id="produtos" href="#" onclick="carregarConteudo('produto'); return false;">Produtos</a></li>
                                     <li><a class="dropdown-item" id="forncecedores" href="#" onclick="carregarConteudo('forncecedores'); return false;">Fornecedores</a></li>
                                     <li><a class="dropdown-item" id="pedidocompras" href="#" onclick="carregarConteudo('pedidocompras'); return false;">Pedido de Compras</a></li>
                                     <li><a class="dropdown-item" id="inventario" href="#" onclick="carregarConteudo('inventario'); return false;">Inventário</a></li>
@@ -135,10 +134,10 @@
         </div>
     </div>
 </div>
-<div class="pgFooter">
-    <div class="container my-auto">
-        <div class="text-center my-auto copyright"><span>Copyright © Trisceles Corp 2024</span></div>
-    </div>
-</div>
+<%--<div class="pgFooter">--%>
+<%--    <div class="container my-auto">--%>
+<%--        <div class="text-center my-auto copyright"><span>Copyright © Trisceles Corp 2024</span></div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 </body>
 </html>

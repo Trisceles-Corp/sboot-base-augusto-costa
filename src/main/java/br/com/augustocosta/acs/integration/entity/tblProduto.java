@@ -19,16 +19,13 @@ public class tblProduto {
     private Integer id;
 
     @Column(name = "CodigoInterno")
-    private Integer codigoInterno;
+    private Double codigoInterno;
 
     @Column(name = "DescricaoProduto", nullable = false)
     private String descricaoProduto;
 
     @Column(name = "CodigoBarras", nullable = false)
     private Double codigoBarras;
-
-    @Column(name = "Categoria", nullable = false)
-    private String categoria;
 
     @Column(name = "EstoqueMinimo", nullable = false)
     private Integer estoqueMinimo;
@@ -42,16 +39,16 @@ public class tblProduto {
     @Column(name = "Comissao", nullable = false)
     private Double comissao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MarcaId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "MarcaId", nullable = false)
     private tblMarca marca;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LinhaId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "LinhaId", nullable = false)
     private tblLinha linha;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CaracteristicaId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CaracteristicaId", nullable = false)
     private tblCaracteristica caracteristica;
 
     @Column(name = "Ativo", nullable = false)
@@ -63,9 +60,11 @@ public class tblProduto {
     @Column(name = "DataAlteracao", nullable = false)
     private LocalDateTime dataAlteracao;
 
-    @Column(name = "CriadoPor", nullable = false)
-    private Integer criadoPor;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CriadoPor", nullable = false)
+    private tblUsuario criadoPor;
 
-    @Column(name = "AlteradoPor", nullable = false)
-    private Integer alteradoPor;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "AlteradoPor", nullable = false)
+    private tblUsuario alteradoPor;
 }

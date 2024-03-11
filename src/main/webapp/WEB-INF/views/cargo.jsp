@@ -27,7 +27,6 @@
         </table>
         <div class="button-bar">
             <input type="submit" value="Salvar" />
-            <a href="${pageContext.request.contextPath}/cargo/novo">Novo</a>
         </div>
     </form:form>
 </div>
@@ -44,9 +43,8 @@
         <c:forEach var="cargo" items="${listaCargos}">
             <tr>
                 <td>
-                    <a href="#" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo}'); return false;"
+                    <a href="#" class="btn-visualizar" onclick="visualizarCargo('${cargo.id}', '${cargo.nome}', '${cargo.ativo}'); return false;"
                        title="Visualizar">
-                        <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
                     </a>
                 </td>
                 <td><c:out value="${cargo.id}" /></td>

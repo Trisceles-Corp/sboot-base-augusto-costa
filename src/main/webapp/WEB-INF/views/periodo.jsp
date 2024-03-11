@@ -27,7 +27,6 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/periodo/novo">Novo</a>
     </div>
 </form:form>
 
@@ -45,10 +44,8 @@
     <c:forEach var="periodo" items="${listaPeriodos}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarPeriodo('${periodo.id}', '${periodo.nome}', '${periodo.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarPeriodo('${periodo.id}', '${periodo.nome}', '${periodo.ativo}'); return false;" title="Visualizar">
                 </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
             <td><c:out value="${periodo.id}" /></td>
             <td><c:out value="${periodo.nome}" /></td>

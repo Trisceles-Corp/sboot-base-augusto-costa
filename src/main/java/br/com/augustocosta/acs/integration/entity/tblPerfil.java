@@ -2,7 +2,7 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.*;
 
 @Entity
 @Table(name = "tbl_perfil")
@@ -21,7 +21,7 @@ public class tblPerfil {
     @Column(name = "Nome", nullable = false)
     private String nome;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TipoPerfilId", nullable = false)
     private tblTipoPerfil tipoPerfil;
 

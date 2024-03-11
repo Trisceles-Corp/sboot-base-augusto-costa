@@ -38,6 +38,10 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
+    public tblUsuario getByUserId(Integer id) {
+        return repository.getReferenceById(id);
+    }
+
     public List<tblUsuario> getByName(String nome) {
         return repository.findByNome(nome);
     }

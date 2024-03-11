@@ -11,6 +11,20 @@
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
+
+    <script>
+        function verificarNomeAntesDeSalvar() {
+            const nomeInput = document.getElementById('field_Name');
+            const nome = nomeInput.value.trim();
+
+            if (nome === '') {
+                alert('O campo Nome é obrigatório e não pode estar vazio.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+
 </head>
 <body>
 <div class="container-fluid">
@@ -23,7 +37,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <form:form class="bootstrap-form-with-validation" id="perfilForm" modelAttribute="tblPerfil" action="${pageContext.request.contextPath}/perfil/salvar" method="POST">
+            <form:form class="bootstrap-form-with-validation" id="perfilForm" modelAttribute="tblPerfil" action="${pageContext.request.contextPath}/perfil/salvar" method="POST" onsubmit="return verificarNomeAntesDeSalvar()">
                 <form:hidden path="id" id="field_Id"/>
                 <div class="form-group mb-3">
                     <form:label path="nome" class="form-label" for="text-input">Nome:</form:label>
@@ -43,8 +57,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-3">
-                    <input type="submit" class="btn btn-primary" value="Salvar" />
-                    <button type="button" class="btn btn-secondary"><a href="${pageContext.request.contextPath}/perfil/novo"></a>Novo</button>
+                    <input type="submit" class="btn btn-primary" id="btnSalvar" value="Salvar" />
                 </div>
             </form:form>
         </div>
@@ -60,23 +73,21 @@
                 <th>Nome</th>
                 <th>Tipo Perfil</th>
                 <th>Ativo</th>
-                <th>Data de Criação</th>
+                <th>Data Alteração</th>
             </tr>
         </thead>
         <c:forEach var="perfil" items="${listaPerfil}">
         <tbody>
             <tr>
                 <td>
-                    <a href="#" onclick="visualizarPerfil('${perfil.id}', '${perfil.tipoPerfil.id}', '${perfil.nome}', '${perfil.ativo}'); return false;" title="Visualizar">
-                        <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                    <a href="#" class="btn-visualizar" onclick="visualizarPerfil('${perfil.id}', '${perfil.tipoPerfil.id}', '${perfil.nome}', '${perfil.ativo}'); return false;" title="Visualizar">
                     </a>
-                    <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
                 </td>
                 <td><c:out value="${perfil.id}" /></td>
                 <td><c:out value="${perfil.nome}" /></td>
                 <td><c:out value="${perfil.tipoPerfil.id}" /></td>
                 <td><c:out value="${perfil.ativo ? 'Sim' : 'Não'}" /></td>
-                <td><c:out value="${perfil.dataCriacao}" /></td>
+                <td><c:out value="${perfil.dataAlteracao}" /></td>
             </tr>
         </tbody>
         </c:forEach>

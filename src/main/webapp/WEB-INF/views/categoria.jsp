@@ -27,7 +27,6 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/categoria/novo">Novo</a>
     </div>
 </form:form>
 
@@ -48,15 +47,13 @@
         <tbody>
             <tr>
                 <td>
-                    <a href="#" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}', '${categoria.ativo}'); return false;" title="Visualizar">
-                        <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                    <a href="#" class="btn-visualizar" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}', '${categoria.ativo}'); return false;" title="Visualizar">
                     </a>
                 </td>
                 <td>
                     <form action="${pageContext.request.contextPath}/categoria/delete/${categoria.id}" method="POST">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="button" onclick="confirmarExclusao(event)" title="Excluir" style="border: none; background: none; cursor: pointer;">
-                            <img src="${pageContext.request.contextPath}/img/delete.png" alt="Excluir" />
+                        <button type="button" class="btn-excluir" onclick="confirmarExclusao(event)" title="Excluir" >
                         </button>
                     </form>
                 </td>

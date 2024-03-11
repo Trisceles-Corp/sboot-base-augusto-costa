@@ -60,13 +60,4 @@ public class CategoriaController {
         service.delete(id);
         return "redirect:/categoria";
     }
-
-    @GetMapping("/novo")
-    public String novo(Model model) {
-        model.addAttribute("listaCategorias", service.getActiveByNameAsc());
-        model.addAttribute("tblCategoria", new tblCategoria());
-        return "redirect:/categoria";
-    }
-
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
 }

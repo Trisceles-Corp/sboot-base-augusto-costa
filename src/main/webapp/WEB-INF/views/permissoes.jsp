@@ -29,7 +29,6 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/permissoes/novo">Novo</a>
     </div>
 </form:form>
 
@@ -48,10 +47,8 @@
     <c:forEach var="permissoes" items="${listaPermissoes}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarPermissoes('${permissoes.id}', '${permissoes.nome}', '${permissoes.descricao}', '${permissoes.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarPermissoes('${permissoes.id}', '${permissoes.nome}', '${permissoes.descricao}', '${permissoes.ativo}'); return false;" title="Visualizar">
                 </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
             <td><c:out value="${permissoes.id}" /></td>
             <td><c:out value="${permissoes.nome}" /></td>

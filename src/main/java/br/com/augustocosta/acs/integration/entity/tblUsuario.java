@@ -67,11 +67,11 @@ public class tblUsuario {
     @Column(name = "Observacao")
     private String observacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CargoId")
     private tblCargo cargo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PerfilId", nullable = false)
     private tblPerfil perfil;
 

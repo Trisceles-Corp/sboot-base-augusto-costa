@@ -27,7 +27,6 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/tipoperfil/novo">Novo</a>
     </div>
 </form:form>
 
@@ -39,22 +38,21 @@
         <th>Id</th>
         <th>Descrição</th>
         <th>Ativo</th>
-        <th>Data de Criação</th>
-        <th>Criado Por</th>
+        <th>Data Alteração</th>
+        <th>Alterado Por</th>
     </tr>
     <c:forEach var="tipo" items="${listaTipos}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarTipo('${tipo.id}', '${tipo.descricao}', '${tipo.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarTipo('${tipo.id}', '${tipo.descricao}', '${tipo.ativo}'); return false;" title="Visualizar">
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
             <td><c:out value="${tipo.id}" /></td>
             <td><c:out value="${tipo.descricao}" /></td>
             <td><c:out value="${tipo.ativo ? 'Sim' : 'Não'}" /></td>
-            <td><c:out value="${tipo.dataCriacao}" /></td>
-            <td><c:out value="${tipo.criadoPor}" /></td>
+            <td><c:out value="${tipo.dataAlteracao}" /></td>
+            <td><c:out value="${tipo.alteradoPor}" /></td>
         </tr>
     </c:forEach>
 </table>

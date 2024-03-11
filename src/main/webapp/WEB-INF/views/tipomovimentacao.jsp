@@ -27,7 +27,6 @@
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/tipomovimentacao/novo">Novo</a>
     </div>
 </form:form>
 
@@ -45,8 +44,7 @@
     <c:forEach var="tipomovimentacao" items="${listaTipoMovimentacao}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarDiasSemana('${tipomovimentacao.id}', '${tipomovimentacao.descricaoMovimentacao}', '${tipomovimentacao.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarDiasSemana('${tipomovimentacao.id}', '${tipomovimentacao.descricaoMovimentacao}', '${tipomovimentacao.ativo}'); return false;" title="Visualizar">
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

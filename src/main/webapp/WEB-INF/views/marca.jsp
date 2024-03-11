@@ -3,61 +3,83 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Marcas</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <title>Marca</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
+
 </head>
 <body>
-<div class="pgHeader">
-    <p>Marca</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="itemHeader">
+                <h3>Configuração - <small>Marca</small></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <form:form class="bootstrap-form-with-validation" id="perfilForm" modelAttribute="tblMarca" action="${pageContext.request.contextPath}/marca/salvar" method="POST">
+            <form:hidden path="id" id="field_Id"/>
+            <div class="form-group mb-3">
+                <form:label path="descricaoMarca" class="form-label" for="text-input">Nome:</form:label>
+                <form:input path="descricaoMarca" class="form-control" type="text" id="field_Name" />
+            </div>
+            <div class="form-group mb-3">
+                <form:label path="categoria" class="form-label">Categoria:</form:label>
+                <form:select path="categoria" class="form-control" id="field_CategoriaId">
+                    <form:option value="" label=" Selecione "/>
+                    <form:options items="${listaCategorias}" itemValue="id" itemLabel="nome"/>
+                </form:select>
+            </div>
+            <div class="form-group mb-3">
+                <div class="form-check">
+                    <form:checkbox path="ativo" id="field_Active"/>
+                    <form:label path="ativo" class="form-check-label" for="field_Active">Ativo</form:label>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" class="btn btn-primary" id="btnSalvar" value="Salvar" />
+            </div>
+            </form:form>
+        </div>
+    </div>
 </div>
 
-<form:form id="tipoForm" modelAttribute="tblMarca" action="${pageContext.request.contextPath}/marca/salvar" method="POST">
-    <form:hidden path="id" id="field_Id"/>
-    <table>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
         <tr>
-            <td><form:label path="descricaoMarca">Descrição:</form:label></td>
-            <td><form:input path="descricaoMarca" id="field_Name"/></td>
+            <th>Ações</th>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Ativo</th>
+            <th>Data Alteração</th>
         </tr>
-        <tr>
-            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
-        </tr>
+        </thead>
+        <c:forEach var="marca" items="${listaMarcas}">
+            <tbody>
+            <tr>
+                <td>
+                    <a href="#" class="btn-visualizar" onclick="visualizarMarca('${marca.id}', '${marca.categoria.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
+                    </a>
+                </td>
+                <td><c:out value="${marca.id}" /></td>
+                <td><c:out value="${marca.descricaoMarca}" /></td>
+                <td><c:out value="${marca.categoria.id}" /></td>
+                <td><c:out value="${marca.ativo ? 'Sim' : 'Não'}" /></td>
+                <td><c:out value="${marca.dataAlteracao}" /></td>
+            </tr>
+            </tbody>
+        </c:forEach>
     </table>
-    <div class="button-bar">
-        <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/marca/novo">Novo</a>
-    </div>
-</form:form>
-
-<br/>
-
-<table>
-    <tr>
-        <th>Ações</th>
-        <th>Id</th>
-        <th>Descrição</th>
-        <th>Ativo</th>
-        <th>Data de Criação</th>
-        <th>Criado Por</th>
-    </tr>
-    <c:forEach var="marca" items="${listaMarcas}">
-        <tr>
-            <td>
-                <a href="#" onclick="visualizarMarca('${marca.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
-                </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
-            </td>
-            <td><c:out value="${marca.id}" /></td>
-            <td><c:out value="${marca.descricaoMarca}" /></td>
-            <td><c:out value="${marca.ativo ? 'Sim' : 'Não'}" /></td>
-            <td><c:out value="${marca.dataCriacao}" /></td>
-            <td><c:out value="${marca.criadoPor}" /></td>
-        </tr>
-    </c:forEach>
-</table>
+</div>
 
 </body>
 </html>

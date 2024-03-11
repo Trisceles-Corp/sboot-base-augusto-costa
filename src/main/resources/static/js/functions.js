@@ -34,8 +34,9 @@ function visualizarLocalEstoque(id, name, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
-function visualizarMarca(id, name, active) {
+function visualizarMarca(id, categoriaId, name, active) {
     document.getElementById("field_Id").value = id;
+    document.getElementById("field_CategoriaId").value = categoriaId;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
 }
@@ -90,4 +91,20 @@ function confirmarExclusao(event) {
     if (confirmacao) {
         event.target.form.submit();
     }
+}
+
+function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, linhaId, caracteristicaId, estoqueMinimo, custo, valorVenda, comissao, ativo) {
+    console.log(id);
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_CodigoInterno").value = codigoInterno;
+    document.getElementById("field_Name").value = nome;
+    document.getElementById("field_CodigoBarras").value = codigoBarras;
+    document.getElementById("field_MarcaId").value = marcaId;
+    document.getElementById("field_LinhaId").value = linhaId;
+    document.getElementById("field_CaracteristicaId").value = caracteristicaId;
+    document.getElementById("field_EstoqueMinimo").value = estoqueMinimo;
+    document.getElementById("field_Custo").value = custo;
+    document.getElementById("field_valorVenda").value = valorVenda;
+    document.getElementById("field_Comissao").value = comissao;
+    document.getElementById("field_Active").checked = ativo === 'true';
 }

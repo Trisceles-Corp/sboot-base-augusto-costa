@@ -84,6 +84,28 @@
     left: 5px;
 }
 
+.btn-visualizar {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url('../img/icons8-view-24.png');
+    background-size: cover;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.btn-excluir {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url('../img/icons8-delete-24.png');
+    background-size: cover;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
 p{
     position: absolute;
     font-family: "Arial", serif;
