@@ -4,32 +4,31 @@
 <html>
 <head>
     <title>Permissões</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarPermissoes(permissaoId, nome, descricao, ativo) {
-            document.querySelector("input[name='tblPermissoes.id']").value = permissaoId;
-            document.querySelector("textarea[name='tblPermissoes.nome']").value = nome;
-            document.querySelector("textarea[name='tblPermissoes.descricao']").value = descricao;
-            document.querySelector("input[name='tblPermissoes.ativo']").checked = ativo === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
+<div class="pgHeader">
+    <p>Permissões</p>
+</div>
 
 <form:form id="tipoForm" modelAttribute="tblPermissoes" action="${pageContext.request.contextPath}/permissoes/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" /></td>
+            <td><form:input path="nome" id="field_Name"/></td>
             <td><form:label path="descricao">Descrição:</form:label></td>
-            <td><form:input path="descricao" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricao" id="field_Description"/></td>
+        </tr>
+        <tr>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/permissoes/novo">Novo</a>
     </div>
 </form:form>
 
@@ -48,10 +47,8 @@
     <c:forEach var="permissoes" items="${listaPermissoes}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarPermissoes('${permissoes.id}', '${permissoes.nome}', '${permissoes.descricao}', '${permissoes.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarPermissoes('${permissoes.id}', '${permissoes.nome}', '${permissoes.descricao}', '${permissoes.ativo}'); return false;" title="Visualizar">
                 </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
             <td><c:out value="${permissoes.id}" /></td>
             <td><c:out value="${permissoes.nome}" /></td>

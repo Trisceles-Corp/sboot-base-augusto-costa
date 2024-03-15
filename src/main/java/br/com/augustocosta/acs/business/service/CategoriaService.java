@@ -39,7 +39,7 @@ public class CategoriaService {
         return repository.findAll();
     }
 
-    public List<tblCategoria> getActivesByName() {
+    public List<tblCategoria> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByNomeAsc();
     }
 
@@ -65,13 +65,13 @@ public class CategoriaService {
     }
 
     @Transactional
-    public void delete(Integer id, int alteradoPor) {
+    public void delete(Integer id) {
         tblCategoria table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrado com id: " + id));
 
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(alteradoPor);
+        table.setAlteradoPor(1);
 
         repository.save(table);
     }

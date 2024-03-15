@@ -35,6 +35,10 @@ public class PermissoesService {
         return repository.findByNome(nome);
     }
 
+    public List<tblPermissoes> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByNomeAsc();
+    }
+
     public List<tblPermissoes> getAll() {
         return repository.findAll();
     }

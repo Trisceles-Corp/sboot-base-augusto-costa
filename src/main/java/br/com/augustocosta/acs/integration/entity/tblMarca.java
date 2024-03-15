@@ -18,9 +18,9 @@ public class tblMarca {
     @Column(name = "MarcaId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CategoriaId", nullable = false)
-    private tblAgendamento categoria;
+    private tblCategoria categoria;
 
     @Column(name = "DescricaoMarca", nullable = false)
     private String descricaoMarca;

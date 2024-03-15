@@ -4,29 +4,29 @@
 <html>
 <head>
     <title>Dias da Semana</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarDiasSemana(diasSemanaId, descricao, ativo) {
-            document.querySelector("input[name='tblDiasSemana.id']").value = diasSemanaId;
-            document.querySelector("textarea[name='tblDiasSemana.diasSemana']").value = descricao;
-            document.querySelector("input[name='tblDiasSemana.ativo']").checked = ativo === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
+<div class="pgHeader">
+    <p>Dias da Semana</p>
+</div>
 
 <form:form id="tipoForm" modelAttribute="tblDiasSemana" action="${pageContext.request.contextPath}/diassemana/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="diasSemana">Descrição:</form:label></td>
-            <td><form:input path="diasSemana" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="diasSemana" id="field_Name"/></td>
+        </tr>
+        <tr>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/diassemana/novo">Novo</a>
     </div>
 </form:form>
 
@@ -44,10 +44,8 @@
     <c:forEach var="diassemana" items="${listaDiasSemana}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarDiasSemana('${diassemana.id}', '${diassemana.diasSemana}', '${diassemana.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarDiasSemana('${diassemana.id}', '${diassemana.diasSemana}', '${diassemana.ativo}'); return false;" title="Visualizar">
                 </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>
             <td><c:out value="${diassemana.id}" /></td>
             <td><c:out value="${diassemana.diasSemana}" /></td>

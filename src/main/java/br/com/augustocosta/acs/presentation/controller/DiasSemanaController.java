@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/diasSemana")
 public class DiasSemanaController {
@@ -28,13 +31,31 @@ public class DiasSemanaController {
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblDiasSemana diasSemana) {
-        service.create(diasSemana);
+    public String salvar(@ModelAttribute tblDiasSemana table) {
+        if (table.getId() != null && table.getId() != 0){
+            Optional<tblDiasSemana> data = service.getById(table.getId());
+            table.setAtivo(table.getAtivo());
+            table.setDataCriacao(data.orElseThrow().getDataCriacao());
+            table.setCriadoPor(data.get().getCriadoPor());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.update(table.getId(), table);
+        }
+        else {
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.create(table);
+        }
+
         return "redirect:/diasSemana";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaDiasSemana", service.getAll());
         model.addAttribute("tblDiasSemana", new tblDiasSemana());
         return "diasSemana";
     }

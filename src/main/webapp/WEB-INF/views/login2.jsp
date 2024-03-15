@@ -5,10 +5,11 @@
 <head>
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -28,6 +29,5 @@
             <a class="forgot" href="#">Forgot your email or password?</a>
         </form:form>
     </section>
-    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

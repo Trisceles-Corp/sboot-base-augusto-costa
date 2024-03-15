@@ -4,29 +4,29 @@
 <html>
 <head>
     <title>Linha</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <script type="text/javascript">
-        function visualizarLinha(linhaId, descricao, ativo) {
-            document.querySelector("input[name='tblLinha.id']").value = linhaId;
-            document.querySelector("textarea[name='tblLinha.descricaoLinha']").value = descricao;
-            document.querySelector("input[name='tblLinha.ativo']").checked = ativo === 'true';
-        }
-    </script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
+<div class="pgHeader">
+    <p>Linha</p>
+</div>
 
 <form:form id="tipoForm" modelAttribute="tblLinha" action="${pageContext.request.contextPath}/linha/salvar" method="POST">
-    <form:hidden path="id" />
+    <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
             <td><form:label path="descricaoLinha">Descrição:</form:label></td>
-            <td><form:input path="descricaoLinha" /></td>
-            <td><form:checkbox path="ativo" label="Ativo" /></td>
+            <td><form:input path="descricaoLinha" id="field_Name"/></td>
+        </tr>
+        <tr>
+            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
         </tr>
     </table>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
-        <a href="${pageContext.request.contextPath}/linha/novo">Novo</a>
     </div>
 </form:form>
 
@@ -44,8 +44,7 @@
     <c:forEach var="linha" items="${listaLinhas}">
         <tr>
             <td>
-                <a href="#" onclick="visualizarLinha('${linha.id}', '${linha.descricaoLinha}', '${linha.ativo}'); return false;" title="Visualizar">
-                    <img src="${pageContext.request.contextPath}/img/view.png" alt="Visualizar" />
+                <a href="#" class="btn-visualizar" onclick="visualizarLinha('${linha.id}', '${linha.descricaoLinha}', '${linha.ativo}'); return false;" title="Visualizar">
                 </a>
                 <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
             </td>

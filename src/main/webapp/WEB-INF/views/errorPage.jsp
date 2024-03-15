@@ -5,9 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>404 Error</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/404-NOT-FOUND-animated.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/404-NOT-FOUND-animated.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css">
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -23,12 +25,10 @@ DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
             <body class="bg-purple">
                 <div class="stars">
                     <div class="central-body">
-                        <img class="image-404" src="${pageContext.request.contextPath}/img/muppers/404.svg" width="300px">
-                        <p></p>
                         <h1>${errorTitle}</h1>
                         <h2>Error Code: ${errorCode}</h2>
-                        <p>${errorMessage}</p>
-                        <a href="${pageContext.request.contextPath}/caracteristica" class="btn-go-home">Retornar</a>
+                        <h2 style="text-align: center">${errorMessage}</h2>
+                        <a href="${pageContext.request.contextPath}/main" class="btn-go-home">Retornar</a>
                     </div>
                     <div class="objects">
                         <img class="object_rocket" src="${pageContext.request.contextPath}/img/muppers/rocket.svg" width="40px">
@@ -52,7 +52,6 @@ DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
         </div>
     </section>
 </main>
-<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/marca")
 public class MarcaController {
@@ -22,22 +25,40 @@ public class MarcaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaMarcas", service.getAll());
+        model.addAttribute("listaMarcas", service.getActiveByNameAsc());
+        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca"; // Nome do arquivo JSP para a página
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblMarca marca) {
-        service.create(marca);
+    public String salvar(@ModelAttribute tblMarca table) {
+        if (table.getId() != null && table.getId() != 0){
+            Optional<tblMarca> data = service.getById(table.getId());
+            table.setAtivo(table.getAtivo());
+            table.setDataCriacao(data.orElseThrow().getDataCriacao());
+            table.setCriadoPor(data.get().getCriadoPor());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.update(table.getId(), table);
+        }
+        else {
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setAlteradoPor(1);
+            service.create(table);
+        }
+
         return "redirect:/marca";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
+        model.addAttribute("listaMarcas", service.getActiveByNameAsc());
+        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca";
     }
-
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
 }

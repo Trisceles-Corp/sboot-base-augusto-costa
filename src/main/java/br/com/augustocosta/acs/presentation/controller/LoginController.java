@@ -31,7 +31,7 @@ public class LoginController {
         boolean isValidUser = usuarioService.validateLogin(loginDTO.getEmail(), loginDTO.getSenha());
 
         if (isValidUser) {
-            return "redirect:/categoria";
+            return "redirect:/main";
         } else {
             model.addAttribute("loginError", "Invalid email or password.");
             return "login2";

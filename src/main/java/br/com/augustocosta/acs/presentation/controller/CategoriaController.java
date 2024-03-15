@@ -27,7 +27,7 @@ public class CategoriaController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaCategorias", service.getActivesByName());
+        model.addAttribute("listaCategorias", service.getActiveByNameAsc());
         model.addAttribute("tblCategoria", new tblCategoria());
         return "categoria";
     }
@@ -55,11 +55,9 @@ public class CategoriaController {
         return "redirect:/categoria";
     }
 
-    @GetMapping("/novo")
-    public String novo(Model model) {
-        model.addAttribute("tblCategoria", new tblCategoria());
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id);
         return "redirect:/categoria";
     }
-
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
 }

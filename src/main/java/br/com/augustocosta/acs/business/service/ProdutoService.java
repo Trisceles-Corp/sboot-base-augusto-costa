@@ -1,10 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
-import br.com.augustocosta.acs.integration.entity.tblProduto;
-import br.com.augustocosta.acs.integration.entity.tblMarca;
-import br.com.augustocosta.acs.integration.entity.tblLinha;
-import br.com.augustocosta.acs.integration.entity.tblCaracteristica;
-import br.com.augustocosta.acs.persistence.repository.ProdutoRepository;
+import br.com.augustocosta.acs.integration.entity.*;
+import br.com.augustocosta.acs.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +14,22 @@ public class ProdutoService {
 
     private final ProdutoRepository repository;
 
+    private final MarcaRepository marcaRepository;
+
+    private final LinhaRepository linhaRepository;
+
+    private final CaracteristicaRepository caracteristicaRepository;
+
+    private final UsuarioRepository usuarioRepository;
+
+
     @Autowired
-    public ProdutoService(ProdutoRepository repository) {
+    public ProdutoService(ProdutoRepository repository, MarcaRepository marcaRepository, LinhaRepository linhaRepository, CaracteristicaRepository caracteristicaRepository, UsuarioRepository usuarioRepository) {
         this.repository = repository;
+        this.marcaRepository = marcaRepository;
+        this.linhaRepository = linhaRepository;
+        this.caracteristicaRepository = caracteristicaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public tblProduto create(tblProduto table) {
@@ -37,13 +47,27 @@ public class ProdutoService {
         return repository.findById(id);
     }
 
+    public tblUsuario getByUserId(Integer id) {
+        return usuarioRepository.getReferenceById(id);
+    }
+
     public List<tblProduto> getByCodigoInterno(Integer codigoInterno) {
         return repository.findByCodigoInterno(codigoInterno);
     }
 
-    public List<tblProduto> getByDescricao(String descricaoProduto) {
+    public List<tblProduto> getByName(String descricaoProduto) {
         return repository.findByDescricaoProduto(descricaoProduto);
     }
+
+    public List<tblProduto> getActiveByNameAsc() {
+        return repository.findByAtivoTrueOrderByDescricaoProdutoAsc();
+    }
+
+    public List<tblMarca> getActiveMarcaByNameAsc() {return marcaRepository.findByAtivoTrueOrderByDescricaoMarcaAsc();}
+
+    public List<tblLinha> getActiveLinhaByNameAsc() {return linhaRepository.findByAtivoTrueOrderByDescricaoLinhaAsc();}
+
+    public List<tblCaracteristica> getActiveCaracteristicaByNameAsc() {return caracteristicaRepository.findByAtivoTrueOrderByDescricaoCaracteristicaAsc();}
 
     public List<tblProduto> getByMarca(tblMarca marca) {
         return repository.findByMarca(marca);
@@ -72,7 +96,6 @@ public class ProdutoService {
         table.setCodigoInterno(dados.getCodigoInterno());
         table.setDescricaoProduto(dados.getDescricaoProduto());
         table.setCodigoBarras(dados.getCodigoBarras());
-        table.setCategoria(dados.getCategoria());
         table.setEstoqueMinimo(dados.getEstoqueMinimo());
         table.setCusto(dados.getCusto());
         table.setValorVenda(dados.getValorVenda());
@@ -87,13 +110,13 @@ public class ProdutoService {
         return repository.save(table);
     }
 
-    public void delete(Integer id, int alteradoPor) {
+    public void delete(Integer id, Integer alteradoPor) {
         tblProduto table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado com id: " + id));
-
+        tblUsuario user = usuarioRepository.getReferenceById(alteradoPor);
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(alteradoPor);
+        table.setAlteradoPor(user);
 
         repository.save(table);
     }

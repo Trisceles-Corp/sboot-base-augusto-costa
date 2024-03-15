@@ -5,17 +5,17 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbl_tipo")
+@Table(name = "tbl_tipoPerfil")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblTipo {
+public class tblTipoPerfil {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TipoId")
+    @Column(name = "TipoPerfilId")
     private Integer id;
 
     @Column(name = "Descricao", nullable = false)
