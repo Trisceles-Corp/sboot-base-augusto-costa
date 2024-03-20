@@ -32,7 +32,7 @@
 </div>
 <div>
     <table>
-        <tr>
+        <tr class="gridHeader">
             <th>Ações</th>
             <th>Id</th>
             <th>Nome</th>

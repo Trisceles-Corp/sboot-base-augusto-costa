@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="pgHeader">
-    <p>Linha</p>
+    <p>Local Estoque</p>
 </div>
 
 <form:form id="tipoForm" modelAttribute="tblLocalEstoque" action="${pageContext.request.contextPath}/localestoque/salvar" method="POST">
@@ -33,7 +33,7 @@
 <br/>
 
 <table>
-    <tr>
+    <tr class="gridHeader">
         <th>Ações</th>
         <th>Id</th>
         <th>Descrição</th>

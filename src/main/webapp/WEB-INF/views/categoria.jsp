@@ -35,7 +35,7 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr>
+            <tr class="gridHeader">
                 <th colspan="2">Ações</th>
                 <th>ID</th>
                 <th>Nome</th>

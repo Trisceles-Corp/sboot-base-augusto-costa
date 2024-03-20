@@ -19,8 +19,8 @@ public class tblUsuario {
     @Column(name = "UsuarioId")
     private Integer id;
 
-    @Column(name = "CPF", nullable = false)
-    private Double cpf;
+    @Column(name = "CPF", length = 11, nullable = false)
+    private String cpf;
 
     @Column(name = "Nome", nullable = false)
     private String nome;

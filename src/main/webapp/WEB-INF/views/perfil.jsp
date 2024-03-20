@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="itemHeader">
-                <h3>Configuração - <small>Perfil</small></h3>
+                <h3>Perfil</h3>
             </div>
         </div>
     </div>
@@ -67,7 +67,7 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr>
+            <tr class="gridHeader">
                 <th>Ações</th>
                 <th>Id</th>
                 <th>Nome</th>

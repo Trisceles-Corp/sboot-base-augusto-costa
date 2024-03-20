@@ -7,17 +7,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<tblUsuario, Integer> {
-    List<tblUsuario> findByNome(String nome);
-    List<tblUsuario> findBySobrenome(String sobrenome);
+    List<tblUsuario> findByNomeOrderByNomeAsc(String nome);
+    List<tblUsuario> findBySobrenomeOrderByNomeAsc(String sobrenome);
     List<tblUsuario> findByAtivoTrueOrderByNomeAsc();
-    List<tblUsuario> findByCpf(Double cpf);
-    List<tblUsuario> findByEmail(String email);
-    List<tblUsuario> findByCargo(tblCargo cargo);
-    List<tblUsuario> findByPerfil(tblPerfil perfil);
+    List<tblUsuario> findByCpfOrderByNomeAsc(String cpf);
+    List<tblUsuario> findByEmailOrderByNomeAsc(String email);
+    List<tblUsuario> findByCargoOrderByNomeAsc(tblCargo cargo);
+    List<tblUsuario> findByPerfilOrderByNomeAsc(tblPerfil perfil);
+    List<tblUsuario> findByPerfilId(Integer perfilId);
     List<tblUsuario> findByAtivoTrue();
     List<tblUsuario> findByAtivoFalse();
 }

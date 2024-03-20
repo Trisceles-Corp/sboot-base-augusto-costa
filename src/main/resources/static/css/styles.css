@@ -14,6 +14,18 @@
     left: 5px;
 }
 
+.content-main {
+    grid-area: main;
+}
+
+/*.p-5 {*/
+/*    padding: 3rem !important;*/
+/*    padding-top: 3rem !important;*/
+/*    padding-right: 3rem !important;*/
+/*    padding-bottom: 3rem !important;*/
+/*    padding-left: 3rem !important;*/
+/*}*/
+
 .pgHeader{
     padding: 10px;
     background-color: whitesmoke;
@@ -106,6 +118,12 @@
     background-color: transparent;
 }
 
+.gridHeader{
+    background: #333D3F;
+    border:black;
+    color: white;
+}
+
 p{
     position: absolute;
     font-family: "Arial", serif;
@@ -114,4 +132,201 @@ p{
     font-size: large;
     text-align: center;
     left: 50%;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Outfit", sans-serif;
+}
+
+:root{
+    --cor-cinza:#999;
+    --cor-amarelo:#F0DD6C;
+    --cor-cinza-escuro:#333D3F
+}
+
+.full{
+    background-color: whitesmoke;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 50px 1fr 40px;
+    grid-template-areas: "sidenav header"
+                        "sidenav main"
+                        "sidenav footer";
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------ header ------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+.header{
+    grid-area: header;
+    color: var(--cor-amarelo);
+    background-color:var(--cor-cinza-escuro);
+    box-shadow: 5px 5px 25px -14px rgb(153, 153, 153);
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    height: 70px;
+}
+
+.welcome{
+    font-size: 1.4em;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    align-content: center;
+}
+
+.welcome p{
+    margin: auto;
+}
+
+.login{
+    position: absolute;
+    right: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login img{
+    width: 50%;
+    cursor: pointer;
+}
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------ sidenav ------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+.sidenav{
+    grid-area: sidenav;
+    background-color:var(--cor-cinza-escuro);
+    /*border-top-right-radius:20px ;*/
+    border-bottom-right-radius: 20px;
+    padding-top: 20px;
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+}
+
+.logo{
+    width: 80%;
+    height: 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.logo img{
+    max-width: 90%;
+    height: 90%;
+}
+
+.nav-pages{
+    margin-top: 20px;
+}
+
+.contain-option{
+    height: auto;
+    text-align: left;
+}
+
+a.nav-option{
+    /* padding-left: 25px; */
+    text-decoration: none;
+    color: var(--cor-cinza);
+    height: auto;
+    cursor: pointer;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    :hover{
+        color: var(--cor-amarelo);
+        background-color: #2d3536;
+    }
+}
+
+.nav-option img{
+    max-height: 20px;
+}
+
+.nav-ativo{
+    color: var(--cor-amarelo) !important;
+    .contain-option{
+        border-right: 3px solid var(--cor-amarelo);
+    }
+}
+
+.contain-option{
+    padding-left: 25px;
+}
+
+.contain-option:hover{
+    border-right: 3px solid var(--cor-amarelo);
+    a{
+        color: var(--cor-amarelo);
+    }
+}
+
+.contain-option a{
+    text-decoration: none;
+    color: var(--cor-cinza);
+}
+
+.sub-options{
+    color: var(--cor-cinza);
+    display: none;
+    :hover{
+        color: var(--cor-amarelo);
+    }
+}
+.sub-option-item span{
+    font-size: 10px;
+}
+
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------ content2 -----------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------------------------------*/
+.content2{
+    grid-area: main;
+}
+
+.form-row{
+    display: flex;
+}
+
+#linha-botao-pesquisa{
+    display: flex;
+    align-items: center;
+}
+
+.form-cadastro{
+    display: none;
+}
+
+.icones-tabela{
+    width: 25px;
+    cursor: pointer;
+}
+
+.table tbody tr{
+    padding: 0px !important;
+}
+
+.cel-img-tabela-clientes{
+    text-align: center;
+}
+
+.th-editar{
+    text-align: center;
+}
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*------------------------------------------------------------ footer ------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+footer{
+    grid-area: footer;
+    height: 40px;
+    text-align: center;
 }

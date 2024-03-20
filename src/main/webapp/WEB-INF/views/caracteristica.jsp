@@ -32,7 +32,7 @@
 </div>
 <div class="dataGrid">
     <table>
-        <tr>
+        <tr class="gridHeader">
             <th>Ações</th>
             <th>Id</th>
             <th>Descrição</th>

@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/costacrm
-    username: root
-    password:
+    url: jdbc:sqlserver://LENOVO-P50\MSSQLSERVER;database=costacrm;encrypt=false;
+    username: sa
+    password: Woden26@ws
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
     open-in-view: false

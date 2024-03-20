@@ -1,8 +1,11 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblCargo;
+import br.com.augustocosta.acs.integration.entity.tblCategoria;
 import br.com.augustocosta.acs.integration.entity.tblPerfil;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
+import br.com.augustocosta.acs.persistence.repository.CargoRepository;
+import br.com.augustocosta.acs.persistence.repository.PerfilRepository;
 import br.com.augustocosta.acs.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,14 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final CargoRepository cargoRepository;
+    private final PerfilRepository perfilRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository repository) {
+    public UsuarioService(UsuarioRepository repository, CargoRepository cargoRepository, PerfilRepository perfilRepository) {
         this.repository = repository;
+        this.perfilRepository = perfilRepository;
+        this.cargoRepository = cargoRepository;
     }
 
     @Transactional
@@ -34,6 +41,10 @@ public class UsuarioService {
         return repository.findAll();
     }
 
+    public List<tblCargo> getAllActivesByCargo(){return cargoRepository.findByAtivoTrueOrderByNomeAsc(); }
+
+    public List<tblPerfil> getAllActivesByPerfil(){return perfilRepository.findByAtivoTrueOrderByNomeAsc(); }
+
     public Optional<tblUsuario> getById(Integer id) {
         return repository.findById(id);
     }
@@ -43,31 +54,35 @@ public class UsuarioService {
     }
 
     public List<tblUsuario> getByName(String nome) {
-        return repository.findByNome(nome);
+        return repository.findByNomeOrderByNomeAsc(nome);
     }
 
     public List<tblUsuario> getByLastName(String sobrenome) {
-        return repository.findBySobrenome(sobrenome);
+        return repository.findBySobrenomeOrderByNomeAsc(sobrenome);
     }
 
     public List<tblUsuario> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByNomeAsc();
     }
 
-    public List<tblUsuario> getByCPF(Double cpf) {
-        return repository.findByCpf(cpf);
+    public List<tblUsuario> getActiveByPerfilAsc(Integer perfilId) {
+        return repository.findByPerfilId(perfilId);
+    }
+
+    public List<tblUsuario> getByCPF(String cpf) {
+        return repository.findByCpfOrderByNomeAsc(cpf);
     }
 
     public List<tblUsuario> getByEmail(String email) {
-        return repository.findByEmail(email);
+        return repository.findByEmailOrderByNomeAsc(email);
     }
 
     public List<tblUsuario> getByCargo(tblCargo cargo) {
-        return repository.findByCargo(cargo);
+        return repository.findByCargoOrderByNomeAsc(cargo);
     }
 
     public List<tblUsuario> getByPerfil(tblPerfil perfil) {
-        return repository.findByPerfil(perfil);
+        return repository.findByPerfilOrderByNomeAsc(perfil);
     }
 
     public List<tblUsuario> getActives() {
@@ -125,7 +140,7 @@ public class UsuarioService {
     }
 
     public boolean validateLogin(String email, String senha) {
-        return repository.findByEmail(email)
+        return repository.findByEmailOrderByNomeAsc(email)
                 .stream()
                 .anyMatch(user -> user.getSenha().equals(senha) && user.getAtivo());
     }

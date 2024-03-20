@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="pgHeader">
-    <p>Tipo</p>
+    <p>Tipo Perfil</p>
 </div>
 
 <form:form id="tipoForm" modelAttribute="tblTipoPerfil" action="${pageContext.request.contextPath}/tipoperfil/salvar" method="POST">
@@ -33,7 +33,7 @@
 <br/>
 
 <table>
-    <tr>
+    <tr class="gridHeader">
         <th>Ações</th>
         <th>Id</th>
         <th>Descrição</th>

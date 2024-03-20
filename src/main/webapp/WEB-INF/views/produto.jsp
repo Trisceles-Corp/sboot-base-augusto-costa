@@ -122,7 +122,7 @@
 <div class="table-responsive">
     <table class="table">
         <thead>
-        <tr>
+        <tr class="gridHeader">
             <th>Ações</th>
             <th>Id</th>
             <th>Codigo Interno</th>
