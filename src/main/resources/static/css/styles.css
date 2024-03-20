@@ -124,14 +124,22 @@
     color: white;
 }
 
-p{
-    position: absolute;
-    font-family: "Arial", serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: large;
-    text-align: center;
-    left: 50%;
+/*p{*/
+/*    position: absolute;*/
+/*    font-family: "Arial", serif;*/
+/*    font-style: normal;*/
+/*    font-weight: bold;*/
+/*    font-size: large;*/
+/*    text-align: center;*/
+/*    left: 50%;*/
+/*}*/
+
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 *{
@@ -178,11 +186,13 @@ p{
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    align-content: center;
 }
 
 .welcome p{
     margin: auto;
+    margin-top: auto;
+    margin-right: auto;
+    margin-bottom: auto;
 }
 
 .login{
