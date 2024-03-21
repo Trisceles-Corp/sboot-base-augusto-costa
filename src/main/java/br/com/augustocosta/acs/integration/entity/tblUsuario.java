@@ -20,7 +20,7 @@ public class tblUsuario {
     private Integer id;
 
     @Column(name = "CPF", length = 11, nullable = false)
-    private String cpf;
+    private Double cpf;
 
     @Column(name = "Nome", nullable = false)
     private String nome;
@@ -40,8 +40,9 @@ public class tblUsuario {
     @Column(name = "Senha", nullable = false)
     private String senha;
 
-    @Column(name = "Endereco")
-    private String endereco;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "EnderecoId")
+    private tblEndereco endereco;
 
     @Column(name = "DDICelular", nullable = false)
     private Integer ddiCelular;

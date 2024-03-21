@@ -200,7 +200,7 @@
 
         </div>
     </div>
-    <div class="content-main p-5">
+    <div class="content-main p-5" id="MainContent">
         <div class="row" id="linha-botao-pesquisa">
             <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar">Cadastrar cliente</button>
             <div class="input-group w-50 m-3">
@@ -264,6 +264,32 @@
                 <div class="form-group col-md-3">
                     <label for="inputProfissao">Profissão</label>
                     <input type="text" class="form-control" id="inputProfissao"placeholder="Profissão">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-1">
+                    <label for="inputDDICel">DDI Celular</label>
+                    <input type="number" class="form-control" id="inputDDICel"placeholder="55">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputDDDCel">DDD Celular</label>
+                    <input type="number" class="form-control" id="inputDDDCel"placeholder="DDD">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputCelular">Celular</label>
+                    <input type="number" class="form-control" id="inputCelular"placeholder="Celular">
+                </div>
+                <div class="form-group col-md-1">
+                    <label for="inputDDITel">DDI Telefone</label>
+                    <input type="number" class="form-control" id="inputDDITel"placeholder="55">
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputDDDTel">DDD Telefone</label>
+                    <input type="number" class="form-control" id="inputDDDTel"placeholder="DDD">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="inputTelefone">Telefone</label>
+                    <input type="number" class="form-control" id="inputTelefone"placeholder="Telefone">
                 </div>
             </div>
             <div class="row">

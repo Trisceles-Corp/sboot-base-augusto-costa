@@ -1,10 +1,12 @@
 package br.com.augustocosta.acs.business.service;
 
+import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.integration.entity.tblCargo;
-import br.com.augustocosta.acs.integration.entity.tblCategoria;
+import br.com.augustocosta.acs.integration.entity.tblEndereco;
 import br.com.augustocosta.acs.integration.entity.tblPerfil;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.persistence.repository.CargoRepository;
+import br.com.augustocosta.acs.persistence.repository.EnderecoRepository;
 import br.com.augustocosta.acs.persistence.repository.PerfilRepository;
 import br.com.augustocosta.acs.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +23,14 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private final CargoRepository cargoRepository;
     private final PerfilRepository perfilRepository;
+    private final EnderecoRepository enderecoRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository repository, CargoRepository cargoRepository, PerfilRepository perfilRepository) {
+    public UsuarioService(UsuarioRepository repository, CargoRepository cargoRepository, PerfilRepository perfilRepository, EnderecoRepository enderecoRepository) {
         this.repository = repository;
         this.perfilRepository = perfilRepository;
         this.cargoRepository = cargoRepository;
+        this.enderecoRepository = enderecoRepository;
     }
 
     @Transactional
@@ -69,12 +73,24 @@ public class UsuarioService {
         return repository.findByPerfilId(perfilId);
     }
 
-    public List<tblUsuario> getByCPF(String cpf) {
-        return repository.findByCpfOrderByNomeAsc(cpf);
+    public List<dtoUsuario> getByCPF(Integer perfilId, Double cpf) {
+        return repository.findUsersByPerfilIdAndCpf(perfilId, cpf);
     }
 
-    public List<tblUsuario> getByEmail(String email) {
-        return repository.findByEmailOrderByNomeAsc(email);
+    public List<dtoUsuario> getByEmail(Integer perfilId, String email) {
+        return repository.findUsersByPerfilIdAndEmail(perfilId, email);
+    }
+
+    public List<dtoUsuario> getByNome(Integer perfilId, String nome) {
+        return repository.findUsersByPerfilIdAndNome(perfilId, nome);
+    }
+
+    public List<dtoUsuario> getBySobrenome(Integer perfilId, String sobrenome) {
+        return repository.findUsersByPerfilIdAndSobrenome(perfilId, sobrenome);
+    }
+
+    public List<dtoUsuario> getByCelular(Integer perfilId, Double celular) {
+        return repository.findUsersByPerfilIdAndCelular(perfilId, celular);
     }
 
     public List<tblUsuario> getByCargo(tblCargo cargo) {
@@ -93,9 +109,18 @@ public class UsuarioService {
         return repository.findByAtivoFalse();
     }
 
-    public tblUsuario update(Integer id, tblUsuario dados) {
+    public tblUsuario update(Integer id, dtoUsuario dados) {
         tblUsuario table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com id: " + id));
+
+        tblEndereco endereco = enderecoRepository.findById(dados.getEnderecoId())
+                .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + id));
+
+        tblCargo cargo = cargoRepository.findById(dados.getCargoId())
+                .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + id));
+
+        tblPerfil perfil = perfilRepository.findById(dados.getPerfilId())
+                .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + id));
 
         table.setCpf(dados.getCpf());
         table.setNome(dados.getNome());
@@ -104,7 +129,7 @@ public class UsuarioService {
         table.setDataNascimento(dados.getDataNascimento());
         table.setEmail(dados.getEmail());
         table.setSenha(dados.getSenha());
-        table.setEndereco(dados.getEndereco());
+        table.setEndereco(endereco);
         table.setDdiCelular(dados.getDdiCelular());
         table.setDddCelular(dados.getDddCelular());
         table.setCelular(dados.getCelular());
@@ -113,8 +138,8 @@ public class UsuarioService {
         table.setTelefone(dados.getTelefone());
         table.setProfissao(dados.getProfissao());
         table.setObservacao(dados.getObservacao());
-        table.setCargo(dados.getCargo());
-        table.setPerfil(dados.getPerfil());
+        table.setCargo(cargo);
+        table.setPerfil(perfil);
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());

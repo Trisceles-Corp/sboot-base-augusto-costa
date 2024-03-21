@@ -26,7 +26,7 @@ public class LoginController {
         return "login2";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/verify")
     public String login(dtoLogin loginDTO, Model model) {
         boolean isValidUser = usuarioService.validateLogin(loginDTO.getEmail(), loginDTO.getSenha());
 
