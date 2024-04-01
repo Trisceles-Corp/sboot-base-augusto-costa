@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.business.service;
 
+import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.integration.entity.tblEndereco;
 import br.com.augustocosta.acs.persistence.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,17 @@ public class EnderecoService {
         return repository.save(table);
     }
 
+    public tblEndereco createDto(dtoUsuario dados)
+    {
+        return repository.save(convertVo(dados));
+    }
+
     public Optional<tblEndereco> getById(Integer id) {
         return repository.findById(id);
+    }
+
+    public tblEndereco getEnderecoById(Integer id) {
+        return repository.findEnderecoById(id);
     }
 
     public List<tblEndereco> getByCep(String cep) {
@@ -88,6 +98,11 @@ public class EnderecoService {
     }
 
     @Transactional
+    public tblEndereco updateDto(dtoUsuario dados) {
+        return repository.save(convertVo(dados));
+    }
+
+    @Transactional
     public void delete(Integer id, int alteradoPor) {
         tblEndereco table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + id));
@@ -102,5 +117,34 @@ public class EnderecoService {
     public boolean isAtivo(Integer id) {
         Optional<tblEndereco> table = repository.findById(id);
         return table.map(tblEndereco::getAtivo).orElse(false);
+    }
+
+    public tblEndereco convertVo(dtoUsuario dados)
+    {
+        tblEndereco table = new tblEndereco();
+
+        if (dados.getEnderecoId() != null && dados.getEnderecoId() != 0){
+            table = repository.findById(dados.getEnderecoId())
+                    .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + dados.getEnderecoId()));
+            table.setDataAlteracao(LocalDateTime.now());
+        }
+        else {
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setAlteradoPor(1);
+        }
+
+        table.setCep(dados.getCep());
+        table.setLogradouro(dados.getLogradouro());
+        table.setNumero(dados.getNumero());
+        table.setComplemento(dados.getComplemento());
+        table.setBairro(dados.getBairro());
+        table.setCidade(dados.getCidade());
+        table.setUf(dados.getUf());
+        table.setObservacao(dados.getObservacao());
+
+        return table;
     }
 }

@@ -7,27 +7,95 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Augusto Costa</title>
-
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/icons/favicon.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWjxZI3IFlSXwYEg4Gy5zIzNMAygg3IrPQe9CSbkWvFNgqP+a" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <!-- Mantenha apenas uma versão do jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+    <script>
+        var contextPath = "${pageContext.request.contextPath}";
+
+        function toggleFormCadastro() {
+            const formClienteCadast = document.getElementById("form-cadastro");
+            if (formClienteCadast.style.display === "block") {
+                formClienteCadast.style.display = "none";
+            } else {
+                formClienteCadast.style.display = "block";
+            }
+        }
+
+        function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, senha, profissao, ddiCelular, dddCelular, celular, ddiTelefone, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
+            const formClienteCadast = document.getElementById("form-cadastro");
+            if (formClienteCadast.style.display === "none") {
+                formClienteCadast.style.display = "block";
+            } else {
+                formClienteCadast.style.display = "block";
+            }
+
+            document.getElementById("inputUsuarioId").value = usuarioId;
+            document.getElementById("inputEnderecoId").value = enderecoId;
+            document.getElementById("inputCargoId").value = cargoId;
+            document.getElementById("inputPerfilId").value = perfilId;
+            document.getElementById("inputNome").value = nome;
+            document.getElementById("inputSobrenome").value = sobrenome;
+            document.getElementById("inputCpfCnpj").value = cpfCnpj;
+            document.getElementById("inputGenero").value = genero;
+            document.getElementById("inputNascimento").value = dataNascimento;
+            document.getElementById("inputEmail").value = email;
+            document.getElementById("inputSenha").value = senha;
+            document.getElementById("inputConfirmacaoSenha").value = senha;
+            document.getElementById("inputProfissao").value = profissao;
+            document.getElementById("inputDDICel").value = ddiCelular;
+            document.getElementById("inputDDDCel").value = dddCelular;
+            document.getElementById("inputCelular").value = celular;
+            document.getElementById("inputDDITel").value = ddiTelefone;
+            document.getElementById("inputDDDTel").value = dddTelefone;
+            document.getElementById("inputTelefone").value = telefone;
+            document.getElementById("inputCEP").value = cep;
+            document.getElementById("inputlogradouro").value = logradouro;
+            document.getElementById("inputNumero").value = numero;
+            document.getElementById("inputComplemento").value = complemento;
+            document.getElementById("inputBairro").value = bairro;
+            document.getElementById("inputCidade").value = cidade;
+            document.getElementById("inputEstado").value = uf;
+            document.getElementById("inputObservacao").value = observacao;
+        }
+
+        function carregarConteudo(nomePagina) {
+            var url = contextPath + "/" + nomePagina;
+            console.log(url);
+
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("mainContent").innerHTML = data;
+                })
+                .catch(error => {
+                    console.error("Erro ao carregar a página:", error);
+                });
+        }
+
+        function refreshPage() {
+            // Recarrega a página atual
+            location.reload();
+        }
+    </script>
 </head>
 
 <body>
 <div class="full">
-    <div class="header">
+    <div class="header" id="div_header">
         <div class="welcome mx-5 p-2">
             <p>Augusto Costa Spa</p>
         </div>
@@ -53,8 +121,8 @@
                     </div>
                 </div>
             </li>
+            <div class="d-none d-sm-block topbar-divider"></div>
         </ul>
-
     </div>
     <div class="sidenav">
         <div class="logo">
@@ -82,78 +150,70 @@
                     </script>
                 </div>
             </a>
-            <!-- classe nav-ativo para o campo da pagina atual e imagem F0DD6C (amarela) -->
-            <!-- script comentado para não mudar na cor -->
-            <a class="nav-option nav-ativo" id="clientes">
-                <div class="contain-option w-100">
-                    <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png" id="cliente-img">
-                        <span class="mx-2">Clientes</span>
-                    </div>
-                    <!-- <script>
+            <div class="contain-option w-100" id="clientes">
+                <div class="my-2">
+                    <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png" id="cliente-img">
+                    <button onclick="refreshPage()" >Clientes</button>
+                </div>
+                <script>
                     /* mudar cor da imagem ao passar o mouse em cima*/
-                    
+
                     const cliente = document.getElementById("clientes");
                     const imgCliente = cliente.querySelector("img");
-            
+
                     cliente.addEventListener("mouseover", () => {
                         imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
                     });
-            
+
                     cliente.addEventListener("mouseout", () => {
                         imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
                     });
-                </script> -->
+                </script>
+            </div>
+            <div class="contain-option w-100" id="estoque">
+                <div class="my-2">
+                    <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
+                    <span class="mx-2">Estoque</span>
                 </div>
-            </a>
-            <a href="estoque.html" class="nav-option" id="estoque">
-                <div class="contain-option w-100">
-                    <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
-                        <span class="mx-2">Estoque</span>
+                <div class="contain-sub-option">
+                    <div class="sub-options px-5 py-1">
+                        <button class="sub-option-item" onclick="carregarConteudo('produto')" >Produtos</button><br>
                     </div>
-                    <div class="contain-sub-option">
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Produtos</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Fornecedores</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Pedidos de compra</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Inventário</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Solicitação de saída</span><br>
-                        </div>
+                    <div class="sub-options px-5 py-1">
+                        <span class="sub-option-item" onclick="carregarConteudo('produto')">Fornecedores</span><br>
                     </div>
-                    <script>
-                        /* mudar cor da imagem ao passar o mouse em cima*/
-                        const estoque = document.getElementById("estoque");
-                        const imgEstoque = estoque.querySelector("img");
-                        const subOptionsEstoque = estoque.querySelectorAll(".sub-options");
-
-
-                        estoque.addEventListener("mouseover", () => {
-                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
-                            for(var i = 0; i < subOptionsEstoque.length; i++){
-                                subOptionsEstoque[i].style.display = "block";
-                            }
-                        });
-
-                        estoque.addEventListener("mouseout", () => {
-                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
-                            for(var i = 0; i < subOptionsEstoque.length; i++){
-                                subOptionsEstoque[i].style.display = "none";
-                            }
-                        });
-
-
-                    </script>
+                    <div class="sub-options px-5 py-1">
+                        <span class="sub-option-item" onclick="carregarConteudo('produto')">Pedidos de compra</span><br>
+                    </div>
+                    <div class="sub-options px-5 py-1">
+                        <span class="sub-option-item" onclick="carregarConteudo('produto')">Inventário</span><br>
+                    </div>
+                    <div class="sub-options px-5 py-1">
+                        <span class="sub-option-item">Solicitação de saída</span><br>
+                    </div>
                 </div>
-            </a>
+                <script>
+                    /* mudar cor da imagem ao passar o mouse em cima*/
+                    const estoque = document.getElementById("estoque");
+                    const imgEstoque = estoque.querySelector("img");
+                    const subOptionsEstoque = estoque.querySelectorAll(".sub-options");
+
+                    estoque.addEventListener("mouseover", () => {
+                        imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
+                        for(var i = 0; i < subOptionsEstoque.length; i++){
+                            subOptionsEstoque[i].style.display = "block";
+                        }
+                    });
+
+                    estoque.addEventListener("mouseout", () => {
+                        imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
+                        for(var i = 0; i < subOptionsEstoque.length; i++){
+                            subOptionsEstoque[i].style.display = "none";
+                        }
+                    });
+
+                </script>
+            </div>
             <a href="financeiro.html" class="nav-option" id="financeiro">
                 <div class="contain-option w-100">
                     <div class="my-2">
@@ -195,20 +255,18 @@
                         });
                     </script>
                 </div>
-
             </a>
-
         </div>
     </div>
-    <div class="content-main p-5" id="MainContent">
+    <div class="content-main p-5" id="mainContent">
         <div class="row" id="linha-botao-pesquisa">
-            <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar">Cadastrar cliente</button>
+            <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar cliente</button>
             <div class="input-group w-50 m-3">
                 <input type="text" class="form-control" aria-label="Input text com botão dropdown">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar cliente por</button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">CPF</a>
+                        <a class="dropdown-item" href="#">CPF / CNPJ</a>
                         <a class="dropdown-item" href="#">E-mail</a>
                         <a class="dropdown-item" href="#">Nome</a>
                         <a class="dropdown-item" href="#">Sobrenome</a>
@@ -218,110 +276,113 @@
             </div>
         </div>
 
-
         <!-- formulário de cadastro -->
-        <form class="form-cadastro my-2" id="form-cadastro">
+        <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoUsuario" action="${pageContext.request.contextPath}/cliente/salvar" method="POST">
+            <form:hidden path="usuarioId" id="inputUsuarioId"/>
+            <form:hidden path="enderecoId" id="inputEnderecoId"/>
+            <form:hidden path="cargoId" id="inputCargoId"/>
+            <form:hidden path="perfilId" id="inputPerfilId"/>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="inputNome">Nome</label>
-                    <input type="text" class="form-control" id="inputNome" placeholder="Nome">
+                    <form:label path="nome" for="inputNome">Nome</form:label>
+                    <form:input path="nome" type="text" class="form-control" id="inputNome" maxlength="100" />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputSobrenome">Sobrenome</label>
-                    <input type="text" class="form-control" id="inputSobrenome" placeholder="Sobrenome">
+                    <form:label path="sobrenome" for="inputSobrenome">Sobrenome</form:label>
+                    <form:input path="sobrenome" type="text" class="form-control" id="inputSobrenome" maxlength="200" />
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputCpf">CPF</label>
-                    <input type="number" class="form-control" id="inputCpf" placeholder="CPF">
+                    <form:label path="cpfCnpj" for="inputCpfCnpj">CPF / CNPJ</form:label>
+                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" maxlength="18"  />
                 </div>
                 <div class="form-group col-md-1">
-                    <label for="inputGenero">Gênero</label>
-                    <select id="inputGenero" class="form-control">
+                    <form:label path="genero" for="inputGenero">Gênero</form:label>
+                    <form:select path="genero" id="inputGenero" class="form-control">
                         <option selected>Selecione</option>
                         <option value="M" label="Masculino"></option>
                         <option value="F" label="Feminino"></option>
                         <option value="O" label="Outros"></option>
-                    </select>
+                    </form:select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputNascimento">Nascimento</label>
-                    <input type="date" class="form-control" id="inputNascimento" placeholder="dd-mm-yyyy">
+                    <form:label path="dataNascimento" for="inputNascimento">Nascimento</form:label>
+                    <form:input  path="dataNascimento" type="date" class="form-control" id="inputNascimento" placeholder="mm-dd-yyyy" />
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-3">
-                    <label for="inputEmail">E-mail</label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="E-mail">
+                    <form:label path="email" for="inputEmail">E-mail</form:label>
+                    <form:input path="email" type="email" class="form-control" id="inputEmail" maxlength="50"  />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputSenha">Senha</label>
-                    <input type="password" class="form-control" id="inputSenha" placeholder="Senha">
+                    <form:label path="senha" for="inputSenha">Senha</form:label>
+                    <form:input path="senha" type="password" class="form-control" id="inputSenha"  />
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputConfirmacaoSenha">Confirme a Senha</label>
-                    <input type="password" class="form-control" id="inputConfirmacaoSenha" placeholder="Senha">
+                    <input type="password" class="form-control" id="inputConfirmacaoSenha" >
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputProfissao">Profissão</label>
-                    <input type="text" class="form-control" id="inputProfissao"placeholder="Profissão">
+                    <form:label path="profissao" for="inputProfissao">Profissão</form:label>
+                    <form:input path="profissao" type="text" class="form-control" id="inputProfissao" maxlength="100"  />
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-1">
-                    <label for="inputDDICel">DDI Celular</label>
-                    <input type="number" class="form-control" id="inputDDICel"placeholder="55">
+                    <form:label path="ddiCelular" for="inputDDICel">DDI Celular</form:label>
+                    <form:input path="ddiCelular" type="number" class="form-control" id="inputDDICel" maxlength="2"  />
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputDDDCel">DDD Celular</label>
-                    <input type="number" class="form-control" id="inputDDDCel"placeholder="DDD">
+                    <form:label path="dddCelular" for="inputDDDCel">DDD Celular</form:label>
+                    <form:input path="dddCelular" type="number" class="form-control" id="inputDDDCel" maxlength="2"  />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputCelular">Celular</label>
-                    <input type="number" class="form-control" id="inputCelular"placeholder="Celular">
+                    <form:label path="celular" for="inputCelular">Celular</form:label>
+                    <form:input path="celular" type="text" class="form-control" id="inputCelular" maxlength="11"  />
                 </div>
                 <div class="form-group col-md-1">
-                    <label for="inputDDITel">DDI Telefone</label>
-                    <input type="number" class="form-control" id="inputDDITel"placeholder="55">
+                    <form:label path="ddiTelefone" for="inputDDITel">DDI Telefone</form:label>
+                    <form:input path="ddiTelefone" type="number" class="form-control" id="inputDDITel" maxlength="2" autocomplete="true"  />
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputDDDTel">DDD Telefone</label>
-                    <input type="number" class="form-control" id="inputDDDTel"placeholder="DDD">
+                    <form:label path="dddTelefone" for="inputDDDTel">DDD Telefone</form:label>
+                    <form:input path="dddTelefone" type="number" class="form-control" id="inputDDDTel" maxlength="2"  />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputTelefone">Telefone</label>
-                    <input type="number" class="form-control" id="inputTelefone"placeholder="Telefone">
+                    <form:label path="telefone" for="inputTelefone">Telefone</form:label>
+                    <form:input path="telefone" type="text" class="form-control" id="inputTelefone" maxlength="9"  />
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-1">
-                    <label for="inputCEP">CEP</label>
-                    <input type="text" class="form-control" id="inputCEP">
+                    <form:label path="cep" for="inputCEP">CEP</form:label>
+                    <form:input path="cep" type="text" class="form-control" id="inputCEP" maxlength="9"  />
                 </div>
                 <div class="form-group col-md-5">
-                    <label for="inputEndereço">Endereço</label>
-                    <input type="text" class="form-control" id="inputEndereço" placeholder="Endereço">
+                    <form:label path="logradouro" for="inputlogradouro">Endereço</form:label>
+                    <form:input path="logradouro" type="text" class="form-control" id="inputlogradouro" maxlength="200"  />
                 </div>
                 <div class="form-group col-md-1">
-                    <label for="inputNumero">Número</label>
-                    <input type="text" class="form-control" id="inputNumero" placeholder="Número">
+                    <form:label path="numero" for="inputNumero">Número</form:label>
+                    <form:input path="numero" type="text" class="form-control" id="inputNumero" maxlength="10"  />
                 </div>
                 <div class="form-group col-md-5">
-                    <label for="inputComplemento">Complemento</label>
-                    <input type="text" class="form-control" id="inputComplemento" placeholder="Complemento">
+                    <form:label path="complemento" for="inputComplemento">Complemento</form:label>
+                    <form:input path="complemento" type="text" class="form-control" id="inputComplemento" maxlength="100"  />
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-3">
-                    <label for="inputBairro">Bairro</label>
-                    <input type="text" class="form-control" id="inputBairro">
+                    <form:label path="bairro" for="inputBairro">Bairro</form:label>
+                    <form:input path="bairro" type="text" class="form-control" maxlength="100" id="inputBairro" />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="inputCidade">Cidade</label>
-                    <input type="text" class="form-control" id="inputCidade">
+                    <form:label path="cidade" for="inputCidade">Cidade</form:label>
+                    <form:input path="cidade" type="text" class="form-control" maxlength="100" id="inputCidade" />
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputEstado">Estado</label>
-                    <select id="inputEstado" class="form-control">
+                    <form:label path="uf" for="inputEstado">Estado</form:label>
+                    <form:select path="uf" id="inputEstado" class="form-control">
                         <option selected>Selecione</option>
                         <option value="AL" label="Alagoas"></option>
                         <option value="AP" label="Amapá"></option>
@@ -348,32 +409,22 @@
                         <option value="SP" label="São Paulo"></option>
                         <option value="SE" label="Sergipe"></option>
                         <option value="TO" label="Tocantins"></option>
-                    </select>
+                    </form:select>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputObservacao">Observação</label>
-                    <input type="text" class="form-control" id="inputObservacao"placeholder="Observação">
+                    <form:label path="observacao" for="inputObservacao">Observação</form:label>
+                    <form:textarea path="observacao" type="text" class="form-control" id="inputObservacao"  />
                 </div>
             </div>
             <div class="mt-2">
                 <button type="submit" class="btn btn-primary ">Salvar</button>
                 <button type="button" class="btn btn-danger  m-1" id="cancelar-cadastro">Cancelar</button>
             </div>
-        </form>
+        </form:form>
         <script>
             /* abrir e fechar formulario */
-            const btnFormClienteCadast = document.getElementById("btn-cadastrar");
             const formClienteCadast = document.getElementById("form-cadastro");
             const btnCancelarCadast = document.getElementById("cancelar-cadastro")
-
-            btnFormClienteCadast.addEventListener("click", () => {
-                if(formClienteCadast.style.display === "block"){
-                    formClienteCadast.style.display = "none";
-                }else{
-                    formClienteCadast.style.display = "block";
-                }
-
-            });
 
             btnCancelarCadast.addEventListener("click", () => {
                 formClienteCadast.style.display = "none";
@@ -381,38 +432,34 @@
         </script>
 
         <!-- tabela mostrando os clientes cadastrados -->
-        <table class="table table-bordered table-hover table-responsive my-3">
-            <thead>
-            <tr>
+        <table id="tabelaClientes" class="table table-bordered table-hover table-responsive my-3" >
+            <thead class="table-dark">
+            <tr class="gridHeader">
+                <th scope="col" class="th-editar">Ações</th>
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Telefone</th>
+                <th scope="col">Celular</th>
                 <th scope="col">E-mail</th>
-                <th scope="col" class="th-editar">Editar</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Alex</td>
-                <td>(11)98382-2323</td>
-                <td>alex@gmail.com</td>
-                <td class="cel-img-tabela-clientes"><img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" title="Editar"><img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir"></td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Mary</td>
-                <td>(19)98122-2543</td>
-                <td>mary@gmail.com</td>
-                <td class="cel-img-tabela-clientes"><img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" title="Editar"><img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir"></td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Mônica</td>
-                <td>(11)98434-2509</td>
-                <td>monica@gmail.com</td>
-                <td class="cel-img-tabela-clientes"><img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" title="Editar"><img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir"></td>
-            </tr>
+                <c:forEach var="dtoUsuario" items="${listaClientes}">
+                    <tr>
+                        <td class="cel-img-tabela-clientes">
+                            <form action="${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}" method="POST">
+                                <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCliente('${dtoUsuario.usuarioId}', '${dtoUsuario.enderecoId}', '${dtoUsuario.cargoId}', '${dtoUsuario.perfilId}', '${dtoUsuario.nome}', '${dtoUsuario.sobrenome}', '${dtoUsuario.cpfCnpj}', '${dtoUsuario.genero}', '${dtoUsuario.dataNascimento}', '${dtoUsuario.email}', '${dtoUsuario.senha}', '${dtoUsuario.profissao}', '${dtoUsuario.ddiCelular}', '${dtoUsuario.dddCelular}', '${dtoUsuario.celular}', '${dtoUsuario.ddiTelefone}', '${dtoUsuario.dddTelefone}', '${dtoUsuario.telefone}', '${dtoUsuario.cep}', '${dtoUsuario.logradouro}', '${dtoUsuario.numero}', '${dtoUsuario.complemento}', '${dtoUsuario.bairro}', '${dtoUsuario.cidade}', '${dtoUsuario.uf}', '${dtoUsuario.observacao}'); return false;" title="Editar">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}')">
+                                    <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                                </a>
+                            </form>
+                        </td>
+                        <th scope="row"><c:out value="${dtoUsuario.usuarioId}" /></th>
+                        <td><c:out value="${dtoUsuario.nomeCompleto}" /></td>
+                        <td><c:out value="${dtoUsuario.celularCompleto}" /></td>
+                        <td><c:out value="${dtoUsuario.email}" /></td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
         <script>
@@ -441,8 +488,8 @@
 
         </script>
     </div>
-    <footer>
-        <p>Copyright @ Trísceles Corp 2024</p>
+    <footer class="footer">
+       <p> Copyright @ Trísceles Corp 2024 </p>
     </footer>
 </div>
 
@@ -451,7 +498,51 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+<script>
+    $(document).ready(function(){
+        aplicarMascaraCelular();
+        aplicarMascaraTelefone();
+        aplicarMascaraCpfCnpj();
+
+        $('#inputCelular').on('blur', aplicarMascaraCelular);
+        $('#inputTelefone').on('blur', aplicarMascaraTelefone);
+        $('#inputCpfCnpj').on('blur', aplicarMascaraCpfCnpj);
+        $('#inputCEP').keyup(aplicarMascaraCEP);
+        $('#inputCEP').blur(aplicarMascaraCEP);
+
+        $('#tabelaClientes').DataTable({
+            "pageLength": 5,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.11.3/i18n/pt_br.json"
+            }
+        });
+
+        function aplicarMascaraCEP() {
+            var cep = $(this).val().replace(/\D/g, '');
+            cep = cep.replace(/^(\d{5})(\d)/, "$1-$2");
+            $(this).val(cep);
+        }
+
+        function aplicarMascaraCelular() {
+            $('#inputCelular').mask('00000-0000');
+        }
+
+        function aplicarMascaraTelefone() {
+            $('#inputTelefone').mask('0000-0000');
+        }
+
+        function aplicarMascaraCpfCnpj() {
+            var cpfCnpjOptions = {
+                onKeyPress: function(cpfcnpj, e, field, options){
+                    var masks = ['000.000.000-009', '00.000.000/0000-00'];
+                    var mask = (cpfcnpj.length > 14) ? masks[1] : masks[0];
+                    $(field).mask(mask, options);
+                }
+            };
+            $('#inputCpfCnpj').mask('000.000.000-009', cpfCnpjOptions);
+        }
+    });
+</script>
+
 </body>
-
-
 </html>

@@ -25,7 +25,7 @@ public class tblEndereco {
     private String logradouro;
 
     @Column(name = "Numero")
-    private Integer numero;
+    private String numero;
 
     @Column(name = "Complemento")
     private String complemento;

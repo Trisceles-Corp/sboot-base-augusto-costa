@@ -3,7 +3,7 @@ package br.com.augustocosta.acs.persistence.dao;
 public class SqlQueries {
     public static final String QUERY_USUARIO_BY_PERFIL =
             "SELECT usr.UsuarioId, " +
-                    "usr.CPF, " +
+                    "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
                     "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
@@ -23,11 +23,11 @@ public class SqlQueries {
                     "usr.DDICelular, " +
                     "usr.DDDCelular, " +
                     "usr.Celular, " +
-                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + CAST(usr.Celular AS varchar(20)) CelularCompleto, " +
+                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + usr.Celular AS CelularCompleto, " +
                     "usr.DDITelefone, " +
                     "usr.DDDTelefone, " +
                     "usr.Telefone, " +
-                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + CAST(usr.Telefone AS varchar(20)) TelefoneCompleto, " +
+                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + usr.Telefone AS TelefoneCompleto, " +
                     "usr.Profissao, " +
                     "usr.Observacao, " +
                     "usr.CargoId, " +
@@ -41,11 +41,13 @@ public class SqlQueries {
                     "JOIN dbo.tbl_endereco edr ON usr.EnderecoId = edr.EnderecoId " +
                     "JOIN dbo.tbl_cargo crg ON usr.CargoId = crg.CargoId " +
                     "JOIN dbo.tbl_perfil prf ON usr.PerfilId = prf.PerfilId " +
-                    "WHERE usr.PerfilId = :perfilId";
+                    "WHERE usr.PerfilId = :perfilId " +
+                    "AND usr.Ativo = 1 " +
+                    "Order By 5";
 
     public static final String QUERY_USUARIO_BY_PERFIL_CPF =
             "SELECT usr.UsuarioId, " +
-                    "usr.CPF, " +
+                    "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
                     "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
@@ -65,11 +67,11 @@ public class SqlQueries {
                     "usr.DDICelular, " +
                     "usr.DDDCelular, " +
                     "usr.Celular, " +
-                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + CAST(usr.Celular AS varchar(20)) CelularCompleto, " +
+                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + usr.Celular AS CelularCompleto, " +
                     "usr.DDITelefone, " +
                     "usr.DDDTelefone, " +
                     "usr.Telefone, " +
-                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + CAST(usr.Telefone AS varchar(20)) TelefoneCompleto, " +
+                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + usr.Telefone AS TelefoneCompleto, " +
                     "usr.Profissao, " +
                     "usr.Observacao, " +
                     "usr.CargoId, " +
@@ -84,11 +86,13 @@ public class SqlQueries {
                     "JOIN dbo.tbl_cargo crg ON usr.CargoId = crg.CargoId " +
                     "JOIN dbo.tbl_perfil prf ON usr.PerfilId = prf.PerfilId " +
                     "WHERE usr.PerfilId = :perfilId " +
-                    "AND usr.CPF = :cpf";
+                    "AND usr.CpfCnpj = :cpfCnpj " +
+                    "AND usr.Ativo = 1 " +
+                    "Order By 5";
 
     public static final String QUERY_USUARIO_BY_PERFIL_EMAIL =
             "SELECT usr.UsuarioId, " +
-                    "usr.CPF, " +
+                    "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
                     "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
@@ -108,11 +112,11 @@ public class SqlQueries {
                     "usr.DDICelular, " +
                     "usr.DDDCelular, " +
                     "usr.Celular, " +
-                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + CAST(usr.Celular AS varchar(20)) CelularCompleto, " +
+                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + usr.Celular AS CelularCompleto, " +
                     "usr.DDITelefone, " +
                     "usr.DDDTelefone, " +
                     "usr.Telefone, " +
-                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + CAST(usr.Telefone AS varchar(20)) TelefoneCompleto, " +
+                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + usr.Telefone AS TelefoneCompleto, " +
                     "usr.Profissao, " +
                     "usr.Observacao, " +
                     "usr.CargoId, " +
@@ -127,16 +131,18 @@ public class SqlQueries {
                     "JOIN dbo.tbl_cargo crg ON usr.CargoId = crg.CargoId " +
                     "JOIN dbo.tbl_perfil prf ON usr.PerfilId = prf.PerfilId " +
                     "WHERE usr.PerfilId = :perfilId " +
-                    "AND usr.Email Like = :email + '%'";
+                    "AND usr.Email Like = :email + '%' " +
+                    "AND usr.Ativo = 1 " +
+                    "Order By 5";
 
     public static final String QUERY_USUARIO_BY_PERFIL_NOME =
             "SELECT usr.UsuarioId, " +
-                    "usr.CPF, " +
+                    "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
                     "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
                     "usr.Genero, " +
-                    "CASE usr.Genero WHEN 'M' THEN 'Masculino' WHEN 'F' THEN 'Feminino' ELSE 'Outros' END GeneroDescricao, " +
+                    "CASE usr.Genero WHEN 'M' THEN 'Masculino' WHEN 'F' THEN 'Feminino' ELSE 'Outros' END AS GeneroDescricao, " +
                     "usr.DataNascimento, " +
                     "usr.Email, " +
                     "usr.Senha, " +
@@ -151,11 +157,11 @@ public class SqlQueries {
                     "usr.DDICelular, " +
                     "usr.DDDCelular, " +
                     "usr.Celular, " +
-                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + CAST(usr.Celular AS varchar(20)) CelularCompleto, " +
+                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + usr.Celular AS CelularCompleto, " +
                     "usr.DDITelefone, " +
                     "usr.DDDTelefone, " +
                     "usr.Telefone, " +
-                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + CAST(usr.Telefone AS varchar(20)) TelefoneCompleto, " +
+                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + usr.Telefone AS TelefoneCompleto, " +
                     "usr.Profissao, " +
                     "usr.Observacao, " +
                     "usr.CargoId, " +
@@ -170,11 +176,13 @@ public class SqlQueries {
                     "JOIN dbo.tbl_cargo crg ON usr.CargoId = crg.CargoId " +
                     "JOIN dbo.tbl_perfil prf ON usr.PerfilId = prf.PerfilId " +
                     "WHERE usr.PerfilId = :perfilId " +
-                    "AND usr.Nome Like = :nome + '%'";
+                    "AND usr.Nome Like = :nome + '%' " +
+                    "AND usr.Ativo = 1 " +
+                    "Order By 5";
 
     public static final String QUERY_USUARIO_BY_PERFIL_SOBRENOME =
             "SELECT usr.UsuarioId, " +
-                    "usr.CPF, " +
+                    "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
                     "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
@@ -194,11 +202,11 @@ public class SqlQueries {
                     "usr.DDICelular, " +
                     "usr.DDDCelular, " +
                     "usr.Celular, " +
-                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + CAST(usr.Celular AS varchar(20)) CelularCompleto, " +
+                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + usr.Celular AS CelularCompleto, " +
                     "usr.DDITelefone, " +
                     "usr.DDDTelefone, " +
                     "usr.Telefone, " +
-                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + CAST(usr.Telefone AS varchar(20)) TelefoneCompleto, " +
+                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + usr.Telefone AS TelefoneCompleto, " +
                     "usr.Profissao, " +
                     "usr.Observacao, " +
                     "usr.CargoId, " +
@@ -213,11 +221,13 @@ public class SqlQueries {
                     "JOIN dbo.tbl_cargo crg ON usr.CargoId = crg.CargoId " +
                     "JOIN dbo.tbl_perfil prf ON usr.PerfilId = prf.PerfilId " +
                     "WHERE usr.PerfilId = :perfilId " +
-                    "AND usr.Sobrenome Like = :sobrenome + '%'";
+                    "AND usr.Sobrenome Like = :sobrenome + '%' " +
+                    "AND usr.Ativo = 1 " +
+                    "Order By 5";
 
     public static final String QUERY_USUARIO_BY_PERFIL_CELULAR =
             "SELECT usr.UsuarioId, " +
-                    "usr.CPF, " +
+                    "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
                     "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
@@ -237,11 +247,11 @@ public class SqlQueries {
                     "usr.DDICelular, " +
                     "usr.DDDCelular, " +
                     "usr.Celular, " +
-                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + CAST(usr.Celular AS varchar(20)) CelularCompleto, " +
+                    "'+'  + CAST(usr.DDICelular AS varchar(10)) + ' (' + CAST(usr.DDDCelular AS varchar(10)) + ') ' + usr.Celular AS CelularCompleto, " +
                     "usr.DDITelefone, " +
                     "usr.DDDTelefone, " +
                     "usr.Telefone, " +
-                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + CAST(usr.Telefone AS varchar(20)) TelefoneCompleto, " +
+                    "'+'  + CAST(usr.DDITelefone AS varchar(10)) + ' (' + CAST(usr.DDDTelefone AS varchar(10)) + ') ' + usr.Telefone AS TelefoneCompleto, " +
                     "usr.Profissao, " +
                     "usr.Observacao, " +
                     "usr.CargoId, " +
@@ -256,5 +266,7 @@ public class SqlQueries {
                     "JOIN dbo.tbl_cargo crg ON usr.CargoId = crg.CargoId " +
                     "JOIN dbo.tbl_perfil prf ON usr.PerfilId = prf.PerfilId " +
                     "WHERE usr.PerfilId = :perfilId " +
-                    "AND usr.Celular = :celular";
+                    "AND usr.Celular = :celular " +
+                    "AND usr.Ativo = 1 " +
+                    "Order By 5";
 }

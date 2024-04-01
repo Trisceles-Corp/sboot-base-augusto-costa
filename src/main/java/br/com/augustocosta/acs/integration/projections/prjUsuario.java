@@ -1,33 +1,33 @@
 package br.com.augustocosta.acs.integration.projections;
 
 import java.time.*;
-import java.util.Date;
+import java.util.*;
 
 public interface prjUsuario {
     Integer getUsuarioId();
-    String getCpf();
+    String getCpfCnpj();
     String getNome();
     String getSobrenome();
     String getNomeCompleto();
-    char getGenero();
+    Character getGenero();
     String getGeneroDescricao();
-    Date getDataNascimento();
+    LocalDate getDataNascimento();
     String getEmail();
     String getSenha();
     Integer getEnderecoId();
     String getCep();
     String getLogradouro();
-    Integer getNumero();
+    String getNumero();
     String getComplemento();
     String getBairro();
     String getCidade();
     String getUf();
     Integer getDdiCelular();
     Integer getDddCelular();
-    Double getCelular();
+    String getCelular();
     Integer getDdiTelefone();
     Integer getDddTelefone();
-    Double getTelefone();
+    String getTelefone();
     String getProfissao();
     String getObservacao();
     Integer getCargoId();
@@ -38,4 +38,11 @@ public interface prjUsuario {
     LocalDateTime getDataAlteracao();
     Integer getAlteradoPor();
 
+    default String getCelularCompleto() {
+        return "+" + getDdiCelular() + " (" + getDddCelular() + ") " + getCelular();
+    }
+
+    default String getTelefoneCompleto() {
+        return "+" + getDdiTelefone() + " (" + getDddTelefone() + ") " + getTelefone();
+    }
 }

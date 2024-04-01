@@ -16,6 +16,8 @@
 
 .content-main {
     grid-area: main;
+    padding-top: 70px;
+    bottom: 40px;
 }
 
 /*.p-5 {*/
@@ -179,6 +181,11 @@ p {
     align-items: center;
     flex-direction: row;
     height: 70px;
+    position: fixed;
+    top: 0;
+    left: 250px;
+    width: calc(100% - 250px);
+    z-index: 999;
 }
 
 .welcome{
@@ -336,7 +343,11 @@ a.nav-option{
 /*------------------------------------------------------------ footer ------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------------------*/
 footer{
-    grid-area: footer;
+    position: fixed;
+    left: 250px;
+    bottom: 0;
+    background: whitesmoke;
     height: 40px;
+    width: calc(100% - 250px);
     text-align: center;
 }

@@ -41,6 +41,7 @@ function visualizarMarca(id, categoriaId, name, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
+
 function visualizarPeriodo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
@@ -89,7 +90,7 @@ function confirmarExclusao(event) {
     event.preventDefault();
     var confirmacao = confirm("Deseja excluir o registro?");
     if (confirmacao) {
-        event.target.form.submit();
+        event.target.closest('form').submit();
     }
 }
 
