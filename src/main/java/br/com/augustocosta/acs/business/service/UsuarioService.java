@@ -127,10 +127,10 @@ public class UsuarioService {
     @Transactional
     public dtoUsuario createDto(tblEndereco endereco, dtoUsuario dados) {
         tblUsuario usuario = new tblUsuario();
-        tblCargo cargo = cargoRepository.findById(1)
+        tblCargo cargo = cargoRepository.findById(dados.getCargoId())
                 .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + dados.getCargoId()));
-        tblPerfil perfil = perfilRepository.findById(4)
-                .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + dados.getCargoId()));
+        tblPerfil perfil = perfilRepository.findById(dados.getPerfilId())
+                .orElseThrow(() -> new IllegalArgumentException("Perfil não encontrado com id: " + dados.getPerfilId()));
         repository.save(convertVo(usuario, endereco, cargo, perfil, dados));
         return dados;
     }

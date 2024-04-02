@@ -30,26 +30,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
-    <script>
-        var contextPath = "${pageContext.request.contextPath}";
-
-        $(document).ready(function() {
-            carregarConteudo("agendamento");
-        });
-
-        function carregarConteudo(nomePagina) {
-            var url = contextPath + "/" + nomePagina;
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("conteudoPrincipal").innerHTML = data;
-                })
-                .catch(error => {
-                    console.error("Erro ao carregar a página:", error);
-                });
-        }
-    </script>
-
 </head>
 
 <body id="page-top">

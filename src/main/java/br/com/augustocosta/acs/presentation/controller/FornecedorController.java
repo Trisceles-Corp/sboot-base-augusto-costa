@@ -5,14 +5,17 @@ import br.com.augustocosta.acs.business.service.UsuarioService;
 import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.integration.entity.tblEndereco;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Controller
-@RequestMapping("/cliente")
-public class ClienteController {
+@RequestMapping("/fornecedor")
+public class FornecedorController {
 
     @Autowired
     private UsuarioService usuarioService;
@@ -23,27 +26,31 @@ public class ClienteController {
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("dtoUsuario", new dtoUsuario());
-        return "cliente";
+        return "fornecedor";
     }
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaClientes", usuarioService.getAllByPerfil(4));
+        model.addAttribute("listaFornecedores", usuarioService.getAllByPerfil(6));
         model.addAttribute("listaPerfil", usuarioService.getAllActivesByPerfil());
         model.addAttribute("listCargos", usuarioService.getAllActivesByCargo());
         model.addAttribute("dtoUsuario", new dtoUsuario());
-        return "cliente";
+        return "fornecedor";
     }
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoUsuario dados) {
+        dados.setCargoId(16);
+        dados.setPerfilId(6);
+        dados.setGenero('O');
+        dados.setSenha("123456");
+        dados.setDataNascimento(LocalDate.now());
+
         if (dados.getUsuarioId() != null && dados.getUsuarioId() != 0){
             tblEndereco saveEndereco = enderecoService.updateDto(dados);
             usuarioService.updateDto(saveEndereco, dados);
         }
         else {
-            dados.setCargoId(1);
-            dados.setPerfilId(4);
             usuarioService.createDto(enderecoService.createDto(dados), dados);
         }
 
@@ -53,6 +60,6 @@ public class ClienteController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         usuarioService.delete(id, 1);
-        return "redirect:/cliente";
+        return "redirect:/fornecedor";
     }
 }

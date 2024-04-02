@@ -23,242 +23,10 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
-    <script>
-        var contextPath = "${pageContext.request.contextPath}";
-
-        function toggleFormCadastro() {
-            const formClienteCadast = document.getElementById("form-cadastro");
-            if (formClienteCadast.style.display === "block") {
-                formClienteCadast.style.display = "none";
-            } else {
-                formClienteCadast.style.display = "block";
-            }
-        }
-
-        function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, senha, profissao, ddiCelular, dddCelular, celular, ddiTelefone, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
-            const formClienteCadast = document.getElementById("form-cadastro");
-            if (formClienteCadast.style.display === "none") {
-                formClienteCadast.style.display = "block";
-            } else {
-                formClienteCadast.style.display = "block";
-            }
-
-            document.getElementById("inputUsuarioId").value = usuarioId;
-            document.getElementById("inputEnderecoId").value = enderecoId;
-            document.getElementById("inputCargoId").value = cargoId;
-            document.getElementById("inputPerfilId").value = perfilId;
-            document.getElementById("inputNome").value = nome;
-            document.getElementById("inputSobrenome").value = sobrenome;
-            document.getElementById("inputCpfCnpj").value = cpfCnpj;
-            document.getElementById("inputGenero").value = genero;
-            document.getElementById("inputNascimento").value = dataNascimento;
-            document.getElementById("inputEmail").value = email;
-            document.getElementById("inputSenha").value = senha;
-            document.getElementById("inputConfirmacaoSenha").value = senha;
-            document.getElementById("inputProfissao").value = profissao;
-            document.getElementById("inputDDICel").value = ddiCelular;
-            document.getElementById("inputDDDCel").value = dddCelular;
-            document.getElementById("inputCelular").value = celular;
-            document.getElementById("inputDDITel").value = ddiTelefone;
-            document.getElementById("inputDDDTel").value = dddTelefone;
-            document.getElementById("inputTelefone").value = telefone;
-            document.getElementById("inputCEP").value = cep;
-            document.getElementById("inputlogradouro").value = logradouro;
-            document.getElementById("inputNumero").value = numero;
-            document.getElementById("inputComplemento").value = complemento;
-            document.getElementById("inputBairro").value = bairro;
-            document.getElementById("inputCidade").value = cidade;
-            document.getElementById("inputEstado").value = uf;
-            document.getElementById("inputObservacao").value = observacao;
-        }
-
-        function carregarConteudo(nomePagina) {
-            var url = contextPath + "/" + nomePagina;
-            console.log(url);
-
-            fetch(url)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("mainContent").innerHTML = data;
-                })
-                .catch(error => {
-                    console.error("Erro ao carregar a página:", error);
-                });
-        }
-
-        function refreshPage() {
-            // Recarrega a página atual
-            location.reload();
-        }
-    </script>
 </head>
 
 <body>
-<div class="full">
-    <div class="header" id="div_header">
-        <div class="welcome mx-5 p-2">
-            <p>Augusto Costa Spa</p>
-        </div>
-        <!-- <div class="login"> -->
-        <!-- <img src="${pageContext.request.contextPath}/img/icons login/user-999.png" alt=""> -->
-        <!-- </div> -->
-
-        <ul class="navbar-nav flex-nowrap ms-auto">
-            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
-                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
-                    <form class="me-auto navbar-search w-100">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                        </div>
-                    </form>
-                </div>
-            </li>
-            <div class="d-none d-sm-block topbar-divider"></div>
-            <li class="nav-item dropdown no-arrow">
-                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Alexander Andrade</span><img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar3.jpeg"></a>
-                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
-                    </div>
-                </div>
-            </li>
-            <div class="d-none d-sm-block topbar-divider"></div>
-        </ul>
-    </div>
-    <div class="sidenav">
-        <div class="logo">
-            <img src="${pageContext.request.contextPath}/img/logos/image(5).png" alt="">
-        </div>
-        <div class="nav-pages">
-            <a href="agenda.html" class="nav-option" id="agenda">
-                <div class="contain-option w-100">
-                    <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <span class="mx-2">Agenda</span>
-                    </div>
-                    <script>
-                        /* mudar cor da imagem ao passar o mouse em cima*/
-                        const agenda = document.getElementById("agenda");
-                        const imgAgenda = agenda.querySelector("img");
-
-                        agenda.addEventListener("mouseover", () => {
-                            imgAgenda.setAttribute("src", "${pageContext.request.contextPath}/img/icon agenda/agenda-F0DD6C.png");
-                        });
-
-                        agenda.addEventListener("mouseout", () => {
-                            imgAgenda.setAttribute("src", "${pageContext.request.contextPath}/img/icon agenda/agenda-999.png");
-                        });
-                    </script>
-                </div>
-            </a>
-            <div class="contain-option w-100" id="clientes">
-                <div class="my-2">
-                    <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png" id="cliente-img">
-                    <button onclick="refreshPage()" >Clientes</button>
-                </div>
-                <script>
-                    /* mudar cor da imagem ao passar o mouse em cima*/
-
-                    const cliente = document.getElementById("clientes");
-                    const imgCliente = cliente.querySelector("img");
-
-                    cliente.addEventListener("mouseover", () => {
-                        imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
-                    });
-
-                    cliente.addEventListener("mouseout", () => {
-                        imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
-                    });
-                </script>
-            </div>
-            <div class="contain-option w-100" id="estoque">
-                <div class="my-2">
-                    <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
-                    <span class="mx-2">Estoque</span>
-                </div>
-                <div class="contain-sub-option">
-                    <div class="sub-options px-5 py-1">
-                        <button class="sub-option-item" onclick="carregarConteudo('produto')" >Produtos</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item" onclick="carregarConteudo('produto')">Fornecedores</span><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item" onclick="carregarConteudo('produto')">Pedidos de compra</span><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item" onclick="carregarConteudo('produto')">Inventário</span><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item">Solicitação de saída</span><br>
-                    </div>
-                </div>
-                <script>
-                    /* mudar cor da imagem ao passar o mouse em cima*/
-                    const estoque = document.getElementById("estoque");
-                    const imgEstoque = estoque.querySelector("img");
-                    const subOptionsEstoque = estoque.querySelectorAll(".sub-options");
-
-                    estoque.addEventListener("mouseover", () => {
-                        imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
-                        for(var i = 0; i < subOptionsEstoque.length; i++){
-                            subOptionsEstoque[i].style.display = "block";
-                        }
-                    });
-
-                    estoque.addEventListener("mouseout", () => {
-                        imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
-                        for(var i = 0; i < subOptionsEstoque.length; i++){
-                            subOptionsEstoque[i].style.display = "none";
-                        }
-                    });
-
-                </script>
-            </div>
-            <a href="financeiro.html" class="nav-option" id="financeiro">
-                <div class="contain-option w-100">
-                    <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png" id="financeiro-img">
-                        <span class="mx-2">Financeiro</span>
-                    </div>
-                    <div class="contain-sub-option">
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Caixas em aberto</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Comandas abertas</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Comissões</span><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Entradas e saídas</span><br>
-                        </div>
-                    </div>
-                    <script>
-                        /* mudar cor da imagem ao passar o mouse em cima*/
-                        const financeiro = document.getElementById("financeiro");
-                        const imgFinanceiro = financeiro.querySelector("img");
-                        const subOptionsFinanceiro = financeiro.querySelectorAll(".sub-options");
-
-                        financeiro.addEventListener("mouseover", () => {
-                            imgFinanceiro.setAttribute("src", "${pageContext.request.contextPath}/img/icon financeiro/financeiro-F0DD6C.png");
-                            for(var i = 0; i < subOptionsFinanceiro.length; i++){
-                                subOptionsFinanceiro[i].style.display = "block";
-                            }
-                        });
-
-                        financeiro.addEventListener("mouseout", () => {
-                            imgFinanceiro.setAttribute("src", "${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png");
-                            for(var i = 0; i < subOptionsFinanceiro.length; i++){
-                                subOptionsFinanceiro[i].style.display = "none";
-                            }
-                        });
-                    </script>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="content-main p-5" id="mainContent">
+    <div>
         <div class="row" id="linha-botao-pesquisa">
             <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar cliente</button>
             <div class="input-group w-50 m-3">
@@ -443,23 +211,23 @@
             </tr>
             </thead>
             <tbody>
-                <c:forEach var="dtoUsuario" items="${listaClientes}">
-                    <tr>
-                        <td class="cel-img-tabela-clientes">
-                            <form action="${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}" method="POST">
-                                <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCliente('${dtoUsuario.usuarioId}', '${dtoUsuario.enderecoId}', '${dtoUsuario.cargoId}', '${dtoUsuario.perfilId}', '${dtoUsuario.nome}', '${dtoUsuario.sobrenome}', '${dtoUsuario.cpfCnpj}', '${dtoUsuario.genero}', '${dtoUsuario.dataNascimento}', '${dtoUsuario.email}', '${dtoUsuario.senha}', '${dtoUsuario.profissao}', '${dtoUsuario.ddiCelular}', '${dtoUsuario.dddCelular}', '${dtoUsuario.celular}', '${dtoUsuario.ddiTelefone}', '${dtoUsuario.dddTelefone}', '${dtoUsuario.telefone}', '${dtoUsuario.cep}', '${dtoUsuario.logradouro}', '${dtoUsuario.numero}', '${dtoUsuario.complemento}', '${dtoUsuario.bairro}', '${dtoUsuario.cidade}', '${dtoUsuario.uf}', '${dtoUsuario.observacao}'); return false;" title="Editar">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}')">
-                                    <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
-                                </a>
-                            </form>
-                        </td>
-                        <th scope="row"><c:out value="${dtoUsuario.usuarioId}" /></th>
-                        <td><c:out value="${dtoUsuario.nomeCompleto}" /></td>
-                        <td><c:out value="${dtoUsuario.celularCompleto}" /></td>
-                        <td><c:out value="${dtoUsuario.email}" /></td>
-                    </tr>
-                </c:forEach>
+            <c:forEach var="dtoUsuario" items="${listaClientes}">
+                <tr>
+                    <td class="cel-img-tabela-clientes">
+                        <form action="${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}" method="POST">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCliente('${dtoUsuario.usuarioId}', '${dtoUsuario.enderecoId}', '${dtoUsuario.cargoId}', '${dtoUsuario.perfilId}', '${dtoUsuario.nome}', '${dtoUsuario.sobrenome}', '${dtoUsuario.cpfCnpj}', '${dtoUsuario.genero}', '${dtoUsuario.dataNascimento}', '${dtoUsuario.email}', '${dtoUsuario.senha}', '${dtoUsuario.profissao}', '${dtoUsuario.ddiCelular}', '${dtoUsuario.dddCelular}', '${dtoUsuario.celular}', '${dtoUsuario.ddiTelefone}', '${dtoUsuario.dddTelefone}', '${dtoUsuario.telefone}', '${dtoUsuario.cep}', '${dtoUsuario.logradouro}', '${dtoUsuario.numero}', '${dtoUsuario.complemento}', '${dtoUsuario.bairro}', '${dtoUsuario.cidade}', '${dtoUsuario.uf}', '${dtoUsuario.observacao}'); return false;" title="Editar">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}')">
+                                <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                            </a>
+                        </form>
+                    </td>
+                    <th scope="row"><c:out value="${dtoUsuario.usuarioId}" /></th>
+                    <td><c:out value="${dtoUsuario.nomeCompleto}" /></td>
+                    <td><c:out value="${dtoUsuario.celularCompleto}" /></td>
+                    <td><c:out value="${dtoUsuario.email}" /></td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
         <script>
@@ -488,18 +256,33 @@
 
         </script>
     </div>
-    <footer class="footer">
-       <p> Copyright @ Trísceles Corp 2024 </p>
-    </footer>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWjxZI3IFlSXwYEg4Gy5zIzNMAygg3IrPQe9CSbkWvFNgqP+a" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWjxZI3IFlSXwYEg4Gy5zIzNMAygg3IrPQe9CSbkWvFNgqP+a" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-<script>
-    $(document).ready(function(){
+    <script>
+
+        $(document).ready(function() {
+            $('#form-cadastro').submit(function(event) {
+                event.preventDefault();
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/cliente/salvar',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        alert(response);
+                        },
+                    error: function() {
+                        alert('Erro ao salvar o cliente.');
+                    }
+                });
+            });
+        });
+
         aplicarMascaraCelular();
         aplicarMascaraTelefone();
         aplicarMascaraCpfCnpj();
@@ -541,8 +324,7 @@
             };
             $('#inputCpfCnpj').mask('000.000.000-009', cpfCnpjOptions);
         }
-    });
-</script>
 
+    </script>
 </body>
 </html>
