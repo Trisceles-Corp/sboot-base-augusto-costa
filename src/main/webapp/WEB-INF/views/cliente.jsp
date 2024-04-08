@@ -186,25 +186,16 @@
             </div>
             <div class="mt-2">
                 <button type="submit" class="btn btn-primary ">Salvar</button>
-                <button type="button" class="btn btn-danger  m-1" id="cancelar-cadastro">Cancelar</button>
+                <button type="button" class="btn btn-danger  m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
             </div>
         </form:form>
-        <script>
-            /* abrir e fechar formulario */
-            const formClienteCadast = document.getElementById("form-cadastro");
-            const btnCancelarCadast = document.getElementById("cancelar-cadastro")
-
-            btnCancelarCadast.addEventListener("click", () => {
-                formClienteCadast.style.display = "none";
-            });
-        </script>
 
         <!-- tabela mostrando os clientes cadastrados -->
         <table id="tabelaClientes" class="table table-bordered table-hover table-responsive my-3" >
             <thead class="table-dark">
             <tr class="gridHeader">
                 <th scope="col" class="th-editar">Ações</th>
-                <th scope="col">ID</th>
+<%--                <th scope="col">ID</th>--%>
                 <th scope="col">Nome</th>
                 <th scope="col">Celular</th>
                 <th scope="col">E-mail</th>
@@ -222,7 +213,7 @@
                             </a>
                         </form>
                     </td>
-                    <th scope="row"><c:out value="${dtoUsuario.usuarioId}" /></th>
+<%--                    <th scope="row"><c:out value="${dtoUsuario.usuarioId}" /></th>--%>
                     <td><c:out value="${dtoUsuario.nomeCompleto}" /></td>
                     <td><c:out value="${dtoUsuario.celularCompleto}" /></td>
                     <td><c:out value="${dtoUsuario.email}" /></td>

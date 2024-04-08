@@ -12,19 +12,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
-    <script>
-        function verificarNomeAntesDeSalvar() {
-            const nomeInput = document.getElementById('field_Name');
-            const nome = nomeInput.value.trim();
-
-            if (nome === '') {
-                alert('O campo Nome é obrigatório e não pode estar vazio.');
-                return false;
-            }
-            return true;
-        }
-    </script>
-
 </head>
 <body>
 <div class="container-fluid">

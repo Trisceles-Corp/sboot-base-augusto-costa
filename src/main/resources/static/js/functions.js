@@ -1,14 +1,23 @@
 function toggleFormCadastro() {
-    const formClienteCadast = document.getElementById("form-cadastro");
-    if (formClienteCadast.style.display === "block") {
-        formClienteCadast.style.display = "none";
+    const formCadastro = document.getElementById("form-cadastro");
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
     } else {
-        formClienteCadast.style.display = "block";
+        formCadastro.style.display = "block";
     }
 }
 
+function toggleCloseCadastro() {
+    const formCadastro = document.getElementById("form-cadastro");
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
+    } else {
+        formCadastro.style.display = "none";
+    }
+    window.location.reload();
+}
+
 function carregarConteudo(url) {
-    console.log(url);
 
     fetch(url)
         .then(response => response.text())
@@ -25,10 +34,26 @@ function refreshPage() {
     location.reload();
 }
 
+function verificarNomeAntesDeSalvar() {
+    const nomeInput = document.getElementById('field_Name');
+    const nome = nomeInput.value.trim();
+
+    if (nome === '') {
+        alert('O campo Nome é obrigatório e não pode estar vazio.');
+        return false;
+    }
+    return true;
+}
+
 function visualizarCaracteristica(caracteristicaId, descricao, ativo) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = caracteristicaId;
     document.getElementById("field_Descricao").value = descricao;
-    document.getElementById("field_Active").checked = ativo === 'true';
 }
 
 function visualizarCargo(id, name, active) {
@@ -121,8 +146,15 @@ function confirmarExclusao(event) {
     }
 }
 
-function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, linhaId, caracteristicaId, estoqueMinimo, custo, valorVenda, comissao, ativo) {
-    console.log(id);
+function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, linhaId, caracteristicaId, estoqueMinimo, custo, valorVenda, comissao) {
+
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_CodigoInterno").value = codigoInterno;
     document.getElementById("field_Name").value = nome;
@@ -134,7 +166,6 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, linha
     document.getElementById("field_Custo").value = custo;
     document.getElementById("field_valorVenda").value = valorVenda;
     document.getElementById("field_Comissao").value = comissao;
-    document.getElementById("field_Active").checked = ativo === 'true';
 }
 
 function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, senha, profissao, ddiCelular, dddCelular, celular, ddiTelefone, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {

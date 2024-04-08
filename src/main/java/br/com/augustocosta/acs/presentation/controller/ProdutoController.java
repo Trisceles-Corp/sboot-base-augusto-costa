@@ -34,9 +34,21 @@ public class ProdutoController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblProduto table) {
+        table.setAtivo(true);
+        if (table.getCusto() != null) {
+            String decimalPoint = table.getCusto().toString();
+            Double custo = Double.parseDouble(decimalPoint.replace(",", "."));
+            table.setCusto(custo);
+        }
+
+        if (table.getValorVenda() != null) {
+            String decimalPoint = table.getValorVenda().toString();
+            Double venda = Double.parseDouble(decimalPoint.replace(",", "."));
+            table.setValorVenda(venda);
+        }
+
         if (table.getId() != null && table.getId() != 0){
             Optional<tblProduto> data = service.getById(table.getId());
-            table.setAtivo(table.getAtivo());
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
@@ -44,13 +56,18 @@ public class ProdutoController {
             service.update(table.getId(), table);
         }
         else {
-            table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(service.getByUserId(1));
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(service.getByUserId(1));
             service.create(table);
         }
-        return "redirect:/produto";
+        return "redirect:/index";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
     }
 }
