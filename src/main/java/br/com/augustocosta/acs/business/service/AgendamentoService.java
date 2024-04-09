@@ -2,7 +2,6 @@ package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
-import br.com.augustocosta.acs.integration.entity.tblServico;
 import br.com.augustocosta.acs.integration.entity.tblBloqueio;
 import br.com.augustocosta.acs.persistence.repository.AgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
