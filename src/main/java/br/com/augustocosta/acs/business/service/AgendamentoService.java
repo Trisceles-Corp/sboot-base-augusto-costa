@@ -44,10 +44,6 @@ public class AgendamentoService {
         return repository.findByColaborador(colaborador);
     }
 
-    public List<tblAgendamento> getByServico(tblServico servico) {
-        return repository.findByServico(servico);
-    }
-
     public List<tblAgendamento> getByBloqueio(tblBloqueio bloqueio) {
         return repository.findByBloqueio(bloqueio);
     }
@@ -70,7 +66,6 @@ public class AgendamentoService {
 
         table.setCliente(dados.getCliente());
         table.setColaborador(dados.getColaborador());
-        table.setServico(dados.getServico());
         table.setDataAgendamento(dados.getDataAgendamento());
         table.setHoraAgendamento(dados.getHoraAgendamento());
         table.setBloqueio(dados.getBloqueio());

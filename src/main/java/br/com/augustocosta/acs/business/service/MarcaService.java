@@ -15,12 +15,10 @@ import java.util.Optional;
 public class MarcaService {
 
     private final MarcaRepository repository;
-    private final CategoriaRepository categoriaRepository;
 
     @Autowired
-    public MarcaService(MarcaRepository repository, CategoriaRepository categoriarepository) {
+    public MarcaService(MarcaRepository repository) {
         this.repository = repository;
-        this.categoriaRepository = categoriarepository;
     }
 
     @Transactional
@@ -47,8 +45,6 @@ public class MarcaService {
         return repository.findAll();
     }
 
-    public List<tblCategoria> getAllActivesCategories(){return categoriaRepository.findByAtivoTrueOrderByNomeAsc(); }
-
     public List<tblMarca> getActives() {
         return repository.findByAtivoTrue();
     }
@@ -63,7 +59,6 @@ public class MarcaService {
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
 
         table.setDescricaoMarca(dados.getDescricaoMarca());
-        table.setCategoria(dados.getCategoria());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());

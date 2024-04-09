@@ -14,7 +14,7 @@ function toggleCloseCadastro() {
     } else {
         formCadastro.style.display = "none";
     }
-    window.location.reload();
+    formCadastro.reset();
 }
 
 function carregarConteudo(url) {
@@ -86,9 +86,8 @@ function visualizarLocalEstoque(id, name, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
-function visualizarMarca(id, categoriaId, name, active) {
+function visualizarMarca(id, name, active) {
     document.getElementById("field_Id").value = id;
-    document.getElementById("field_CategoriaId").value = categoriaId;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
 }
@@ -146,7 +145,7 @@ function confirmarExclusao(event) {
     }
 }
 
-function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, linhaId, caracteristicaId, estoqueMinimo, custo, valorVenda, comissao) {
+function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categoriaId, linhaId, caracteristicaId, estoqueMinimo, custo, valorVenda, comissao) {
 
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
@@ -160,6 +159,7 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, linha
     document.getElementById("field_Name").value = nome;
     document.getElementById("field_CodigoBarras").value = codigoBarras;
     document.getElementById("field_MarcaId").value = marcaId;
+    document.getElementById("field_CategoriaId").value = categoriaId;
     document.getElementById("field_LinhaId").value = linhaId;
     document.getElementById("field_CaracteristicaId").value = caracteristicaId;
     document.getElementById("field_EstoqueMinimo").value = estoqueMinimo;

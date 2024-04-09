@@ -34,19 +34,19 @@
                 <form:label path="descricaoProduto" class="form-label" for="text-input">Nome:</form:label>
                 <form:input path="descricaoProduto" class="form-control" type="text" id="field_Name" />
             </div>
-            <div class="form-group col-md-2">
-                <form:label path="codigoInterno" class="form-label" for="text-input">Codigo Interno:</form:label>
+            <div class="form-group col-md-1">
+                <form:label path="codigoInterno" class="form-label" for="text-input">Codigo:</form:label>
                 <form:input path="codigoInterno" class="form-control" type="text" id="field_CodigoInterno" />
             </div>
             <div class="form-group col-md-2">
-                <form:label path="codigoBarras" class="form-label" for="text-input">Codigo de Barras:</form:label>
+                <form:label path="codigoBarras" class="form-label" for="text-input">Bar Code:</form:label>
                 <form:input path="codigoBarras" class="form-control" type="text" id="field_CodigoBarras" />
             </div>
             <div class="form-group col-md-1">
                 <form:label path="custo" class="form-label" for="text-input">Custo:</form:label>
                 <form:input path="custo" class="form-control" type="text" id="field_Custo" />
             </div>
-            <div class="form-group col-md-1">
+            <div class="form-group col-md-2">
                 <form:label path="valorVenda" class="form-label" for="text-input">Valor Venda:</form:label>
                 <form:input path="valorVenda" class="form-control" type="text" id="field_valorVenda" />
             </div>
@@ -61,6 +61,13 @@
                 <form:select path="marca" class="form-control" id="field_MarcaId">
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listaMarcas}" itemValue="id" itemLabel="descricaoMarca"/>
+                </form:select>
+            </div>
+            <div class="form-group col-md-2">
+                <form:label path="categoria" class="form-label">Categoria:</form:label>
+                <form:select path="categoria" class="form-control" id="field_CategoriaId">
+                    <form:option value="" label=" Selecione "/>
+                    <form:options items="${listaCategorias}" itemValue="id" itemLabel="nome"/>
                 </form:select>
             </div>
             <div class="form-group col-md-2">
@@ -97,9 +104,9 @@
             <th scope="col">Nome</th>
             <th scope="col">Marca</th>
             <th scope="col">Linha</th>
-            <th scope="col">Vlr Venda</th>
-            <th scope="col">Estoque Mínimo</th>
-            <th scope="col">Cd Interno</th>
+            <th scope="col">Preço</th>
+            <th scope="col">Mínimo</th>
+            <th scope="col">Codigo</th>
         </tr>
         </thead>
         <tbody>
@@ -107,7 +114,7 @@
                 <tr>
                     <td class="cel-img-tabela-clientes">
                         <form action="${pageContext.request.contextPath}/produto/delete/${produto.id}" method="POST">
-                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarProduto('${produto.id}', '${produto.codigoInterno}', '${produto.descricaoProduto}', '${produto.codigoBarras}', '${produto.marca.id}', '${produto.linha.id}', '${produto.caracteristica.id}', '${produto.estoqueMinimo}', '${produto.custo}', '${produto.valorVenda}', '${produto.comissao}'); return false;" title="Editar">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarProduto('${produto.id}', '${produto.codigoInterno}', '${produto.descricaoProduto}', '${produto.codigoBarras}', '${produto.marca.id}', '${produto.categoria.id}', '${produto.linha.id}', '${produto.caracteristica.id}', '${produto.estoqueMinimo}', '${produto.custo}', '${produto.valorVenda}', '${produto.comissao}'); return false;" title="Editar">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/produto/delete/${produto.id}')">
                                 <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">

@@ -26,6 +26,7 @@ public class ProdutoController {
     public String listarTodos(Model model) {
         model.addAttribute("listaProdutos", service.getActiveByNameAsc());
         model.addAttribute("listaMarcas", service.getActiveMarcaByNameAsc());
+        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("listaLinhas", service.getActiveLinhaByNameAsc());
         model.addAttribute("listaCaracteristicas", service.getActiveCaracteristicaByNameAsc());
         model.addAttribute("tblProduto", new tblProduto());

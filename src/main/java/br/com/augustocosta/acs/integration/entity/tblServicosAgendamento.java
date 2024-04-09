@@ -5,21 +5,30 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-@Table(name = "tbl_marca")
+@Table(name = "tbl_servicosagendamento")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblMarca {
+public class tblServicosAgendamento {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MarcaId")
-    private Integer id;
+    @EmbeddedId
+    private ServicosAgendamento id;
 
-    @Column(name = "DescricaoMarca", nullable = false)
-    private String descricaoMarca;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ServicoId", nullable = false)
+    private tblServico servico;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "AgendamentoId", nullable = false)
+    private tblAgendamento agendamento;
+
+    @Column(name = "ValorUnitario", nullable = false)
+    private Double valorUnitario;
+
+    @Column(name = "Quantidade", nullable = false)
+    private Integer quantidade;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

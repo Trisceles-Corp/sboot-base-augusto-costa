@@ -25,7 +25,7 @@ public class tblProduto {
     private String descricaoProduto;
 
     @Column(name = "CodigoBarras", nullable = false)
-    private Double codigoBarras;
+    private String codigoBarras;
 
     @Column(name = "EstoqueMinimo", nullable = false)
     private Integer estoqueMinimo;
@@ -38,6 +38,10 @@ public class tblProduto {
 
     @Column(name = "Comissao", nullable = false)
     private Double comissao;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CategoriaId", nullable = false)
+    private tblCategoria categoria;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MarcaId", nullable = false)

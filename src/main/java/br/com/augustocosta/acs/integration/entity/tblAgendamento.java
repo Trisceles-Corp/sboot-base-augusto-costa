@@ -27,10 +27,6 @@ public class tblAgendamento {
     @JoinColumn(name = "ColaboradorId", nullable = false)
     private tblUsuario colaborador;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ServicoId", nullable = false)
-    private tblServico servico;
-
     @Column(name = "DataAgendamento", nullable = false)
     private Date dataAgendamento;
 

@@ -31,13 +31,6 @@
                 <form:input path="descricaoMarca" class="form-control" type="text" id="field_Name" />
             </div>
             <div class="form-group mb-3">
-                <form:label path="categoria" class="form-label">Categoria:</form:label>
-                <form:select path="categoria" class="form-control" id="field_CategoriaId">
-                    <form:option value="" label=" Selecione "/>
-                    <form:options items="${listaCategorias}" itemValue="id" itemLabel="nome"/>
-                </form:select>
-            </div>
-            <div class="form-group mb-3">
                 <div class="form-check">
                     <form:checkbox path="ativo" id="field_Active"/>
                     <form:label path="ativo" class="form-check-label" for="field_Active">Ativo</form:label>
@@ -67,12 +60,11 @@
             <tbody>
             <tr>
                 <td>
-                    <a href="#" class="btn-visualizar" onclick="visualizarMarca('${marca.id}', '${marca.categoria.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
+                    <a href="#" class="btn-visualizar" onclick="visualizarMarca('${marca.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
                     </a>
                 </td>
                 <td><c:out value="${marca.id}" /></td>
                 <td><c:out value="${marca.descricaoMarca}" /></td>
-                <td><c:out value="${marca.categoria.id}" /></td>
                 <td><c:out value="${marca.ativo ? 'Sim' : 'Não'}" /></td>
                 <td><c:out value="${marca.dataAlteracao}" /></td>
             </tr>

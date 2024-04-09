@@ -13,7 +13,6 @@ import java.util.*;
 public interface AgendamentoRepository extends JpaRepository<tblAgendamento, Integer> {
     List<tblAgendamento> findByColaborador(tblUsuario colaborador);
     List<tblAgendamento> findByCliente(tblUsuario cliente);
-    List<tblAgendamento> findByServico(tblServico servico);
     List<tblAgendamento> findByBloqueio(tblBloqueio bloqueio);
     List<tblAgendamento> findByDataAgendamento(Date dataAgendamento);
     List<tblAgendamento> findByAtivoTrue();
