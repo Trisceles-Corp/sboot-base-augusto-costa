@@ -32,6 +32,7 @@ public class CargoController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblCargo table) {
+        table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblCargo> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
@@ -42,7 +43,6 @@ public class CargoController {
             service.update(table.getId(), table);
         }
         else {
-            table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(1);
             table.setDataAlteracao(LocalDateTime.now());
@@ -50,7 +50,7 @@ public class CargoController {
             service.create(table);
         }
 
-        return "redirect:/cargo";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")
@@ -60,5 +60,9 @@ public class CargoController {
         return "cargo";
     }
 
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
+    }
 }

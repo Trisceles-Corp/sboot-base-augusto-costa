@@ -45,7 +45,7 @@ function verificarNomeAntesDeSalvar() {
     return true;
 }
 
-function visualizarCaracteristica(caracteristicaId, descricao, ativo) {
+function visualizarCaracteristica(caracteristicaId, descricao) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
         formClienteCadast.style.display = "block";
@@ -53,19 +53,29 @@ function visualizarCaracteristica(caracteristicaId, descricao, ativo) {
         formClienteCadast.style.display = "block";
     }
     document.getElementById("field_Id").value = caracteristicaId;
-    document.getElementById("field_Descricao").value = descricao;
+    document.getElementById("field_Nome").value = descricao;
 }
 
-function visualizarCargo(id, name, active) {
+function visualizarCargo(id, name) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = id;
-    document.getElementById("field_Name").value = name;
-    document.getElementById("field_Active").checked = active === 'true';
+    document.getElementById("field_Nome").value = name;
 }
 
-function visualizarCategoria(categoriaId, nome, ativo) {
+function visualizarCategoria(categoriaId, nome) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = categoriaId;
-    document.getElementById("field_Name").value = nome;
-    document.getElementById("field_Active").checked = ativo === 'true';
+    document.getElementById("field_Nome").value = nome;
 }
 
 function visualizarDiasSemana(id, name, active) {
@@ -74,21 +84,37 @@ function visualizarDiasSemana(id, name, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
-function visualizarLinha(id, name, active) {
+function visualizarLinha(id, name) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = id;
-    document.getElementById("field_Name").value = name;
-    document.getElementById("field_Active").checked = active === 'true';
+    document.getElementById("field_Nome").value = name;
 }
 
-function visualizarLocalEstoque(id, name, active) {
+function visualizarLocalEstoque(id, name) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = id;
-    document.getElementById("field_Name").value = name;
-    document.getElementById("field_Active").checked = active === 'true';
+    document.getElementById("field_Nome").value = name;
 }
 
 function visualizarMarca(id, name, active) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = id;
-    document.getElementById("field_Name").value = name;
+    document.getElementById("field_Nome").value = name;
     document.getElementById("field_Active").checked = active === 'true';
 }
 
@@ -106,16 +132,20 @@ function visualizarPermissoes(id, name, description, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
-function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao, ativo) {
-    console.log(id);
-    document.getElementById("field_Id'").value = id;
+function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+    document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = nome;
     document.getElementById("field_Tempo").value = tempo;
     document.getElementById("field_Valor").value = valor;
     document.getElementById("field_Desconto").value = desconto;
     document.getElementById("field_Comissao").value = comissao;
     document.getElementById("field_Observacao").value = observacao;
-    document.getElementById("field_Ativo").checked = ativo === 'true';
 }
 
 function visualizarTipo(id, name, active) {
@@ -168,7 +198,7 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Comissao").value = comissao;
 }
 
-function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, senha, profissao, ddiCelular, dddCelular, celular, ddiTelefone, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
+function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, senha, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
         formClienteCadast.style.display = "block";
@@ -189,10 +219,8 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     document.getElementById("inputSenha").value = senha;
     document.getElementById("inputConfirmacaoSenha").value = senha;
     document.getElementById("inputProfissao").value = profissao;
-    document.getElementById("inputDDICel").value = ddiCelular;
     document.getElementById("inputDDDCel").value = dddCelular;
     document.getElementById("inputCelular").value = celular;
-    document.getElementById("inputDDITel").value = ddiTelefone;
     document.getElementById("inputDDDTel").value = dddTelefone;
     document.getElementById("inputTelefone").value = telefone;
     document.getElementById("inputCEP").value = cep;
@@ -205,7 +233,7 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     document.getElementById("inputObservacao").value = observacao;
 }
 
-function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, email, profissao, ddiCelular, dddCelular, celular, ddiTelefone, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
+function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
         formClienteCadast.style.display = "block";
@@ -222,10 +250,8 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
     document.getElementById("inputCpfCnpj").value = cpfCnpj;
     document.getElementById("inputEmail").value = email;
     document.getElementById("inputProfissao").value = profissao;
-    document.getElementById("inputDDICel").value = ddiCelular;
     document.getElementById("inputDDDCel").value = dddCelular;
     document.getElementById("inputCelular").value = celular;
-    document.getElementById("inputDDITel").value = ddiTelefone;
     document.getElementById("inputDDDTel").value = dddTelefone;
     document.getElementById("inputTelefone").value = telefone;
     document.getElementById("inputCEP").value = cep;

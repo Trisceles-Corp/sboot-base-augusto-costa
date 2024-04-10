@@ -92,70 +92,74 @@
                     </script>
                 </div>
             </a>
-            <div class="contain-option w-100" id="clientes">
-                <div class="my-2">
-                    <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png" id="cliente-img">
-                    <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
+            <a class="nav-option" id="clientes">
+                <div class="contain-option w-100">
+                    <div class="my-2">
+                        <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
+                        <button class="mx-2" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
+                    </div>
+                    <script>
+                        /* mudar cor da imagem ao passar o mouse em cima*/
+
+                        const cliente = document.getElementById("clientes");
+                        const imgCliente = cliente.querySelector("img");
+
+                        cliente.addEventListener("mouseover", () => {
+                            imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
+                        });
+
+                        cliente.addEventListener("mouseout", () => {
+                            imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
+                        });
+                    </script>
                 </div>
-                <script>
-                    /* mudar cor da imagem ao passar o mouse em cima*/
+            </a>
+            <a class="nav-option" id="estoque">
+                <div class="contain-option w-100">
+                    <div class="my-2">
+                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
+                        <span class="mx-2">Estoque</span>
+                    </div>
+                    <div class="contain-sub-option">
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/produto')" >Produtos</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/fornecedor')" >Fornecedores</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <span class="sub-option-item" onclick="carregarConteudo(contextPath + '/pedidosCompra')">Pedidos de compra</span><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <span class="sub-option-item" onclick="carregarConteudo(contextPath + '/inventario')">Inventário</span><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <span class="sub-option-item">Solicitação de saída</span><br>
+                        </div>
+                    </div>
+                    <script>
+                        /* mudar cor da imagem ao passar o mouse em cima*/
+                        const estoque = document.getElementById("estoque");
+                        const imgEstoque = estoque.querySelector("img");
+                        const subOptionsEstoque = estoque.querySelectorAll(".sub-options");
 
-                    const cliente = document.getElementById("clientes");
-                    const imgCliente = cliente.querySelector("img");
+                        estoque.addEventListener("mouseover", () => {
+                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
+                            for(var i = 0; i < subOptionsEstoque.length; i++){
+                                subOptionsEstoque[i].style.display = "block";
+                            }
+                        });
 
-                    cliente.addEventListener("mouseover", () => {
-                        imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
-                    });
+                        estoque.addEventListener("mouseout", () => {
+                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
+                            for(var i = 0; i < subOptionsEstoque.length; i++){
+                                subOptionsEstoque[i].style.display = "none";
+                            }
+                        });
 
-                    cliente.addEventListener("mouseout", () => {
-                        imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
-                    });
-                </script>
-            </div>
-            <div class="contain-option w-100" id="estoque">
-                <div class="my-2">
-                    <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
-                    <span class="mx-2">Estoque</span>
+                    </script>
                 </div>
-                <div class="contain-sub-option">
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/produto')" >Produtos</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/fornecedor')" >Fornecedores</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item" onclick="carregarConteudo(contextPath + '/pedidosCompra')">Pedidos de compra</span><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item" onclick="carregarConteudo(contextPath + '/inventario')">Inventário</span><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <span class="sub-option-item">Solicitação de saída</span><br>
-                    </div>
-                </div>
-                <script>
-                    /* mudar cor da imagem ao passar o mouse em cima*/
-                    const estoque = document.getElementById("estoque");
-                    const imgEstoque = estoque.querySelector("img");
-                    const subOptionsEstoque = estoque.querySelectorAll(".sub-options");
-
-                    estoque.addEventListener("mouseover", () => {
-                        imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
-                        for(var i = 0; i < subOptionsEstoque.length; i++){
-                            subOptionsEstoque[i].style.display = "block";
-                        }
-                    });
-
-                    estoque.addEventListener("mouseout", () => {
-                        imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
-                        for(var i = 0; i < subOptionsEstoque.length; i++){
-                            subOptionsEstoque[i].style.display = "none";
-                        }
-                    });
-
-                </script>
-            </div>
+            </a>
             <a href="financeiro.html" class="nav-option" id="financeiro">
                 <div class="contain-option w-100">
                     <div class="my-2">
@@ -240,65 +244,60 @@
                     </script>
                 </div>
             </a>
-            <div class="contain-option w-100" id="config">
-                <div class="my-2">
-                    <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img">
-                    <span class="mx-2">Configurações</span>
+            <a class="nav-option" id="config">
+                <div class="contain-option w-100">
+                    <div class="my-2">
+                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img">
+                        <span class="mx-2">Configurações</span>
+                    </div>
+                    <div class="contain-sub-option">
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/caracteristica')" >Característica</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/categoria')" >Categoria</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/linha')" >Linha</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/marca')" >Marca</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
+                        </div>
+                    </div>
+                    <script>
+                        /* mudar cor da imagem ao passar o mouse em cima*/
+                        const config = document.getElementById("config");
+                        const imgConfig = config.querySelector("img");
+                        const subOptionsConfig = config.querySelectorAll(".sub-options");
+
+                        config.addEventListener("mouseover", () => {
+                            imgConfig.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
+                            for(var i = 0; i < subOptionsConfig.length; i++){
+                                subOptionsConfig[i].style.display = "block";
+                            }
+                        });
+
+                        config.addEventListener("mouseout", () => {
+                            imgConfig.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
+                            for(var i = 0; i < subOptionsConfig.length; i++){
+                                subOptionsConfig[i].style.display = "none";
+                            }
+                        });
+                    </script>
                 </div>
-                <div class="contain-sub-option">
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/caracteristica')" >Característica</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/categoria')" >Categoria</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/linha')" >Linha</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/marca')" >Marca</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/permissoes')" >Permissões</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
-                    </div>
-                    <div class="sub-options px-5 py-1">
-                        <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/tipoperfil')" >Tipo Perfil</button><br>
-                    </div>
-                </div>
-                <script>
-                    /* mudar cor da imagem ao passar o mouse em cima*/
-                    const config = document.getElementById("config");
-                    const imgConfig = config.querySelector("img");
-                    const subOptionsConfig = config.querySelectorAll(".sub-options");
-
-                    config.addEventListener("mouseover", () => {
-                        imgConfig.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
-                        for(var i = 0; i < subOptionsConfig.length; i++){
-                            subOptionsConfig[i].style.display = "block";
-                        }
-                    });
-
-                    config.addEventListener("mouseout", () => {
-                        imgConfig.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
-                        for(var i = 0; i < subOptionsConfig.length; i++){
-                            subOptionsConfig[i].style.display = "none";
-                        }
-                    });
-
-                </script>
-            </div>
+            </a>
         </div>
     </div>
     <div class="content-main p-5" id="mainContent">

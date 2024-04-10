@@ -25,16 +25,16 @@ public class tblServico {
     private LocalTime tempo;
 
     @Column(name = "Valor", nullable = false)
-    private double valor;
+    private Double valor;
 
     @Column(name = "Observacao")
     private String observacao;
 
     @Column(name = "Desconto")
-    private double desconto;
+    private Double desconto;
 
     @Column(name = "Comissao")
-    private double comissao;
+    private Double comissao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
@@ -50,4 +50,17 @@ public class tblServico {
 
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
+
+    // Getters personalizados para tratar null como zero
+    public double getValor() {
+        return valor != null ? valor: 0.0;
+    }
+
+    public double getDesconto() {
+        return desconto != null ? desconto: 0.0;
+    }
+
+    public double getComissao() {
+        return comissao != null ? comissao: 0.0;
+    }
 }

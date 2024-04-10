@@ -53,19 +53,19 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <form:label path="nome" for="inputNome">Nome</form:label>
-                    <form:input path="nome" type="text" class="form-control" id="inputNome" maxlength="100" />
+                    <form:input path="nome" type="text" class="form-control" id="inputNome" maxlength="100" required="required" />
                 </div>
                 <div class="form-group col-md-3">
                     <form:label path="sobrenome" for="inputSobrenome">Sobrenome</form:label>
-                    <form:input path="sobrenome" type="text" class="form-control" id="inputSobrenome" maxlength="200" />
+                    <form:input path="sobrenome" type="text" class="form-control" id="inputSobrenome" maxlength="200" required="required" />
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="cpfCnpj" for="inputCpfCnpj">CPF / CNPJ</form:label>
-                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" maxlength="18"  />
+                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" maxlength="18" required="required" />
                 </div>
                 <div class="form-group col-md-1">
                     <form:label path="genero" for="inputGenero">Gênero</form:label>
-                    <form:select path="genero" id="inputGenero" class="form-control">
+                    <form:select path="genero" id="inputGenero" class="form-control" required="required">
                         <option selected>Selecione</option>
                         <option value="M" label="Masculino"></option>
                         <option value="F" label="Feminino"></option>
@@ -80,15 +80,15 @@
             <div class="row">
                 <div class="form-group col-md-3">
                     <form:label path="email" for="inputEmail">E-mail</form:label>
-                    <form:input path="email" type="email" class="form-control" id="inputEmail" maxlength="50"  />
+                    <form:input path="email" type="email" class="form-control" id="inputEmail" maxlength="50" required="required" />
                 </div>
                 <div class="form-group col-md-3">
                     <form:label path="senha" for="inputSenha">Senha</form:label>
-                    <form:input path="senha" type="password" class="form-control" id="inputSenha"  />
+                    <form:input path="senha" type="password" class="form-control" id="inputSenha" required="required" />
                 </div>
                 <div class="form-group col-md-3">
                     <label for="inputConfirmacaoSenha">Confirme a Senha</label>
-                    <input type="password" class="form-control" id="inputConfirmacaoSenha" >
+                    <input type="password" class="form-control" id="inputConfirmacaoSenha" required>
                 </div>
                 <div class="form-group col-md-3">
                     <form:label path="profissao" for="inputProfissao">Profissão</form:label>
@@ -96,21 +96,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="form-group col-md-1">
-                    <form:label path="ddiCelular" for="inputDDICel">DDI Celular</form:label>
-                    <form:input path="ddiCelular" type="number" class="form-control" id="inputDDICel" maxlength="2"  />
-                </div>
                 <div class="form-group col-md-2">
                     <form:label path="dddCelular" for="inputDDDCel">DDD Celular</form:label>
-                    <form:input path="dddCelular" type="number" class="form-control" id="inputDDDCel" maxlength="2"  />
+                    <form:input path="dddCelular" type="number" class="form-control" id="inputDDDCel" maxlength="2" required="required" />
                 </div>
                 <div class="form-group col-md-3">
                     <form:label path="celular" for="inputCelular">Celular</form:label>
-                    <form:input path="celular" type="text" class="form-control" id="inputCelular" maxlength="11"  />
-                </div>
-                <div class="form-group col-md-1">
-                    <form:label path="ddiTelefone" for="inputDDITel">DDI Telefone</form:label>
-                    <form:input path="ddiTelefone" type="number" class="form-control" id="inputDDITel" maxlength="2" autocomplete="true"  />
+                    <form:input path="celular" type="text" class="form-control" id="inputCelular" maxlength="11" required="required" />
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="dddTelefone" for="inputDDDTel">DDD Telefone</form:label>
@@ -124,15 +116,15 @@
             <div class="row">
                 <div class="form-group col-md-1">
                     <form:label path="cep" for="inputCEP">CEP</form:label>
-                    <form:input path="cep" type="text" class="form-control" id="inputCEP" maxlength="9"  />
+                    <form:input path="cep" type="text" class="form-control" id="inputCEP" maxlength="9" required="required" />
                 </div>
                 <div class="form-group col-md-5">
                     <form:label path="logradouro" for="inputlogradouro">Endereço</form:label>
-                    <form:input path="logradouro" type="text" class="form-control" id="inputlogradouro" maxlength="200"  />
+                    <form:input path="logradouro" type="text" class="form-control" id="inputlogradouro" maxlength="200" required="required" />
                 </div>
                 <div class="form-group col-md-1">
                     <form:label path="numero" for="inputNumero">Número</form:label>
-                    <form:input path="numero" type="text" class="form-control" id="inputNumero" maxlength="10"  />
+                    <form:input path="numero" type="text" class="form-control" id="inputNumero" maxlength="10" required="required" />
                 </div>
                 <div class="form-group col-md-5">
                     <form:label path="complemento" for="inputComplemento">Complemento</form:label>
@@ -142,15 +134,15 @@
             <div class="row">
                 <div class="form-group col-md-3">
                     <form:label path="bairro" for="inputBairro">Bairro</form:label>
-                    <form:input path="bairro" type="text" class="form-control" maxlength="100" id="inputBairro" />
+                    <form:input path="bairro" type="text" class="form-control" maxlength="100" id="inputBairro" required="required" />
                 </div>
                 <div class="form-group col-md-3">
                     <form:label path="cidade" for="inputCidade">Cidade</form:label>
-                    <form:input path="cidade" type="text" class="form-control" maxlength="100" id="inputCidade" />
+                    <form:input path="cidade" type="text" class="form-control" maxlength="100" id="inputCidade" required="required"/>
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="uf" for="inputEstado">Estado</form:label>
-                    <form:select path="uf" id="inputEstado" class="form-control">
+                    <form:select path="uf" id="inputEstado" class="form-control" required="required">
                         <option selected>Selecione</option>
                         <option value="AL" label="Alagoas"></option>
                         <option value="AP" label="Amapá"></option>
@@ -206,7 +198,7 @@
                 <tr>
                     <td class="cel-img-tabela-clientes">
                         <form action="${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}" method="POST">
-                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCliente('${dtoUsuario.usuarioId}', '${dtoUsuario.enderecoId}', '${dtoUsuario.cargoId}', '${dtoUsuario.perfilId}', '${dtoUsuario.nome}', '${dtoUsuario.sobrenome}', '${dtoUsuario.cpfCnpj}', '${dtoUsuario.genero}', '${dtoUsuario.dataNascimento}', '${dtoUsuario.email}', '${dtoUsuario.senha}', '${dtoUsuario.profissao}', '${dtoUsuario.ddiCelular}', '${dtoUsuario.dddCelular}', '${dtoUsuario.celular}', '${dtoUsuario.ddiTelefone}', '${dtoUsuario.dddTelefone}', '${dtoUsuario.telefone}', '${dtoUsuario.cep}', '${dtoUsuario.logradouro}', '${dtoUsuario.numero}', '${dtoUsuario.complemento}', '${dtoUsuario.bairro}', '${dtoUsuario.cidade}', '${dtoUsuario.uf}', '${dtoUsuario.observacao}'); return false;" title="Editar">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCliente('${dtoUsuario.usuarioId}', '${dtoUsuario.enderecoId}', '${dtoUsuario.cargoId}', '${dtoUsuario.perfilId}', '${dtoUsuario.nome}', '${dtoUsuario.sobrenome}', '${dtoUsuario.cpfCnpj}', '${dtoUsuario.genero}', '${dtoUsuario.dataNascimento}', '${dtoUsuario.email}', '${dtoUsuario.senha}', '${dtoUsuario.profissao}', '${dtoUsuario.dddCelular}', '${dtoUsuario.celular}', '${dtoUsuario.dddTelefone}', '${dtoUsuario.telefone}', '${dtoUsuario.cep}', '${dtoUsuario.logradouro}', '${dtoUsuario.numero}', '${dtoUsuario.complemento}', '${dtoUsuario.bairro}', '${dtoUsuario.cidade}', '${dtoUsuario.uf}', '${dtoUsuario.observacao}'); return false;" title="Editar">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/cliente/delete/${dtoUsuario.usuarioId}')">
                                 <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">

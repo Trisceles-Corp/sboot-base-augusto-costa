@@ -34,6 +34,7 @@ public class CategoriaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblCategoria categoria) {
+        categoria.setAtivo(true);
         if (categoria.getId() != null && categoria.getId() != 0){
             Optional<tblCategoria> data = service.getById(categoria.getId());
             categoria.setAtivo(categoria.getAtivo());
@@ -44,7 +45,6 @@ public class CategoriaController {
             service.update(categoria.getId(), categoria);
         }
         else {
-            categoria.setAtivo(true);
             categoria.setDataCriacao(LocalDateTime.now());
             categoria.setCriadoPor(1);
             categoria.setDataAlteracao(LocalDateTime.now());
@@ -52,12 +52,12 @@ public class CategoriaController {
             service.create(categoria);
         }
 
-        return "redirect:/categoria";
+        return "redirect:/index";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id);
-        return "redirect:/categoria";
+        return "redirect:/index";
     }
 }

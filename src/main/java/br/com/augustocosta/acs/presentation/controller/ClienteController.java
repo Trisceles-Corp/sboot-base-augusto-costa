@@ -37,6 +37,10 @@ public class ClienteController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoUsuario dados) {
+        dados.setDdiCelular(55);
+        dados.setDdiTelefone(55);
+        dados.setCargoId(1);
+        dados.setPerfilId(4);
         if (dados.getUsuarioId() != null && dados.getUsuarioId() != 0){
             tblEndereco saveEndereco = enderecoService.updateDto(dados);
             usuarioService.updateDto(saveEndereco, dados);

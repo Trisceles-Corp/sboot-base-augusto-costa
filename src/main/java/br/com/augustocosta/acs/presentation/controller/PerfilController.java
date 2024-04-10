@@ -32,6 +32,7 @@ public class PerfilController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblPerfil table) {
+        table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblPerfil> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
@@ -42,14 +43,13 @@ public class PerfilController {
             service.update(table.getId(), table);
         }
         else {
-            table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(1);
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(1);
             service.create(table);
         }
-        return "redirect:/perfil";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")
@@ -57,5 +57,11 @@ public class PerfilController {
         model.addAttribute("listaTipos", service.getActiveByNameAsc());
         model.addAttribute("tblPerfil", new tblPerfil());
         return "perfil";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
     }
 }

@@ -40,6 +40,8 @@ public class FornecedorController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoUsuario dados) {
+        dados.setDdiCelular(55);
+        dados.setDdiTelefone(55);
         dados.setCargoId(16);
         dados.setPerfilId(6);
         dados.setGenero('O');

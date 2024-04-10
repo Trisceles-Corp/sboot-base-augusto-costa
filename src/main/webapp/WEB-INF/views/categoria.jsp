@@ -1,71 +1,75 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Alexander Andrade
+  Date: 10/04/2024
+  Time: 11:17
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Categoria</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+    <title>Augusto Costa</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<div class="pgHeader">
-    <p>Categorias</p>
-</div>
-<form:form id="tipoForm" modelAttribute="tblCategoria" action="${pageContext.request.contextPath}/categoria/salvar" method="POST">
-    <form:hidden path="id" id="field_Id" />
-    <table>
-        <tr>
-            <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" id="field_Name"/></td>
-        </tr>
-        <tr>
-            <td><form:checkbox path="ativo" id="field_Active" label="Ativo" /></td>
-        </tr>
-    </table>
-    <div class="button-bar">
-        <input type="submit" value="Salvar" />
+<div>
+    <div class="itemHeader">
+        <h4>Categoria Produto</h4>
     </div>
-</form:form>
+    <div class="row" id="linha-botao-cadastro">
+        <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
+    </div>
 
-<br/>
+    <!-- formulário de cadastro -->
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="tblCategoria" action="${pageContext.request.contextPath}/categoria/salvar" method="POST">
+        <form:hidden path="id" id="field_Id"/>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <form:label path="nome" class="form-label" for="text-input">Nome:</form:label>
+                <form:input path="nome" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
+            </div>
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+        </div>
+    </form:form>
+</div>
 
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr class="gridHeader">
-                <th colspan="2">Ações</th>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Ativo</th>
-                <th>Data de Criação</th>
-            </tr>
+<div>
+    <table id="tabelaDados" class="table table-bordered table-hover table-responsive my-3">
+        <thead class="table-dark">
+        <tr class="gridHeader">
+            <th scope="col" class="th-editar">Ações</th>
+            <th scope="col">Nome</th>
+        </tr>
         </thead>
-        <c:forEach var="categoria" items="${listaCategorias}">
         <tbody>
+        <c:forEach var="categoria" items="${listaCategorias}">
             <tr>
-                <td>
-                    <a href="#" class="btn-visualizar" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}', '${categoria.ativo}'); return false;" title="Visualizar">
-                    </a>
-                </td>
-                <td>
+                <td class="cel-img-tabela-clientes">
                     <form action="${pageContext.request.contextPath}/categoria/delete/${categoria.id}" method="POST">
+                        <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCategoria('${categoria.id}', '${categoria.nome}'); return false;" title="Editar">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <button type="button" class="btn-excluir" onclick="confirmarExclusao(event)" title="Excluir" >
-                        </button>
+                        <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/categoria/delete/${categoria.id}')">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                        </a>
                     </form>
                 </td>
-                <td><c:out value="${categoria.id}" /></td>
                 <td><c:out value="${categoria.nome}" /></td>
-                <td><c:out value="${categoria.ativo ? 'Sim' : 'Não'}" /></td>
-                <td><c:out value="${categoria.dataCriacao}" /></td>
             </tr>
-        </tbody>
         </c:forEach>
+        </tbody>
     </table>
 </div>
-
 </body>
 </html>

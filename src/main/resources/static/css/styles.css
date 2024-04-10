@@ -45,6 +45,7 @@
     width: 100%;
     text-align: center;
     vertical-align: center;
+
     top: 5px;
     left: 5px;
 }
@@ -247,7 +248,7 @@ contain-option-button-active{
 
 .logo{
     width: 80%;
-    height: 80px;
+    height: 40px;
     margin: 0 auto;
     text-align: center;
 }
