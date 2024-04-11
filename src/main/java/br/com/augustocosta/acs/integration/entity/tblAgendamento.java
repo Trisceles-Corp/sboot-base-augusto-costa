@@ -19,11 +19,11 @@ public class tblAgendamento {
     @Column(name = "AgendamentoId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ClienteId", nullable = false)
     private tblUsuario cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ColaboradorId", nullable = false)
     private tblUsuario colaborador;
 
@@ -33,7 +33,11 @@ public class tblAgendamento {
     @Column(name = "HoraAgendamento", nullable = false)
     private LocalTime horaAgendamento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SituacaoId")
+    private tblSituacaoAgendamento situacao;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BloqueioId")
     private tblBloqueio bloqueio;
 

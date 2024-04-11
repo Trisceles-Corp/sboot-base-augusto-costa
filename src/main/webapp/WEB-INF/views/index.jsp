@@ -275,6 +275,9 @@
                         <div class="sub-options px-5 py-1">
                             <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
                         </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
+                        </div>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/

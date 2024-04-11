@@ -67,6 +67,17 @@ function visualizarCargo(id, name) {
     document.getElementById("field_Nome").value = name;
 }
 
+function visualizarSituacaoAgendamento(id, name) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_Nome").value = name;
+}
+
 function visualizarCategoria(categoriaId, nome) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {

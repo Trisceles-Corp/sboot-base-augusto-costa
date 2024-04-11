@@ -1,9 +1,11 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
+import br.com.augustocosta.acs.integration.entity.tblSituacaoAgendamento;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.integration.entity.tblBloqueio;
 import br.com.augustocosta.acs.persistence.repository.AgendamentoRepository;
+import br.com.augustocosta.acs.persistence.repository.SituacaoAgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,12 @@ import java.time.LocalDateTime;
 public class AgendamentoService {
 
     private final AgendamentoRepository repository;
+    private final SituacaoAgendamentoRepository situacaoRepository;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository repository) {
+    public AgendamentoService(AgendamentoRepository repository, SituacaoAgendamentoRepository situacaoRepository) {
         this.repository = repository;
+        this.situacaoRepository = situacaoRepository;
     }
 
     public tblAgendamento create(tblAgendamento table) {
@@ -45,6 +49,11 @@ public class AgendamentoService {
 
     public List<tblAgendamento> getByBloqueio(tblBloqueio bloqueio) {
         return repository.findByBloqueio(bloqueio);
+    }
+
+    public List<tblAgendamento> getBySituacao(int situacaoId) {
+        Optional<tblSituacaoAgendamento> situacao = situacaoRepository.findById(situacaoId);
+        return repository.findBySituacao(situacao.orElse(null));
     }
 
     public List<tblAgendamento> getByDataAgendamento(Date dataAgendamento) {
