@@ -2,23 +2,23 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
-import java.time.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbl_vendaproduto")
+@Table(name = "tbl_compraproduto")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblVendaProduto {
+public class tblCompraProduto {
 
     @EmbeddedId
-    private VendaProduto id;
+    private CompraProduto id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "VendaId", nullable = false)
-    private tblVenda venda;
+    @JoinColumn(name = "CompraId", nullable = false)
+    private tblCompra compra;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ProdutoId", nullable = false)

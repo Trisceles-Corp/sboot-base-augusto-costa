@@ -1,6 +1,6 @@
 package br.com.augustocosta.acs.business.service;
 
-import br.com.augustocosta.acs.integration.entity.VendasProduto;
+import br.com.augustocosta.acs.integration.entity.VendaProduto;
 import br.com.augustocosta.acs.integration.entity.tblVendaProduto;
 import br.com.augustocosta.acs.persistence.repository.VendaProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,13 @@ public class VendaProdutoService {
     }
 
     public Optional<tblVendaProduto> findById(Integer vendaId, Integer produtoId) {
-        VendasProduto id = new VendasProduto(vendaId, produtoId);
+        VendaProduto id = new VendaProduto(vendaId, produtoId);
         return repository.findById(id);
     }
 
     @Transactional
     public tblVendaProduto update(Integer vendaId, Integer produtoId, tblVendaProduto dados) {
-        VendasProduto id = new VendasProduto(vendaId, produtoId);
+        VendaProduto id = new VendaProduto(vendaId, produtoId);
         tblVendaProduto table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Venda Produtos não encontrado com id: " + id));
 
@@ -44,7 +44,7 @@ public class VendaProdutoService {
     }
 
     public void delete(Integer vendaId, Integer produtoId) {
-        VendasProduto id = new VendasProduto(vendaId, produtoId);
+        VendaProduto id = new VendaProduto(vendaId, produtoId);
         repository.deleteById(id);
     }
 }

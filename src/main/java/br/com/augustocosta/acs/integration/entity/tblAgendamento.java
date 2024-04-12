@@ -37,10 +37,6 @@ public class tblAgendamento {
     @JoinColumn(name = "SituacaoId")
     private tblSituacaoAgendamento situacao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "BloqueioId")
-    private tblBloqueio bloqueio;
-
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 

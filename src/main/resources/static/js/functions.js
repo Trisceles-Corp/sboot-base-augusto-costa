@@ -78,6 +78,18 @@ function visualizarSituacaoAgendamento(id, name) {
     document.getElementById("field_Nome").value = name;
 }
 
+function visualizarCompras(id, localEstoqueId, situacaoCompraId) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_LocalEstoqueId").value = localEstoqueId;
+    document.getElementById("field_SituacaoCompraId").value = situacaoCompraId;
+}
+
 function visualizarCategoria(categoriaId, nome) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
@@ -165,11 +177,16 @@ function visualizarTipo(id, name, active) {
     document.getElementById("field_Active").checked = active === 'true';
 }
 
-function visualizarPerfil(id, tipoperfilid, name, active) {
+function visualizarPerfil(id, tipoperfilid, name) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_TipoPerfilId").value = tipoperfilid;
-    document.getElementById("field_Name").value = name;
-    document.getElementById("field_Active").checked = active === 'true';
+    document.getElementById("field_Nome").value = name;
 }
 
 function visualizarDiasSemana(id, name, active) {

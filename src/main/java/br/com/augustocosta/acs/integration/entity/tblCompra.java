@@ -2,33 +2,29 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
-import java.time.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbl_vendaproduto")
+@Table(name = "tbl_compra")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblVendaProduto {
+public class tblCompra {
 
-    @EmbeddedId
-    private VendaProduto id;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "VendaId", nullable = false)
-    private tblVenda venda;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "CompraId")
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ProdutoId", nullable = false)
-    private tblProduto produto;
+    @JoinColumn(name = "LocalEstoqueId", nullable = false)
+    private tblLocalEstoque localEstoque;
 
-    @Column(name = "ValorUnitario", nullable = false)
-    private Double valorUnitario;
-
-    @Column(name = "Quantidade", nullable = false)
-    private Integer quantidade;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SituacaoCompraId", nullable = false)
+    private tblSituacaoCompra situacaoCompra;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

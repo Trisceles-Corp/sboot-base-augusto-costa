@@ -50,7 +50,6 @@ public class ClienteController {
             dados.setPerfilId(4);
             usuarioService.createDto(enderecoService.createDto(dados), dados);
         }
-
         return "redirect:/index";
     }
 

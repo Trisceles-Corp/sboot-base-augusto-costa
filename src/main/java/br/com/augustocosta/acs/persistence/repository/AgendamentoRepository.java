@@ -14,7 +14,6 @@ public interface AgendamentoRepository extends JpaRepository<tblAgendamento, Int
     List<tblAgendamento> findByColaborador(tblUsuario colaborador);
     List<tblAgendamento> findByCliente(tblUsuario cliente);
     List<tblAgendamento> findBySituacao(tblSituacaoAgendamento situacao);
-    List<tblAgendamento> findByBloqueio(tblBloqueio bloqueio);
     List<tblAgendamento> findByDataAgendamento(Date dataAgendamento);
     List<tblAgendamento> findByAtivoTrue();
     List<tblAgendamento> findByAtivoFalse();

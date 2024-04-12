@@ -47,10 +47,6 @@ public class AgendamentoService {
         return repository.findByColaborador(colaborador);
     }
 
-    public List<tblAgendamento> getByBloqueio(tblBloqueio bloqueio) {
-        return repository.findByBloqueio(bloqueio);
-    }
-
     public List<tblAgendamento> getBySituacao(int situacaoId) {
         Optional<tblSituacaoAgendamento> situacao = situacaoRepository.findById(situacaoId);
         return repository.findBySituacao(situacao.orElse(null));
@@ -76,7 +72,6 @@ public class AgendamentoService {
         table.setColaborador(dados.getColaborador());
         table.setDataAgendamento(dados.getDataAgendamento());
         table.setHoraAgendamento(dados.getHoraAgendamento());
-        table.setBloqueio(dados.getBloqueio());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());

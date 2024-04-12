@@ -128,7 +128,7 @@
                             <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/fornecedor')" >Fornecedores</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item" onclick="carregarConteudo(contextPath + '/pedidosCompra')">Pedidos de compra</span><br>
+                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/compra')" >Pedidos de compra</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
                             <span class="sub-option-item" onclick="carregarConteudo(contextPath + '/inventario')">Inventário</span><br>
