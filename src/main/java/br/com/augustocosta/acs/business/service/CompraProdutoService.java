@@ -4,6 +4,7 @@ import br.com.augustocosta.acs.integration.entity.tblCompra;
 import br.com.augustocosta.acs.integration.entity.tblCompraProduto;
 import br.com.augustocosta.acs.integration.entity.tblProduto;
 import br.com.augustocosta.acs.persistence.repository.CompraProdutoRepository;
+import br.com.augustocosta.acs.persistence.repository.CompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +16,12 @@ import java.util.Optional;
 public class CompraProdutoService {
 
     private final CompraProdutoRepository repository;
+    private final CompraRepository compraRepository;
 
     @Autowired
-    public CompraProdutoService(CompraProdutoRepository repository) {
+    public CompraProdutoService(CompraProdutoRepository repository, CompraRepository compraRepository) {
         this.repository = repository;
+        this.compraRepository = compraRepository;
     }
 
     @Transactional
@@ -37,7 +40,8 @@ public class CompraProdutoService {
         return repository.findByProduto(produto);
     }
 
-    public List<tblCompraProduto> getByCompra(tblCompra compra) {
+    public List<tblCompraProduto> getByCompra(Integer compraId) {
+        tblCompra compra = compraRepository.getReferenceById(compraId);
         return repository.findByCompra(compra);
     }
 

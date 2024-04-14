@@ -3,11 +3,12 @@ package br.com.augustocosta.acs.business.service;
 import br.com.augustocosta.acs.integration.entity.tblCompra;
 import br.com.augustocosta.acs.integration.entity.tblLocalEstoque;
 import br.com.augustocosta.acs.integration.entity.tblSituacaoCompra;
-import br.com.augustocosta.acs.integration.entity.tblTipoPerfil;
 import br.com.augustocosta.acs.persistence.repository.CompraRepository;
 import br.com.augustocosta.acs.persistence.repository.LocalEstoqueRepository;
 import br.com.augustocosta.acs.persistence.repository.SituacaoCompraRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -73,6 +74,8 @@ public class CompraService {
         tblCompra table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + id));
 
+        table.setSituacaoCompra(dados.getSituacaoCompra());
+        table.setLocalEstoque(dados.getLocalEstoque());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());

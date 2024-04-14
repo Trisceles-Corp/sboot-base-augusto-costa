@@ -26,6 +26,9 @@ public class tblCompra {
     @JoinColumn(name = "SituacaoCompraId", nullable = false)
     private tblSituacaoCompra situacaoCompra;
 
+    @Column(name = "ValorTotal")
+    private Double valorTotal;
+
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 

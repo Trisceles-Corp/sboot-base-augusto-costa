@@ -7,12 +7,13 @@ import br.com.augustocosta.acs.business.service.SituacaoCompraService;
 import br.com.augustocosta.acs.integration.entity.tblCompraProduto;
 import br.com.augustocosta.acs.integration.entity.tblCompra;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/compra")
@@ -20,8 +21,14 @@ public class CompraController {
 
     @Autowired
     private CompraService service;
-    private CompraProdutoService produtoService;
+
+    @Autowired
+    private CompraProdutoService compraProdutoService;
+
+    @Autowired
     private LocalEstoqueService localService;
+
+    @Autowired
     private SituacaoCompraService situacaoService;
 
     @GetMapping("/form")
@@ -32,14 +39,14 @@ public class CompraController {
     }
 
     @GetMapping
-    public String listarCompraProdutos(Model model) {
+    public String listarCompras(Model model) {
         model.addAttribute("listarCompra", service.getActives());
-        model.addAttribute("listarCompraProdutos", produtoService.getActives());
+        model.addAttribute("listarCompraProdutos", compraProdutoService.getByCompra(0));
         model.addAttribute("listarLocalEstoque", localService.getActiveByNameAsc());
         model.addAttribute("listarSituacao", situacaoService.getActiveByNameAsc());
         model.addAttribute("tblCompra", new tblCompra());
         model.addAttribute("tblCompraProduto", new tblCompraProduto());
-        return "compra"; // Nome do arquivo JSP para a página
+        return "compra";
     }
 
     @PostMapping("/salvar")
@@ -68,7 +75,7 @@ public class CompraController {
     @GetMapping("/novo")
     public String novoSituacaoAgendamento(Model model) {
         model.addAttribute("listarCompra", service.getActives());
-        model.addAttribute("listarCompraProdutos", produtoService.getActives());
+        model.addAttribute("listarCompraProdutos", compraProdutoService.getActives());
         model.addAttribute("tblCompra", new tblCompra());
         model.addAttribute("tblCompraProduto", new tblCompraProduto());
         return "compra";
@@ -78,5 +85,12 @@ public class CompraController {
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
         return "redirect:/index";
+    }
+
+    @GetMapping("/produtos/{compraId}")
+    @ResponseBody
+    public ResponseEntity<List<tblCompraProduto>> listarProdutosPorCompra(@PathVariable Integer compraId) {
+        List<tblCompraProduto> produtos = compraProdutoService.getByCompra(compraId);
+        return ResponseEntity.ok(produtos);
     }
 }

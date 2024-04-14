@@ -78,16 +78,47 @@ function visualizarSituacaoAgendamento(id, name) {
     document.getElementById("field_Nome").value = name;
 }
 
-function visualizarCompras(id, localEstoqueId, situacaoCompraId) {
-    const formClienteCadast = document.getElementById("form-cadastro");
-    if (formClienteCadast.style.display === "none") {
-        formClienteCadast.style.display = "block";
+function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valorTotal, dataCriacao) {
+    const formCadastro = document.getElementById("form-cadastro");
+    if (formCadastro.style.display === "none") {
+        formCadastro.style.display = "block";
     } else {
-        formClienteCadast.style.display = "block";
+        formCadastro.style.display = "block";
     }
+    const dataCriacaoDate = new Date(dataCriacao);
+    const dataFormatada = dataCriacaoDate.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
     document.getElementById("field_Id").value = id;
     document.getElementById("field_LocalEstoqueId").value = localEstoqueId;
     document.getElementById("field_SituacaoCompraId").value = situacaoCompraId;
+    document.getElementById("field_ValorTotal").value = valorTotal;
+    document.getElementById("field_DataCriacao").value = dataFormatada;
+
+    fetch(`${contexto}/compra/produtos/${id}`)
+        .then(response => response.json())
+        .then(data => atualizarTabelaProdutos(data))
+        .catch(error => console.error('Erro ao buscar produtos da compra:', error));
+}
+
+function atualizarTabelaProdutos(produtos) {
+    const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    tabela.innerHTML = ''; // Limpar tabela existente
+
+    produtos.forEach(produto => {
+        let linha = tabela.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.innerHTML = '...'; // Adicione elementos de ação conforme necessário
+        linha.insertCell(1).innerText = produto.produto.descricaoProduto;
+        linha.insertCell(2).innerText = produto.valorUnitario;
+        linha.insertCell(3).innerText = produto.quantidade;
+        linha.insertCell(4).innerText = produto.valorTotal;
+    });
 }
 
 function visualizarCategoria(categoriaId, nome) {
