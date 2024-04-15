@@ -18,12 +18,16 @@ public class tblMovimentacao {
     @Column(name = "MovimentacaoId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TipoMovimentacaoId", nullable = false)
     private tblTipoMovimentacao tipoMovimentacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "VendaId", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CompraId")
+    private tblCompra compra;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "VendaId")
     private tblVenda venda;
 
     @Column(name = "Observacao")

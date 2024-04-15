@@ -1,5 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
+import br.com.augustocosta.acs.integration.dto.dtoInventario;
+import br.com.augustocosta.acs.integration.projections.prjInventario;
 import br.com.augustocosta.acs.integration.entity.tblEstoque;
 import br.com.augustocosta.acs.integration.entity.tblProduto;
 import br.com.augustocosta.acs.integration.entity.tblLocalEstoque;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +52,9 @@ public class EstoqueService {
         return repository.findByMovimentacao(movimentacao);
     }
 
-    public List<tblEstoque> getByName(String nome) {
-        return repository.findByNome(nome);
+    public List<dtoInventario> getByInventario() {
+        List<prjInventario> projections = repository.findByInventario();
+        return convertProjectionToDto(projections);
     }
 
     public List<tblEstoque> getActives() {
@@ -68,8 +72,8 @@ public class EstoqueService {
         table.setProduto(dados.getProduto());
         table.setLocalEstoque(dados.getLocalEstoque());
         table.setMovimentacao(dados.getMovimentacao());
-        table.setNome(dados.getNome());
         table.setQuantidade(dados.getQuantidade());
+        table.setValorMovimentacao(dados.getValorMovimentacao());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());
@@ -91,5 +95,21 @@ public class EstoqueService {
     public boolean isAtivo(Integer id) {
         Optional<tblEstoque> table = repository.findById(id);
         return table.map(tblEstoque::getAtivo).orElse(false);
+    }
+
+    public List<dtoInventario> convertProjectionToDto(List<prjInventario> projections) {
+        List<dtoInventario> dtos = new ArrayList<>();
+        for(prjInventario prj : projections) {
+            dtoInventario dto = new dtoInventario();
+            dto.setLocalEstoqueId(prj.getLocalEstoqueId());
+            dto.setDescricaoLocal(prj.getDescricaoLocal());
+            dto.setProdutoId(prj.getProdutoId());
+            dto.setCodigoInterno(prj.getCodigoInterno());
+            dto.setDescricaoProduto(prj.getDescricaoProduto());
+            dto.setQtdProduto(prj.getQtdProduto());
+            dto.setValorProduto(prj.getValorProduto());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }

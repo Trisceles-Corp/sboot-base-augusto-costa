@@ -29,8 +29,11 @@ public class tblCompra {
     @Column(name = "ValorTotal")
     private Double valorTotal;
 
+    @Column(name = "Estocado", nullable = false)
+    private Boolean Estocado = false;
+
     @Column(name = "Ativo", nullable = false)
-    private Boolean ativo;
+    private Boolean ativo = true;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;

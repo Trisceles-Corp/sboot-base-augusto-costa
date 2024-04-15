@@ -269,4 +269,37 @@ public class SqlQueries {
                     "AND usr.Celular = :celular " +
                     "AND usr.Ativo = 1 " +
                     "Order By 5";
+
+    public static final String QUERY_INVENTARIO =
+            "SELECT loc.LocalEstoqueId " +
+                    ",loc.DescricaoLocal " +
+                    ",produto.ProdutoId " +
+                    ",produto.CodigoInterno " +
+                    ",produto.DescricaoProduto " +
+                    ",entrada.QtdProduto - (CASE WHEN saida.QtdProduto IS NULL THEN 0 ELSE saida.QtdProduto END) AS QtdProduto " +
+                    ",entrada.ValorProduto - (CASE WHEN saida.ValorProduto IS NULL THEN 0 ELSE saida.ValorProduto END) AS ValorProduto " +
+                    "FROM dbo.tbl_produto produto " +
+                    "JOIN ( " +
+                    "SELECT etq.LocalEstoqueId " +
+                    ",etq.ProdutoId " +
+                    ",SUM(etq.Quantidade) AS QtdProduto " +
+                    ",SUM(etq.ValorMovimentacao) AS ValorProduto " +
+                    "FROM dbo.tbl_estoque etq " +
+                    "JOIN dbo.tbl_movimentacao mov ON etq.MovimentacaoId = mov.MovimentacaoId " +
+                    "WHERE mov.TipoMovimentacaoId = (SELECT TipoMovimentacaoID FROM dbo.tbl_tipomovimentacao WHERE DescricaoMovimentacao = 'Entrada') " +
+                    "GROUP BY etq.LocalEstoqueId,etq.ProdutoId " +
+                    ") entrada ON produto.ProdutoId = entrada.ProdutoId " +
+                    "LEFT JOIN ( " +
+                    "SELECT etq.LocalEstoqueId " +
+                    ",etq.ProdutoId " +
+                    ",SUM(etq.Quantidade) * -1 AS QtdProduto " +
+                    ",SUM(etq.ValorMovimentacao) * -1 AS ValorProduto " +
+                    "FROM dbo.tbl_estoque etq " +
+                    "JOIN dbo.tbl_movimentacao mov ON etq.MovimentacaoId = mov.MovimentacaoId " +
+                    "WHERE mov.TipoMovimentacaoId <> (SELECT TipoMovimentacaoID FROM dbo.tbl_tipomovimentacao WHERE DescricaoMovimentacao = 'Entrada') " +
+                    "GROUP BY etq.LocalEstoqueId,etq.ProdutoId " +
+                    ") saida ON (entrada.ProdutoId = saida.ProdutoId AND entrada.LocalEstoqueId = saida.LocalEstoqueId) " +
+                    "JOIN dbo.tbl_localestoque loc ON entrada.LocalEstoqueId = loc.LocalEstoqueId " +
+                    "ORDER BY loc.DescricaoLocal, produto.DescricaoProduto";
+
 }
