@@ -30,6 +30,10 @@ public class tblMovimentacao {
     @JoinColumn(name = "VendaId")
     private tblVenda venda;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SaidaId")
+    private tblSaida saida;
+
     @Column(name = "Observacao")
     private String observacao;
 

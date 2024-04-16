@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.business.service;
 
+import br.com.augustocosta.acs.integration.entity.tblLocalEstoque;
 import br.com.augustocosta.acs.integration.entity.tblVenda;
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 import br.com.augustocosta.acs.persistence.repository.VendaRepository;
@@ -37,6 +38,10 @@ public class VendaService {
 
     public List<tblVenda> getByAgendamento(tblAgendamento agendamento) {
         return repository.findByAgendamento(agendamento);
+    }
+
+    public List<tblVenda> getByLocalEstoque(tblLocalEstoque localestoque) {
+        return repository.findByLocalEstoque(localestoque);
     }
 
     public List<tblVenda> getByDataCriacao(LocalDateTime dataCriacao) {

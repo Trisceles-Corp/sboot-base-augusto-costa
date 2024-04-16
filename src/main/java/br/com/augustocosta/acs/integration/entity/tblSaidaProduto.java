@@ -5,26 +5,30 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-@Table(name = "tbl_venda")
+@Table(name = "tbl_saidaproduto")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblVenda {
+public class tblSaidaProduto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "VendaId")
-    private Integer id;
+    @EmbeddedId
+    private SaidaProduto id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "AgendamentoId", nullable = false)
-    private tblAgendamento agendamento;
+    @JoinColumn(name = "SaidaId", nullable = false)
+    private tblSaida saida;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "LocalEstoqueId", nullable = false)
-    private tblAgendamento localEstoque;
+    @JoinColumn(name = "ProdutoId", nullable = false)
+    private tblProduto produto;
+
+    @Column(name = "ValorUnitario", nullable = false)
+    private Double valorUnitario;
+
+    @Column(name = "Quantidade", nullable = false)
+    private Integer quantidade;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
