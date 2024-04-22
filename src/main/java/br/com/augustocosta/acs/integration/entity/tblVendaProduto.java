@@ -30,6 +30,9 @@ public class tblVendaProduto {
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
 
+    @Column(name = "ValorTotal")
+    private Double valorTotal;
+
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 

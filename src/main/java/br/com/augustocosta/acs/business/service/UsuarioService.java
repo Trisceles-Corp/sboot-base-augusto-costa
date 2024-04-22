@@ -7,6 +7,7 @@ import br.com.augustocosta.acs.integration.entity.tblPerfil;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.integration.projections.prjUsuario;
 import br.com.augustocosta.acs.persistence.repository.CargoRepository;
+import br.com.augustocosta.acs.persistence.repository.EnderecoRepository;
 import br.com.augustocosta.acs.persistence.repository.PerfilRepository;
 import br.com.augustocosta.acs.persistence.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,14 @@ public class UsuarioService {
     private final UsuarioRepository repository;
     private final CargoRepository cargoRepository;
     private final PerfilRepository perfilRepository;
+    private final EnderecoRepository enderecoRepository;
 
     @Autowired
-    public UsuarioService(UsuarioRepository repository, CargoRepository cargoRepository, PerfilRepository perfilRepository) {
+    public UsuarioService(UsuarioRepository repository, CargoRepository cargoRepository, PerfilRepository perfilRepository, EnderecoRepository enderecoRepository) {
         this.repository = repository;
         this.perfilRepository = perfilRepository;
         this.cargoRepository = cargoRepository;
+        this.enderecoRepository = enderecoRepository;
     }
 
     public List<tblUsuario> getAll() {
@@ -71,6 +74,11 @@ public class UsuarioService {
     public List<dtoUsuario> getAllByPerfil(Integer perfilId) {
         List<prjUsuario> projections = repository.findUsersByPerfilId(perfilId);
         return convertProjectionToDto(projections);
+    }
+
+    public List<tblUsuario> getAllBySolicitante() {
+        List<prjUsuario> projections = repository.findUsersBySolicitante();
+        return convertProjectionToUsuario(projections);
     }
 
     public List<dtoUsuario> getByCpfCnpj(Integer perfilId, Double cpfCnpj) {
@@ -274,5 +282,36 @@ public class UsuarioService {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    public List<tblUsuario> convertProjectionToUsuario(List<prjUsuario> projections) {
+        List<tblUsuario> users = new ArrayList<>();
+        for(prjUsuario prj : projections) {
+            tblUsuario usr = new tblUsuario();
+            usr.setId(prj.getUsuarioId());
+            usr.setCpfCnpj(prj.getCpfCnpj());
+            usr.setNome(prj.getNome());
+            usr.setSobrenome(prj.getSobrenome());
+            usr.setGenero(prj.getGenero());
+            usr.setDataNascimento(prj.getDataNascimento());
+            usr.setEmail(prj.getEmail());
+            usr.setSenha(prj.getSenha());
+            usr.setEndereco(enderecoRepository.getReferenceById(prj.getEnderecoId()));
+            usr.setDdiCelular(prj.getDdiCelular());
+            usr.setDddCelular(prj.getDddCelular());
+            usr.setCelular(prj.getCelular());
+            usr.setDdiTelefone(prj.getDdiTelefone());
+            usr.setDddTelefone(prj.getDddTelefone());
+            usr.setTelefone(prj.getTelefone());
+            usr.setProfissao(prj.getProfissao());
+            usr.setObservacao(prj.getObservacao());
+            usr.setCargo(cargoRepository.getReferenceById(prj.getCargoId()));
+            usr.setPerfil(perfilRepository.getReferenceById(prj.getPerfilId()));
+            usr.setAtivo(prj.getAtivo());
+            usr.setDataAlteracao(prj.getDataAlteracao());
+            usr.setAlteradoPor(prj.getAlteradoPor());
+            users.add(usr);
+        }
+        return users;
     }
 }

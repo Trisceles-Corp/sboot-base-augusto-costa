@@ -57,6 +57,7 @@ public class ServicoService {
 
         table.setNome(dados.getNome());
         table.setTempo(dados.getTempo());
+        table.setValor(dados.getValor());
         table.setObservacao(dados.getObservacao());
         table.setDesconto(dados.getDesconto());
         table.setComissao(dados.getComissao());

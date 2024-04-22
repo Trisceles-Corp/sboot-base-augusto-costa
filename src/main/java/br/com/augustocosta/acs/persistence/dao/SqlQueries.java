@@ -302,4 +302,11 @@ public class SqlQueries {
                     "JOIN dbo.tbl_localestoque loc ON entrada.LocalEstoqueId = loc.LocalEstoqueId " +
                     "ORDER BY loc.DescricaoLocal, produto.DescricaoProduto";
 
+    public static final String QUERY_USUARIO_SOLICITANTE =
+            "SELECT usr.* " +
+                    "FROM dbo.tbl_usuario usr " +
+                    "JOIN (SELECT * FROM dbo.tbl_Perfil WHERE Nome NOT IN ('Administrador','Cliente','Fornecedor')) sol ON usr.PerfilId = sol.PerfilId " +
+                    "WHERE usr.Ativo = 1 " +
+                    "ORDER BY usr.Nome";
+
 }

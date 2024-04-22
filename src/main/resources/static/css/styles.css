@@ -246,6 +246,24 @@ contain-option-button-active{
     width: 250px;
 }
 
+.button-nav-option {
+    --bs-bg-opacity:1;
+    background-color: transparent;
+    color: var(--cor-cinza);
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-family: "Outfit", sans-serif;
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    text-align: left;
+}
+
+.button-nav-option:hover {
+    color: var(--cor-amarelo);
+}
+
 .logo{
     width: 80%;
     height: 40px;

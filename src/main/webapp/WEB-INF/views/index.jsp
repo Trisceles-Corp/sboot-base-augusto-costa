@@ -71,11 +71,11 @@
             <img src="${pageContext.request.contextPath}/img/logos/image(5).png" alt="">
         </div>
         <div class="nav-pages">
-            <a href="agenda.html" class="nav-option" id="agenda">
+            <a class="nav-option" id="agenda">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <span class="mx-2">Agenda</span>
+                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/agenda')" > Agenda</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -96,7 +96,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
-                        <button class="mx-2" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
+                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cliente')" > Clientes</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -122,19 +122,19 @@
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/produto')">Produtos</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/produto')">Produtos</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/fornecedor')">Fornecedores</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/fornecedor')">Fornecedores</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/compra')">Pedidos de compra</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/compra')">Pedidos de compra</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="bg-transparent" onclick="carregarConteudo(contextPath + '/estoque')">Inventário</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/estoque')">Inventário</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Solicitação de saída</span><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/saida')">Solicitação de saída</button><br>
                         </div>
                     </div>
                     <script>
@@ -251,31 +251,31 @@
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/caracteristica')" >Característica</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/caracteristica')" >Característica</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/categoria')" >Categoria</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/categoria')" >Categoria</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/linha')" >Linha</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/linha')" >Linha</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/marca')" >Marca</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/marca')" >Marca</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="contain-option-button-inactive" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
                         </div>
                     </div>
                     <script>

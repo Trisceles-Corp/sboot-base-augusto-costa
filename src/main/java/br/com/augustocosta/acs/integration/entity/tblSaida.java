@@ -26,6 +26,12 @@ public class tblSaida {
     @JoinColumn(name = "LocalEstoqueId", nullable = false)
     private tblLocalEstoque localEstoque;
 
+    @Column(name = "ValorTotal")
+    private Double valorTotal;
+
+    @Column(name = "Estoque")
+    private Boolean estoque;
+
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
 
