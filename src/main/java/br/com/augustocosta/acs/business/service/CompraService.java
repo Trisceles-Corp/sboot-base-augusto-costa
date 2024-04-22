@@ -70,17 +70,8 @@ public class CompraService {
     }
 
     @Transactional
-    public tblCompra update(Integer id, tblCompra dados) {
-        tblCompra table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + id));
-
-        table.setSituacaoCompra(dados.getSituacaoCompra());
-        table.setLocalEstoque(dados.getLocalEstoque());
-        table.setAtivo(dados.getAtivo());
-        table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(dados.getAlteradoPor());
-
-        return repository.save(table);
+    public tblCompra update(tblCompra dados) {
+        return repository.save(dados);
     }
 
     @Transactional

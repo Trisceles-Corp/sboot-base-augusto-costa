@@ -80,11 +80,14 @@ function visualizarSituacaoAgendamento(id, name) {
 
 function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
+    const botaoSalvar = document.getElementById("salvar-cadastro");
+
     if (formCadastro.style.display === "none") {
         formCadastro.style.display = "block";
     } else {
         formCadastro.style.display = "block";
     }
+    const situacaoCompraIdNumerico = Number(situacaoCompraId);
     const dataCriacaoDate = new Date(dataCriacao);
     const dataFormatada = dataCriacaoDate.toLocaleDateString('pt-BR', {
         day: '2-digit',
@@ -94,6 +97,11 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
         minute: '2-digit',
         second: '2-digit'
     });
+    const camposHabilitados = situacaoCompraIdNumerico === 1;
+    document.getElementById("field_LocalEstoqueId").disabled = !camposHabilitados;
+    document.getElementById("field_SituacaoCompraId").disabled = !camposHabilitados;
+    botaoSalvar.disabled = !camposHabilitados;
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_LocalEstoqueId").value = localEstoqueId;
     document.getElementById("field_SituacaoCompraId").value = situacaoCompraId;

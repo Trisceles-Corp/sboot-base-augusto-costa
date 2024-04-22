@@ -38,15 +38,15 @@
                 <form:input path="id" class="form-control" type="text" id="field_Id" readonly="true"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="situacaoCompra" class="form-label">Situação:</form:label>
-                <form:select path="situacaoCompra" class="form-control" id="field_SituacaoCompraId" required="required" >
+                <form:label path="situacaoCompra.id" class="form-label">Situação:</form:label>
+                <form:select path="situacaoCompra.id" class="form-control" id="field_SituacaoCompraId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
                 </form:select>
             </div>
             <div class="form-group col-md-4">
-                <form:label path="localEstoque" class="form-label">Local Estoque:</form:label>
-                <form:select path="localEstoque" class="form-control" id="field_LocalEstoqueId" required="required" >
+                <form:label path="localEstoque.id" class="form-label">Local Estoque:</form:label>
+                <form:select path="localEstoque.id" class="form-control" id="field_LocalEstoqueId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarLocalEstoque}" itemValue="id" itemLabel="descricaoLocal"/>
                 </form:select>
@@ -92,7 +92,7 @@
             </table>
         </div>
         <div class="mt-2">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="submit" class="btn btn-primary" id="salvar-cadastro">Salvar</button>
             <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
         </div>
     </form:form>

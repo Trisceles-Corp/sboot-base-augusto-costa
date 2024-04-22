@@ -59,7 +59,7 @@ public class CompraController {
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(1);
-            service.update(table.getId(), table);
+            service.update(table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());

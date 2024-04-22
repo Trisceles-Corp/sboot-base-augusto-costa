@@ -54,15 +54,8 @@ public class SaidaService {
     }
 
     @Transactional
-    public tblSaida update(Integer id, tblSaida dados) {
-        tblSaida table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Saida não encontrado com id: " + id));
-
-        table.setAtivo(dados.getAtivo());
-        table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(dados.getAlteradoPor());
-
-        return repository.save(table);
+    public tblSaida update(tblSaida dados) {
+        return repository.save(dados);
     }
 
     @Transactional

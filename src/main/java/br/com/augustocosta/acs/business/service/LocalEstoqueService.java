@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblLocalEstoque;
+import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.persistence.repository.LocalEstoqueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class LocalEstoqueService {
 
     public Optional<tblLocalEstoque> getById(Integer id) {
         return repository.findById(id);
+    }
+
+    public tblLocalEstoque getByLocalId(Integer id) {
+        return repository.getReferenceById(id);
     }
 
     public List<tblLocalEstoque> getByName(String nome) {

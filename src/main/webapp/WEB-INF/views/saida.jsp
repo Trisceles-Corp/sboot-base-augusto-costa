@@ -38,15 +38,15 @@
                 <form:input path="id" class="form-control" type="text" id="field_Id" readonly="true"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="solicitante" class="form-label">Solicitante:</form:label>
-                <form:select path="solicitante" class="form-control" id="field_SolicitanteId" required="required" >
+                <form:label path="solicitante.id" class="form-label">Solicitante:</form:label>
+                <form:select path="solicitante.id" class="form-control" id="field_SolicitanteId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarSolicitante}" itemValue="id" itemLabel="nome"/>
                 </form:select>
             </div>
             <div class="form-group col-md-4">
-                <form:label path="localEstoque" class="form-label">Local Estoque:</form:label>
-                <form:select path="localEstoque" class="form-control" id="field_LocalEstoqueId" required="required" >
+                <form:label path="localEstoque.id" class="form-label">Local Estoque:</form:label>
+                <form:select path="localEstoque.id" class="form-control" id="field_LocalEstoqueId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarLocalEstoque}" itemValue="id" itemLabel="descricaoLocal"/>
                 </form:select>

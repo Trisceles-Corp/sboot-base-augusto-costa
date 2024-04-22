@@ -75,7 +75,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/agenda')" > Agenda</button>
+                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/agenda')" >Agenda</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -96,7 +96,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
-                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cliente')" > Clientes</button>
+                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -118,7 +118,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
-                        <span class="mx-2">Estoque</span>
+                        <span class="button-nav-option">Estoque</span>
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
@@ -163,7 +163,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png" id="financeiro-img">
-                        <span class="mx-2">Financeiro</span>
+                        <span class="button-nav-option"> Financeiro</span>
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
@@ -205,7 +205,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="dashboard-img">
-                        <span class="mx-2">Dashboard</span>
+                        <span class="button-nav-option">Dashboard</span>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -226,7 +226,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img">
-                        <span class="mx-2">Relatórios</span>
+                        <span class="button-nav-option">Relatórios</span>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -247,7 +247,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img">
-                        <span class="mx-2">Configurações</span>
+                        <span class="button-nav-option">Configurações</span>
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">

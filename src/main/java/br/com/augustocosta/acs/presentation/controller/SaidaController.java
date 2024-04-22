@@ -1,7 +1,6 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
-import br.com.augustocosta.acs.integration.entity.tblCompraProduto;
 import br.com.augustocosta.acs.integration.entity.tblSaida;
 import br.com.augustocosta.acs.integration.entity.tblSaidaProduto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +48,7 @@ public class SaidaController {
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblSaida table) {
         table.setAtivo(true);
+
         if (table.getId() != null && table.getId() != 0){
             Optional<tblSaida> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
@@ -56,7 +56,7 @@ public class SaidaController {
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(1);
-            service.update(table.getId(), table);
+            service.update(table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
