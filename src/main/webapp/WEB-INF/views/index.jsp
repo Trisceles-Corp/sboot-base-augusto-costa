@@ -75,7 +75,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/agenda')" >Agenda</button>
+                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/agendamento')" >Agenda</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -205,7 +205,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="dashboard-img">
-                        <span class="button-nav-option">Dashboard</span>
+                        <span class="button-nav-option">Painel</span>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/

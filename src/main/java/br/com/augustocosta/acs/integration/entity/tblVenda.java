@@ -24,7 +24,7 @@ public class tblVenda {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LocalEstoqueId", nullable = false)
-    private tblAgendamento localEstoque;
+    private tblLocalEstoque localEstoque;
 
     @Column(name = "ValorTotal")
     private Double valorTotal;

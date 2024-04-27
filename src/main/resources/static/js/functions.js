@@ -293,7 +293,7 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Comissao").value = comissao;
 }
 
-function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, senha, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
+function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
         formClienteCadast.style.display = "block";
@@ -311,8 +311,6 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     document.getElementById("inputGenero").value = genero;
     document.getElementById("inputNascimento").value = dataNascimento;
     document.getElementById("inputEmail").value = email;
-    document.getElementById("inputSenha").value = senha;
-    document.getElementById("inputConfirmacaoSenha").value = senha;
     document.getElementById("inputProfissao").value = profissao;
     document.getElementById("inputDDDCel").value = dddCelular;
     document.getElementById("inputCelular").value = celular;

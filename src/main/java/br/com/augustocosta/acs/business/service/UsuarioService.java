@@ -179,6 +179,12 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + dados.getCargoId()));
         tblPerfil perfil = perfilRepository.findById(dados.getPerfilId())
                 .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + dados.getPerfilId()));
+        if (table.getSenha() != null ){
+            dados.setSenha(table.getSenha());
+        }
+        else {
+            dados.setSenha("123456");
+        }
         repository.save(convertVo(table, endereco, cargo, perfil, dados));
         return dados;
     }

@@ -45,6 +45,7 @@ public class ClienteController {
             usuarioService.updateDto(saveEndereco, dados);
         }
         else {
+            dados.setSenha("123456");
             dados.setCargoId(1);
             dados.setPerfilId(4);
             usuarioService.createDto(enderecoService.createDto(dados), dados);

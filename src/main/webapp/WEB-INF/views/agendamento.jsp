@@ -1,145 +1,115 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Agendamento</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <!-- Bootstrap DatePicker CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
-    <!-- FullCalendar -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'/>
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' media='print' />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
+
 </head>
 <body>
-<div class="pgHeader">
-    <p>Agendamento</p>
-    <!-- Botões de Comando -->
-    <button type="button" class="btn btn-primary">Agendar</button>
-    <button type="button" class="btn btn-secondary">Bloquear</button>
-</div>
-<div class="pgNavigation">
-    <!-- Calendário -->
-    <div id="calendar"></div>
-    <div class="form-group">
-        <div class="input-group date" id="datepicker">
-            <input type="text" class="form-control">
-            <div class="input-group-addon">
-                <span class="glyphicon glyphicon-th"></span>
-            </div>
-        </div>
+<div>
+    <div class="row" id="linha-botao-cadastro">
+        <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar Agendamento</button>
     </div>
 
-    <!-- Radio Buttons -->
-    <div class="radio">
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="profissional" id="barbeiros" value="barbeiros">
-            <label class="form-check-label" for="barbeiros">Barbeiros</label>
+    <!-- formulário de cadastro -->
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" onsubmit="return verificarNomeAntesDeSalvar()">
+        <form:hidden path="agendamento.id" id="field_Id"/>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <form:label path="agendamento.cliente.id" class="form-label">Cliente:</form:label>
+            <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required">
+                <form:option value="" label=" Selecione "/>
+                <form:options items="${listarClientes}" itemValue="id" itemLabel="Nome"/>
+            </form:select>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="profissional" id="cabeleireiros" value="cabeleireiros">
-            <label class="form-check-label" for="cabeleireiros">Cabeleireiros</label>
+        <div class="form-group col-md-4">
+            <form:label path="agendamento.colaborador.id" class="form-label">Colaborador:</form:label>
+            <form:select path="agendamento.colaborador.id" class="form-control" id="field_ColaboradorId" required="required">
+                <form:option value="" label=" Selecione "/>
+                <form:options items="${listarColaboradores}" itemValue="id" itemLabel="Nome"/>
+            </form:select>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="profissional" id="depiladoras" value="depiladoras">
-            <label class="form-check-label" for="depiladoras">Depiladoras</label>
+        <div class="form-group col-md-2">
+            <form:label path="agendamento.dataAgendamento" class="form-label" for="inputNascimento">Data:</form:label>
+            <form:input  path="agendamento.dataAgendamento" type="date" class="form-control" id="inputNascimento" placeholder="mm-dd-yyyy"  readonly="readonly" required="required" />
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="profissional" id="manicures" value="manicures">
-            <label class="form-check-label" for="manicures">Manicures</label>
+        <div class="form-group col-md-2">
+            <form:label path="agendamento.horaAgendamento" class="form-label" for="text-input">Hora:</form:label>
+            <form:input path="agendamento.horaAgendamento" class="form-control" type="time" id="field_HoraAgendamento" min="09:00" max="18:00" required="required"/>
         </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <form:label path="servicosAgendamento.servico.id" class="form-label">Serviço:</form:label>
+            <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId">
+                <form:option value="" label=" Selecione "/>
+                <form:options items="${listarServiços}" itemValue="id" itemLabel="nome"/>
+            </form:select>
+        </div>
+        <div class="form-group col-md-4">
+            <form:label path="vendaProduto.produto.id" class="form-label">Produto:</form:label>
+            <form:select path="vendaProduto.produto.id" class="form-control" id="field_ProdutoId">
+                <form:option value="" label=" Selecione "/>
+                <form:options items="${listarProdutos}" itemValue="id" itemLabel="descricaoProduto"/>
+            </form:select>
+        </div>
+        <div class="form-group col-md-2">
+            <form:label path="agendamento.situacao.id" class="form-label">Situação:</form:label>
+            <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId">
+                <form:option value="" label=" Selecione "/>
+                <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
+            </form:select>
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+        </div>
+        </form:form>
     </div>
 
-    <!-- Labels Informativos -->
-    <div class="mt-3">
-        <div><span class="color-box blue"></span> <label>Finalizado</label></div>
-        <div><span class="color-box green"></span> <label>Agendado</label></div>
-        <div><span class="color-box red"></span> <label>Em atendimento</label></div>
-        <div><span class="color-box yellow"></span> <label>Em espera</label></div>
-    </div>
-</div>
-<div class="pgContent">
-    <!-- Grid Central com JSTL -->
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <table class="table">
-                <thead>
+    <div>
+        <table id="tabelaProdutoss" class="table table-bordered table-hover table-responsive my-3">
+            <thead class="table-dark">
+            <tr class="gridHeader">
+                <th scope="col" class="th-editar">Ações</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Linha</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Mínimo</th>
+                <th scope="col">Codigo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="agendamento" items="${listaProdutos}">
                 <tr>
-                    <th>Horário</th>
-                    <th>Alexander</th>
-                    <th>Paulo</th>
-                    <th>Monica</th>
-                    <th>Maryene</th>
-                    <th>Vitor</th>
+                    <td class="cel-img-tabela-clientes">
+                        <form action="${pageContext.request.contextPath}/agendamento/delete/${agendamento.id}" method="POST">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarProduto('${agendamento.id}', '${agendamento.codigoInterno}', '${agendamento.descricaoProduto}', '${agendamento.codigoBarras}', '${agendamento.marca.id}', '${agendamento.categoria.id}', '${agendamento.linha.id}', '${agendamento.caracteristica.id}', '${agendamento.estoqueMinimo}', '${agendamento.custo}', '${agendamento.valorVenda}', '${agendamento.comissao}'); return false;" title="Editar">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/agendamento/delete/${agendamento.id}')">
+                                <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                            </a>
+                        </form>
+                    </td>
+                    <td><c:out value="${agendamento.descricaoProduto}" /></td>
+                    <td><c:out value="${agendamento.marca.descricaoMarca}" /></td>
+                    <td><c:out value="${agendamento.linha.descricaoLinha}" /></td>
+                    <td><c:out value="${agendamento.valorVenda}" /></td>
+                    <td><c:out value="${agendamento.estoqueMinimo}" /></td>
+                    <td><c:out value="${agendamento.codigoInterno}" /></td>
                 </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="i" begin="9" end="18" step="1">
-                    <tr>
-                        <td>${i < 10 ? '0' : ''}${i}:00</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <c:if test="${i != 18}">
-                        <tr>
-                            <td>${i < 10 ? '0' : ''}${i}:30</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </c:if>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
-</div>
-
-<!-- Bootstrap e DatePicker JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#datepicker').datepicker({
-            format: "dd/mm/yyyy",
-            todayHighlight: true,
-            autoclose: true,
-            language: "pt-BR"
-        }).datepicker("setDate", new Date());
-    });
-</script>
-<!-- FullCalendar -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/pt-br.js'></script>
-<script>
-    $(document).ready(function() {
-        $('#calendar').fullCalendar({
-            locale: 'pt-br',
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,agendaWeek,agendaDay'
-            },
-            defaultDate: new Date(),
-            navLinks: false, // can click day/week names to navigate views
-            editable: false,
-            eventLimit: true, // allow "more" link when too many events
-            events: [
-                // Aqui você pode adicionar eventos dinamicamente
-            ]
-        });
-    });
-</script>
 </body>
 </html>
