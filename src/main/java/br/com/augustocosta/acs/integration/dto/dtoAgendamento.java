@@ -15,7 +15,6 @@ public class dtoAgendamento {
     private tblLocalEstoque localEstoque;
     private tblServicosAgendamento servicosAgendamento;
     private List<tblServico> servico;
-    private LocalTime tempoServico;
     private tblVenda venda;
     private tblVendaProduto vendaProduto;
     private List<dtoProdutoVenda> produto;

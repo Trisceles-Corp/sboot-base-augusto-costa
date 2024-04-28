@@ -356,3 +356,81 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
     document.getElementById("inputEstado").value = uf;
     document.getElementById("inputObservacao").value = observacao;
 }
+
+function adicionarServico() {
+    const servicoId = document.getElementById("field_ServicoId").value;
+    buscarDadosServicos(servicoId);
+}
+
+function adicionarProduto() {
+    const produtoId = document.getElementById("field_ProdutoId").value;
+    buscarDadosProdutos(produtoId);
+}
+
+function buscarDadosServicos(servicoId) {
+    $.ajax({
+        url: '/agendamento/listaServicoAgendamento/' + servicoId,
+        type: 'GET',
+        success: function(response) {
+            atualizarGridServicos(response);
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados dos serviços: ", error);
+        }
+    });
+}
+
+function buscarDadosProdutos(produtoId) {
+    $.ajax({
+        url: '/agendamento/listaProdutoAgendamento/' + produtoId,
+        type: 'GET',
+        success: function(response) {
+            atualizarGridProdutos(response);
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados dos produtos: ", error);
+        }
+    });
+}
+
+function atualizarGridServicos(servico) {
+    var tabelaServicos = document.getElementById("tabelaDadosServicos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaServicos.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaServico = novaLinha.insertCell(1);
+    var celulaValor = novaLinha.insertCell(2);
+    var celulaDuracao = novaLinha.insertCell(3);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerServico(this)">Remover</a>';
+    celulaServico.innerHTML = servico.nome;
+    celulaValor.innerHTML = servico.valor;
+    celulaDuracao.innerHTML = servico.duracao;
+}
+
+function atualizarGridProdutos(produto) {
+    var tabelaProduto = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaProduto.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaProduto = novaLinha.insertCell(1);
+    var celulaMarca = novaLinha.insertCell(2);
+    var celulaLinha = novaLinha.insertCell(3);
+    var celulaPreco = novaLinha.insertCell(4);
+    var celulaQuantidade = novaLinha.insertCell(5);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)">Remover</a>';
+    celulaProduto.innerHTML = produto.descricaoProduto;
+    celulaMarca.innerHTML = produto.marca.descricaoMarca;
+    celulaLinha.innerHTML = produto.linha.descricaoLinha;
+    celulaPreco.innerHTML = produto.valorVenda;
+    celulaQuantidade.innerHTML = document.getElementById("field_Quantidade").outerHTML;
+}
+
+function removerServico(link) {
+    var row = link.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}
+
+function removerProduto(link) {
+    var row = link.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}

@@ -8,6 +8,10 @@ import lombok.*;
 public class dtoProdutoVenda {
 
     private Integer produtoId;
+    private String nome;
+    private String marca;
+    private String linha;
+    private Double preco;
     private Integer quantidade;
 
     public dtoProdutoVenda() {

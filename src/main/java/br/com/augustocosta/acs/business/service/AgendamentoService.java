@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.dto.dtoAgendamento;
+import br.com.augustocosta.acs.integration.dto.dtoProdutoVenda;
 import br.com.augustocosta.acs.integration.entity.*;
 import br.com.augustocosta.acs.persistence.repository.AgendamentoRepository;
 import br.com.augustocosta.acs.persistence.repository.ServicosAgendamentoRepository;
@@ -131,6 +132,24 @@ public class AgendamentoService {
 
     public List<tblAgendamento> getInactives() {
         return repository.findByAtivoFalse();
+    }
+
+    public List<dtoProdutoVenda> getProdutoByAgendamentoId(Integer agendamentoId)
+    {
+        List<dtoProdutoVenda> ret = new ArrayList<>();
+        tblVenda venda = vendaRepository.findById(agendamentoId).orElse(null);
+        List<tblVendaProduto> vendaProduto = vendaProdutoRepository.findByVenda(venda);
+        vendaProduto.forEach(item -> {
+            dtoProdutoVenda produtoVenda = new dtoProdutoVenda();
+            produtoVenda.setProdutoId(item.getProduto().getId());
+            produtoVenda.setNome(item.getProduto().getDescricaoProduto());
+            produtoVenda.setMarca(item.getProduto().getMarca().getDescricaoMarca());
+            produtoVenda.setLinha(item.getProduto().getLinha().getDescricaoLinha());
+            produtoVenda.setPreco(item.getProduto().getValorVenda());
+            produtoVenda.setProdutoId(item.getQuantidade());
+            ret.add(produtoVenda);
+        });
+        return ret;
     }
 
     public tblAgendamento update(tblAgendamento dados) {

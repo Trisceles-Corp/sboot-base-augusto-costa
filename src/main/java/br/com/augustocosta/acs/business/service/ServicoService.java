@@ -31,6 +31,10 @@ public class ServicoService {
         return repository.findById(id);
     }
 
+    public tblServico getByServiceId(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Servico não encontrado"));
+    }
+
     public List<tblServico> getByName(String nome) {
         return repository.findByNome(nome);
     }

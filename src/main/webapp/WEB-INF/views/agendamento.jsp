@@ -11,7 +11,6 @@
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
-
 </head>
 <body>
 <div>
@@ -29,14 +28,14 @@
             <form:label path="agendamento.cliente.id" class="form-label" for="field_ClienteId">Cliente:</form:label>
             <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required">
                 <form:option value="" label=" Selecione "/>
-                <form:options items="${listarClientes}" itemValue="id" itemLabel="Nome"/>
+                <form:options items="${listarClientes}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
         </div>
         <div class="form-group col-md-4">
             <form:label path="agendamento.colaborador.id" class="form-label" for="field_ColaboradorId">Colaborador:</form:label>
             <form:select path="agendamento.colaborador.id" class="form-control" id="field_ColaboradorId" required="required">
                 <form:option value="" label=" Selecione "/>
-                <form:options items="${listarColaboradores}" itemValue="id" itemLabel="Nome"/>
+                <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
         </div>
         <div class="form-group col-md-2">
@@ -45,7 +44,7 @@
         </div>
         <div class="form-group col-md-1">
             <form:label path="agendamento.horaAgendamento" class="form-label" for="field_HoraAgendamento">Hora:</form:label>
-            <form:select path="agendamento.horaAgendamento" class="form-control" id="field_HoraAgendamento">
+            <form:select path="agendamento.horaAgendamento" class="form-control" id="field_HoraAgendamento" required="required">
                 <form:option value="" label="Select"/>
                 <option selected>Select</option>
                 <option value="09:00" label="09:00"></option>
@@ -70,14 +69,14 @@
             </form:select>
         </div>
         <div class="form-group col-md-1">
-            <form:label path="tempoServico" class="form-label" for="inputDuracao">Duração:</form:label>
-            <form:input path="tempoServico" type="text" class="form-control" id="inputDuracao" maxlength="100" readonly="true"/>
+            <form:label path="agendamento.duracao" class="form-label" for="field_Duracao">Duração:</form:label>
+            <form:input path="agendamento.duracao" type="text" class="form-control" id="field_Duracao" readonly="true"/>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-4">
             <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:</form:label>
-            <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId">
+            <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId" required="required">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarServiços}" itemValue="id" itemLabel="nome"/>
             </form:select>
@@ -90,17 +89,94 @@
             </form:select>
         </div>
         <div class="form-group col-md-2">
+            <form:label path="vendaProduto.quantidade" class="form-label" for="field_Quantidade">Qtde Produto:</form:label>
+            <form:input path="vendaProduto.quantidade" type="number" class="form-control" id="field_Quantidade" placeholder="0"/>
+        </div>
+        <div class="form-group col-md-2">
             <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:</form:label>
-            <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId">
-                <form:option value="" label=" Selecione "/>
+            <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId" required="required">
                 <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
             </form:select>
         </div>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <button type="button" class="btn btn-outline-secondary" onclick="adicionarServico()">Adicionar Serviço</button>
+            </div>
+            <div class="form-group col-md-4">
+                <button type="button" class="btn btn-outline-secondary" onclick="adicionarProduto()">Adicionar Produto</button>
+            </div>
+        </div>
+
+        <div class="row" id="tabelaServicos">
+            <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3">
+                <thead class="table-secondary">
+                <tr class="gridHeader">
+                    <th scope="col" class="th-editar">Ações</th>
+                    <th scope="col">Serviço</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">Duração</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="servico" items="${listarServiçosAgendamento}">
+                    <tr>
+                        <td class="cel-img-tabela-clientes">
+                            <form action="${pageContext.request.contextPath}/saida/delete/${servico.id}" method="POST">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${servico.id}')">
+                                    <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                                </a>
+                            </form>
+                        </td>
+                        <td><c:out value="${servico.nome}" /></td>
+                        <td><c:out value="${servico.valor}" /></td>
+                        <td><c:out value="${servico.tempo}" /></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row" id="tabelaProduto">
+            <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3">
+                <thead class="table-secondary">
+                <tr class="gridHeader">
+                    <th scope="col" class="th-editar">Ações</th>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Linha</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="saidaProduto" items="${listarProdutosAgendamento}">
+                    <tr>
+                        <td class="cel-img-tabela-clientes">
+                            <form action="${pageContext.request.contextPath}/saida/delete/${saidaProduto.id}" method="POST">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${saidaProduto.id}')">
+                                    <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                                </a>
+                            </form>
+                        </td>
+                        <td><c:out value="${saidaProduto.nome}" /></td>
+                        <td><c:out value="${saidaProduto.marca}" /></td>
+                        <td><c:out value="${saidaProduto.linha}" /></td>
+                        <td><c:out value="${saidaProduto.preco}" /></td>
+                        <td><c:out value="${saidaProduto.quantidade}" /></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+
         <div class="mt-2">
             <button type="submit" class="btn btn-primary">Salvar</button>
             <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
         </div>
         </form:form>
     </div>
+</div>
 </body>
 </html>

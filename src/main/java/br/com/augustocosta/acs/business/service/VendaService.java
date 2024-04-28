@@ -36,8 +36,8 @@ public class VendaService {
         return repository.findById(id);
     }
 
-    public List<tblVenda> getByAgendamento(tblAgendamento agendamento) {
-        return repository.findByAgendamento(agendamento);
+    public List<tblVenda> getByAgendamentoId(Integer id) {
+        return repository.findByAgendamentoId(id);
     }
 
     public List<tblVenda> getByLocalEstoque(tblLocalEstoque localestoque) {

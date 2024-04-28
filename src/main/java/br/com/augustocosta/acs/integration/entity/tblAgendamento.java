@@ -33,6 +33,9 @@ public class tblAgendamento {
     @Column(name = "HoraAgendamento", nullable = false)
     private LocalTime horaAgendamento;
 
+    @Column(name = "Duracao")
+    private LocalTime duracao;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SituacaoId")
     private tblSituacaoAgendamento situacao;
