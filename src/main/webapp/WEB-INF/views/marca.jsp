@@ -34,7 +34,7 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-5">
-                <form:label path="descricaoMarca" class="form-label" for="text-input">Descrição:</form:label>
+                <form:label path="descricaoMarca" class="form-label" for="field_Nome">Descrição:</form:label>
                 <form:input path="descricaoMarca" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
             </div>
         </div>

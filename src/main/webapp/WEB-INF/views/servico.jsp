@@ -34,29 +34,29 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-5">
-                <form:label path="nome" class="form-label" for="text-input">Nome:</form:label>
+                <form:label path="nome" class="form-label" for="field_Nome">Nome:</form:label>
                 <form:input path="nome" class="form-control" type="text" id="field_Nome" required="required" />
             </div>
             <div class="form-group col-md-1">
-                <form:label path="tempo" class="form-label" for="text-input">Tempo:</form:label>
+                <form:label path="tempo" class="form-label" for="field_Tempo">Tempo:</form:label>
                 <form:input path="tempo" class="form-control" type="text" id="field_Tempo" required="required" placeholder="00:30"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="valor" class="form-label" for="text-input">Valor:</form:label>
+                <form:label path="valor" class="form-label" for="field_Valor">Valor:</form:label>
                 <form:input path="valor" class="form-control" type="text" id="field_Valor" required="required"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="desconto" class="form-label" for="text-input">Desconto:</form:label>
+                <form:label path="desconto" class="form-label" for="field_Desconto">Desconto:</form:label>
                 <form:input path="desconto" class="form-control" type="text" id="field_Desconto" />
             </div>
             <div class="form-group col-md-2">
-                <form:label path="comissao" class="form-label" for="text-input">Comissão:</form:label>
+                <form:label path="comissao" class="form-label" for="field_Comissao">Comissão:</form:label>
                 <form:input path="comissao" class="form-control" type="text" id="field_Comissao" />
             </div>
         </div>
         <div>
             <div class="form-group col-md-12">
-                <form:label path="observacao" class="form-label" for="text-input">Observacao:</form:label>
+                <form:label path="observacao" class="form-label" for="field_Observacao">Observacao:</form:label>
                 <form:textarea path="observacao" class="form-control" type="text" id="field_Observacao" />
             </div>
         </div>

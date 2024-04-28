@@ -31,61 +31,61 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-4">
-                <form:label path="descricaoProduto" class="form-label" for="text-input">Nome:</form:label>
+                <form:label path="descricaoProduto" class="form-label" for="field_Name">Nome:</form:label>
                 <form:input path="descricaoProduto" class="form-control" type="text" id="field_Name" />
             </div>
             <div class="form-group col-md-1">
-                <form:label path="codigoInterno" class="form-label" for="text-input">Codigo:</form:label>
+                <form:label path="codigoInterno" class="form-label" for="field_CodigoInterno">Codigo:</form:label>
                 <form:input path="codigoInterno" class="form-control" type="text" id="field_CodigoInterno" />
             </div>
             <div class="form-group col-md-2">
-                <form:label path="codigoBarras" class="form-label" for="text-input">Bar Code:</form:label>
+                <form:label path="codigoBarras" class="form-label" for="field_CodigoBarras">Bar Code:</form:label>
                 <form:input path="codigoBarras" class="form-control" type="text" id="field_CodigoBarras" />
             </div>
             <div class="form-group col-md-1">
-                <form:label path="custo" class="form-label" for="text-input">Custo:</form:label>
+                <form:label path="custo" class="form-label" for="field_Custo">Custo:</form:label>
                 <form:input path="custo" class="form-control" type="text" id="field_Custo" />
             </div>
             <div class="form-group col-md-2">
-                <form:label path="valorVenda" class="form-label" for="text-input">Valor Venda:</form:label>
+                <form:label path="valorVenda" class="form-label" for="field_valorVenda">Valor Venda:</form:label>
                 <form:input path="valorVenda" class="form-control" type="text" id="field_valorVenda" />
             </div>
             <div class="form-group col-md-1">
-                <form:label path="comissao" class="form-label" for="text-input">Comissão:</form:label>
+                <form:label path="comissao" class="form-label" for="field_Comissao">Comissão:</form:label>
                 <form:input path="comissao" class="form-control" type="text" id="field_Comissao" />
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-2">
-                <form:label path="marca" class="form-label">Marca:</form:label>
+                <form:label path="marca" class="form-label" for="field_MarcaId">Marca:</form:label>
                 <form:select path="marca" class="form-control" id="field_MarcaId">
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listaMarcas}" itemValue="id" itemLabel="descricaoMarca"/>
                 </form:select>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="categoria" class="form-label">Categoria:</form:label>
+                <form:label path="categoria" class="form-label" for="field_CategoriaId">Categoria:</form:label>
                 <form:select path="categoria" class="form-control" id="field_CategoriaId">
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listaCategorias}" itemValue="id" itemLabel="nome"/>
                 </form:select>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="linha" class="form-label">Linha:</form:label>
+                <form:label path="linha" class="form-label" for="field_LinhaId">Linha:</form:label>
                 <form:select path="linha" class="form-control" id="field_LinhaId">
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listaLinhas}" itemValue="id" itemLabel="descricaoLinha"/>
                 </form:select>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="caracteristica" class="form-label">Característica:</form:label>
+                <form:label path="caracteristica" class="form-label" for="field_CaracteristicaId">Característica:</form:label>
                 <form:select path="caracteristica" class="form-control" id="field_CaracteristicaId">
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listaCaracteristicas}" itemValue="id" itemLabel="descricaoCaracteristica"/>
                 </form:select>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="estoqueMinimo" class="form-label" for="text-input">Estoque Mínimo:</form:label>
+                <form:label path="estoqueMinimo" class="form-label" for="field_EstoqueMinimo">Estoque Mínimo:</form:label>
                 <form:input path="estoqueMinimo" class="form-control" type="text" id="field_EstoqueMinimo" />
             </div>
         </div>

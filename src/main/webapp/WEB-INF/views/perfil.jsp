@@ -34,11 +34,11 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-5">
-                <form:label path="nome" class="form-label" for="text-input">Nome:</form:label>
+                <form:label path="nome" class="form-label" for="field_Nome">Nome:</form:label>
                 <form:input path="nome" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
             </div>
             <div class="form-group col-md-3">
-                <form:label path="tipoPerfil" class="form-label">Tipo de Perfil:</form:label>
+                <form:label path="tipoPerfil" class="form-label" for="field_TipoPerfilId">Tipo de Perfil:</form:label>
                 <form:select path="tipoPerfil" class="form-control" id="field_TipoPerfilId">
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listaTiposPerfil}" itemValue="id" itemLabel="descricao"/>

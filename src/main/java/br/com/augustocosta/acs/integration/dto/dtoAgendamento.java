@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.dto;
 
 import br.com.augustocosta.acs.integration.entity.*;
 import lombok.*;
+
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -13,6 +15,7 @@ public class dtoAgendamento {
     private tblLocalEstoque localEstoque;
     private tblServicosAgendamento servicosAgendamento;
     private List<tblServico> servico;
+    private LocalTime tempoServico;
     private tblVenda venda;
     private tblVendaProduto vendaProduto;
     private List<dtoProdutoVenda> produto;

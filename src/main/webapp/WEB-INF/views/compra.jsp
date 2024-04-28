@@ -34,29 +34,29 @@
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="tblCompra" action="${pageContext.request.contextPath}/compra/salvar" method="POST">
         <div class="row">
             <div class="form-group col-md-1">
-                <form:label path="id" class="form-label" for="text-input">Pedido:</form:label>
+                <form:label path="id" class="form-label" for="field_Id">Pedido:</form:label>
                 <form:input path="id" class="form-control" type="text" id="field_Id" readonly="true"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="situacaoCompra.id" class="form-label">Situação:</form:label>
+                <form:label path="situacaoCompra.id" class="form-label" for="field_SituacaoCompraId">Situação:</form:label>
                 <form:select path="situacaoCompra.id" class="form-control" id="field_SituacaoCompraId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
                 </form:select>
             </div>
             <div class="form-group col-md-4">
-                <form:label path="localEstoque.id" class="form-label">Local Estoque:</form:label>
+                <form:label path="localEstoque.id" class="form-label" for="field_LocalEstoqueId">Local Estoque:</form:label>
                 <form:select path="localEstoque.id" class="form-control" id="field_LocalEstoqueId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarLocalEstoque}" itemValue="id" itemLabel="descricaoLocal"/>
                 </form:select>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="valorTotal" class="form-label" for="text-input">Valor Pedido:</form:label>
+                <form:label path="valorTotal" class="form-label" for="field_ValorTotal">Valor Pedido:</form:label>
                 <form:input path="valorTotal" class="form-control" type="number" id="field_ValorTotal" readonly="true"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="dataCriacao" class="form-label" for="text-input">Data Pedido:</form:label>
+                <form:label path="dataCriacao" class="form-label" for="field_DataCriacao">Data Pedido:</form:label>
                 <form:input path="dataCriacao" class="form-control" type="text" id="field_DataCriacao" disabled="true" />
             </div>
         </div>
