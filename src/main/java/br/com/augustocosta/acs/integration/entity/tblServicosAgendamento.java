@@ -17,11 +17,13 @@ public class tblServicosAgendamento {
     private ServicosAgendamento id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ServicoId", nullable = false)
+    @MapsId("servicoId")
+    @JoinColumn(name = "ServicoId", referencedColumnName = "ServicoId")
     private tblServico servico;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "AgendamentoId", nullable = false)
+    @MapsId("agendamentoId")
+    @JoinColumn(name = "AgendamentoId", referencedColumnName = "AgendamentoId")
     private tblAgendamento agendamento;
 
     @Column(name = "ValorUnitario", nullable = false)

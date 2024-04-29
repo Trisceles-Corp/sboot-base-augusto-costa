@@ -12,7 +12,7 @@ import java.util.List;
 public class dtoAgendamento {
 
     private tblAgendamento agendamento;
-    private tblLocalEstoque localEstoque;
+    private Integer localEstoqueId;
     private tblServicosAgendamento servicosAgendamento;
     private List<tblServico> servico;
     private tblVenda venda;

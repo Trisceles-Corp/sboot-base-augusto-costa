@@ -99,7 +99,7 @@ public class AgendamentoController {
 
     @GetMapping("/listaProdutoAgendamento/{produtoId}")
     @ResponseBody
-    public ResponseEntity<tblProduto> listaProdutoAgendamento(@PathVariable("´produtoId") Integer produtoId) {
+    public ResponseEntity<tblProduto> listaProdutoAgendamento(@PathVariable("produtoId") Integer produtoId) {
         tblProduto produto = produtoService.getByProdutoId(produtoId);
         return ResponseEntity.ok(produto);
     }

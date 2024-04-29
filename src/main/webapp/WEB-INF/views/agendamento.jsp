@@ -17,11 +17,8 @@
     <div class="itemHeader">
         <h4>Agendamento</h4>
     </div>
-    <div class="row" id="linha-botao-cadastro">
-        <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
-    </div>
     <!-- formulário de cadastro -->
-    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST">
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" style="display: block">
         <form:hidden path="agendamento.id" id="field_Id"/>
     <div class="row">
         <div class="form-group col-md-4">
@@ -74,11 +71,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-3">
             <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:</form:label>
             <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId" required="required">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarServiços}" itemValue="id" itemLabel="nome"/>
+            </form:select>
+        </div>
+        <div class="form-group col-md-1">
+            <form:label path="servicosAgendamento" class="form-label" for="buttonServicos">Adicionar:</form:label>
+            <button type="button" class="btn btn-outline-secondary" id="buttonServicos" onclick="adicionarServico()">+</button>
+        </div>
+        <div class="form-group col-md-2">
+            <form:label path="localEstoqueId" class="form-label" for="field_LocalEstoqueId">Local Estoque:</form:label>
+            <form:select path="localEstoqueId" class="form-control" id="field_LocalEstoqueId">
+                <form:options items="${listarLocaisEstoque}" itemValue="id" itemLabel="DescricaoLocal"/>
             </form:select>
         </div>
         <div class="form-group col-md-4">
@@ -88,30 +95,28 @@
                 <form:options items="${listarProdutos}" itemValue="id" itemLabel="descricaoProduto"/>
             </form:select>
         </div>
-        <div class="form-group col-md-2">
-            <form:label path="vendaProduto.quantidade" class="form-label" for="field_Quantidade">Qtde Produto:</form:label>
+        <div class="form-group col-md-1">
+            <form:label path="vendaProduto.quantidade" class="form-label" for="field_Quantidade">Qtde.:</form:label>
             <form:input path="vendaProduto.quantidade" type="number" class="form-control" id="field_Quantidade" placeholder="0"/>
         </div>
-        <div class="form-group col-md-2">
-            <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:</form:label>
-            <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId" required="required">
-                <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
-            </form:select>
+        <div class="form-group col-md-1">
+            <form:label path="vendaProduto" class="form-label" for="buttonProduto">Adicionar:</form:label>
+            <button type="button" class="btn btn-outline-secondary" id="buttonProduto" onclick="adicionarProduto()">+</button>
         </div>
         <div class="row">
-            <div class="form-group col-md-5">
-                <button type="button" class="btn btn-outline-secondary" onclick="adicionarServico()">Adicionar Serviço</button>
-            </div>
-            <div class="form-group col-md-4">
-                <button type="button" class="btn btn-outline-secondary" onclick="adicionarProduto()">Adicionar Produto</button>
+            <div class="form-group col-md-2">
+                <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:</form:label>
+                <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId" required="required">
+                    <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
+                </form:select>
             </div>
         </div>
-
         <div class="row" id="tabelaServicos">
-            <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3">
+            <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3" style="display: none">
                 <thead class="table-secondary">
                 <tr class="gridHeader">
                     <th scope="col" class="th-editar">Ações</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Serviço</th>
                     <th scope="col">Valor</th>
                     <th scope="col">Duração</th>
@@ -128,6 +133,7 @@
                                 </a>
                             </form>
                         </td>
+                        <td><c:out value="${servico.id}" /></td>
                         <td><c:out value="${servico.nome}" /></td>
                         <td><c:out value="${servico.valor}" /></td>
                         <td><c:out value="${servico.tempo}" /></td>
@@ -137,11 +143,12 @@
             </table>
         </div>
 
-        <div class="row" id="tabelaProduto">
-            <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3">
+        <div class="row" id="tabelaProduto" >
+            <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3" style="display: none">
                 <thead class="table-secondary">
                 <tr class="gridHeader">
                     <th scope="col" class="th-editar">Ações</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Produto</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Linha</th>
@@ -153,13 +160,14 @@
                 <c:forEach var="saidaProduto" items="${listarProdutosAgendamento}">
                     <tr>
                         <td class="cel-img-tabela-clientes">
-                            <form action="${pageContext.request.contextPath}/saida/delete/${saidaProduto.id}" method="POST">
+                            <form action="${pageContext.request.contextPath}/saida/delete/${saidaProduto.produtoId}" method="POST">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${saidaProduto.id}')">
+                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${saidaProduto.produtoId}')">
                                     <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
                                 </a>
                             </form>
                         </td>
+                        <td><c:out value="${saidaProduto.produtoId}" /></td>
                         <td><c:out value="${saidaProduto.nome}" /></td>
                         <td><c:out value="${saidaProduto.marca}" /></td>
                         <td><c:out value="${saidaProduto.linha}" /></td>
@@ -172,8 +180,7 @@
         </div>
 
         <div class="mt-2">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+            <button type="button" class="btn btn-primary" onclick="coletarDadosFormulario(); document.getElementById('form-cadastro').submit();">Salvar</button>
         </div>
         </form:form>
     </div>

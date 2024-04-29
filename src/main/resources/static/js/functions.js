@@ -1,3 +1,26 @@
+function atualizarDuracaoAposRemocao(tempoServico) {
+    var duracao = document.getElementById("field_Duracao");
+    var duracaoAtualMinutos = converteHoraParaMinutos(duracao.value);
+    var tempoServicoMinutos = converteHoraParaMinutos(tempoServico);
+
+    var totalMinutos = duracaoAtualMinutos - tempoServicoMinutos;
+
+    duracao.value = converteMinutosParaHora(totalMinutos);
+}
+
+function converteHoraParaMinutos(hora) {
+    if (!hora || !hora.includes(":")) {
+        return 0;
+    }
+    var partes = hora.split(":");
+    return parseInt(partes[0], 10) * 60 + parseInt(partes[1], 10);
+}
+
+function converteMinutosParaHora(minutos) {
+    var horas = Math.floor(minutos / 60);
+    var mins = minutos % 60;
+    return String(horas).padStart(2, '0') + ":" + String(mins).padStart(2, '0');
+}
 function toggleFormCadastro() {
     const formCadastro = document.getElementById("form-cadastro");
     if (formCadastro.style.display === "block") {
@@ -359,11 +382,23 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
 
 function adicionarServico() {
     const servicoId = document.getElementById("field_ServicoId").value;
+    const table = document.getElementById("tabelaDadosServicos");
+    if (table.style.display === "none") {
+        table.style.display = "block";
+    } else {
+        table.style.display = "block";
+    }
     buscarDadosServicos(servicoId);
 }
 
 function adicionarProduto() {
     const produtoId = document.getElementById("field_ProdutoId").value;
+    const table = document.getElementById("tabelaDadosProdutos");
+    if (table.style.display === "none") {
+        table.style.display = "block";
+    } else {
+        table.style.display = "block";
+    }
     buscarDadosProdutos(produtoId);
 }
 
@@ -394,43 +429,123 @@ function buscarDadosProdutos(produtoId) {
 }
 
 function atualizarGridServicos(servico) {
+    var duracao = document.getElementById("field_Duracao");
     var tabelaServicos = document.getElementById("tabelaDadosServicos").getElementsByTagName('tbody')[0];
     var novaLinha = tabelaServicos.insertRow();
     var celulaExcluir = novaLinha.insertCell(0);
-    var celulaServico = novaLinha.insertCell(1);
-    var celulaValor = novaLinha.insertCell(2);
-    var celulaDuracao = novaLinha.insertCell(3);
+    var celulaId = novaLinha.insertCell(1);
+    var celulaServico = novaLinha.insertCell(2);
+    var celulaValor = novaLinha.insertCell(3);
+    var celulaDuracao = novaLinha.insertCell(4);
 
-    celulaExcluir.innerHTML = '<a href="#" onclick="removerServico(this)">Remover</a>';
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerServico(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaId.innerHTML = servico.id;
     celulaServico.innerHTML = servico.nome;
     celulaValor.innerHTML = servico.valor;
-    celulaDuracao.innerHTML = servico.duracao;
+    celulaDuracao.innerHTML = servico.tempo;
+
+    var duracaoAtualMinutos = converteHoraParaMinutos(duracao.value);
+    var tempoServicoMinutos = converteHoraParaMinutos(servico.tempo);
+    var totalMinutos = duracaoAtualMinutos + tempoServicoMinutos;
+
+    duracao.value = converteMinutosParaHora(totalMinutos);
 }
 
 function atualizarGridProdutos(produto) {
-    var tabelaProduto = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
-    var novaLinha = tabelaProduto.insertRow();
-    var celulaExcluir = novaLinha.insertCell(0);
-    var celulaProduto = novaLinha.insertCell(1);
-    var celulaMarca = novaLinha.insertCell(2);
-    var celulaLinha = novaLinha.insertCell(3);
-    var celulaPreco = novaLinha.insertCell(4);
-    var celulaQuantidade = novaLinha.insertCell(5);
+    var quantidadeInput = document.getElementById("field_Quantidade");
+    var quantidade = parseInt(quantidadeInput.value, 10); // Converte para número, base 10
+    console.log(quantidade);
 
-    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)">Remover</a>';
+    if (isNaN(quantidade) || quantidade === null || quantidade === "" || quantidade < 1) {
+        quantidade = 1;
+        quantidadeInput.value = 1;
+    }
+
+    var tabelaProdutos = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaProdutos.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaId = novaLinha.insertCell(1);
+    var celulaProduto = novaLinha.insertCell(2);
+    var celulaMarca = novaLinha.insertCell(3);
+    var celulaLinha = novaLinha.insertCell(4);
+    var celulaPreco = novaLinha.insertCell(5);
+    var celulaQuantidade = novaLinha.insertCell(6);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaId.innerHTML = produto.id;
     celulaProduto.innerHTML = produto.descricaoProduto;
     celulaMarca.innerHTML = produto.marca.descricaoMarca;
     celulaLinha.innerHTML = produto.linha.descricaoLinha;
     celulaPreco.innerHTML = produto.valorVenda;
-    celulaQuantidade.innerHTML = document.getElementById("field_Quantidade").outerHTML;
+    celulaQuantidade.innerHTML = quantidade;
 }
 
 function removerServico(link) {
+    const table = document.getElementById("tabelaDadosServicos");
+    const tbody = table.getElementsByTagName('tbody')[0];
     var row = link.parentNode.parentNode;
+    var tempoServico = row.cells[3].innerText;
+
     row.parentNode.removeChild(row);
+
+    if (tbody.rows.length === 0) {
+        table.style.display = "none";
+    } else {
+        table.style.display = "block";
+    }
+
+    atualizarDuracaoAposRemocao(tempoServico);
 }
 
 function removerProduto(link) {
+    const table = document.getElementById("tabelaDadosProdutos");
+    const tbody = table.getElementsByTagName('tbody')[0];
     var row = link.parentNode.parentNode;
+
     row.parentNode.removeChild(row);
+
+    if (tbody.rows.length === 0) {
+        table.style.display = "none";
+    } else {
+        table.style.display = "block";
+    }
+}
+
+function coletarDadosFormulario() {
+    var servicos = [];
+    document.querySelectorAll("#tabelaDadosServicos tbody tr").forEach(function(row) {
+        var servicoId = row.cells[1] ? row.cells[1].textContent : '';
+        var valor = row.cells[3] ? row.cells[3].textContent : '';
+        var duracao = row.cells[4] ? row.cells[4].textContent : '';
+        if (servicoId) {
+            servicos.push({servicoId: servicoId, valor: valor, duracao: duracao});
+        }
+    });
+
+    var produtos = [];
+    document.querySelectorAll("#tabelaDadosProdutos tbody tr").forEach(function(row) {
+        var produtoId = row.cells[1] ? row.cells[1].textContent : '';
+        var quantidade = row.cells[6] ? row.cells[6].textContent : '';
+        if (produtoId) {
+            produtos.push({produtoId: produtoId, quantidade: quantidade});
+        }
+    });
+    var form = document.getElementById("form-cadastro");
+    servicos.forEach(function(servico, index) {
+        form.appendChild(criarCampoOculto(`servico[${index}].id`, servico.servicoId));
+        form.appendChild(criarCampoOculto(`servico[${index}].valor`, servico.valor));
+        form.appendChild(criarCampoOculto(`servico[${index}].tempo`, servico.duracao));
+    });
+    produtos.forEach(function(produto, index) {
+        form.appendChild(criarCampoOculto(`produto[${index}].produtoId`, produto.produtoId));
+        form.appendChild(criarCampoOculto(`produto[${index}].quantidade`, produto.quantidade));
+    });
+}
+
+function criarCampoOculto(nome, valor) {
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = nome;
+    input.value = valor;
+    return input;
 }

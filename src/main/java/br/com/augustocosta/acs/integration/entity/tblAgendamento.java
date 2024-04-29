@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.*;
 import java.time.*;
 
@@ -28,6 +30,7 @@ public class tblAgendamento {
     private tblUsuario colaborador;
 
     @Column(name = "DataAgendamento", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataAgendamento;
 
     @Column(name = "HoraAgendamento", nullable = false)
