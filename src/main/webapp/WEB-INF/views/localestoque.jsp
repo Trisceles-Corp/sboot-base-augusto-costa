@@ -1,61 +1,75 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Alexander Andrade
+  Date: 10/04/2024
+  Time: 11:17
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Local Estoque</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <title>Augusto Costa</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
+
 </head>
 <body>
-<div class="pgHeader">
-    <p>Linha</p>
+<div>
+    <div class="itemHeader">
+        <h4>Local Estoque</h4>
+    </div>
+    <div class="row" id="localestoque-botao-cadastro">
+        <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
+    </div>
+
+    <!-- formulário de cadastro -->
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="tblLocalEstoque" action="${pageContext.request.contextPath}/localestoque/salvar" method="POST">
+        <form:hidden path="id" id="field_Id"/>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <form:label path="descricaoLocal" class="form-label" for="field_Nome">Descrição:</form:label>
+                <form:input path="descricaoLocal" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
+            </div>
+        </div>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+        </div>
+    </form:form>
 </div>
 
-<form:form id="tipoForm" modelAttribute="tblLocalEstoque" action="${pageContext.request.contextPath}/localestoque/salvar" method="POST">
-    <form:hidden path="id" id="field_Id"/>
-    <table>
-        <tr>
-            <td><form:label path="descricaoLocal">Descrição:</form:label></td>
-            <td><form:input path="descricaoLocal" id="field_Name"/></td>
+<div>
+    <table id="tabelaDados" class="table table-bordered table-hover table-responsive my-3">
+        <thead class="table-dark">
+        <tr class="gridHeader">
+            <th scope="col" class="th-editar">Ações</th>
+            <th scope="col">Descrição</th>
         </tr>
-        <tr>
-            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
-        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="localestoque" items="${listalocais}">
+            <tr>
+                <td class="cel-img-tabela-clientes">
+                    <form action="${pageContext.request.contextPath}/localestoque/delete/${localestoque.id}" method="POST">
+                        <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarLocalEstoque('${localestoque.id}', '${localestoque.descricaoLocal}'); return false;" title="Editar">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/localestoque/delete/${localestoque.id}')">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                        </a>
+                    </form>
+                </td>
+                <td><c:out value="${localestoque.descricaoLocal}" /></td>
+            </tr>
+        </c:forEach>
+        </tbody>
     </table>
-    <div class="button-bar">
-        <input type="submit" value="Salvar" />
-    </div>
-</form:form>
-
-<br/>
-
-<table>
-    <tr>
-        <th>Ações</th>
-        <th>Id</th>
-        <th>Descrição</th>
-        <th>Ativo</th>
-        <th>Data de Criação</th>
-        <th>Criado Por</th>
-    </tr>
-    <c:forEach var="localestoque" items="${listalocais}">
-        <tr>
-            <td>
-                <a href="#" class="btn-visualizar" onclick="visualizarLocalEstoque('${localestoque.id}', '${localestoque.descricaoLocal}', '${localestoque.ativo}'); return false;" title="Visualizar">
-                </a>
-                <!-- Adicione mais ações aqui, como editar e excluir, conforme necessário -->
-            </td>
-            <td><c:out value="${localestoque.id}" /></td>
-            <td><c:out value="${localestoque.descricaoLocal}" /></td>
-            <td><c:out value="${localestoque.ativo ? 'Sim' : 'Não'}" /></td>
-            <td><c:out value="${localestoque.dataCriacao}" /></td>
-            <td><c:out value="${localestoque.criadoPor}" /></td>
-        </tr>
-    </c:forEach>
-</table>
-
+</div>
 </body>
 </html>

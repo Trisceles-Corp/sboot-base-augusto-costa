@@ -18,10 +18,6 @@ public class tblMarca {
     @Column(name = "MarcaId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CategoriaId", nullable = false)
-    private tblCategoria categoria;
-
     @Column(name = "DescricaoMarca", nullable = false)
     private String descricaoMarca;
 

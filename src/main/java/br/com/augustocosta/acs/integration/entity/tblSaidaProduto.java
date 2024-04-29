@@ -3,28 +3,25 @@ package br.com.augustocosta.acs.integration.entity;
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.*;
-import java.util.Objects;
 
 @Entity
-@Table(name = "tbl_movimentacaoProduto")
+@Table(name = "tbl_saidaproduto")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblMovimentacaoProduto {
+public class tblSaidaProduto {
 
     @EmbeddedId
-    private MovimentacaoProduto id;
+    private SaidaProduto id;
 
-    @ManyToOne
-    @MapsId("movimentacaoId")
-    @JoinColumn(name = "MovimentacaoId", referencedColumnName = "MovimentacaoId")
-    private tblMovimentacao movimentacao;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SaidaId", nullable = false)
+    private tblSaida saida;
 
-    @ManyToOne
-    @MapsId("produtoId")
-    @JoinColumn(name = "ProdutoId", referencedColumnName = "ProdutoId")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ProdutoId", nullable = false)
     private tblProduto produto;
 
     @Column(name = "ValorUnitario", nullable = false)
@@ -32,6 +29,12 @@ public class tblMovimentacaoProduto {
 
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
+
+    @Column(name = "ValorTotal")
+    private Double valorTotal;
+
+    @Column(name = "Ativo", nullable = false)
+    private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;

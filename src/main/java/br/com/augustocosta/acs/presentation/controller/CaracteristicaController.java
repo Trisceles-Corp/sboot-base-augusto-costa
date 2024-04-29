@@ -33,9 +33,10 @@ public class CaracteristicaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblCaracteristica caracteristica) {
+        caracteristica.setAtivo(true);
+
         if (caracteristica.getId() != null && caracteristica.getId() != 0){
             Optional<tblCaracteristica> data = service.getById(caracteristica.getId());
-            caracteristica.setAtivo(caracteristica.getAtivo());
             caracteristica.setDataCriacao(data.orElseThrow().getDataCriacao());
             caracteristica.setCriadoPor(data.get().getCriadoPor());
             caracteristica.setDataAlteracao(LocalDateTime.now());
@@ -43,7 +44,6 @@ public class CaracteristicaController {
             service.update(caracteristica.getId(), caracteristica);
         }
         else {
-            caracteristica.setAtivo(true);
             caracteristica.setDataCriacao(LocalDateTime.now());
             caracteristica.setCriadoPor(1);
             caracteristica.setDataAlteracao(LocalDateTime.now());
@@ -51,7 +51,7 @@ public class CaracteristicaController {
             service.create(caracteristica);
         }
 
-        return "redirect:/caracteristica";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")
@@ -61,5 +61,9 @@ public class CaracteristicaController {
         return "caracteristica";
     }
 
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
+    }
 }

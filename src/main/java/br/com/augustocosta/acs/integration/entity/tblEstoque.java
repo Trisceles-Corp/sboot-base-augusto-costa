@@ -30,11 +30,11 @@ public class tblEstoque {
     @JoinColumn(name = "MovimentacaoId", nullable = false)
     private tblMovimentacao movimentacao;
 
-    @Column(name = "Nome", nullable = false)
-    private String nome;
-
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
+
+    @Column(name = "ValorMovimentacao", nullable = false)
+    private String valorMovimentacao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

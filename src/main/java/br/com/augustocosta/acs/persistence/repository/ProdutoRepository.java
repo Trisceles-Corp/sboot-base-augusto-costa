@@ -1,10 +1,6 @@
 package br.com.augustocosta.acs.persistence.repository;
 
-import br.com.augustocosta.acs.integration.entity.tblProduto;
-import br.com.augustocosta.acs.integration.entity.tblMarca;
-import br.com.augustocosta.acs.integration.entity.tblLinha;
-import br.com.augustocosta.acs.integration.entity.tblCaracteristica;
-import br.com.augustocosta.acs.integration.entity.tblUsuario;
+import br.com.augustocosta.acs.integration.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +12,7 @@ public interface ProdutoRepository extends JpaRepository<tblProduto, Integer> {
     List<tblProduto> findByDescricaoProduto(String descricaoProduto);
     List<tblProduto> findByAtivoTrueOrderByDescricaoProdutoAsc();
     List<tblProduto> findByMarca(tblMarca marca);
+    List<tblProduto> findByCategoria(tblCategoria categoria);
     List<tblProduto> findByLinha(tblLinha linha);
     List<tblProduto> findByCaracteristica(tblCaracteristica caracteristica);
     List<tblProduto> findByCriadoPor(tblUsuario usuario);

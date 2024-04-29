@@ -2,7 +2,7 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.util.*;
 import java.time.*;
 
 @Entity
@@ -19,8 +19,8 @@ public class tblUsuario {
     @Column(name = "UsuarioId")
     private Integer id;
 
-    @Column(name = "CPF", nullable = false)
-    private Double cpf;
+    @Column(name = "CpfCnpj", length = 11, nullable = false)
+    private String cpfCnpj;
 
     @Column(name = "Nome", nullable = false)
     private String nome;
@@ -32,7 +32,7 @@ public class tblUsuario {
     private char genero;
 
     @Column(name = "DataNascimento", nullable = false)
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @Column(name = "Email", nullable = false)
     private String email;
@@ -40,8 +40,9 @@ public class tblUsuario {
     @Column(name = "Senha", nullable = false)
     private String senha;
 
-    @Column(name = "Endereco")
-    private String endereco;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "EnderecoId", nullable = false)
+    private tblEndereco endereco;
 
     @Column(name = "DDICelular", nullable = false)
     private Integer ddiCelular;
@@ -50,7 +51,7 @@ public class tblUsuario {
     private Integer dddCelular;
 
     @Column(name = "Celular", nullable = false)
-    private Double celular;
+    private String celular;
 
     @Column(name = "DDITelefone")
     private Integer ddiTelefone;
@@ -59,7 +60,7 @@ public class tblUsuario {
     private Integer dddTelefone;
 
     @Column(name = "Telefone")
-    private Double telefone;
+    private String telefone;
 
     @Column(name = "Profissao")
     private String profissao;

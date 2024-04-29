@@ -1,9 +1,16 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Alexander Andrade
+  Date: 10/04/2024
+  Time: 11:17
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>Marca</title>
+    <title>Augusto Costa</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
@@ -14,72 +21,55 @@
 
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="itemHeader">
-                <h3>Configuração - <small>Marca</small></h3>
+<div>
+    <div class="itemHeader">
+        <h4>Marcas Produto</h4>
+    </div>
+    <div class="row" id="marca-botao-cadastro">
+        <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
+    </div>
+
+    <!-- formulário de cadastro -->
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="tblMarca" action="${pageContext.request.contextPath}/marca/salvar" method="POST">
+        <form:hidden path="id" id="field_Id"/>
+        <div class="row">
+            <div class="form-group col-md-5">
+                <form:label path="descricaoMarca" class="form-label" for="field_Nome">Descrição:</form:label>
+                <form:input path="descricaoMarca" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <form:form class="bootstrap-form-with-validation" id="perfilForm" modelAttribute="tblMarca" action="${pageContext.request.contextPath}/marca/salvar" method="POST">
-            <form:hidden path="id" id="field_Id"/>
-            <div class="form-group mb-3">
-                <form:label path="descricaoMarca" class="form-label" for="text-input">Nome:</form:label>
-                <form:input path="descricaoMarca" class="form-control" type="text" id="field_Name" />
-            </div>
-            <div class="form-group mb-3">
-                <form:label path="categoria" class="form-label">Categoria:</form:label>
-                <form:select path="categoria" class="form-control" id="field_CategoriaId">
-                    <form:option value="" label=" Selecione "/>
-                    <form:options items="${listaCategorias}" itemValue="id" itemLabel="nome"/>
-                </form:select>
-            </div>
-            <div class="form-group mb-3">
-                <div class="form-check">
-                    <form:checkbox path="ativo" id="field_Active"/>
-                    <form:label path="ativo" class="form-check-label" for="field_Active">Ativo</form:label>
-                </div>
-            </div>
-            <div class="form-group mb-3">
-                <input type="submit" class="btn btn-primary" id="btnSalvar" value="Salvar" />
-            </div>
-            </form:form>
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
         </div>
-    </div>
+    </form:form>
 </div>
 
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Ações</th>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Ativo</th>
-            <th>Data Alteração</th>
+<div>
+    <table id="tabelaDados" class="table table-bordered table-hover table-responsive my-3">
+        <thead class="table-dark">
+        <tr class="gridHeader">
+            <th scope="col" class="th-editar">Ações</th>
+            <th scope="col">Descrição</th>
         </tr>
         </thead>
+        <tbody>
         <c:forEach var="marca" items="${listaMarcas}">
-            <tbody>
             <tr>
-                <td>
-                    <a href="#" class="btn-visualizar" onclick="visualizarMarca('${marca.id}', '${marca.categoria.id}', '${marca.descricaoMarca}', '${marca.ativo}'); return false;" title="Visualizar">
-                    </a>
+                <td class="cel-img-tabela-clientes">
+                    <form action="${pageContext.request.contextPath}/marca/delete/${marca.id}" method="POST">
+                        <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarMarca('${marca.id}', '${marca.descricaoMarca}'); return false;" title="Editar">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/marca/delete/${marca.id}')">
+                            <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                        </a>
+                    </form>
                 </td>
-                <td><c:out value="${marca.id}" /></td>
                 <td><c:out value="${marca.descricaoMarca}" /></td>
-                <td><c:out value="${marca.categoria.id}" /></td>
-                <td><c:out value="${marca.ativo ? 'Sim' : 'Não'}" /></td>
-                <td><c:out value="${marca.dataAlteracao}" /></td>
             </tr>
-            </tbody>
         </c:forEach>
+        </tbody>
     </table>
 </div>
-
 </body>
 </html>

@@ -16,17 +16,22 @@
 
 <form:form id="tipoForm" modelAttribute="tblPermissoes" action="${pageContext.request.contextPath}/permissoes/salvar" method="POST">
     <form:hidden path="id" id="field_Id"/>
-    <table>
-        <tr>
-            <td><form:label path="nome">Nome:</form:label></td>
-            <td><form:input path="nome" id="field_Name"/></td>
-            <td><form:label path="descricao">Descrição:</form:label></td>
-            <td><form:input path="descricao" id="field_Description"/></td>
-        </tr>
-        <tr>
-            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="form-group col-md-5">
+            <form:label path="nome" class="form-label" for="field_Name">Nome:</form:label>
+            <form:input path="nome" class="form-control" id="field_Name"/>
+        </div>
+        <div class="form-group col-md-5">
+            <form:label path="descricao" class="form-label" for="field_Description">Descrição:</form:label>
+            <form:input path="descricao" class="form-control" id="field_Description"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-1">
+            <form:label path="ativo" class="form-label" for="field_Active">Ativo:</form:label>
+            <form:checkbox path="ativo" class="form-control" id="field_Active"/>
+        </div>
+    </div>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
     </div>
@@ -35,7 +40,7 @@
 <br/>
 
 <table>
-    <tr>
+    <tr class="gridHeader">
         <th>Ações</th>
         <th>Id</th>
         <th>Nome</th>

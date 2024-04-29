@@ -26,12 +26,12 @@ public class LoginController {
         return "login2";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/verify")
     public String login(dtoLogin loginDTO, Model model) {
         boolean isValidUser = usuarioService.validateLogin(loginDTO.getEmail(), loginDTO.getSenha());
 
         if (isValidUser) {
-            return "redirect:/main";
+            return "redirect:/index";
         } else {
             model.addAttribute("loginError", "Invalid email or password.");
             return "login2";

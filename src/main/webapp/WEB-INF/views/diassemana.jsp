@@ -18,8 +18,8 @@
     <form:hidden path="id" id="field_Id"/>
     <table>
         <tr>
-            <td><form:label path="diasSemana">Descrição:</form:label></td>
-            <td><form:input path="diasSemana" id="field_Name"/></td>
+            <td><form:label path="diasSemana" class="form-label" for="field_Name">Descrição:</form:label></td>
+            <td><form:input path="diasSemana" class="form-control" id="field_Name"/></td>
         </tr>
         <tr>
             <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
@@ -33,7 +33,7 @@
 <br/>
 
 <table>
-    <tr>
+    <tr class="gridHeader">
         <th>Ações</th>
         <th>Id</th>
         <th>Descrição</th>

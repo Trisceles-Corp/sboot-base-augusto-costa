@@ -16,15 +16,18 @@
 
 <form:form id="tipoForm" modelAttribute="tblTipoMovimentacao" action="${pageContext.request.contextPath}/tipomovimentacao/salvar" method="POST">
     <form:hidden path="id" id="field_Id"/>
-    <table>
-        <tr>
-            <td><form:label path="descricaoMovimentacao">Descrição:</form:label></td>
-            <td><form:input path="descricaoMovimentacao" id="field_Name"/></td>
-        </tr>
-        <tr>
-            <td><form:checkbox path="ativo" label="Ativo" id="field_Active"/></td>
-        </tr>
-    </table>
+    <div class="row">
+        <div class="form-group col-md-5">
+            <form:label path="descricaoMovimentacao" class="form-label" for="field_Name">Descrição:</form:label>
+            <form:input path="descricaoMovimentacao" class="form-control" id="field_Name"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-1">
+            <form:label path="ativo" class="form-label" for="field_Active">Ativo:</form:label>
+            <form:checkbox path="ativo" label="Ativo" id="field_Active"/>
+        </div>
+    </div>
     <div class="button-bar">
         <input type="submit" value="Salvar" />
     </div>
@@ -33,7 +36,7 @@
 <br/>
 
 <table>
-    <tr>
+    <tr class="gridHeader">
         <th>Ações</th>
         <th>Id</th>
         <th>Descrição</th>

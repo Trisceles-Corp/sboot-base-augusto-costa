@@ -22,11 +22,14 @@ public class ProdutoService {
 
     private final UsuarioRepository usuarioRepository;
 
+    private final CategoriaRepository categoriaRepository;
+
 
     @Autowired
-    public ProdutoService(ProdutoRepository repository, MarcaRepository marcaRepository, LinhaRepository linhaRepository, CaracteristicaRepository caracteristicaRepository, UsuarioRepository usuarioRepository) {
+    public ProdutoService(ProdutoRepository repository, MarcaRepository marcaRepository, CategoriaRepository categoriaRepository, LinhaRepository linhaRepository, CaracteristicaRepository caracteristicaRepository, UsuarioRepository usuarioRepository) {
         this.repository = repository;
         this.marcaRepository = marcaRepository;
+        this.categoriaRepository = categoriaRepository;
         this.linhaRepository = linhaRepository;
         this.caracteristicaRepository = caracteristicaRepository;
         this.usuarioRepository = usuarioRepository;
@@ -47,9 +50,15 @@ public class ProdutoService {
         return repository.findById(id);
     }
 
+    public tblProduto getByProdutoId(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+
     public tblUsuario getByUserId(Integer id) {
         return usuarioRepository.getReferenceById(id);
     }
+
+    public List<tblCategoria> getAllActivesCategories(){return categoriaRepository.findByAtivoTrueOrderByNomeAsc(); }
 
     public List<tblProduto> getByCodigoInterno(Integer codigoInterno) {
         return repository.findByCodigoInterno(codigoInterno);
@@ -101,6 +110,7 @@ public class ProdutoService {
         table.setValorVenda(dados.getValorVenda());
         table.setComissao(dados.getComissao());
         table.setMarca(dados.getMarca());
+        table.setCategoria(dados.getCategoria());
         table.setLinha(dados.getLinha());
         table.setCaracteristica(dados.getCaracteristica());
         table.setAtivo(dados.getAtivo());

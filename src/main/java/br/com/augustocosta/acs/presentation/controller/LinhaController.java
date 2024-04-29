@@ -32,6 +32,7 @@ public class LinhaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblLinha table) {
+        table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblLinha> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
@@ -42,7 +43,6 @@ public class LinhaController {
             service.update(table.getId(), table);
         }
         else {
-            table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(1);
             table.setDataAlteracao(LocalDateTime.now());
@@ -50,7 +50,7 @@ public class LinhaController {
             service.create(table);
         }
 
-        return "redirect:/linha";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")
@@ -60,5 +60,9 @@ public class LinhaController {
         return "linha";
     }
 
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
+    }
 }

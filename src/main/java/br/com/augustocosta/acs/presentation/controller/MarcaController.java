@@ -26,13 +26,13 @@ public class MarcaController {
     @GetMapping
     public String listarTodos(Model model) {
         model.addAttribute("listaMarcas", service.getActiveByNameAsc());
-        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca"; // Nome do arquivo JSP para a página
     }
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblMarca table) {
+        table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblMarca> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
@@ -43,7 +43,6 @@ public class MarcaController {
             service.update(table.getId(), table);
         }
         else {
-            table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(1);
             table.setDataAlteracao(LocalDateTime.now());
@@ -51,14 +50,19 @@ public class MarcaController {
             service.create(table);
         }
 
-        return "redirect:/marca";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("listaMarcas", service.getActiveByNameAsc());
-        model.addAttribute("listaCategorias", service.getAllActivesCategories());
         model.addAttribute("tblMarca", new tblMarca());
         return "marca";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
     }
 }

@@ -54,7 +54,7 @@ public class CargoService {
     @Transactional
     public tblCargo update(Integer id, tblCargo dados) {
         tblCargo table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + id));
 
         table.setNome(dados.getNome());
         table.setAtivo(dados.getAtivo());
@@ -67,7 +67,7 @@ public class CargoService {
     @Transactional
     public void delete(Integer id, int alteradoPor) {
         tblCargo table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + id));
 
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());
@@ -77,7 +77,7 @@ public class CargoService {
     }
 
     public boolean isAtivo(Integer id) {
-        Optional<tblCargo> cargo = repository.findById(id);
-        return cargo.map(tblCargo::getAtivo).orElse(false);
+        Optional<tblCargo> table = repository.findById(id);
+        return table.map(tblCargo::getAtivo).orElse(false);
     }
 }

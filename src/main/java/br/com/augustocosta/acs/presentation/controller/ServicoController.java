@@ -31,6 +31,7 @@ public class ServicoController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblServico table) {
+        table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblServico> data = service.getById(table.getId());
             table.setAtivo(table.getAtivo());
@@ -41,7 +42,6 @@ public class ServicoController {
             service.update(table.getId(), table);
         }
         else {
-            table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(1);
             table.setDataAlteracao(LocalDateTime.now());
@@ -49,7 +49,7 @@ public class ServicoController {
             service.create(table);
         }
 
-        return "redirect:/servico";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")
@@ -59,5 +59,9 @@ public class ServicoController {
         return "servico";
     }
 
-    // Implemente os métodos para visualizar, editar e excluir conforme necessário
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        service.delete(id, 1);
+        return "redirect:/index";
+    }
 }

@@ -20,7 +20,7 @@
     </c:if>
 
     <section class="login-dark">
-        <form:form method="post" modelAttribute="tblUsuario" action="${pageContext.request.contextPath}/login2/login" style="margin: 0px;">
+        <form:form method="post" modelAttribute="tblUsuario" action="${pageContext.request.contextPath}/login2/verify" style="margin: 0px;">
             <h2 class="visually-hidden">Login Form</h2>
             <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
             <div class="mb-3"><input class="form-control" type="email" id="email" name="email" placeholder="Email" required></div>

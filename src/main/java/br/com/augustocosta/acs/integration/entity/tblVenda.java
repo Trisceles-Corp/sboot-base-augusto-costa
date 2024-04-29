@@ -18,9 +18,19 @@ public class tblVenda {
     @Column(name = "VendaId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "AgendamentoId", nullable = false)
     private tblAgendamento agendamento;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "LocalEstoqueId", nullable = false)
+    private tblLocalEstoque localEstoque;
+
+    @Column(name = "ValorTotal")
+    private Double valorTotal;
+
+    @Column(name = "Estoque")
+    private Boolean estoque;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

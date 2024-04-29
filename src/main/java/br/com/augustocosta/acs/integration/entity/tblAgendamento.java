@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.*;
 import java.time.*;
 
@@ -19,27 +21,27 @@ public class tblAgendamento {
     @Column(name = "AgendamentoId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ClienteId", nullable = false)
     private tblUsuario cliente;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ColaboradorId", nullable = false)
     private tblUsuario colaborador;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ServicoId", nullable = false)
-    private tblServico servico;
-
     @Column(name = "DataAgendamento", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataAgendamento;
 
     @Column(name = "HoraAgendamento", nullable = false)
     private LocalTime horaAgendamento;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BloqueioId")
-    private tblBloqueio bloqueio;
+    @Column(name = "Duracao")
+    private LocalTime duracao;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SituacaoId")
+    private tblSituacaoAgendamento situacao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
