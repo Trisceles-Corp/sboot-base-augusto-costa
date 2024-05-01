@@ -12,7 +12,7 @@ import java.time.*;
 
 @Repository
 public interface VendaRepository extends JpaRepository<tblVenda, Integer> {
-    List<tblVenda> findByAgendamentoId(Integer id);
+    tblVenda findByAgendamentoId(Integer id);
     List<tblVenda> findByLocalEstoque(tblLocalEstoque localEstoque);
     List<tblVenda> findByDataCriacao(LocalDateTime dataCriacao);
     List<tblVenda> findByAtivoTrue();

@@ -31,6 +31,10 @@ public class FormasPagamentoService {
         return repository.findById(id);
     }
 
+    public tblFormasPagamento getByFormaPagamentoId(Integer id) {
+        return repository.getReferenceById(id);
+    }
+
     public List<tblFormasPagamento> getActiveByNameAsc() {
         return repository.findByAtivoTrueOrderByNomeAsc();
     }

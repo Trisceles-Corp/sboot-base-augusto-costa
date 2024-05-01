@@ -255,13 +255,37 @@ contain-option-button-active{
     padding: 0;
     cursor: pointer;
     font-family: "Outfit", sans-serif;
-    font-size: var(--bs-body-font-size);
+    font-size: 14px;
     font-weight: var(--bs-body-font-weight);
     text-align: left;
 }
 
 .button-nav-option:hover {
     color: var(--cor-amarelo);
+}
+
+.button-nav-item {
+    --bs-bg-opacity:1;
+    background-color: transparent;
+    color: var(--cor-cinza);
+    border: none;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    font-family: "Outfit", sans-serif;
+    font-size: 14px;
+    font-weight: var(--bs-body-font-weight);
+    text-align: left;
+}
+
+.button-nav-item:hover {
+    color: var(--cor-amarelo);
+}
+
+.panel{
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .logo{

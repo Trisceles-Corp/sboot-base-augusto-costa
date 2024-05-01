@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblBandeiras;
+import br.com.augustocosta.acs.integration.entity.tblFormasPagamento;
 import br.com.augustocosta.acs.persistence.repository.BandeirasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class BandeirasService {
 
     public Optional<tblBandeiras> getById(Integer id) {
         return repository.findById(id);
+    }
+
+    public tblBandeiras getByBandeiraId(Integer id) {
+        return repository.getReferenceById(id);
     }
 
     public List<tblBandeiras> getAll() {

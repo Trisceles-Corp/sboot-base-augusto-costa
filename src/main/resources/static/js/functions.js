@@ -180,6 +180,90 @@ function atualizarTabelaProdutos(produtos) {
     });
 }
 
+function visualizarComanda(contexto, id, agendamentoId, clienteId, colaboradorId, dataAgendamento, horaAgendamento, valorServicos, valorProdutos, valorDescontos, valorComanda, situacao) {
+    const formCadastro = document.getElementById("form-cadastro");
+    const tabelaProduto = document.getElementById("tabelaDadosProdutos");
+
+    if (formCadastro.style.display === "none") {
+        formCadastro.style.display = "block";
+    } else {
+        formCadastro.style.display = "block";
+    }
+
+    if(valorProdutos > 0.0){
+        if (tabelaProduto.style.display === "none") {
+            tabelaProduto.style.display = "block";
+        } else {
+            tabelaProduto.style.display = "block";
+        }
+    } else {
+        tabelaProduto.style.display = "none";
+    }
+
+    const dataAgendamentoDate = new Date(dataAgendamento);
+    const dataFormatada = dataAgendamentoDate.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_ClienteId").value = clienteId;
+    document.getElementById("field_ColaboradorId").value = colaboradorId;
+    document.getElementById("field_dataAgendamento").value = dataAgendamento;
+    document.getElementById("field_HoraAgendamento").value = horaAgendamento;
+    document.getElementById("field_valorServicos").value = valorServicos;
+    document.getElementById("field_valorProdutos").value = valorProdutos;
+    document.getElementById("field_valorDescontos").value = valorDescontos;
+    document.getElementById("field_valorComanda").value = valorComanda;
+    document.getElementById("field_situacaoId").value = situacao;
+
+    fetch(`${contexto}/comanda/servicos/${agendamentoId}`)
+        .then(response => response.json())
+        .then(data => atualizarTabelaServicosComanda(data))
+        .catch(error => console.error('Erro ao buscar serviços da comanda:', error));
+
+    fetch(`${contexto}/comanda/produtos/${agendamentoId}`)
+        .then(response => response.json())
+        .then(data => atualizarTabelaProdutosComanda(data))
+        .catch(error => console.error('Erro ao buscar produtos da comanda:', error));
+}
+
+function atualizarTabelaServicosComanda(servicos) {
+    const tabela = document.getElementById("tabelaDadosServicos").getElementsByTagName('tbody')[0];
+    tabela.innerHTML = ''; // Limpar tabela existente
+
+    servicos.forEach(servico => {
+        let linha = tabela.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover">';
+        linha.insertCell(1).innerText = servico.id;
+        linha.insertCell(2).innerText = servico.nome;
+        linha.insertCell(3).innerText = servico.valor;
+        linha.insertCell(4).innerText = servico.tempo;
+    });
+}
+
+function atualizarTabelaProdutosComanda(produtos) {
+    const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    tabela.innerHTML = ''; // Limpar tabela existente
+
+    produtos.forEach(produto => {
+        let linha = tabela.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover">';
+        linha.insertCell(1).innerText = produto.produtoId;
+        linha.insertCell(2).innerText = produto.nome;
+        linha.insertCell(3).innerText = produto.marca;
+        linha.insertCell(4).innerText = produto.linha;
+        linha.insertCell(5).innerText = produto.preco;
+        linha.insertCell(6).innerText = produto.quantidade;
+    });
+}
+
 function visualizarCategoria(categoriaId, nome) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
@@ -402,6 +486,18 @@ function adicionarProduto() {
     buscarDadosProdutos(produtoId);
 }
 
+function adicionarPagamento() {
+    const formaPagamentoId = document.getElementById("field_formaPagamentoId").value;
+    const bandeiraId = document.getElementById("field_bandeiraId").value;
+    const table = document.getElementById("tabelaDadosPagamentos");
+    if (table.style.display === "none") {
+        table.style.display = "block";
+    } else {
+        table.style.display = "block";
+    }
+    buscarDadosPagamentos(formaPagamentoId, bandeiraId);
+}
+
 function buscarDadosServicos(servicoId) {
     $.ajax({
         url: '/agendamento/listaServicoAgendamento/' + servicoId,
@@ -428,6 +524,23 @@ function buscarDadosProdutos(produtoId) {
     });
 }
 
+function buscarDadosPagamentos(formaPagamentoId, bandeiraId) {
+    var requestFormaPagamento = $.ajax({
+        url: '/formaspagamento/listaFormasPagamento/' + formaPagamentoId,
+        type: 'GET'
+    });
+
+    var requestBandeira = $.ajax({
+        url: '/bandeiras/listaBandeiras/' + bandeiraId,
+        type: 'GET'
+    });
+
+    $.when(requestFormaPagamento, requestBandeira).done(function(responseFormaPagamento, responseBandeira) {
+        atualizarGridPagamentos(responseFormaPagamento[0], responseBandeira[0]);
+    }).fail(function(error) {
+        console.log("Erro ao buscar dados: ", error);
+    });
+}
 function atualizarGridServicos(servico) {
     var duracao = document.getElementById("field_Duracao");
     var tabelaServicos = document.getElementById("tabelaDadosServicos").getElementsByTagName('tbody')[0];
@@ -454,7 +567,6 @@ function atualizarGridServicos(servico) {
 function atualizarGridProdutos(produto) {
     var quantidadeInput = document.getElementById("field_Quantidade");
     var quantidade = parseInt(quantidadeInput.value, 10); // Converte para número, base 10
-    console.log(quantidade);
 
     if (isNaN(quantidade) || quantidade === null || quantidade === "" || quantidade < 1) {
         quantidade = 1;
@@ -478,6 +590,45 @@ function atualizarGridProdutos(produto) {
     celulaLinha.innerHTML = produto.linha.descricaoLinha;
     celulaPreco.innerHTML = produto.valorVenda;
     celulaQuantidade.innerHTML = quantidade;
+}
+
+function atualizarGridPagamentos(formaPagamento, bandeira) {
+    var comandaInput = document.getElementById("field_id");
+    var parcelasInput = document.getElementById("field_parcelas");
+    var valorInput = document.getElementById("field_valorPagamento");
+    var comandaId = parseInt(comandaInput.value, 10);
+    var parcelas = parseInt(parcelasInput.value, 10);
+    var valor = parseFloat(valorInput.value);
+
+    if (isNaN(parcelas) || parcelas === null || parcelas === "" || parcelas < 1) {
+        parcelas = 1;
+        parcelasInput.value = 1;
+    }
+
+    var tabelaPagamentos = document.getElementById("tabelaDadosPagamentos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaPagamentos.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaFormaPagamento = novaLinha.insertCell(1);
+    var celulaBandeira = novaLinha.insertCell(2);
+    var celulaParcelas = novaLinha.insertCell(3);
+    var celulaValor = novaLinha.insertCell(4);
+    var celulaFormaPagamentoId = novaLinha.insertCell(5);
+    var celulaBandeiraId = novaLinha.insertCell(6);
+    var celulaComandaId = novaLinha.insertCell(7);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaFormaPagamento.innerHTML = formaPagamento.nome;
+    celulaBandeira.innerHTML = bandeira.nome;
+    celulaParcelas.innerHTML = parcelas;
+    celulaValor.innerHTML = valor.toFixed(2);
+
+    celulaFormaPagamentoId.innerHTML = `<input type="hidden" name="formaPagamentoId" value="${formaPagamento.id}">`;
+    celulaBandeiraId.innerHTML = `<input type="hidden" name="bandeiraId" value="${bandeira.id}">`;
+    celulaComandaId.innerHTML = `<input type="hidden" name="comandaId" value="${comandaId}">`;
+
+    celulaFormaPagamentoId.style.display = 'none';
+    celulaBandeiraId.style.display = 'none';
+    celulaComandaId.style.display = 'none';
 }
 
 function removerServico(link) {
@@ -539,6 +690,29 @@ function coletarDadosFormulario() {
     produtos.forEach(function(produto, index) {
         form.appendChild(criarCampoOculto(`produto[${index}].produtoId`, produto.produtoId));
         form.appendChild(criarCampoOculto(`produto[${index}].quantidade`, produto.quantidade));
+    });
+}
+
+function coletarDadosPagamentos() {
+    var pagamentos = [];
+    document.querySelectorAll("#tabelaDadosPagamentos tbody tr").forEach(function(row) {
+        var parcelas = row.cells[3] ? row.cells[3].textContent : '';
+        var valor = row.cells[4] ? row.cells[4].textContent : '';
+        var formaPagamentoId = row.cells[5] ? row.cells[5].textContent : '';
+        var bandeiraId = row.cells[6] ? row.cells[6].textContent : '';
+        var comandaId = row.cells[7] ? row.cells[7].textContent : '';
+        if (formaPagamentoId) {
+            pagamentos.push({comandaId: comandaId, formaPagamentoId: formaPagamentoId, bandeiraId: bandeiraId, parcelas: parcelas, valor: valor});
+        }
+    });
+
+    var form = document.getElementById("form-cadastro");
+    pagamentos.forEach(function(servico, index) {
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].comanda.id`, pagamentos.comandaId));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].formaPagamento.id`, pagamentos.formaPagamentoId));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].bandeira.id`, pagamentos.bandeiraId));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].parcelas`, pagamentos.parcelas));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].valorPagamento`, pagamentos.valor));
     });
 }
 

@@ -2,7 +2,9 @@ package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
 import br.com.augustocosta.acs.integration.entity.tblBandeiras;
+import br.com.augustocosta.acs.integration.entity.tblFormasPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -65,5 +67,12 @@ public class BandeirasController {
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
         return "redirect:/index";
+    }
+
+    @GetMapping("/listaBandeiras/{bandeiraId}")
+    @ResponseBody
+    public ResponseEntity<tblBandeiras> listaBandeiras(@PathVariable("bandeiraId") Integer bandeiraId) {
+        tblBandeiras bandeiras = service.getByBandeiraId(bandeiraId);
+        return ResponseEntity.ok(bandeiras);
     }
 }

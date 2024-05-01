@@ -28,8 +28,11 @@ public class tblComandaPagamento {
     @JoinColumn(name = "BandeiraId", nullable = false)
     private tblBandeiras bandeira;
 
+    @Column(name = "Parcelas")
+    private Integer parcelas = 1;
+
     @Column(name = "Valor", nullable = false)
-    private Double valor = 0.0;
+    private Double valorPagamento = 0.0;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo = true;

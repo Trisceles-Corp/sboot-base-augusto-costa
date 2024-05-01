@@ -22,6 +22,9 @@
 </head>
 <body>
 <div>
+    <div class="itemHeader">
+        <h4>Produtos</h4>
+    </div>
     <div class="row" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar Produto</button>
     </div>
@@ -97,7 +100,7 @@
 </div>
 
 <div>
-    <table id="tabelaProdutoss" class="table table-bordered table-hover table-responsive my-3">
+    <table id="tabelaProdutos" class="table table-bordered table-hover table-responsive my-3">
         <thead class="table-dark">
         <tr class="gridHeader">
             <th scope="col" class="th-editar">Ações</th>
