@@ -35,6 +35,12 @@ public class ComandaController {
     @Autowired
     private ComandaPagamentoService comandaPagamentoService;
 
+    @Autowired
+    private FormasPagamentoService formasPagamentoService;
+
+    @Autowired
+    private BandeirasService bandeirasService;
+
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("dtoComanda", new dtoComanda());
@@ -49,6 +55,8 @@ public class ComandaController {
         model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(0));
         model.addAttribute("listarProdutosAgendamento", agendamentoService.getProdutoByAgendamentoId(0));
         model.addAttribute("listarPagamentos", comandaPagamentoService.getByComanda(0));
+        model.addAttribute("listarFormaPagamentos", formasPagamentoService.getActiveByNameAsc());
+        model.addAttribute("listarBandeiras", bandeirasService.getActiveByNameAsc());
         model.addAttribute("dtoComanda", new dtoComanda());
         return "comanda";
     }

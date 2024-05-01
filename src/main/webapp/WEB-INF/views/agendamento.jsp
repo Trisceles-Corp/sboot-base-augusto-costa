@@ -79,7 +79,7 @@
             </form:select>
         </div>
         <div class="form-group col-md-1">
-            <form:label path="servicosAgendamento" class="form-label" for="buttonServicos">Adicionar:</form:label>
+            <label class="form-label" for="buttonServicos">Adicionar:</label>
             <button type="button" class="btn btn-outline-secondary" id="buttonServicos" onclick="adicionarServico()">+</button>
         </div>
         <div class="form-group col-md-2">
@@ -100,7 +100,7 @@
             <form:input path="vendaProduto.quantidade" type="number" class="form-control" id="field_Quantidade" placeholder="0"/>
         </div>
         <div class="form-group col-md-1">
-            <form:label path="vendaProduto" class="form-label" for="buttonProduto">Adicionar:</form:label>
+            <label class="form-label" for="buttonProduto">Adicionar:</label>
             <button type="button" class="btn btn-outline-secondary" id="buttonProduto" onclick="adicionarProduto()">+</button>
         </div>
         <div class="row">

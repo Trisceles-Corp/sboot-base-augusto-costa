@@ -29,7 +29,7 @@
         <div class="row">
             <div class="form-group col-md-2">
                 <form:label path="situacao" class="form-label" for="field_situacaoId">Situação:</form:label>
-                <form:select path="situacao" class="form-control" id="field_situacaoId" required="required">
+                <form:select path="situacao" class="form-control" id="field_situacaoId" required="required" readonly="true">
                     <option value=true label="Aberto"></option>
                     <option value=false label="Fechado"></option>
                 </form:select>
@@ -149,36 +149,35 @@
             </div>
         </div>
         <div class="panel">
-            <h3>Pagamento</h3>
-            <div class="row">
-                <div class="form-group col-md-4">
-                    <form:label path="caixaId" class="form-label" for="field_ColaboradorId">Caixa:</form:label>
-                    <form:select path="caixaId" class="form-control" id="field_ColaboradorId" readonly="readonly">
-                        <form:option value="" label=" Selecione "/>
-                        <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
-                    </form:select>
-                </div>
-                <div class="form-group col-md-2">
-                    <form:label path="valorPagamento" class="form-label" for="field_valorComanda">Total a pager:</form:label>
-                    <form:input path="valorPagamento" class="form-control" type="text" id="field_valorPagamento"/>
-                </div>
+            <div class="itemHeader">
+                <h5>Pagamentos</h5>
             </div>
             <div class="row">
+                <div class="form-group col-md-2">
+                    <form:label path="caixaId" class="form-label" for="field_ColaboradorId">Caixa:</form:label>
+                    <form:select path="caixaId" class="form-control" id="field_ColaboradorId">
+                        <form:option value="" label=" Selecione "/>
+                        <option selected>Selecione</option>
+                        <option value="1" label="Caixa 01"></option>
+                        <option value="2" label="Caixa 02"></option>
+<%--                        <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>--%>
+                    </form:select>
+                </div>
                 <div class="form-group col-md-2">
                     <form:label path="formaPagamentoId" class="form-label" for="field_formaPagamentoId">Forma:</form:label>
                     <form:select path="formaPagamentoId" class="form-control" id="field_formaPagamentoId">
                         <form:option value="" label=" Selecione "/>
-                        <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
+                        <form:options items="${listarFormaPagamentos}" itemValue="id" itemLabel="nome"/>
                     </form:select>
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="bandeiraId" class="form-label" for="field_bandeiraId">Bandeira:</form:label>
                     <form:select path="bandeiraId" class="form-control" id="field_bandeiraId">
                         <form:option value="" label=" Selecione "/>
-                        <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
+                        <form:options items="${listarBandeiras}" itemValue="id" itemLabel="nome"/>
                     </form:select>
                 </div>
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-1">
                     <form:label path="parcelas" class="form-label" for="field_parcelas">Parcelas:</form:label>
                     <form:input path="parcelas" class="form-control" type="number" id="field_parcelas"/>
                 </div>
@@ -187,8 +186,12 @@
                     <form:input path="valorInserido" class="form-control" type="number" id="field_valorPagamento"/>
                 </div>
                 <div class="form-group col-md-1">
-                    <form:label path="vendaProduto" class="form-label" for="buttonPagamento">Adicionar:</form:label>
+                    <label class="form-label" for="buttonPagamento">Adicionar:</label>
                     <button type="button" class="btn btn-outline-secondary" id="buttonPagamento" onclick="adicionarPagamento()">+</button>
+                </div>
+                <div class="form-group col-md-2">
+                    <form:label path="valorPagamento" class="form-label" for="field_valorComanda">Total a Pagar:</form:label>
+                    <form:input path="valorPagamento" class="form-control" type="text" id="field_valorPagamento"/>
                 </div>
             </div>
             <div class="row" id="tabelaPagamentos">
