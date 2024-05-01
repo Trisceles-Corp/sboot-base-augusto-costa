@@ -13,6 +13,7 @@ public class dtoComanda {
 
     private Integer comandaId;
     private Integer agendamentoId;
+    private Integer caixaId;
     private Date dataAgendamento;
     private LocalTime horaAgendamento;
     private Integer clienteId;
