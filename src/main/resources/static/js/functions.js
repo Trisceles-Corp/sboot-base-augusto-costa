@@ -467,22 +467,14 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
 function adicionarServico() {
     const servicoId = document.getElementById("field_ServicoId").value;
     const table = document.getElementById("tabelaDadosServicos");
-    if (table.style.display === "none") {
-        table.style.display = "block";
-    } else {
-        table.style.display = "block";
-    }
+    table.style.display = "block";
     buscarDadosServicos(servicoId);
 }
 
 function adicionarProduto() {
     const produtoId = document.getElementById("field_ProdutoId").value;
     const table = document.getElementById("tabelaDadosProdutos");
-    if (table.style.display === "none") {
-        table.style.display = "block";
-    } else {
-        table.style.display = "block";
-    }
+    table.style.display = "block";
     buscarDadosProdutos(produtoId);
 }
 
@@ -490,11 +482,16 @@ function adicionarPagamento() {
     const formaPagamentoId = document.getElementById("field_formaPagamentoId").value;
     const bandeiraId = document.getElementById("field_bandeiraId").value;
     const table = document.getElementById("tabelaDadosPagamentos");
-    if (table.style.display === "none") {
-        table.style.display = "block";
-    } else {
-        table.style.display = "block";
+
+    if (!formaPagamentoId || parseInt(formaPagamentoId, 10) <= 0) {
+        alert("O campo Forma é obrigatório e deve ser informado.");
+        return;
     }
+    if (!bandeiraId || parseInt(bandeiraId, 10) <= 0) {
+        alert("O campo Informação é obrigatório e deve ser informado.");
+        return;
+    }
+    table.style.display = "block";
     buscarDadosPagamentos(formaPagamentoId, bandeiraId);
 }
 
@@ -526,12 +523,12 @@ function buscarDadosProdutos(produtoId) {
 
 function buscarDadosPagamentos(formaPagamentoId, bandeiraId) {
     var requestFormaPagamento = $.ajax({
-        url: '/formaspagamento/listaFormasPagamento/' + formaPagamentoId,
+        url: '/comanda/listaFormasPagamento/' + formaPagamentoId,
         type: 'GET'
     });
 
     var requestBandeira = $.ajax({
-        url: '/bandeiras/listaBandeiras/' + bandeiraId,
+        url: '/comanda/listaBandeiras/' + bandeiraId,
         type: 'GET'
     });
 
@@ -593,11 +590,29 @@ function atualizarGridProdutos(produto) {
 }
 
 function atualizarGridPagamentos(formaPagamento, bandeira) {
-    var comandaInput = document.getElementById("field_id");
-    var parcelasInput = document.getElementById("field_parcelas");
-    var valorInput = document.getElementById("field_valorPagamento");
+    var formaInput = document.getElementById("field_formaPagamentoId");
+    var bandeiraInput = document.getElementById("field_bandeiraId");
+    var comandaInput = document.getElementById("field_Id");
     var comandaId = parseInt(comandaInput.value, 10);
+
+    var caixaInput = document.getElementById("field_CaixaId");
+    if (!caixaInput.value || caixaInput.value === "0") {
+        alert("O campo Caixa é obrigatório e deve ser informado.");
+        return;
+    }
+
+    var parcelasInput = document.getElementById("field_parcelas");
+    if (!parcelasInput.value || parseInt(parcelasInput.value, 10) <= 0) {
+        alert("O campo Parcelas é obrigatório e deve ser maior que 0.");
+        return;
+    }
     var parcelas = parseInt(parcelasInput.value, 10);
+
+    var valorInput = document.getElementById("field_valorPagamento");
+    if (!valorInput.value || parseFloat(valorInput.value) <= 0) {
+        alert("O campo Valor do Pagamento é obrigatório e deve ser maior que 0.");
+        return;
+    }
     var valor = parseFloat(valorInput.value);
 
     if (isNaN(parcelas) || parcelas === null || parcelas === "" || parcelas < 1) {
@@ -616,7 +631,7 @@ function atualizarGridPagamentos(formaPagamento, bandeira) {
     var celulaBandeiraId = novaLinha.insertCell(6);
     var celulaComandaId = novaLinha.insertCell(7);
 
-    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerPagamento(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
     celulaFormaPagamento.innerHTML = formaPagamento.nome;
     celulaBandeira.innerHTML = bandeira.nome;
     celulaParcelas.innerHTML = parcelas;
@@ -629,6 +644,12 @@ function atualizarGridPagamentos(formaPagamento, bandeira) {
     celulaFormaPagamentoId.style.display = 'none';
     celulaBandeiraId.style.display = 'none';
     celulaComandaId.style.display = 'none';
+
+    caixaInput.value = 0;
+    formaInput.value = 0;
+    bandeiraInput.value = 0;
+    parcelasInput.value = 0;
+    valorInput.value = 0.0;
 }
 
 function removerServico(link) {
@@ -650,6 +671,20 @@ function removerServico(link) {
 
 function removerProduto(link) {
     const table = document.getElementById("tabelaDadosProdutos");
+    const tbody = table.getElementsByTagName('tbody')[0];
+    var row = link.parentNode.parentNode;
+
+    row.parentNode.removeChild(row);
+
+    if (tbody.rows.length === 0) {
+        table.style.display = "none";
+    } else {
+        table.style.display = "block";
+    }
+}
+
+function removerPagamento(link) {
+    const table = document.getElementById("tabelaDadosPagamentos");
     const tbody = table.getElementsByTagName('tbody')[0];
     var row = link.parentNode.parentNode;
 
@@ -707,12 +742,12 @@ function coletarDadosPagamentos() {
     });
 
     var form = document.getElementById("form-cadastro");
-    pagamentos.forEach(function(servico, index) {
-        form.appendChild(criarCampoOculto(`pagamentos[${index}].comanda.id`, pagamentos.comandaId));
-        form.appendChild(criarCampoOculto(`pagamentos[${index}].formaPagamento.id`, pagamentos.formaPagamentoId));
-        form.appendChild(criarCampoOculto(`pagamentos[${index}].bandeira.id`, pagamentos.bandeiraId));
-        form.appendChild(criarCampoOculto(`pagamentos[${index}].parcelas`, pagamentos.parcelas));
-        form.appendChild(criarCampoOculto(`pagamentos[${index}].valorPagamento`, pagamentos.valor));
+    pagamentos.forEach(function(pagamento, index) {
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].comanda.id`, pagamento.comandaId));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].formaPagamento.id`, pagamento.formaPagamentoId));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].bandeira.id`, pagamento.bandeiraId));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].parcelas`, pagamento.parcelas));
+        form.appendChild(criarCampoOculto(`pagamentos[${index}].valorPagamento`, pagamento.valor));
     });
 }
 

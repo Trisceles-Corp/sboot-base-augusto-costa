@@ -3,10 +3,7 @@ package br.com.augustocosta.acs.presentation.controller;
 import br.com.augustocosta.acs.business.service.*;
 import br.com.augustocosta.acs.integration.dto.dtoComanda;
 import br.com.augustocosta.acs.integration.dto.dtoProdutoVenda;
-import br.com.augustocosta.acs.integration.entity.tblComanda;
-import br.com.augustocosta.acs.integration.entity.tblComandaPagamento;
-import br.com.augustocosta.acs.integration.entity.tblProduto;
-import br.com.augustocosta.acs.integration.entity.tblServico;
+import br.com.augustocosta.acs.integration.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +22,9 @@ public class ComandaController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private CaixaService caixaService;
 
     @Autowired
     private ServicosAgendamentoService servicoAgendamentoService;
@@ -56,6 +56,7 @@ public class ComandaController {
         model.addAttribute("listarProdutosAgendamento", agendamentoService.getProdutoByAgendamentoId(0));
         model.addAttribute("listarPagamentos", comandaPagamentoService.getByComanda(0));
         model.addAttribute("listarFormaPagamentos", formasPagamentoService.getActiveByNameAsc());
+        model.addAttribute("listarCaixas", caixaService.getActiveByNameAsc());
         model.addAttribute("listarBandeiras", bandeirasService.getActiveByNameAsc());
         model.addAttribute("dtoComanda", new dtoComanda());
         return "comanda";
@@ -63,11 +64,7 @@ public class ComandaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoComanda dados) {
-        tblComanda table = service.getTableById(dados.getComandaId());
-        table.setSituacao(dados.getSituacao());
-        table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(1);
-        service.update(table);
+        service.update(dados);
         return "redirect:/index";
     }
 
@@ -96,5 +93,19 @@ public class ComandaController {
     public ResponseEntity<List<dtoProdutoVenda>> listarProdutosPorCompra(@PathVariable Integer agendamentoId) {
         List<dtoProdutoVenda> produtos = agendamentoService.getProdutoByAgendamentoId(agendamentoId);
         return ResponseEntity.ok(produtos);
+    }
+
+    @GetMapping("/listaFormasPagamento/{formasPagamentoId}")
+    @ResponseBody
+    public ResponseEntity<tblFormasPagamento> listaPagamento(@PathVariable("formasPagamentoId") Integer formasPagamentoId) {
+        tblFormasPagamento tblFormasPagamento = formasPagamentoService.getByFormaPagamentoId(formasPagamentoId);
+        return ResponseEntity.ok(tblFormasPagamento);
+    }
+
+    @GetMapping("/listaBandeiras/{bandeiraId}")
+    @ResponseBody
+    public ResponseEntity<tblBandeiras> listaBandeiras(@PathVariable("bandeiraId") Integer bandeiraId) {
+        tblBandeiras bandeiras = bandeirasService.getByBandeiraId(bandeiraId);
+        return ResponseEntity.ok(bandeiras);
     }
 }

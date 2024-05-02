@@ -1,8 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
-import br.com.augustocosta.acs.integration.entity.tblFormasPagamento;
-import br.com.augustocosta.acs.integration.entity.tblProduto;
+import br.com.augustocosta.acs.integration.entity.tblCaixa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,34 +12,34 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/formaspagamento")
-public class FormasPagamentoController {
+@RequestMapping("/caixa")
+public class CaixaController {
 
     @Autowired
-    private FormasPagamentoService service;
+    private CaixaService service;
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("tblFormasPagamento", new tblFormasPagamento());
-        return "formaspagamento";
+        model.addAttribute("tblCaixa", new tblCaixa());
+        return "caixa";
     }
 
     @GetMapping
-    public String listarFormasPagamentos(Model model) {
-        model.addAttribute("listarFormasPagamentos", service.getActives());
-        model.addAttribute("tblFormasPagamento", new tblFormasPagamento());
-        return "formaspagamento";
+    public String listarDependencias(Model model) {
+        model.addAttribute("listarCaixas", service.getActiveByNameAsc());
+        model.addAttribute("tblCaixa", new tblCaixa());
+        return "caixa";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblFormasPagamento table) {
+    public String salvar(@ModelAttribute tblCaixa table) {
         table.setAtivo(true);
 
         if (table.getId() != null && table.getId() != 0){
-            Optional<tblFormasPagamento> data = service.getById(table.getId());
+            tblCaixa data = service.getByCaixaId(table.getId());
             table.setAtivo(table.getAtivo());
-            table.setDataCriacao(data.orElseThrow().getDataCriacao());
-            table.setCriadoPor(data.get().getCriadoPor());
+            table.setDataCriacao(data.getDataCriacao());
+            table.setCriadoPor(data.getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(1);
             service.update(table);
@@ -58,9 +57,9 @@ public class FormasPagamentoController {
 
     @GetMapping("/novo")
     public String novoSituacaoAgendamento(Model model) {
-        model.addAttribute("listarFormasPagamentos", service.getActives());
-        model.addAttribute("tblFormasPagamento", new tblFormasPagamento());
-        return "formaspagamento";
+        model.addAttribute("listarCaixas", service.getActiveByNameAsc());
+        model.addAttribute("tblCaixa", new tblCaixa());
+        return "caixa";
     }
 
     @PostMapping("/delete/{id}")

@@ -68,11 +68,4 @@ public class BandeirasController {
         service.delete(id, 1);
         return "redirect:/index";
     }
-
-    @GetMapping("/listaBandeiras/{bandeiraId}")
-    @ResponseBody
-    public ResponseEntity<tblBandeiras> listaBandeiras(@PathVariable("bandeiraId") Integer bandeiraId) {
-        tblBandeiras bandeiras = service.getByBandeiraId(bandeiraId);
-        return ResponseEntity.ok(bandeiras);
-    }
 }

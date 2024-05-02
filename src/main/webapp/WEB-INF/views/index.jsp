@@ -167,10 +167,10 @@
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
-                            <span class="button-nav-option">Caixas em aberto</span><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/caixa')">Caixas em aberto</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/comanda')">Comandas Abertas</button><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/comanda')">Comandas abertas</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
                             <span class="button-nav-option">Comissões</span><br>

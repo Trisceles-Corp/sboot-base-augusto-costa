@@ -1,11 +1,9 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.dto.dtoComanda;
-import br.com.augustocosta.acs.integration.entity.tblComanda;
-import br.com.augustocosta.acs.integration.entity.tblAgendamento;
+import br.com.augustocosta.acs.integration.entity.*;
 import br.com.augustocosta.acs.integration.projections.prjComanda;
-import br.com.augustocosta.acs.persistence.repository.AgendamentoRepository;
-import br.com.augustocosta.acs.persistence.repository.ComandaRepository;
+import br.com.augustocosta.acs.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +17,17 @@ public class ComandaService {
 
     private final ComandaRepository repository;
     private final AgendamentoRepository agendamentoRepository;
+    private final FormasPagamentoRepository formasPagamentoRepository;
+    private final BandeirasRepository bandeirasRepository;
+    private final ComandaPagamentoRepository comandaPagamentoRepository;
 
     @Autowired
-    public ComandaService(ComandaRepository repository, AgendamentoRepository agendamentoRepository) {
+    public ComandaService(ComandaRepository repository, AgendamentoRepository agendamentoRepository, FormasPagamentoRepository formasPagamentoRepository, BandeirasRepository bandeirasRepository, ComandaPagamentoRepository comandaPagamentoRepository) {
         this.repository = repository;
         this.agendamentoRepository = agendamentoRepository;
+        this.formasPagamentoRepository = formasPagamentoRepository;
+        this.bandeirasRepository = bandeirasRepository;
+        this.comandaPagamentoRepository = comandaPagamentoRepository;
     }
 
     @Transactional
@@ -70,8 +74,37 @@ public class ComandaService {
     }
 
     @Transactional
-    public tblComanda update(tblComanda dados) {
-        return repository.save(dados);
+    public void update(dtoComanda dados) {
+        tblComanda comanda = repository.getReferenceById(dados.getComandaId());
+
+        // Processa e salva os pagamentos
+        dados.getPagamentos().forEach(pagamento -> {
+            tblFormasPagamento formasPagamento = formasPagamentoRepository.getReferenceById(pagamento.getFormaPagamento().getId());
+            tblBandeiras bandeiras = bandeirasRepository.getReferenceById(pagamento.getBandeira().getId());
+            tblComandaPagamento table = new tblComandaPagamento();
+            ComandaPagamento id = new ComandaPagamento(comanda.getId(), pagamento.getFormaPagamento().getId());
+            table.setId(id);
+            table.setComanda(comanda);
+            table.setFormaPagamento(formasPagamento);
+            table.setBandeira(bandeiras);
+            table.setParcelas(pagamento.getParcelas());
+            table.setValorPagamento(pagamento.getValorPagamento());
+            table.setAtivo(true);
+            table.setDataCriacao(LocalDateTime.now());
+            table.setDataAlteracao(LocalDateTime.now());
+            table.setCriadoPor(1);
+            table.setAlteradoPor(1);
+            comandaPagamentoRepository.save(table);
+        });
+
+        // Processa e salva os comanda
+        comanda.setSituacao(false);
+        comanda.setDataAlteracao(LocalDateTime.now());
+        comanda.setAlteradoPor(1);
+        repository.save(comanda);
+
+        // Processa e salva os caixa
+
     }
 
     @Transactional

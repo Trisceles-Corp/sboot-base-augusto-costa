@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-
+        <div class="itemRequired">* campos obrigatórios</div>
         <!-- formulário de cadastro -->
         <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoUsuario" action="${pageContext.request.contextPath}/cliente/salvar" method="POST">
             <form:hidden path="usuarioId" id="inputUsuarioId"/>
@@ -52,19 +52,19 @@
             <form:hidden path="perfilId" id="inputPerfilId"/>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <form:label path="nome" class="form-label" for="inputNome">Nome:</form:label>
+                    <form:label path="nome" class="form-label" for="inputNome">Nome:<span class="text-danger">*</span></form:label>
                     <form:input path="nome" type="text" class="form-control" id="inputNome" maxlength="100" required="required" />
                 </div>
                 <div class="form-group col-md-3">
-                    <form:label path="sobrenome" class="form-label" for="inputSobrenome">Sobrenome:</form:label>
+                    <form:label path="sobrenome" class="form-label" for="inputSobrenome">Sobrenome:<span class="text-danger">*</span></form:label>
                     <form:input path="sobrenome" type="text" class="form-control" id="inputSobrenome" maxlength="200" required="required" />
                 </div>
                 <div class="form-group col-md-2">
-                    <form:label path="cpfCnpj" class="form-label" for="inputCpfCnpj">CPF / CNPJ:</form:label>
+                    <form:label path="cpfCnpj" class="form-label" for="inputCpfCnpj">CPF / CNPJ:<span class="text-danger">*</span></form:label>
                     <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" maxlength="18" required="required" />
                 </div>
                 <div class="form-group col-md-1">
-                    <form:label path="genero" class="form-label" for="inputGenero">Gênero:</form:label>
+                    <form:label path="genero" class="form-label" for="inputGenero">Gênero:<span class="text-danger">*</span></form:label>
                     <form:select path="genero" class="form-control" id="inputGenero" required="required">
                         <option selected>Selecione</option>
                         <option value="M" label="Masculino"></option>
@@ -79,7 +79,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-3">
-                    <form:label path="email" class="form-label" for="inputEmail">E-mail:</form:label>
+                    <form:label path="email" class="form-label" for="inputEmail">E-mail:<span class="text-danger">*</span></form:label>
                     <form:input path="email" type="email" class="form-control" id="inputEmail" maxlength="50" required="required" />
                 </div>
                 <div class="form-group col-md-3">
@@ -87,11 +87,11 @@
                     <form:input path="profissao" type="text" class="form-control" id="inputProfissao" maxlength="100"  />
                 </div>
                 <div class="form-group col-md-1">
-                    <form:label path="dddCelular" class="form-label" for="inputDDDCel">DDD:</form:label>
+                    <form:label path="dddCelular" class="form-label" for="inputDDDCel">DDD:<span class="text-danger">*</span></form:label>
                     <form:input path="dddCelular" type="number" class="form-control" id="inputDDDCel" maxlength="2" required="required" />
                 </div>
                 <div class="form-group col-md-2">
-                    <form:label path="celular" class="form-label" for="inputCelular">Celular:</form:label>
+                    <form:label path="celular" class="form-label" for="inputCelular">Celular:<span class="text-danger">*</span></form:label>
                     <form:input path="celular" type="text" class="form-control" id="inputCelular" maxlength="11" required="required" />
                 </div>
                 <div class="form-group col-md-1">
@@ -105,15 +105,15 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-2">
-                    <form:label path="cep" class="form-label" for="inputCEP">CEP:</form:label>
+                    <form:label path="cep" class="form-label" for="inputCEP">CEP:<span class="text-danger">*</span></form:label>
                     <form:input path="cep" type="text" class="form-control" id="inputCEP" maxlength="9" required="required" />
                 </div>
                 <div class="form-group col-md-5">
-                    <form:label path="logradouro" class="form-label" for="inputlogradouro">Endereço:</form:label>
+                    <form:label path="logradouro" class="form-label" for="inputlogradouro">Endereço:<span class="text-danger">*</span></form:label>
                     <form:input path="logradouro" type="text" class="form-control" id="inputlogradouro" maxlength="200" required="required" />
                 </div>
                 <div class="form-group col-md-1">
-                    <form:label path="numero" class="form-label" for="inputNumero">Número:</form:label>
+                    <form:label path="numero" class="form-label" for="inputNumero">Número:<span class="text-danger">*</span></form:label>
                     <form:input path="numero" type="text" class="form-control" id="inputNumero" maxlength="10" required="required" />
                 </div>
                 <div class="form-group col-md-4">
@@ -123,15 +123,15 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
-                    <form:label path="bairro" class="form-label" for="inputBairro">Bairro:</form:label>
+                    <form:label path="bairro" class="form-label" for="inputBairro">Bairro:<span class="text-danger">*</span></form:label>
                     <form:input path="bairro" type="text" class="form-control" id="inputBairro" maxlength="100" required="required" />
                 </div>
                 <div class="form-group col-md-4">
-                    <form:label path="cidade" class="form-label" for="inputCidade">Cidade:</form:label>
+                    <form:label path="cidade" class="form-label" for="inputCidade">Cidade:<span class="text-danger">*</span></form:label>
                     <form:input path="cidade" type="text" class="form-control" id="inputCidade" maxlength="100" required="required"/>
                 </div>
                 <div class="form-group col-md-4">
-                    <form:label path="uf" class="form-label" for="inputEstado">Estado:</form:label>
+                    <form:label path="uf" class="form-label" for="inputEstado">Estado:<span class="text-danger">*</span></form:label>
                     <form:select path="uf" class="form-control" id="inputEstado" required="required">
                         <option selected>Selecione</option>
                         <option value="AL" label="Alagoas"></option>
