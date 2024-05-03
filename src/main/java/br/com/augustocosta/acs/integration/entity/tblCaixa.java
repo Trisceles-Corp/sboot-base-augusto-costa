@@ -21,14 +21,19 @@ public class tblCaixa {
     @Column(name = "Nome", nullable = false)
     private String nome;
 
-    @Column(name = "ResponsavelAbertura", nullable = false)
-    private Integer responsavelAbertura;
+    @Column(name = "NomeIndice")
+    private Integer nomeIndice = 1;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ResponsavelAbertura", nullable = false)
+    private tblUsuario responsavelAbertura;
 
     @Column(name = "DataAbertura", nullable = false)
     private LocalDateTime dataAbertura;
 
-    @Column(name = "ResponsavelFechamento", nullable = false)
-    private Integer responsavelFechamento;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ResponsavelFechamento", nullable = false)
+    private tblUsuario responsavelFechamento;
 
     @Column(name = "DataFechamento", nullable = false)
     private LocalDateTime dataFechamento;

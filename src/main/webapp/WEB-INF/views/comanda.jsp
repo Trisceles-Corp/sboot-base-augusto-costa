@@ -158,7 +158,7 @@
                     <form:label path="caixaId" class="form-label" for="field_CaixaId">Caixa:<span class="text-danger">*</span></form:label>
                     <form:select path="caixaId" class="form-control" id="field_CaixaId">
                         <form:option value="0" label=" Selecione "/>
-                        <form:options items="${listarCaixas}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
+                        <form:options items="${listarCaixas}" itemValue="id" itemLabel="nome"/>
                     </form:select>
                 </div>
                 <div class="form-group col-md-2">

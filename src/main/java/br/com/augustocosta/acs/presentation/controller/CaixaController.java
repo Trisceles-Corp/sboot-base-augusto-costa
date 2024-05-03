@@ -18,6 +18,9 @@ public class CaixaController {
     @Autowired
     private CaixaService service;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblCaixa", new tblCaixa());
@@ -27,6 +30,7 @@ public class CaixaController {
     @GetMapping
     public String listarDependencias(Model model) {
         model.addAttribute("listarCaixas", service.getActiveByNameAsc());
+        model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
         model.addAttribute("tblCaixa", new tblCaixa());
         return "caixa";
     }

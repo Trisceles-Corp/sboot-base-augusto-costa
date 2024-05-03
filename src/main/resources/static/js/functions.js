@@ -400,6 +400,26 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Comissao").value = comissao;
 }
 
+function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEmail, dataAbertura, valorAbertura, responsavelFechamentoId, dataFechamento, valorFechamento) {
+
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_Name").value = nome;
+    document.getElementById("field_ResponsavelAbertura").value = responsavelAberturaId;
+    document.getElementById("field_Email").value = responsavelAberturaEmail;
+    document.getElementById("field_DataAbertura").value = dataAbertura;
+    document.getElementById("field_ValorAbertura").value = valorAbertura;
+    document.getElementById("field_ResponsavelFechamento").value = responsavelFechamentoId;
+    document.getElementById("field_DataFechamento").value = dataFechamento;
+    document.getElementById("field_ValorFechamento").value = valorFechamento;
+}
+
 function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
