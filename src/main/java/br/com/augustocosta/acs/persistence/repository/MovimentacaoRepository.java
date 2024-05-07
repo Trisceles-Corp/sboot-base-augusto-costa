@@ -18,4 +18,5 @@ public interface MovimentacaoRepository extends JpaRepository<tblMovimentacao, I
     List<tblMovimentacao> findByDataCriacao(LocalDateTime dataCriacao);
     List<tblMovimentacao> findByAtivoTrue();
     List<tblMovimentacao> findByAtivoFalse();
+    Integer findTopByOrderByNrNotaFiscalDesc();
 }

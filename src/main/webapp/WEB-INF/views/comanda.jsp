@@ -55,7 +55,7 @@
         <div class="row">
             <div class="form-group col-md-2">
                 <form:label path="dataAgendamento" class="form-label" for="field_dataAgendamento">Data:</form:label>
-                <form:input  path="dataAgendamento" type="text" class="form-control" id="field_dataAgendamento" readonly="true" />
+                <form:input  path="dataAgendamento" type="date" class="form-control" id="field_dataAgendamento" readonly="true" />
             </div>
             <div class="form-group col-md-2">
                 <form:label path="horaAgendamento" class="form-label" for="field_HoraAgendamento">Hora:</form:label>
@@ -149,21 +149,21 @@
             </div>
         </div>
         <div class="panel">
-            <div class="itemHeader">
-                <h5>Pagamentos</h5>
+            <div class="headerContainer">
+                <h5 class="headerTitle">Pagamentos</h5>
+                <div class="headerRequired">* campos obrigatórios</div>
             </div>
-            <div class="itemRequired">* campos obrigatórios</div>
             <div class="row">
                 <div class="form-group col-md-2">
                     <form:label path="caixaId" class="form-label" for="field_CaixaId">Caixa:<span class="text-danger">*</span></form:label>
-                    <form:select path="caixaId" class="form-control" id="field_CaixaId">
+                    <form:select path="caixaId" class="form-control" id="field_CaixaId" required="true" >
                         <form:option value="0" label=" Selecione "/>
                         <form:options items="${listarCaixas}" itemValue="id" itemLabel="nome"/>
                     </form:select>
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="formaPagamentoId" class="form-label" for="field_formaPagamentoId">Forma:<span class="text-danger">*</span></form:label>
-                    <form:select path="formaPagamentoId" class="form-control" id="field_formaPagamentoId">
+                    <form:select path="formaPagamentoId" class="form-control" id="field_formaPagamentoId" onchange="ajustarCamposFormaPagamento();">
                         <form:option value="0" label=" Selecione "/>
                         <form:options items="${listarFormaPagamentos}" itemValue="id" itemLabel="nome"/>
                     </form:select>
@@ -188,8 +188,8 @@
                     <button type="button" class="btn btn-outline-secondary" id="buttonPagamento" onclick="adicionarPagamento()">+</button>
                 </div>
                 <div class="form-group col-md-2">
-                    <form:label path="valorPagamento" class="form-label" for="field_valorComanda">Total a Pagar:</form:label>
-                    <form:input path="valorPagamento" class="form-control" type="text" id="field_valorPagamento" disabled="true"/>
+                    <form:label path="valorPagamento" class="form-label" for="field_valorTotalPgto">Total a Pagar:</form:label>
+                    <form:input path="valorPagamento" class="form-control" type="text" id="field_valorTotalPgto" disabled="true"/>
                 </div>
             </div>
             <div class="row" id="tabelaPagamentos">
@@ -226,7 +226,7 @@
         </div>
         <div class="row">
             <div class="mt-2">
-                <button type="button" class="btn btn-primary" onclick="coletarDadosPagamentos(); document.getElementById('form-cadastro').submit();">Salvar</button>
+                <button type="button" class="btn btn-primary" onclick="coletarDadosPagamentos(); document.getElementById('form-cadastro').submit();">Fechar Comanda</button>
                 <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
             </div>
         </div>

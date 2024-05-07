@@ -9,7 +9,7 @@ public interface prjComanda {
 
     Integer getComandaId();
     Integer getAgendamentoId();
-    Date getDataAgendamento();
+    LocalDate getDataAgendamento();
     LocalTime getHoraAgendamento();
     tblAgendamento getAgendamento();
     Integer getClienteId();

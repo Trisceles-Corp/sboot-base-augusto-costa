@@ -501,6 +501,8 @@ function adicionarProduto() {
 function adicionarPagamento() {
     const formaPagamentoId = document.getElementById("field_formaPagamentoId").value;
     const bandeiraId = document.getElementById("field_bandeiraId").value;
+    const valorPagamento = parseFloat(document.getElementById("field_valorPagamento").value);
+    const valorTotalPgtoElement = document.getElementById("field_valorTotalPgto");
     const table = document.getElementById("tabelaDadosPagamentos");
 
     if (!formaPagamentoId || parseInt(formaPagamentoId, 10) <= 0) {
@@ -510,6 +512,15 @@ function adicionarPagamento() {
     if (!bandeiraId || parseInt(bandeiraId, 10) <= 0) {
         alert("O campo Informação é obrigatório e deve ser informado.");
         return;
+    }
+    if (isNaN(valorPagamento) || valorPagamento <= 0) {
+        alert("O valor do pagamento deve ser maior que zero.");
+        return;
+    } else
+    {
+        var valorTotalPgto = parseFloat(valorTotalPgtoElement.value || 0);
+        valorTotalPgto += valorPagamento;
+        valorTotalPgtoElement.value = valorTotalPgto.toFixed(2); // Formata para duas casas decimais
     }
     table.style.display = "block";
     buscarDadosPagamentos(formaPagamentoId, bandeiraId);
@@ -558,6 +569,7 @@ function buscarDadosPagamentos(formaPagamentoId, bandeiraId) {
         console.log("Erro ao buscar dados: ", error);
     });
 }
+
 function atualizarGridServicos(servico) {
     var duracao = document.getElementById("field_Duracao");
     var tabelaServicos = document.getElementById("tabelaDadosServicos").getElementsByTagName('tbody')[0];
@@ -665,7 +677,6 @@ function atualizarGridPagamentos(formaPagamento, bandeira) {
     celulaBandeiraId.style.display = 'none';
     celulaComandaId.style.display = 'none';
 
-    caixaInput.value = 0;
     formaInput.value = 0;
     bandeiraInput.value = 0;
     parcelasInput.value = 0;
@@ -706,7 +717,17 @@ function removerProduto(link) {
 function removerPagamento(link) {
     const table = document.getElementById("tabelaDadosPagamentos");
     const tbody = table.getElementsByTagName('tbody')[0];
+
     var row = link.parentNode.parentNode;
+
+    var valorInput = document.getElementById("field_valorTotalPgto");
+
+    if (valorInput.value && parseFloat(valorInput.value) > 0) {
+        var valorAtual = parseFloat(valorInput.value);
+        var valorCelula = parseFloat(row.cells[4].textContent || row.cells[4].innerText);
+        var valorFinal = valorAtual - valorCelula;
+        valorInput.value = valorFinal.toFixed(2);
+    }
 
     row.parentNode.removeChild(row);
 
@@ -751,11 +772,11 @@ function coletarDadosFormulario() {
 function coletarDadosPagamentos() {
     var pagamentos = [];
     document.querySelectorAll("#tabelaDadosPagamentos tbody tr").forEach(function(row) {
-        var parcelas = row.cells[3] ? row.cells[3].textContent : '';
-        var valor = row.cells[4] ? row.cells[4].textContent : '';
-        var formaPagamentoId = row.cells[5] ? row.cells[5].textContent : '';
-        var bandeiraId = row.cells[6] ? row.cells[6].textContent : '';
-        var comandaId = row.cells[7] ? row.cells[7].textContent : '';
+        var parcelas = row.cells[3].textContent || row.cells[3].innerText;
+        var valor = row.cells[4].textContent || row.cells[4].innerText;
+        var formaPagamentoId = row.cells[5].querySelector("input").value;
+        var bandeiraId = row.cells[6].querySelector("input").value;
+        var comandaId = row.cells[7].querySelector("input").value;
         if (formaPagamentoId) {
             pagamentos.push({comandaId: comandaId, formaPagamentoId: formaPagamentoId, bandeiraId: bandeiraId, parcelas: parcelas, valor: valor});
         }
@@ -769,6 +790,56 @@ function coletarDadosPagamentos() {
         form.appendChild(criarCampoOculto(`pagamentos[${index}].parcelas`, pagamento.parcelas));
         form.appendChild(criarCampoOculto(`pagamentos[${index}].valorPagamento`, pagamento.valor));
     });
+}
+
+function criarCampoOculto(nome, valor) {
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = nome;
+    input.value = valor;
+    return input;
+}
+
+function ajustarCamposFormaPagamento() {
+    const valorTotalPgtoElement = document.getElementById("field_valorTotalPgto");
+    var formaPagamentoId = document.getElementById("field_formaPagamentoId").value;
+    var bandeiraId = document.getElementById("field_bandeiraId");
+    var parcelas = document.getElementById("field_parcelas");
+    var valorPagamento = document.getElementById("field_valorPagamento");
+    var valorComanda = document.getElementById("field_valorComanda").value;
+    var valorTotalPgto = parseFloat(valorTotalPgtoElement.value || 0);
+
+    // Resetando os campos para o estado padrão
+    bandeiraId.disabled = false;
+    parcelas.disabled = false;
+
+    // Aplicando regras específicas com base na forma de pagamento selecionada
+    switch(formaPagamentoId) {
+        case "1": // Dinheiro
+            bandeiraId.value = "3";
+            bandeiraId.disabled = true;
+            parcelas.value = "1";
+            parcelas.disabled = true;
+            valorPagamento.value = valorComanda - valorTotalPgto;
+            break;
+        case "2": // Débito
+        case "4": // Pix
+            bandeiraId.value = "4";
+            bandeiraId.disabled = true;
+            parcelas.value = "1";
+            parcelas.disabled = true;
+            valorPagamento.value = valorComanda - valorTotalPgto;
+            break;
+        case "3": // Crédito
+            bandeiraId.disabled = false;
+            Array.from(bandeiraId.options).forEach(function(option) {
+                option.disabled = !["1", "2", "5"].includes(option.value);
+            });
+            parcelas.disabled = false;
+            break;
+        default:
+            console.log("Forma de pagamento não reconhecida.");
+    }
 }
 
 function criarCampoOculto(nome, valor) {

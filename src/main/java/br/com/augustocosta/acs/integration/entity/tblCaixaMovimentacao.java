@@ -5,33 +5,34 @@ import jakarta.persistence.*;
 import java.time.*;
 
 @Entity
-@Table(name = "tbl_estoque")
+@Table(name = "tbl_caixamovimentacao")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class tblEstoque {
+public class tblCaixaMovimentacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "EstoqueId")
+    @Column(name = "CaixaMovimentacaoId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProdutoId", nullable = false)
-    private tblProduto produto;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "CaixaId", nullable = false)
+    private tblCaixa caixa;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LocalEstoqueId", nullable = false)
-    private tblLocalEstoque localEstoque;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ComandaId")
+    private tblComanda comanda;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MovimentacaoId", nullable = false)
-    private tblMovimentacao movimentacao;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "TipoMovimentacaoId", nullable = false)
+    private tblTipoMovimentacao tipoMovimentacao;
 
-    @Column(name = "Quantidade", nullable = false)
-    private Integer quantidade;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FormaPagamentoId", nullable = false)
+    private tblFormasPagamento formaPagamento;
 
     @Column(name = "ValorMovimentacao", nullable = false)
     private Double valorMovimentacao;

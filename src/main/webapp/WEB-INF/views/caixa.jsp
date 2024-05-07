@@ -83,7 +83,7 @@
             </div>
             <div class="row">
                 <div class="mt-2">
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-primary">Fechar</button>
                     <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
                 </div>
             </div>

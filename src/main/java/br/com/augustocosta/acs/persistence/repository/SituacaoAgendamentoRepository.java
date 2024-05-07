@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface SituacaoAgendamentoRepository extends JpaRepository<tblSituacaoAgendamento, Integer> {
-    List<tblSituacaoAgendamento> findByNome(String nome);
+    tblSituacaoAgendamento findByNome(String nome);
     List<tblSituacaoAgendamento> findByAtivoTrueOrderByNomeAsc();
     List<tblSituacaoAgendamento> findByAtivoTrue();
     List<tblSituacaoAgendamento> findByAtivoFalse();

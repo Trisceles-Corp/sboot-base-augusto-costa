@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.dto;
 
 import br.com.augustocosta.acs.integration.entity.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.*;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +16,10 @@ public class dtoComanda {
     private Integer comandaId;
     private Integer agendamentoId;
     private Integer caixaId;
-    private Date dataAgendamento;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataAgendamento;
+
     private LocalTime horaAgendamento;
     private Integer clienteId;
     private String nomeCliente;
