@@ -26,6 +26,7 @@
     </div>
     <!-- formulário de cadastro -->
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoComanda" action="${pageContext.request.contextPath}/comanda/salvar" method="POST" >
+        <form:hidden path="agendamentoId" id="field_agendamentoId"/>
         <div class="row">
             <div class="form-group col-md-2">
                 <form:label path="situacao" class="form-label" for="field_situacaoId">Situação:</form:label>

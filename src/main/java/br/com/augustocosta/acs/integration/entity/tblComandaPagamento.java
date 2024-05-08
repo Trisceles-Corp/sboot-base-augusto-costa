@@ -17,11 +17,13 @@ public class tblComandaPagamento {
     private ComandaPagamento id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ComandaId", nullable = false)
+    @MapsId("comandaId")
+    @JoinColumn(name = "ComandaId", referencedColumnName = "ComandaId")
     private tblComanda comanda;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "FormaPagamentoId", nullable = false)
+    @MapsId("formaPagamentoId")
+    @JoinColumn(name = "FormaPagamentoId", referencedColumnName = "FormaPagamentoId")
     private tblFormasPagamento formaPagamento;
 
     @ManyToOne(fetch = FetchType.EAGER)

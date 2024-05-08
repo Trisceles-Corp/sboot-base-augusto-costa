@@ -18,9 +18,8 @@ public class tblCaixaMovimentacao {
     @Column(name = "CaixaMovimentacaoId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CaixaId", nullable = false)
-    private tblCaixa caixa;
+    @Column(name = "CaixaId", nullable = false)
+    private Integer caixaId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ComandaId")

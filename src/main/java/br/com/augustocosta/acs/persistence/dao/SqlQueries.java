@@ -292,8 +292,8 @@ public class SqlQueries {
                     "LEFT JOIN ( " +
                     "SELECT etq.LocalEstoqueId " +
                     ",etq.ProdutoId " +
-                    ",SUM(etq.Quantidade) * -1 AS QtdProduto " +
-                    ",SUM(etq.ValorMovimentacao) * -1 AS ValorProduto " +
+                    ",SUM(etq.Quantidade) AS QtdProduto " +
+                    ",SUM(etq.ValorMovimentacao) AS ValorProduto " +
                     "FROM dbo.tbl_estoque etq " +
                     "JOIN dbo.tbl_movimentacao mov ON etq.MovimentacaoId = mov.MovimentacaoId " +
                     "WHERE mov.TipoMovimentacaoId <> (SELECT TipoMovimentacaoID FROM dbo.tbl_tipomovimentacao WHERE DescricaoMovimentacao = 'Entrada') " +

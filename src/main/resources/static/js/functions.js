@@ -211,6 +211,7 @@ function visualizarComanda(contexto, id, agendamentoId, clienteId, colaboradorId
     });
 
     document.getElementById("field_Id").value = id;
+    document.getElementById("field_agendamentoId").value = agendamentoId;
     document.getElementById("field_ClienteId").value = clienteId;
     document.getElementById("field_ColaboradorId").value = colaboradorId;
     document.getElementById("field_dataAgendamento").value = dataAgendamento;
@@ -836,6 +837,7 @@ function ajustarCamposFormaPagamento() {
                 option.disabled = !["1", "2", "5"].includes(option.value);
             });
             parcelas.disabled = false;
+            valorPagamento.value = valorComanda - valorTotalPgto;
             break;
         default:
             console.log("Forma de pagamento não reconhecida.");

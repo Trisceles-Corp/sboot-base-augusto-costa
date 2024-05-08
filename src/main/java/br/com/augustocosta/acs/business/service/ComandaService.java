@@ -4,6 +4,7 @@ import br.com.augustocosta.acs.integration.dto.dtoComanda;
 import br.com.augustocosta.acs.integration.entity.*;
 import br.com.augustocosta.acs.integration.projections.prjComanda;
 import br.com.augustocosta.acs.persistence.repository.*;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,19 @@ public class ComandaService {
         this.movimentacaoRepository = movimentacaoRepository;
         this.vendaProdutoRepository = vendaProdutoRepository;
         this.estoqueRepository = estoqueRepository;
+    }
+    @Autowired
+    private EntityManager entityManager;
+
+    public tblCaixa findCaixaById(Integer id) {
+        return entityManager.find(tblCaixa.class, id);
+    }
+
+    public tblSituacaoAgendamento findSituacaoAgendamentoByNome(String nome) {
+        String jpql = "SELECT s FROM tblSituacaoAgendamento s WHERE s.nome = :nome";
+        return entityManager.createQuery(jpql, tblSituacaoAgendamento.class)
+                .setParameter("nome", nome)
+                .getSingleResult();
     }
 
     @Transactional
@@ -96,36 +110,36 @@ public class ComandaService {
         if (dados.getPagamentos() == null || CollectionUtils.isEmpty(dados.getPagamentos())) {
             throw new IllegalArgumentException("Nenhum pagamento informado para a comanda.");
         }
-
-        tblComanda comanda = repository.getReferenceById(dados.getComandaId());
-        tblCaixa caixa = caixaRepository.getReferenceById(dados.getCaixaId());
+        final Integer caixaId = dados.getCaixaId();
+        tblComanda comanda = repository.findById(dados.getComandaId()).orElseThrow(() -> new RuntimeException("Comanda não encontrado"));
 
         // Processa e salva os pagamentos
         dados.getPagamentos().forEach(pagamento -> {
             tblFormasPagamento formasPagamento = formasPagamentoRepository.getReferenceById(pagamento.getFormaPagamento().getId());
             tblBandeiras bandeiras = bandeirasRepository.getReferenceById(pagamento.getBandeira().getId());
-            tblComandaPagamento table = new tblComandaPagamento();
-//            ComandaPagamento id = new ComandaPagamento(comanda.getId(), pagamento.getFormaPagamento().getId());
-            table.setComanda(comanda);
-            table.setFormaPagamento(formasPagamento);
-            table.setBandeira(bandeiras);
-            table.setParcelas(pagamento.getParcelas());
-            table.setValorPagamento(pagamento.getValorPagamento());
-            table.setAtivo(true);
-            table.setDataCriacao(LocalDateTime.now());
-            table.setDataAlteracao(LocalDateTime.now());
-            table.setCriadoPor(1);
-            table.setAlteradoPor(1);
-            comandaPagamentoRepository.save(table);
+            ComandaPagamento id = new ComandaPagamento(comanda.getId(), pagamento.getFormaPagamento().getId());
+            tblComandaPagamento comandaPagamento = new tblComandaPagamento();
+            comandaPagamento.setId(id);
+            comandaPagamento.setComanda(comanda);
+            comandaPagamento.setFormaPagamento(formasPagamento);
+            comandaPagamento.setBandeira(bandeiras);
+            comandaPagamento.setParcelas(pagamento.getParcelas());
+            comandaPagamento.setValorPagamento(pagamento.getValorPagamento());
+            comandaPagamento.setAtivo(true);
+            comandaPagamento.setDataCriacao(LocalDateTime.now());
+            comandaPagamento.setDataAlteracao(LocalDateTime.now());
+            comandaPagamento.setCriadoPor(1);
+            comandaPagamento.setAlteradoPor(1);
+            comandaPagamentoRepository.save(comandaPagamento);
 
             // Processa e salva os caixa
             tblCaixaMovimentacao caixaMovimentacao = new tblCaixaMovimentacao();
             tblTipoMovimentacao tipoMovimentacaoEntrada = tipoMovimentacaoRepository.findByDescricaoMovimentacao("Entrada");
-            caixaMovimentacao.setCaixa(caixa);
+            caixaMovimentacao.setCaixaId(caixaId);
             caixaMovimentacao.setComanda(comanda);
             caixaMovimentacao.setTipoMovimentacao(tipoMovimentacaoEntrada);
             caixaMovimentacao.setFormaPagamento(formasPagamento);
-            caixaMovimentacao.setValorMovimentacao(dados.getValorPagamento());
+            caixaMovimentacao.setValorMovimentacao(pagamento.getValorPagamento());
             caixaMovimentacao.setAtivo(true);
             caixaMovimentacao.setDataCriacao(LocalDateTime.now());
             caixaMovimentacao.setDataAlteracao(LocalDateTime.now());
@@ -141,8 +155,8 @@ public class ComandaService {
         repository.save(comanda);
 
         // Processo e salva agendamento
-        tblSituacaoAgendamento situacaoAgendamento = situacaoAgendamentoRepository.findByNome("Finalizado");
-        tblAgendamento agendamento = agendamentoRepository.getReferenceById(dados.getAgendamentoId());
+        tblSituacaoAgendamento situacaoAgendamento = findSituacaoAgendamentoByNome("Finalizado");
+        tblAgendamento agendamento = agendamentoRepository.findById(dados.getAgendamentoId()).orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
         agendamento.setSituacao(situacaoAgendamento);
         agendamento.setDataAlteracao(LocalDateTime.now());
         agendamento.setAlteradoPor(1);
@@ -151,7 +165,7 @@ public class ComandaService {
         // Processa e salva venda produtos quando existir
         tblVenda venda = vendaRepository.findByAgendamentoId(agendamento.getId());
         if(venda != null){
-            Integer maxNrNotaFiscal = movimentacaoRepository.findTopByOrderByNrNotaFiscalDesc();
+            Integer maxNrNotaFiscal = movimentacaoRepository.findMaxNrNotaFiscal();
             if (maxNrNotaFiscal == null) {
                 maxNrNotaFiscal = 1; // Caso não existam registros, definimos como 0 ou outro valor inicial adequado
             }

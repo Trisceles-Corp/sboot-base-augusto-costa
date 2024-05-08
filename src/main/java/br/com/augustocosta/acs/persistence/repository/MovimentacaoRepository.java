@@ -5,6 +5,7 @@ import br.com.augustocosta.acs.integration.entity.tblMovimentacao;
 import br.com.augustocosta.acs.integration.entity.tblTipoMovimentacao;
 import br.com.augustocosta.acs.integration.entity.tblVenda;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,5 +19,6 @@ public interface MovimentacaoRepository extends JpaRepository<tblMovimentacao, I
     List<tblMovimentacao> findByDataCriacao(LocalDateTime dataCriacao);
     List<tblMovimentacao> findByAtivoTrue();
     List<tblMovimentacao> findByAtivoFalse();
-    Integer findTopByOrderByNrNotaFiscalDesc();
+    @Query("SELECT MAX(m.nrNotaFiscal) FROM tblMovimentacao m")
+    Integer findMaxNrNotaFiscal();
 }
