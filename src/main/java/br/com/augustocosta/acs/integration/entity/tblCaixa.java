@@ -15,7 +15,7 @@ public class tblCaixa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CaixaId")
+    @Column(name = "CaixaId", nullable = false)
     private Integer id;
 
     @Column(name = "Nome", nullable = false)

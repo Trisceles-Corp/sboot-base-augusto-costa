@@ -1,7 +1,6 @@
 package br.com.augustocosta.acs.persistence.repository;
 
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
-import br.com.augustocosta.acs.integration.entity.tblBloqueio;
 import br.com.augustocosta.acs.integration.entity.tblSituacaoAgendamento;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import org.springframework.data.jpa.repository.JpaRepository;

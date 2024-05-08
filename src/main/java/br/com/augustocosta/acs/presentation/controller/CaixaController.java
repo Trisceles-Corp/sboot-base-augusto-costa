@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
+import br.com.augustocosta.acs.integration.dto.dtoCaixa;
 import br.com.augustocosta.acs.integration.entity.tblCaixa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,46 +24,33 @@ public class CaixaController {
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("tblCaixa", new tblCaixa());
+        model.addAttribute("dtoCaixa", new dtoCaixa());
         return "caixa";
     }
 
     @GetMapping
     public String listarDependencias(Model model) {
-        model.addAttribute("listarCaixas", service.getActiveByNameAsc());
+        model.addAttribute("listarCaixas", service.getAllByAtivo());
         model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
-        model.addAttribute("tblCaixa", new tblCaixa());
+        model.addAttribute("dtoCaixa", new dtoCaixa());
         return "caixa";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblCaixa table) {
-        table.setAtivo(true);
-
-        if (table.getId() != null && table.getId() != 0){
-            tblCaixa data = service.getByCaixaId(table.getId());
-            table.setAtivo(table.getAtivo());
-            table.setDataCriacao(data.getDataCriacao());
-            table.setCriadoPor(data.getCriadoPor());
-            table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
-            service.update(table);
+    public String salvar(@ModelAttribute dtoCaixa dados) {
+        if (dados.getCaixaId() != null && dados.getCaixaId() != 0){
+            service.update(dados);
         }
         else {
-            table.setDataCriacao(LocalDateTime.now());
-            table.setCriadoPor(1);
-            table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
-            service.create(table);
+            service.create(dados);
         }
-
         return "redirect:/index";
     }
 
     @GetMapping("/novo")
     public String novoSituacaoAgendamento(Model model) {
         model.addAttribute("listarCaixas", service.getActiveByNameAsc());
-        model.addAttribute("tblCaixa", new tblCaixa());
+        model.addAttribute("dtoCaixa", new dtoCaixa());
         return "caixa";
     }
 

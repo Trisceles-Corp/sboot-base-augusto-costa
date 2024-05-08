@@ -3,10 +3,8 @@ package br.com.augustocosta.acs.integration.projections;
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 
 import java.time.*;
-import java.util.Date;
 
 public interface prjComanda {
-
     Integer getComandaId();
     Integer getAgendamentoId();
     LocalDate getDataAgendamento();

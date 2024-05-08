@@ -339,4 +339,53 @@ public class SqlQueries {
                     "ORDER BY " +
                     "age.DataAgendamento DESC";
 
+    public static final String QUERY_CAIXAS =
+            "SELECT cax.CaixaId " +
+                    ",cax.Nome " +
+                    ",NomeIndice " +
+                    ",cax.ResponsavelAbertura " +
+                    ",abe.Nome + ' ' + abe.Sobrenome AS NomeRespAbertura " +
+                    ",abe.Email AS Email " +
+                    ",cax.DataAbertura " +
+                    ",CONVERT(date, cax.DataAbertura) AS Data " +
+                    ",CONVERT(time, cax.DataAbertura) AS Hora " +
+                    ",cax.ResponsavelFechamento " +
+                    ",fec.Nome + ' ' + fec.Sobrenome AS NomeRespFechamento " +
+                    ",cax.DataFechamento " +
+                    ",cax.ValorAbertura " +
+                    ",COALESCE(mov.Credito, 0) AS Credito " +
+                    ",COALESCE(mov.Debito, 0) AS Debito " +
+                    ",COALESCE(mov.Dinheiro, 0) AS Dinheiro " +
+                    ",COALESCE(mov.Pix, 0) AS Pix " +
+                    ",(cax.ValorAbertura + COALESCE(mov.Credito, 0) + COALESCE(mov.Debito, 0) + COALESCE(mov.Dinheiro, 0) + COALESCE(mov.Pix, 0)) AS ValorProvisorio " +
+                    ",cax.ValorFechamento " +
+                    ",cax.Ativo " +
+                    ",cax.DataCriacao " +
+                    ",cax.DataAlteracao " +
+                    ",cax.CriadoPor " +
+                    ",cax.AlteradoPor " +
+                    "FROM dbo.tbl_caixa cax " +
+                    "JOIN dbo.tbl_usuario abe ON cax.ResponsavelAbertura = abe.UsuarioId " +
+                    "LEFT JOIN dbo.tbl_usuario fec ON cax.ResponsavelFechamento = fec.UsuarioId " +
+                    "LEFT JOIN ( " +
+                    "SELECT CaixaId, [Credito], [Debito], [Dinheiro], [Pix] FROM " +
+                    "(SELECT cxm.CaixaId " +
+                    "		,fpg.Nome " +
+                    "		,cxm.ValorMovimentacao " +
+                    "	FROM dbo.tbl_caixamovimentacao cxm " +
+                    "	JOIN dbo.tbl_formaspagamento fpg ON cxm.FormaPagamentoId = fpg.FormaPagamentoId) src   " +
+                    "PIVOT   " +
+                    "(SUM (ValorMovimentacao)  " +
+                    "FOR Nome IN   " +
+                    "( [Credito], [Debito], [Dinheiro], [Pix])   " +
+                    ") AS pvt   " +
+                    ") mov ON cax.CaixaId = mov.CaixaId " +
+                    "WHERE cax.Ativo = 1 " +
+                    "ORDER BY cax.Nome";
+
+    public static final String QUERY_MAXINDICECAIXA =
+            "SELECT COALESCE(MAX(c.NomeIndice),0) " +
+                    " FROM tbl_caixa c  " +
+                    "WHERE CONVERT(DATE, c.DataAbertura) = CONVERT(DATE, GETDATE())";
+
 }

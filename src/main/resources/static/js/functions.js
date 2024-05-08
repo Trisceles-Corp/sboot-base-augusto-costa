@@ -30,6 +30,33 @@ function toggleFormCadastro() {
     }
 }
 
+function toggleFormCadastroCaixa() {
+    const formCadastro = document.getElementById("form-cadastro");
+    const caixaId = document.getElementById("field_Id").value;
+    const respAbertura = document.getElementById("field_ResponsavelAbertura");
+    const respFechamento = document.getElementById("field_ResponsavelFechamento");
+    const valorAbertura = document.getElementById("field_ValorAbertura");
+    const botaoSalvar = document.getElementById("salvar-cadastro");
+
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
+    } else {
+        formCadastro.style.display = "block";
+    }
+
+    if(caixaId != null){
+        respAbertura.readOnly = false;
+        respFechamento.readOnly = true;
+        valorAbertura.readOnly = false;
+        botaoSalvar.readOnly = false;
+    } else {
+        respAbertura.readOnly = true;
+        respFechamento.readOnly = false;
+        valorAbertura.readOnly = true;
+        botaoSalvar.readOnly = true;
+    }
+}
+
 function toggleCloseCadastro() {
     const formCadastro = document.getElementById("form-cadastro");
     if (formCadastro.style.display === "block") {
@@ -401,24 +428,33 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Comissao").value = comissao;
 }
 
-function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEmail, dataAbertura, valorAbertura, responsavelFechamentoId, dataFechamento, valorFechamento) {
-
+function visualizarCaixa(id, nome, nomeIndice, responsavelAberturaId, responsavelAberturaEmail, dataAberturaCompleta, dataAbertura, horaAbertura, valorAbertura, valorProvisorio, dataCriacao, criadoPor) {
     const formClienteCadast = document.getElementById("form-cadastro");
+    const respFechamentoElement = document.getElementById("field_ResponsavelFechamento");
+    const respAberturaElement = document.getElementById("field_ResponsavelAbertura");
+    const valorAberturaElement = document.getElementById("field_ValorAbertura");
+
     if (formClienteCadast.style.display === "none") {
         formClienteCadast.style.display = "block";
     } else {
         formClienteCadast.style.display = "block";
     }
-
+    console.log(responsavelAberturaId);
+    respFechamentoElement.readOnly=false;
+    respAberturaElement.readOnly = true;
+    valorAberturaElement.readOnly = true;
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = nome;
+    document.getElementById("field_NomeIndice").value = nomeIndice;
+    document.getElementById("field_DataAberturaCompleta").value = dataAberturaCompleta;
+    document.getElementById("field_DataAbertura").value = dataAbertura;
+    document.getElementById("field_HoraAbertura").value = horaAbertura;
     document.getElementById("field_ResponsavelAbertura").value = responsavelAberturaId;
     document.getElementById("field_Email").value = responsavelAberturaEmail;
-    document.getElementById("field_DataAbertura").value = dataAbertura;
     document.getElementById("field_ValorAbertura").value = valorAbertura;
-    document.getElementById("field_ResponsavelFechamento").value = responsavelFechamentoId;
-    document.getElementById("field_DataFechamento").value = dataFechamento;
-    document.getElementById("field_ValorFechamento").value = valorFechamento;
+    document.getElementById("field_ValorProvisorio").value = valorProvisorio;
+    document.getElementById("field_DataCriacao").value = dataCriacao;
+    document.getElementById("field_CriadoPor").value = criadoPor;
 }
 
 function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
@@ -842,6 +878,14 @@ function ajustarCamposFormaPagamento() {
         default:
             console.log("Forma de pagamento não reconhecida.");
     }
+}
+
+function ajustarCamposCaixaFechamento(){
+    const valorProvisorio = document.getElementById("field_ValorProvisorio").value;
+    const responsavelFechamento = document.getElementById("field_ResponsavelFechamento").value;
+    const botaoSalvar = document.getElementById("salvar-cadastro");
+
+    botaoSalvar.disabled = !(valorProvisorio > 0 && responsavelFechamento > 0);
 }
 
 function criarCampoOculto(nome, valor) {
