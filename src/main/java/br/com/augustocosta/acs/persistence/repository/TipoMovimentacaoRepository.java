@@ -9,7 +9,7 @@ import java.time.*;
 
 @Repository
 public interface TipoMovimentacaoRepository extends JpaRepository<tblTipoMovimentacao, Integer> {
-    List<tblTipoMovimentacao> findByDescricaoMovimentacao(String descricaoMovimentacao);
+    tblTipoMovimentacao findByDescricaoMovimentacao(String descricaoMovimentacao);
     List<tblTipoMovimentacao> findByAtivoTrueOrderByDescricaoMovimentacaoAsc();
     List<tblTipoMovimentacao> findByAtivoTrue();
     List<tblTipoMovimentacao> findByAtivoFalse();

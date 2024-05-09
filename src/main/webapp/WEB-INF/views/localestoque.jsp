@@ -22,8 +22,9 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Local Estoque</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Local Estoque</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
     <div class="row" id="localestoque-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
@@ -34,7 +35,7 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-5">
-                <form:label path="descricaoLocal" class="form-label" for="field_Nome">Descrição:</form:label>
+                <form:label path="descricaoLocal" class="form-label" for="field_Nome">Descrição:<span class="text-danger">*</span></form:label>
                 <form:input path="descricaoLocal" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
             </div>
         </div>

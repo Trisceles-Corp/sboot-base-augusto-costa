@@ -22,8 +22,9 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Situação Agendamento</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Situação Agendamento</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
     <div class="row" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
@@ -34,7 +35,7 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-5">
-                <form:label path="nome" class="form-label" for="field_Nome">Nome:</form:label>
+                <form:label path="nome" class="form-label" for="field_Nome">Nome:<span class="text-danger">*</span></form:label>
                 <form:input path="nome" class="form-control" type="text" id="field_Nome" maxlength="100" required="required" />
             </div>
         </div>

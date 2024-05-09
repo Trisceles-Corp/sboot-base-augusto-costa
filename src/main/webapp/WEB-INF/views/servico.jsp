@@ -22,8 +22,9 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Serviços</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Serviços</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
     <div class="row" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar Serviço</button>
@@ -34,15 +35,15 @@
         <form:hidden path="id" id="field_Id"/>
         <div class="row">
             <div class="form-group col-md-5">
-                <form:label path="nome" class="form-label" for="field_Nome">Nome:</form:label>
+                <form:label path="nome" class="form-label" for="field_Nome">Nome:<span class="text-danger">*</span></form:label>
                 <form:input path="nome" class="form-control" type="text" id="field_Nome" required="required" />
             </div>
             <div class="form-group col-md-1">
-                <form:label path="tempo" class="form-label" for="field_Tempo">Tempo:</form:label>
+                <form:label path="tempo" class="form-label" for="field_Tempo">Tempo:<span class="text-danger">*</span></form:label>
                 <form:input path="tempo" class="form-control" type="text" id="field_Tempo" required="required" placeholder="00:30"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="valor" class="form-label" for="field_Valor">Valor:</form:label>
+                <form:label path="valor" class="form-label" for="field_Valor">Valor:<span class="text-danger">*</span></form:label>
                 <form:input path="valor" class="form-control" type="text" id="field_Valor" required="required"/>
             </div>
             <div class="form-group col-md-2">

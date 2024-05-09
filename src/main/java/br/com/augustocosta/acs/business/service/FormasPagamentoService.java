@@ -2,6 +2,7 @@ package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblFormasPagamento;
 import br.com.augustocosta.acs.persistence.repository.FormasPagamentoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,11 @@ public class FormasPagamentoService {
 
     public Optional<tblFormasPagamento> getById(Integer id) {
         return repository.findById(id);
+    }
+
+    @Transactional
+    public tblFormasPagamento getByFormaPagamentoId(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Forma de pagamento não encontrada."));
     }
 
     public List<tblFormasPagamento> getActiveByNameAsc() {

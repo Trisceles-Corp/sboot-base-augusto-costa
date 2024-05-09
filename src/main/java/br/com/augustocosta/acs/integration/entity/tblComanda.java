@@ -25,6 +25,12 @@ public class tblComanda {
     @Column(name = "ValorServicos")
     private Double valorServicos = 0.0;
 
+    @Column(name = "ValorDescontos")
+    private Double valorDescontos = 0.0;
+
+    @Column(name = "ValorComissao")
+    private Double valorComissao = 0.0;
+
     @Column(name = "ValorProdutos")
     private Double valorProdutos = 0.0;
 

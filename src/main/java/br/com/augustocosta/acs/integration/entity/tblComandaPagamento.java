@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -17,19 +19,24 @@ public class tblComandaPagamento {
     private ComandaPagamento id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ComandaId", nullable = false)
+    @MapsId("comandaId")
+    @JoinColumn(name = "ComandaId", referencedColumnName = "ComandaId")
     private tblComanda comanda;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "FormaPagamentoId", nullable = false)
+    @MapsId("formaPagamentoId")
+    @JoinColumn(name = "FormaPagamentoId", referencedColumnName = "FormaPagamentoId")
     private tblFormasPagamento formaPagamento;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BandeiraId", nullable = false)
     private tblBandeiras bandeira;
 
-    @Column(name = "Valor", nullable = false)
-    private Double valor = 0.0;
+    @Column(name = "Parcelas")
+    private Integer parcelas = 1;
+
+    @Column(name = "Valor", nullable = false, precision = 18, scale = 2)
+    private BigDecimal valorPagamento;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo = true;

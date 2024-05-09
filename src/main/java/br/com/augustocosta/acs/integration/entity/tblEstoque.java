@@ -34,7 +34,7 @@ public class tblEstoque {
     private Integer quantidade;
 
     @Column(name = "ValorMovimentacao", nullable = false)
-    private String valorMovimentacao;
+    private Double valorMovimentacao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

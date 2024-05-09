@@ -14,33 +14,34 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Agendamento</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Agendamento</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
     <!-- formulário de cadastro -->
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" style="display: block">
         <form:hidden path="agendamento.id" id="field_Id"/>
     <div class="row">
         <div class="form-group col-md-4">
-            <form:label path="agendamento.cliente.id" class="form-label" for="field_ClienteId">Cliente:</form:label>
+            <form:label path="agendamento.cliente.id" class="form-label" for="field_ClienteId">Cliente:<span class="text-danger">*</span></form:label>
             <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarClientes}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
         </div>
         <div class="form-group col-md-4">
-            <form:label path="agendamento.colaborador.id" class="form-label" for="field_ColaboradorId">Colaborador:</form:label>
+            <form:label path="agendamento.colaborador.id" class="form-label" for="field_ColaboradorId">Colaborador:<span class="text-danger">*</span></form:label>
             <form:select path="agendamento.colaborador.id" class="form-control" id="field_ColaboradorId" required="required">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
         </div>
         <div class="form-group col-md-2">
-            <form:label path="agendamento.dataAgendamento" class="form-label" for="inputNascimento">Data:</form:label>
+            <form:label path="agendamento.dataAgendamento" class="form-label" for="inputNascimento">Data:<span class="text-danger">*</span></form:label>
             <form:input  path="agendamento.dataAgendamento" type="date" class="form-control" id="inputNascimento" placeholder="mm-dd-yyyy"  readonly="readonly" required="required" />
         </div>
         <div class="form-group col-md-1">
-            <form:label path="agendamento.horaAgendamento" class="form-label" for="field_HoraAgendamento">Hora:</form:label>
+            <form:label path="agendamento.horaAgendamento" class="form-label" for="field_HoraAgendamento">Hora:<span class="text-danger">*</span></form:label>
             <form:select path="agendamento.horaAgendamento" class="form-control" id="field_HoraAgendamento" required="required">
                 <form:option value="" label="Select"/>
                 <option selected>Select</option>
@@ -72,18 +73,18 @@
     </div>
     <div class="row">
         <div class="form-group col-md-3">
-            <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:</form:label>
+            <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:<span class="text-danger">*</span></form:label>
             <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId" required="required">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarServiços}" itemValue="id" itemLabel="nome"/>
             </form:select>
         </div>
         <div class="form-group col-md-1">
-            <form:label path="servicosAgendamento" class="form-label" for="buttonServicos">Adicionar:</form:label>
+            <label class="form-label" for="buttonServicos">Adicionar:</label>
             <button type="button" class="btn btn-outline-secondary" id="buttonServicos" onclick="adicionarServico()">+</button>
         </div>
         <div class="form-group col-md-2">
-            <form:label path="localEstoqueId" class="form-label" for="field_LocalEstoqueId">Local Estoque:</form:label>
+            <form:label path="localEstoqueId" class="form-label" for="field_LocalEstoqueId">Local Estoque:<span class="text-danger">*</span></form:label>
             <form:select path="localEstoqueId" class="form-control" id="field_LocalEstoqueId">
                 <form:options items="${listarLocaisEstoque}" itemValue="id" itemLabel="DescricaoLocal"/>
             </form:select>
@@ -100,12 +101,12 @@
             <form:input path="vendaProduto.quantidade" type="number" class="form-control" id="field_Quantidade" placeholder="0"/>
         </div>
         <div class="form-group col-md-1">
-            <form:label path="vendaProduto" class="form-label" for="buttonProduto">Adicionar:</form:label>
+            <label class="form-label" for="buttonProduto">Adicionar:</label>
             <button type="button" class="btn btn-outline-secondary" id="buttonProduto" onclick="adicionarProduto()">+</button>
         </div>
         <div class="row">
             <div class="form-group col-md-2">
-                <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:</form:label>
+                <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:<span class="text-danger">*</span></form:label>
                 <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId" required="required">
                     <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
                 </form:select>

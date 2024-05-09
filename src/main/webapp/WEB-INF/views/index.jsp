@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
@@ -75,7 +76,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/agendamento')" >Agenda</button>
+                        <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/agendamento')" >Agenda</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -96,7 +97,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
-                        <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
+                        <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -118,7 +119,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
-                        <span class="button-nav-option">Estoque</span>
+                        <span class="button-nav-item">Estoque</span>
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
@@ -159,24 +160,24 @@
                     </script>
                 </div>
             </a>
-            <a href="financeiro.html" class="nav-option" id="financeiro">
+            <a class="nav-option" id="financeiro">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png" id="financeiro-img">
-                        <span class="button-nav-option"> Financeiro</span>
+                        <span class="button-nav-item"> Financeiro</span>
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Caixas em aberto</span><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/caixa')">Caixas em aberto</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Comandas abertas</span><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/comanda')">Comandas abertas</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Comissões</span><br>
+                            <span class="button-nav-option">Comissões</span><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <span class="sub-option-item">Entradas e saídas</span><br>
+                            <span class="button-nav-option">Entradas e saídas</span><br>
                         </div>
                     </div>
                     <script>
@@ -201,11 +202,11 @@
                     </script>
                 </div>
             </a>
-            <a href="agenda.html" class="nav-option" id="dashboard">
+            <a class="nav-option" id="dashboard">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="dashboard-img">
-                        <span class="button-nav-option">Painel</span>
+                        <span class="button-nav-item">Painel</span>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -222,11 +223,11 @@
                     </script>
                 </div>
             </a>
-            <a href="agenda.html" class="nav-option" id="relatorios">
+            <a class="nav-option" id="relatorios">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img">
-                        <span class="button-nav-option">Relatórios</span>
+                        <span class="button-nav-item">Relatórios</span>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -247,7 +248,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img">
-                        <span class="button-nav-option">Configurações</span>
+                        <span class="button-nav-item">Configurações</span>
                     </div>
                     <div class="contain-sub-option">
                         <div class="sub-options px-5 py-1">

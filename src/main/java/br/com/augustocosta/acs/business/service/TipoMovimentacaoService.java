@@ -31,7 +31,7 @@ public class TipoMovimentacaoService {
         return repository.findById(id);
     }
 
-    public List<tblTipoMovimentacao> getByName(String nome) {
+    public tblTipoMovimentacao getByName(String nome) {
         return repository.findByDescricaoMovimentacao(nome);
     }
 

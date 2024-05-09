@@ -1,7 +1,9 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblBandeiras;
+import br.com.augustocosta.acs.integration.entity.tblFormasPagamento;
 import br.com.augustocosta.acs.persistence.repository.BandeirasRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,11 @@ public class BandeirasService {
 
     public Optional<tblBandeiras> getById(Integer id) {
         return repository.findById(id);
+    }
+
+    @Transactional
+    public tblBandeiras getByBandeiraId(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bandeira não encontrada."));
     }
 
     public List<tblBandeiras> getAll() {

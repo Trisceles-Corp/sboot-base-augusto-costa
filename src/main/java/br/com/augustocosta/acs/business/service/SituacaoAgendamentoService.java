@@ -31,7 +31,7 @@ public class SituacaoAgendamentoService {
         return repository.findById(id);
     }
 
-    public List<tblSituacaoAgendamento> getByName(String nome) {
+    public tblSituacaoAgendamento getByName(String nome) {
         return repository.findByNome(nome);
     }
 

@@ -18,12 +18,12 @@ public class LoginController {
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblUsuario", new tblUsuario());
-        return "login2";
+        return "login";
     }
 
     @GetMapping
     public String loginPage() {
-        return "login2";
+        return "login";
     }
 
     @PostMapping("/verify")
@@ -34,7 +34,7 @@ public class LoginController {
             return "redirect:/index";
         } else {
             model.addAttribute("loginError", "Invalid email or password.");
-            return "login2";
+            return "login";
         }
     }
 }

@@ -23,8 +23,9 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Solicitação de Saída</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Solicitações de Saída</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
     <div class="row" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
@@ -38,14 +39,14 @@
                 <form:input path="id" class="form-control" type="text" id="field_Id" readonly="true"/>
             </div>
             <div class="form-group col-md-2">
-                <form:label path="solicitante.id" class="form-label" for="field_SolicitanteId">Solicitante:</form:label>
+                <form:label path="solicitante.id" class="form-label" for="field_SolicitanteId">Solicitante:<span class="text-danger">*</span></form:label>
                 <form:select path="solicitante.id" class="form-control" id="field_SolicitanteId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarSolicitante}" itemValue="id" itemLabel="nome"/>
                 </form:select>
             </div>
             <div class="form-group col-md-4">
-                <form:label path="localEstoque.id" class="form-label" for="field_LocalEstoqueId">Local Estoque:</form:label>
+                <form:label path="localEstoque.id" class="form-label" for="field_LocalEstoqueId">Local Estoque:<span class="text-danger">*</span></form:label>
                 <form:select path="localEstoque.id" class="form-control" id="field_LocalEstoqueId" required="required" >
                     <form:option value="" label=" Selecione "/>
                     <form:options items="${listarLocalEstoque}" itemValue="id" itemLabel="descricaoLocal"/>
@@ -60,7 +61,7 @@
                 <form:input path="dataCriacao" class="form-control" type="text" id="field_DataCriacao" disabled="true" />
             </div>
         </div>
-        <div class="row" id="tabelaSaidaProduto">
+        <div class="row" id="tabelaSaidaProduto" style="padding: 20px">
             <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3">
                 <thead class="table-secondary">
                 <tr class="gridHeader">

@@ -23,9 +23,10 @@ public class AgendamentoService {
     private final ProdutoRepository produtoRepository;
     private final ServicoRepository servicoRepository;
     private final LocalEstoqueRepository localEstoqueRepository;
+    private final ComandaRepository comandaRepository;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository repository, ServicosAgendamentoRepository servicosAgendamentoRepository, SituacaoAgendamentoRepository situacaoRepository, VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, ServicoRepository servicoRepository, LocalEstoqueRepository localEstoqueRepository) {
+    public AgendamentoService(AgendamentoRepository repository, ServicosAgendamentoRepository servicosAgendamentoRepository, SituacaoAgendamentoRepository situacaoRepository, VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, ServicoRepository servicoRepository, LocalEstoqueRepository localEstoqueRepository, ComandaRepository comandaRepository) {
         this.repository = repository;
         this.servicosAgendamentoRepository = servicosAgendamentoRepository;
         this.situacaoRepository = situacaoRepository;
@@ -34,11 +35,16 @@ public class AgendamentoService {
         this.produtoRepository = produtoRepository;
         this.servicoRepository = servicoRepository;
         this.localEstoqueRepository = localEstoqueRepository;
+        this.comandaRepository = comandaRepository;
     }
 
     @Transactional
     public void create(dtoAgendamento dados) {
         tblAgendamento agendamento = createAgendamento(dados.getAgendamento());
+        final Double[] somaValores = {0.0};
+        final Double[] somaDescontos = {0.0};
+        final Double[] somaComissao = {0.0};
+        final Double[] somaProdutos = {0.0};
 
         // Processa e salva os serviços associados ao agendamento
         dados.getServico().forEach(servicoDTO -> {
@@ -56,6 +62,14 @@ public class AgendamentoService {
             servicoAgendamento.setCriadoPor(1);
             servicoAgendamento.setAlteradoPor(1);
             servicosAgendamentoRepository.save(servicoAgendamento);
+
+            // Somatoria valores para abertura da comanda
+            if(servico.getDesconto() == 0.0){ servico.setDesconto(1.0); }
+            if(servico.getComissao() == 0.0){ servico.setComissao(1.0); }
+
+            somaValores[0] = somaValores[0] + servicoAgendamento.getValorUnitario();
+            somaDescontos[0] = somaDescontos[0] + (servico.getValor() * (servico.getDesconto() / 100));
+            somaComissao[0] = somaComissao[0] + (servico.getValor() * (servico.getComissao() / 100));
         });
 
         if(dados.getProduto() != null){
@@ -103,9 +117,26 @@ public class AgendamentoService {
             });
 
             // Atualiza o valor total da venda
+            somaProdutos[0] = valorTotalVenda[0];
             venda.setValorTotal(valorTotalVenda[0]);
             vendaRepository.save(venda);
         }
+
+        // Cria a comanda para o agendamento
+        tblComanda comanda = new tblComanda();
+        comanda.setAgendamento(agendamento);
+        comanda.setValorServicos(somaValores[0]);
+        comanda.setValorDescontos(somaDescontos[0]);
+        comanda.setValorComissao(somaComissao[0]);
+        comanda.setValorProdutos(somaProdutos[0]);
+        comanda.setValorEncargos(0.0);
+        comanda.setSituacao(true);
+        comanda.setAtivo(true);
+        comanda.setDataCriacao(LocalDateTime.now());
+        comanda.setDataAlteracao(LocalDateTime.now());
+        comanda.setCriadoPor(1);
+        comanda.setAlteradoPor(1);
+        comandaRepository.save(comanda);
     }
 
     public tblAgendamento createAgendamento(tblAgendamento table) {
@@ -123,6 +154,10 @@ public class AgendamentoService {
 
     public Optional<tblAgendamento> getById(Integer id) {
         return repository.findById(id);
+    }
+
+    public tblAgendamento getTableById(Integer id) {
+        return repository.getReferenceById(id);
     }
 
     public List<tblAgendamento> getByCliente(tblUsuario cliente) {
@@ -153,18 +188,20 @@ public class AgendamentoService {
     public List<dtoProdutoVenda> getProdutoByAgendamentoId(Integer agendamentoId)
     {
         List<dtoProdutoVenda> ret = new ArrayList<>();
-        tblVenda venda = vendaRepository.findById(agendamentoId).orElse(null);
-        List<tblVendaProduto> vendaProduto = vendaProdutoRepository.findByVenda(venda);
-        vendaProduto.forEach(item -> {
-            dtoProdutoVenda produtoVenda = new dtoProdutoVenda();
-            produtoVenda.setProdutoId(item.getProduto().getId());
-            produtoVenda.setNome(item.getProduto().getDescricaoProduto());
-            produtoVenda.setMarca(item.getProduto().getMarca().getDescricaoMarca());
-            produtoVenda.setLinha(item.getProduto().getLinha().getDescricaoLinha());
-            produtoVenda.setPreco(item.getProduto().getValorVenda());
-            produtoVenda.setProdutoId(item.getQuantidade());
-            ret.add(produtoVenda);
-        });
+        if(agendamentoId != 0){
+            tblVenda venda = vendaRepository.findByAgendamentoId(agendamentoId);
+            List<tblVendaProduto> vendaProduto = vendaProdutoRepository.findByVenda(venda);
+            vendaProduto.forEach(item -> {
+                dtoProdutoVenda produtoVenda = new dtoProdutoVenda();
+                produtoVenda.setProdutoId(item.getProduto().getId());
+                produtoVenda.setNome(item.getProduto().getDescricaoProduto());
+                produtoVenda.setMarca(item.getProduto().getMarca().getDescricaoMarca());
+                produtoVenda.setLinha(item.getProduto().getLinha().getDescricaoLinha());
+                produtoVenda.setPreco(item.getProduto().getValorVenda());
+                produtoVenda.setQuantidade(item.getQuantidade());
+                ret.add(produtoVenda);
+            });
+        }
         return ret;
     }
 

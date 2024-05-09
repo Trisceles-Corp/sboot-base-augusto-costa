@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<main class="page contact-page">
+<main class="page contact-page" style="height: 100%">
     <section class="portfolio-block contact" style="background: #080808;color: rgb(255,255,255);">
         <div class="container">
             <!--
