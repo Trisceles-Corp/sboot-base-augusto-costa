@@ -30,13 +30,9 @@
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastroCaixa()">Abrir Caixa</button>
     </div>
     <!-- formulário de cadastro -->
-    <form:form class="form-cadastro my-2" style="width: 50%" id="form-cadastro" modelAttribute="dtoCaixa" action="${pageContext.request.contextPath}/caixa/salvar" method="POST" onsubmit="return verificarNomeAntesDeSalvar()">
+    <form:form class="form-cadastro my-2" style="width: 50%" id="form-cadastro" modelAttribute="dtoCaixa" action="${pageContext.request.contextPath}/caixa/salvar" method="POST">
         <div class="panel" id="panel-cadastro">
             <form:hidden path="caixaId" id="field_Id"/>
-            <form:hidden path="nomeIndice" id="field_NomeIndice"/>
-            <form:hidden path="dataAbertura" id="field_DataAberturaCompleta"/>
-            <form:hidden path="dataCriacao" id="field_DataCriacao"/>
-            <form:hidden path="criadoPor" id="field_CriadoPor"/>
             <div class="row">
                 <div class="form-group col-md-4">
                     <form:label path="nome" class="form-label" for="field_Name">Caixa:</form:label>
@@ -54,7 +50,7 @@
             <div class="row">
                 <div class="form-group col-md-8">
                     <form:label path="responsavelAbertura" class="form-label" for="field_ResponsavelAbertura">Responsável Abertura:<span class="text-danger">*</span></form:label>
-                    <form:select path="responsavelAbertura" class="form-control" id="field_ResponsavelAbertura"  required="required">
+                    <form:select path="responsavelAbertura" class="form-control" id="field_ResponsavelAbertura" onchange="ajustarCamposCaixaAbertura();" required="required">
                         <form:option value="0" label=" Selecione "/>
                         <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
                     </form:select>
@@ -79,7 +75,7 @@
                     </form:select>
                 </div>
                 <div class="form-group col-md-4">
-                    <form:label path="valorProvisorio" class="form-label" for="field_ValorProvisorio">Valor Provisorio:<span class="text-danger">*</span></form:label>
+                    <form:label path="valorProvisorio" class="form-label" for="field_ValorProvisorio">Valor Provisorio:</form:label>
                     <form:input path="valorProvisorio" class="form-control" type="text" id="field_ValorProvisorio" readOnly="true"/>
                 </div>
             </div>
@@ -114,7 +110,7 @@
             <tr>
                 <td class="cel-img-tabela-clientes">
                     <form action="${pageContext.request.contextPath}/caixa/delete/${caixa.caixaId}" method="POST">
-                        <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCaixa('${caixa.caixaId}', '${caixa.nome}', '${caixa.nomeIndice}', '${caixa.responsavelAbertura}', '${caixa.email}', '${caixa.dataAbertura}', '${caixa.data}', '${caixa.hora}', '${caixa.valorAbertura}', '${caixa.valorProvisorio}', '${caixa.dataCriacao}', '${caixa.criadoPor}'); return false;" title="Editar">
+                        <img src="${pageContext.request.contextPath}/img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCaixa('${caixa.caixaId}', '${caixa.nome}', '${caixa.responsavelAbertura}', '${caixa.email}', '${caixa.data}', '${caixa.hora}', '${caixa.valorAbertura}', '${caixa.valorProvisorio}'); return false;" title="Editar">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/caixa/delete/${caixaId}')">
                             <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">

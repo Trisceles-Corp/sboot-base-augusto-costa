@@ -1,51 +1,53 @@
 package br.com.augustocosta.acs.integration.entity;
 
-import lombok.*;
 import jakarta.persistence.*;
-import java.time.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-@Entity
-@Table(name = "tbl_caixa")
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "tbl_caixa")
 public class tblCaixa {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CaixaId", nullable = false)
     private Integer id;
 
-    @Column(name = "Nome", nullable = false)
+    @Column(name = "Nome", nullable = false, length = 50)
     private String nome;
 
-    @Column(name = "NomeIndice")
-    private Integer nomeIndice = 1;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "ResponsavelAbertura", nullable = false)
     private tblUsuario responsavelAbertura;
 
     @Column(name = "DataAbertura", nullable = false)
     private LocalDateTime dataAbertura;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ResponsavelFechamento", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ResponsavelFechamento")
     private tblUsuario responsavelFechamento;
 
-    @Column(name = "DataFechamento", nullable = false)
+    @Column(name = "DataFechamento")
     private LocalDateTime dataFechamento;
 
-    @Column(name = "ValorAbertura", nullable = false)
-    private Double valorAbertura;
+    @ColumnDefault("0")
+    @Column(name = "ValorAbertura", nullable = false, precision = 18, scale = 2)
+    private BigDecimal valorAbertura;
 
-    @Column(name = "ValorFechamento", nullable = false)
-    private Double ValorFechamento;
+    @ColumnDefault("0")
+    @Column(name = "ValorFechamento", nullable = false, precision = 18, scale = 2)
+    private BigDecimal valorFechamento;
 
     @Column(name = "Ativo", nullable = false)
-    private Boolean ativo;
+    private Boolean ativo = false;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
@@ -58,4 +60,12 @@ public class tblCaixa {
 
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
+
+    @ColumnDefault("1")
+    @Column(name = "NomeIndice")
+    private Integer nomeIndice;
+
+    @OneToMany(mappedBy = "caixa")
+    private Set<tblCaixaMovimentacao> tblCaixamovimentacaos = new LinkedHashSet<>();
+
 }

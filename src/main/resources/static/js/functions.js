@@ -32,29 +32,25 @@ function toggleFormCadastro() {
 
 function toggleFormCadastroCaixa() {
     const formCadastro = document.getElementById("form-cadastro");
-    const caixaId = document.getElementById("field_Id").value;
+
+    if (formCadastro) {
+        formCadastro.reset();
+        ajustarCamposAposReset();
+    }
+}
+
+function ajustarCamposAposReset() {
+    const caixaId = document.getElementById("field_Id");
     const respAbertura = document.getElementById("field_ResponsavelAbertura");
     const respFechamento = document.getElementById("field_ResponsavelFechamento");
     const valorAbertura = document.getElementById("field_ValorAbertura");
     const botaoSalvar = document.getElementById("salvar-cadastro");
 
-    if (formCadastro.style.display === "block") {
-        formCadastro.style.display = "none";
-    } else {
-        formCadastro.style.display = "block";
-    }
-
-    if(caixaId != null){
-        respAbertura.readOnly = false;
-        respFechamento.readOnly = true;
-        valorAbertura.readOnly = false;
-        botaoSalvar.readOnly = false;
-    } else {
-        respAbertura.readOnly = true;
-        respFechamento.readOnly = false;
-        valorAbertura.readOnly = true;
-        botaoSalvar.readOnly = true;
-    }
+    caixaId.value = null;
+    respAbertura.readOnly = false;
+    valorAbertura.readOnly = false;
+    respFechamento.readOnly = true;
+    botaoSalvar.disabled = true;
 }
 
 function toggleCloseCadastro() {
@@ -93,6 +89,30 @@ function verificarNomeAntesDeSalvar() {
         return false;
     }
     return true;
+}
+
+function verificarValoresPagamentosAntesDeSalvar() {
+    const valorComandaInput = document.getElementById('field_valorComanda');
+    const valorTotalPgtoInput = document.getElementById('field_valorTotalPgto');
+    var valorComanda = parseFloat(valorComandaInput.value);
+    var valorPagamento = parseFloat(valorTotalPgtoInput.value);
+
+    if (valorComanda !== valorPagamento) {
+        console.log("Entrou na divergência");
+        Swal.fire({
+            icon: 'warning',
+            title: 'Atenção!',
+            text: 'O valor de pagamento está divergente do valor da comanda!',
+            footer: '<a href="#">Precisa de ajuda?</a>',
+            confirmButtonText: 'Entendi',
+            confirmButtonColor: '#3085d6',
+        });
+        return false;
+    } else {
+        console.log("Salvou sem divergência");
+        coletarDadosPagamentos();
+        return true;
+    }
 }
 
 function visualizarCaracteristica(caracteristicaId, descricao) {
@@ -428,7 +448,7 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Comissao").value = comissao;
 }
 
-function visualizarCaixa(id, nome, nomeIndice, responsavelAberturaId, responsavelAberturaEmail, dataAberturaCompleta, dataAbertura, horaAbertura, valorAbertura, valorProvisorio, dataCriacao, criadoPor) {
+function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEmail, dataAbertura, horaAbertura, valorAbertura, valorProvisorio) {
     const formClienteCadast = document.getElementById("form-cadastro");
     const respFechamentoElement = document.getElementById("field_ResponsavelFechamento");
     const respAberturaElement = document.getElementById("field_ResponsavelAbertura");
@@ -445,16 +465,12 @@ function visualizarCaixa(id, nome, nomeIndice, responsavelAberturaId, responsave
     valorAberturaElement.readOnly = true;
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = nome;
-    document.getElementById("field_NomeIndice").value = nomeIndice;
-    document.getElementById("field_DataAberturaCompleta").value = dataAberturaCompleta;
     document.getElementById("field_DataAbertura").value = dataAbertura;
     document.getElementById("field_HoraAbertura").value = horaAbertura;
     document.getElementById("field_ResponsavelAbertura").value = responsavelAberturaId;
     document.getElementById("field_Email").value = responsavelAberturaEmail;
     document.getElementById("field_ValorAbertura").value = valorAbertura;
     document.getElementById("field_ValorProvisorio").value = valorProvisorio;
-    document.getElementById("field_DataCriacao").value = dataCriacao;
-    document.getElementById("field_CriadoPor").value = criadoPor;
 }
 
 function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
@@ -886,6 +902,13 @@ function ajustarCamposCaixaFechamento(){
     const botaoSalvar = document.getElementById("salvar-cadastro");
 
     botaoSalvar.disabled = !(valorProvisorio > 0 && responsavelFechamento > 0);
+}
+
+function ajustarCamposCaixaAbertura(){
+    const responsavelAbertura = document.getElementById("field_ResponsavelAbertura").value;
+    const botaoSalvar = document.getElementById("salvar-cadastro");
+
+    botaoSalvar.disabled = !(responsavelAbertura > 0);
 }
 
 function criarCampoOculto(nome, valor) {

@@ -14,10 +14,10 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Agendamento</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Agendamento</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
-    <div class="itemRequired">* campos obrigatórios</div>
     <!-- formulário de cadastro -->
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" style="display: block">
         <form:hidden path="agendamento.id" id="field_Id"/>

@@ -23,10 +23,10 @@
 </head>
 <body>
 <div>
-    <div class="itemHeader">
-        <h4>Pedido de Compras</h4>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Pedidos de Compra</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
     </div>
-    <div class="itemRequired">* campos obrigatórios</div>
     <div class="row" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
     </div>

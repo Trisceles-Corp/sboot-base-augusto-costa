@@ -111,6 +111,7 @@ public class ComandaService {
             throw new IllegalArgumentException("Nenhum pagamento informado para a comanda.");
         }
         final Integer caixaId = dados.getCaixaId();
+        tblCaixa caixa = findCaixaById(caixaId);
         tblComanda comanda = repository.findById(dados.getComandaId()).orElseThrow(() -> new RuntimeException("Comanda não encontrado"));
 
         // Processa e salva os pagamentos
@@ -135,8 +136,8 @@ public class ComandaService {
             // Processa e salva os caixa
             tblCaixaMovimentacao caixaMovimentacao = new tblCaixaMovimentacao();
             tblTipoMovimentacao tipoMovimentacaoEntrada = tipoMovimentacaoRepository.findByDescricaoMovimentacao("Entrada");
-            caixaMovimentacao.setCaixaId(caixaId);
-            caixaMovimentacao.setComanda(comanda);
+            caixaMovimentacao.setCaixa(caixa);
+            caixaMovimentacao.setComandaId(dados.getCaixaId());
             caixaMovimentacao.setTipoMovimentacao(tipoMovimentacaoEntrada);
             caixaMovimentacao.setFormaPagamento(formasPagamento);
             caixaMovimentacao.setValorMovimentacao(pagamento.getValorPagamento());

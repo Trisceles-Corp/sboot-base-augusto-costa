@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +55,7 @@ public class CaixaService {
         caixa.setResponsavelAbertura(usuarioAbertura);
         caixa.setDataAbertura(LocalDateTime.now());
         caixa.setValorAbertura(dados.getValorAbertura());
+        caixa.setValorFechamento(BigDecimal.valueOf(0));
         caixa.setAtivo(true);
         caixa.setDataCriacao(LocalDateTime.now());
         caixa.setDataAlteracao(LocalDateTime.now());
@@ -94,24 +96,14 @@ public class CaixaService {
 
     @Transactional
     public tblCaixa update(dtoCaixa dados) {
-        tblUsuario usuarioAbertura = usuarioRepository.findById(dados.getResponsavelAbertura()).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
         tblUsuario usuarioFechamento = usuarioRepository.findById(dados.getResponsavelFechamento()).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-
-        tblCaixa caixa = new tblCaixa();
-        caixa.setId(dados.getCaixaId());
-        caixa.setNome(dados.getNome());
-        caixa.setNomeIndice(dados.getNomeIndice());
-        caixa.setResponsavelAbertura(usuarioAbertura);
-        caixa.setDataAbertura(dados.getDataAbertura());
+        tblCaixa caixa = getByCaixaId(dados.getCaixaId());
         caixa.setResponsavelFechamento(usuarioFechamento);
         caixa.setDataFechamento(LocalDateTime.now());
-        caixa.setValorAbertura(dados.getValorAbertura());
         caixa.setValorFechamento(dados.getValorProvisorio());
         caixa.setAtivo(false);
         caixa.setDataAlteracao(LocalDateTime.now());
-        caixa.setDataCriacao(dados.getDataCriacao());
         caixa.setAlteradoPor(dados.getResponsavelFechamento());
-        caixa.setCriadoPor(dados.getCriadoPor());
         return repository.save(caixa);
     }
 

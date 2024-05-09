@@ -1,43 +1,45 @@
 package br.com.augustocosta.acs.integration.entity;
 
-import lombok.*;
 import jakarta.persistence.*;
-import java.time.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-@Entity
-@Table(name = "tbl_caixamovimentacao")
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "tbl_caixamovimentacao")
 public class tblCaixaMovimentacao {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CaixaMovimentacaoId")
+    @Column(name = "CaixaMovimentacaoId", nullable = false)
     private Integer id;
 
-    @Column(name = "CaixaId", nullable = false)
-    private Integer caixaId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "CaixaId", nullable = false)
+    private tblCaixa caixa;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ComandaId")
-    private tblComanda comanda;
+    @Column(name = "ComandaId")
+    private Integer comandaId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "TipoMovimentacaoId", nullable = false)
     private tblTipoMovimentacao tipoMovimentacao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "FormaPagamentoId", nullable = false)
     private tblFormasPagamento formaPagamento;
 
-    @Column(name = "ValorMovimentacao", nullable = false)
-    private Double valorMovimentacao;
+    @ColumnDefault("0")
+    @Column(name = "ValorMovimentacao", nullable = false, precision = 18, scale = 2)
+    private BigDecimal valorMovimentacao;
 
     @Column(name = "Ativo", nullable = false)
-    private Boolean ativo;
+    private Boolean ativo = false;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
@@ -50,4 +52,5 @@ public class tblCaixaMovimentacao {
 
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
+
 }

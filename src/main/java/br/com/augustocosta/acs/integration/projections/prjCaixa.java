@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.integration.projections;
 
+import java.math.BigDecimal;
 import java.time.*;
 
 public interface prjCaixa {
@@ -15,13 +16,13 @@ public interface prjCaixa {
     Integer getResponsavelFechamento();
     String getNomeRespFechamento();
     LocalDateTime getDataFechamento();
-    Double getValorAbertura();
-    Double getCredito();
-    Double getDebito();
-    Double getDinheiro();
-    Double getPix();
-    Double getValorProvisorio();
-    Double getValorFechamento();
+    BigDecimal getValorAbertura();
+    BigDecimal getCredito();
+    BigDecimal getDebito();
+    BigDecimal getDinheiro();
+    BigDecimal getPix();
+    BigDecimal getValorProvisorio();
+    BigDecimal getValorFechamento();
     Boolean getAtivo();
     LocalDateTime getDataCriacao();
     LocalDateTime getDataAlteracao();

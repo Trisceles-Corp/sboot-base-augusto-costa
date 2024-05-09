@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
@@ -25,7 +26,7 @@
         <h4>Comandas Abertas</h4>
     </div>
     <!-- formulário de cadastro -->
-    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoComanda" action="${pageContext.request.contextPath}/comanda/salvar" method="POST" >
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoComanda" action="${pageContext.request.contextPath}/comanda/salvar" method="POST"  onsubmit="return verificarValoresPagamentosAntesDeSalvar()">
         <form:hidden path="agendamentoId" id="field_agendamentoId"/>
         <div class="row">
             <div class="form-group col-md-2">
@@ -227,7 +228,8 @@
         </div>
         <div class="row">
             <div class="mt-2">
-                <button type="button" class="btn btn-primary" onclick="coletarDadosPagamentos(); document.getElementById('form-cadastro').submit();">Fechar Comanda</button>
+<%--                <button type="button" class="btn btn-primary" onclick="coletarDadosPagamentos(); document.getElementById('form-cadastro').submit();">Fechar Comanda</button>--%>
+                <button type="submit" class="btn btn-primary" id="salvar-cadastro">Fechar Comanda</button>
                 <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
             </div>
         </div>

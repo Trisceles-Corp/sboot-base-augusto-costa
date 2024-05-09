@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -33,8 +35,8 @@ public class tblComandaPagamento {
     @Column(name = "Parcelas")
     private Integer parcelas = 1;
 
-    @Column(name = "Valor", nullable = false)
-    private Double valorPagamento = 0.0;
+    @Column(name = "Valor", nullable = false, precision = 18, scale = 2)
+    private BigDecimal valorPagamento;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo = true;
