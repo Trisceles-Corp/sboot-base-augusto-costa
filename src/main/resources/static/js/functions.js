@@ -33,6 +33,12 @@ function toggleFormCadastro() {
 function toggleFormCadastroCaixa() {
     const formCadastro = document.getElementById("form-cadastro");
 
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
+    } else {
+        formCadastro.style.display = "block";
+    }
+
     if (formCadastro) {
         formCadastro.reset();
         ajustarCamposAposReset();
@@ -103,7 +109,7 @@ function verificarValoresPagamentosAntesDeSalvar() {
             icon: 'warning',
             title: 'Atenção!',
             text: 'O valor de pagamento está divergente do valor da comanda!',
-            footer: '<a href="#">Precisa de ajuda?</a>',
+            // footer: '<a href="#">Precisa de ajuda?</a>',
             confirmButtonText: 'Entendi',
             confirmButtonColor: '#3085d6',
         });
@@ -310,6 +316,71 @@ function atualizarTabelaProdutosComanda(produtos) {
         linha.insertCell(5).innerText = produto.preco;
         linha.insertCell(6).innerText = produto.quantidade;
     });
+}
+
+function pesquisarComissoes(contexto, colaboradorId, firstDay, lastDay){
+    const colaborador = document.getElementById("field_ColaboradorId").value;
+    const dataInicial = document.getElementById("searchDataInicial").value;
+    const dataFinal = document.getElementById("searchDataFinal").value;
+
+    const colaboradorLabel = document.getElementById("inputColaborador");
+    const dataIniciailLabel = document.getElementById("inputDataInicial");
+    const dataFinalLabel = document.getElementById("inputDataFinal");
+
+    colaboradorLabel.value = colaborador;
+    dataIniciailLabel.value = dataInicial;
+    dataFinalLabel.value = dataFinal;
+
+    fetch(`${contexto}/comissoes/listarComissoes/${colaboradorId}/${firstDay}/${lastDay}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha na resposta do servidor');
+            }
+            return response.json();
+        })
+        .then(data => atualizarTabelaComissoes(data))
+        .catch(error => console.error('Erro ao buscar comissões do colaborador', error));
+}
+
+function atualizarTabelaComissoes(comissoes) {
+    const totalServicos = document.getElementById("inputTotalServicos");
+    const totalDescontos = document.getElementById("inputTotalDescontos");
+    const totalComissoes = document.getElementById("inputTotalComissoes");
+
+    const tabelaElement = document.getElementById("tabelaComissoes");
+    const tbody = tabelaElement.getElementsByTagName('tbody')[0];
+
+    var somaServicos = 0.0;
+    var somaDescontos = 0.0;
+    var somaComissoes = 0.0;
+
+    if(comissoes !== null && comissoes.length > 0){
+        tbody.innerHTML = '';
+
+        comissoes.forEach(comissao => {
+            let linha = tbody.insertRow();
+            let celulaAcao = linha.insertCell(0);
+            celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-editar mx-2" title="Item">';
+            linha.insertCell(1).innerText = comissao.agendamentoId;
+            linha.insertCell(2).innerText = comissao.dataAgendamento;
+            linha.insertCell(3).innerText = comissao.horaAgendamento;
+            linha.insertCell(4).innerText = comissao.nomeCliente;
+            linha.insertCell(5).innerText = comissao.valorServicos.toFixed(2);
+            linha.insertCell(6).innerText = comissao.valorDescontos.toFixed(2);
+            linha.insertCell(7).innerText = comissao.valorComissao.toFixed(2);
+
+            somaServicos += comissao.valorServicos;
+            somaDescontos += comissao.valorDescontos;
+            somaComissoes += comissao.valorComissao;
+        });
+
+        totalServicos.value = somaServicos.toFixed(2);
+        totalDescontos.value = somaDescontos.toFixed(2);
+        totalComissoes.value = somaComissoes.toFixed(2);
+        tabelaElement.style.display = 'block';
+    } else {
+        tabelaElement.style.display = 'none';
+    }
 }
 
 function visualizarCategoria(categoriaId, nome) {

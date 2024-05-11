@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,11 @@ public class ComandaService {
 
     public List<dtoComanda> getAllByAtivo() {
         List<prjComanda> projections = repository.findComandasByAtivo();
+        return convertProjectionToDto(projections);
+    }
+
+    public List<dtoComanda> getAllComissoesByAtivo(Integer colaboradorId, LocalDate dataInc, LocalDate dataFim) {
+        List<prjComanda> projections = repository.findComissoesByAtivo(colaboradorId, dataInc, dataFim);
         return convertProjectionToDto(projections);
     }
 

@@ -174,7 +174,7 @@
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/comanda')">Comandas abertas</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <span class="button-nav-option">Comissões</span><br>
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/comissoes')">Comissões</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
                             <span class="button-nav-option">Entradas e saídas</span><br>
