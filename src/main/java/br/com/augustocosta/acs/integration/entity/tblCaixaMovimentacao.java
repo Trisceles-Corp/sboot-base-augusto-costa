@@ -19,24 +19,27 @@ public class tblCaixaMovimentacao {
     @Column(name = "CaixaMovimentacaoId", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CaixaId", nullable = false)
     private tblCaixa caixa;
 
     @Column(name = "ComandaId")
     private Integer comandaId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "TipoMovimentacaoId", nullable = false)
     private tblTipoMovimentacao tipoMovimentacao;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "FormaPagamentoId", nullable = false)
     private tblFormasPagamento formaPagamento;
 
     @ColumnDefault("0")
     @Column(name = "ValorMovimentacao", nullable = false, precision = 18, scale = 2)
     private BigDecimal valorMovimentacao;
+
+    @Column(name = "Observacao")
+    private String observacao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo = false;

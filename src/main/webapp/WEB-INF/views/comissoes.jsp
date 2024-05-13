@@ -74,7 +74,8 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label  class="form-label" for="salvar-cadastro">Pesquisar:</label>
-                        <button type="button" class="btn btn-primary" id="salvar-cadastro" onclick="pesquisarComissoes('${pageContext.request.contextPath}', document.getElementById('field_ColaboradorId').value, document.getElementById('searchDataInicial').value, document.getElementById('searchDataFinal').value); return false;">Comissões</button>                    </div>
+                        <button type="button" class="btn btn-primary" id="salvar-cadastro" onclick="pesquisarComissoes('${pageContext.request.contextPath}', document.getElementById('field_ColaboradorId').value, document.getElementById('searchDataInicial').value, document.getElementById('searchDataFinal').value); return false;">Comissões</button>
+                    </div>
                 </div>
             </div>
             <div class="panel col-md-8" id="panel-resultado" >

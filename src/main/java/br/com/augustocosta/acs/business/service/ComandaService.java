@@ -147,6 +147,7 @@ public class ComandaService {
             caixaMovimentacao.setTipoMovimentacao(tipoMovimentacaoEntrada);
             caixaMovimentacao.setFormaPagamento(formasPagamento);
             caixaMovimentacao.setValorMovimentacao(pagamento.getValorPagamento());
+            caixaMovimentacao.setObservacao("Pagto. Comanada: " + dados.getComandaId());
             caixaMovimentacao.setAtivo(true);
             caixaMovimentacao.setDataCriacao(LocalDateTime.now());
             caixaMovimentacao.setDataAlteracao(LocalDateTime.now());

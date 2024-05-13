@@ -62,7 +62,7 @@ public class ComissoesController {
 
     @GetMapping("/listarComissoes/{colaboradorId}/{firstDay}/{lastDay}")
     @ResponseBody
-    public ResponseEntity<List<dtoComanda>> listarProdutosPorCompra(
+    public ResponseEntity<List<dtoComanda>> listarComissoes(
             @PathVariable Integer colaboradorId,
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate firstDay,
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate lastDay) {

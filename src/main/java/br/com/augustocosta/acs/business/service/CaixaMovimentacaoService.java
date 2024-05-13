@@ -6,7 +6,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,12 +37,25 @@ public class CaixaMovimentacaoService {
         table.setAtivo(true);
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
+        table.setCriadoPor(table.getCriadoPor());
+        table.setAlteradoPor(table.getCriadoPor());
         return repository.save(table);
     }
 
     @Transactional
     public tblCaixaMovimentacao getByCaixaMovimentacaoId(Integer id) {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Caixa movimentação não encontrada."));
+    }
+
+    public List<tblCaixaMovimentacao> getByAtivoTrueOrderByDataCriacaoDesc() {
+        return repository.findByAtivoTrueOrderByDataCriacaoDesc();
+    }
+
+    @Transactional
+    public List<tblCaixaMovimentacao> getFilterByDataCriacaoDesc(LocalDate dataInicial, LocalDate dataFinal) {
+        LocalDateTime inicioDoDia = dataInicial.atStartOfDay();
+        LocalDateTime finalDoDia = dataFinal.atTime(LocalTime.MAX);
+        return repository.findByDataCriacaoBetweenAndAtivoTrueOrderByDataCriacaoDesc(inicioDoDia, finalDoDia);
     }
 
     public List<tblCaixa> getActiveCaixaByNameAsc() {
@@ -70,9 +87,9 @@ public class CaixaMovimentacaoService {
     }
 
     @Transactional
-    public tblCaixaMovimentacao update(Integer id, tblCaixaMovimentacao dados) {
-        tblCaixaMovimentacao table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Caixa movimentação não encontrado com id: " + id));
+    public tblCaixaMovimentacao update(tblCaixaMovimentacao dados) {
+        tblCaixaMovimentacao table = repository.findById(dados.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Caixa movimentação não encontrado com id: " + dados.getId()));
 
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
