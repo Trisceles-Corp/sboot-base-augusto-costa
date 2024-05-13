@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -34,6 +35,10 @@ public class CaixaMovimentacaoService {
 
     @Transactional
     public tblCaixaMovimentacao create(tblCaixaMovimentacao table) {
+        if(table.getTipoMovimentacao().getId() != 4){
+            BigDecimal convert = table.getValorMovimentacao().negate();
+            table.setValorMovimentacao(convert);
+        }
         table.setAtivo(true);
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
