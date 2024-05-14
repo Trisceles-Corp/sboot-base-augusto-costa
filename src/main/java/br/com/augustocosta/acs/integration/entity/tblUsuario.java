@@ -90,4 +90,8 @@ public class tblUsuario {
 
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
+
+    @OneToMany(mappedBy = "responsavelAbertura")
+    private Set<tblCaixa> tblCaixa = new LinkedHashSet<>();
+
 }

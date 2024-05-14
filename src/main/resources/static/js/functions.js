@@ -33,6 +33,12 @@ function toggleFormCadastro() {
 function toggleFormCadastroCaixa() {
     const formCadastro = document.getElementById("form-cadastro");
 
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
+    } else {
+        formCadastro.style.display = "block";
+    }
+
     if (formCadastro) {
         formCadastro.reset();
         ajustarCamposAposReset();
@@ -64,15 +70,19 @@ function toggleCloseCadastro() {
 }
 
 function carregarConteudo(url) {
-
     fetch(url)
         .then(response => response.text())
         .then(data => {
-            document.getElementById("mainContent").innerHTML = data;
+            const mainContent = document.getElementById("mainContent");
+            mainContent.innerHTML = data;
+
+            const searchDataInicial = document.getElementById('searchDataInicial');
+            const searchDataFinal = document.getElementById('searchDataFinal');
+            if (searchDataInicial && searchDataFinal) {
+                definirDatasIniciaisEFinais();
+            }
         })
-        .catch(error => {
-            console.error("Erro ao carregar a página:", error);
-        });
+        .catch(error => console.error('Erro ao carregar a página secundária:', error));
 }
 
 function refreshPage() {
@@ -91,6 +101,25 @@ function verificarNomeAntesDeSalvar() {
     return true;
 }
 
+function verificarValoresMovimentacaoAntesDeSalvar() {
+    const justificativaInput = document.getElementById('field_observacao').value;
+
+    if (justificativaInput === null || justificativaInput === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Atenção!',
+            text: 'Justificativa movimentação é obrigatória.',
+            // footer: '<a href="#">Precisa de ajuda?</a>',
+            confirmButtonText: 'Entendi',
+            confirmButtonColor: '#3085d6',
+        });
+        return false;
+    } else {
+        coletarDadosPagamentos();
+        return true;
+    }
+}
+
 function verificarValoresPagamentosAntesDeSalvar() {
     const valorComandaInput = document.getElementById('field_valorComanda');
     const valorTotalPgtoInput = document.getElementById('field_valorTotalPgto');
@@ -98,18 +127,16 @@ function verificarValoresPagamentosAntesDeSalvar() {
     var valorPagamento = parseFloat(valorTotalPgtoInput.value);
 
     if (valorComanda !== valorPagamento) {
-        console.log("Entrou na divergência");
         Swal.fire({
             icon: 'warning',
             title: 'Atenção!',
             text: 'O valor de pagamento está divergente do valor da comanda!',
-            footer: '<a href="#">Precisa de ajuda?</a>',
+            // footer: '<a href="#">Precisa de ajuda?</a>',
             confirmButtonText: 'Entendi',
             confirmButtonColor: '#3085d6',
         });
         return false;
     } else {
-        console.log("Salvou sem divergência");
         coletarDadosPagamentos();
         return true;
     }
@@ -312,6 +339,124 @@ function atualizarTabelaProdutosComanda(produtos) {
     });
 }
 
+function pesquisarComissoes(contexto, colaboradorId, firstDay, lastDay){
+    const colaborador = document.getElementById("field_ColaboradorId").value;
+    const dataInicial = document.getElementById("searchDataInicial").value;
+    const dataFinal = document.getElementById("searchDataFinal").value;
+
+    const colaboradorLabel = document.getElementById("inputColaborador");
+    const dataIniciailLabel = document.getElementById("inputDataInicial");
+    const dataFinalLabel = document.getElementById("inputDataFinal");
+
+    colaboradorLabel.value = colaborador;
+    dataIniciailLabel.value = dataInicial;
+    dataFinalLabel.value = dataFinal;
+
+    fetch(`${contexto}/comissoes/listarComissoes/${colaboradorId}/${firstDay}/${lastDay}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha na resposta do servidor');
+            }
+            return response.json();
+        })
+        .then(data => atualizarTabelaComissoes(data))
+        .catch(error => console.error('Erro ao buscar comissões do colaborador', error));
+}
+
+function atualizarTabelaComissoes(comissoes) {
+    const totalServicos = document.getElementById("inputTotalServicos");
+    const totalDescontos = document.getElementById("inputTotalDescontos");
+    const totalComissoes = document.getElementById("inputTotalComissoes");
+
+    const tabelaElement = document.getElementById("tabelaComissoes");
+    const tbody = tabelaElement.getElementsByTagName('tbody')[0];
+
+    var somaServicos = 0.0;
+    var somaDescontos = 0.0;
+    var somaComissoes = 0.0;
+
+    if(comissoes !== null && comissoes.length > 0){
+        tbody.innerHTML = '';
+
+        comissoes.forEach(comissao => {
+            let linha = tbody.insertRow();
+            let celulaAcao = linha.insertCell(0);
+            celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-editar mx-2" title="Item">';
+            linha.insertCell(1).innerText = comissao.agendamentoId;
+            linha.insertCell(2).innerText = comissao.dataAgendamento;
+            linha.insertCell(3).innerText = comissao.horaAgendamento;
+            linha.insertCell(4).innerText = comissao.nomeCliente;
+            linha.insertCell(5).innerText = comissao.valorServicos.toFixed(2);
+            linha.insertCell(6).innerText = comissao.valorDescontos.toFixed(2);
+            linha.insertCell(7).innerText = comissao.valorComissao.toFixed(2);
+
+            somaServicos += comissao.valorServicos;
+            somaDescontos += comissao.valorDescontos;
+            somaComissoes += comissao.valorComissao;
+        });
+
+        totalServicos.value = somaServicos.toFixed(2);
+        totalDescontos.value = somaDescontos.toFixed(2);
+        totalComissoes.value = somaComissoes.toFixed(2);
+        tabelaElement.style.display = 'block';
+    } else {
+        tabelaElement.style.display = 'none';
+    }
+}
+
+function pesquisarMovimentacoes(contexto, firstDay, lastDay) {
+    const url = `${contexto}/caixamovimentacao/listarMovimentacoes/${firstDay}/${lastDay}`;
+    console.log("URL da requisição: ", url);
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha na resposta do servidor');
+            }
+            return response.json();
+        })
+        .then(data => atualizarTabelaMovimentacoes(data))
+        .catch(error => console.error('Erro ao buscar movimentações financeira.', error));
+}
+
+function atualizarTabelaMovimentacoes(movimentacoes) {
+    const totalEntradasLabel = document.getElementById("resultTotalEntradas");
+    const totalSaidasLabel = document.getElementById("resultTotalSaidas");
+    const tabelaElement = document.getElementById("tabelaMovimentacao");
+    const tbody = tabelaElement.getElementsByTagName('tbody')[0];
+
+    var somaEntradas = 0.0;
+    var somaSaidas = 0.0;
+
+    if(movimentacoes !== null && movimentacoes.length > 0){
+        tbody.innerHTML = '';
+
+        movimentacoes.forEach(movimento => {
+            let linha = tbody.insertRow();
+            let celulaAcao = linha.insertCell(0);
+            celulaAcao.innerHTML = `<img src="../img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCaixaMovimentacao('${movimento.id}', '${movimento.caixa.id}', '${movimento.tipoMovimentacao.id}', '${movimento.formaPagamento.id}', '${movimento.criadoPor}', '${movimento.valorMovimentacao}', '${movimento.observacao}'); return false;" title="Editar">`;
+            linha.insertCell(1).innerText = movimento.dataCriacao;
+            linha.insertCell(2).innerText = movimento.caixa.nome;
+            linha.insertCell(3).innerText = movimento.tipoMovimentacao.descricaoMovimentacao;
+            linha.insertCell(4).innerText = movimento.formaPagamento.nome;
+            linha.insertCell(5).innerText = movimento.valorMovimentacao.toFixed(2);
+            linha.insertCell(6).innerText = movimento.observacao;
+
+            if(movimento.tipoMovimentacao.id === 4){
+                somaEntradas += movimento.valorMovimentacao;
+            } else{
+                somaSaidas += movimento.valorMovimentacao;
+            }
+        });
+        console.log("display = block")
+        totalEntradasLabel.value = somaEntradas.toFixed(2);
+        totalSaidasLabel.value = somaSaidas.toFixed(2);
+        tabelaElement.style.display = 'block';
+    } else {
+        console.log("display = none")
+        tabelaElement.style.display = 'none';
+    }
+}
+
 function visualizarCategoria(categoriaId, nome) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
@@ -448,6 +593,27 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Comissao").value = comissao;
 }
 
+function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagamentoId, colaboradorId, valor, justificativa) {
+
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+
+    console.log(caixaId);
+    console.log(colaboradorId);
+
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_CaixaId").value = caixaId;
+    document.getElementById("field_TipoMovimentacaoId").value = tipoMovimentacaoId;
+    document.getElementById("field_formaPagamentoId").value = formaPagamentoId;
+    document.getElementById("field_ColaboradorId").value = colaboradorId;
+    document.getElementById("field_valorMovimentacao").value = valor;
+    document.getElementById("field_observacao").value = justificativa;
+}
+
 function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEmail, dataAbertura, horaAbertura, valorAbertura, valorProvisorio) {
     const formClienteCadast = document.getElementById("form-cadastro");
     const respFechamentoElement = document.getElementById("field_ResponsavelFechamento");
@@ -459,7 +625,6 @@ function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEma
     } else {
         formClienteCadast.style.display = "block";
     }
-    console.log(responsavelAberturaId);
     respFechamentoElement.readOnly=false;
     respAberturaElement.readOnly = true;
     valorAberturaElement.readOnly = true;
@@ -917,4 +1082,18 @@ function criarCampoOculto(nome, valor) {
     input.name = nome;
     input.value = valor;
     return input;
+}
+
+function definirDatasIniciaisEFinais() {
+    const hoje = new Date();
+    const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+    const ultimoDia = new Date(hoje.getFullYear(), hoje.getMonth() + 1, 0);
+
+    const searchDataInicial = document.getElementById('searchDataInicial');
+    const searchDataFinal = document.getElementById('searchDataFinal');
+
+    if (searchDataInicial && searchDataFinal) {
+        searchDataInicial.valueAsDate = primeiroDia;
+        searchDataFinal.valueAsDate = ultimoDia;
+    }
 }

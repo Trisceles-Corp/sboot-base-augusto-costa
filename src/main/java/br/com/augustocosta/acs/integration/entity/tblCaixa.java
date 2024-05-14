@@ -24,14 +24,18 @@ public class tblCaixa {
     @Column(name = "Nome", nullable = false, length = 50)
     private String nome;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ColumnDefault("1")
+    @Column(name = "NomeIndice")
+    private Integer nomeIndice;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ResponsavelAbertura", nullable = false)
     private tblUsuario responsavelAbertura;
 
     @Column(name = "DataAbertura", nullable = false)
     private LocalDateTime dataAbertura;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ResponsavelFechamento")
     private tblUsuario responsavelFechamento;
 
@@ -61,11 +65,6 @@ public class tblCaixa {
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
 
-    @ColumnDefault("1")
-    @Column(name = "NomeIndice")
-    private Integer nomeIndice;
-
     @OneToMany(mappedBy = "caixa")
     private Set<tblCaixaMovimentacao> tblCaixamovimentacaos = new LinkedHashSet<>();
-
 }

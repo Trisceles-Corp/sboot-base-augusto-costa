@@ -339,6 +339,38 @@ public class SqlQueries {
                     "ORDER BY " +
                     "age.DataAgendamento DESC";
 
+    public static final String QUERY_COMISSOES =
+            "SELECT cmd.ComandaId " +
+                    ",cmd.AgendamentoId " +
+                    ",age.DataAgendamento " +
+                    ",age.HoraAgendamento " +
+                    ",age.ClienteId " +
+                    ",cli.Nome + ' ' + cli.Sobrenome AS NomeCliente " +
+                    ",age.ColaboradorId " +
+                    ",col.Nome + ' ' + col.Sobrenome AS NomeColaborador " +
+                    ",cmd.ValorServicos " +
+                    ",cmd.ValorProdutos " +
+                    ",cmd.ValorDescontos " +
+                    ",cmd.ValorComissao " +
+                    ",cmd.ValorEncargos " +
+                    ",(cmd.ValorServicos + cmd.ValorProdutos - cmd.ValorDescontos) AS ValorComanda " +
+                    ",cmd.Situacao " +
+                    ",cmd.Ativo " +
+                    ",cmd.DataCriacao " +
+                    ",cmd.DataAlteracao " +
+                    ",cmd.CriadoPor " +
+                    ",cmd.AlteradoPor " +
+                    "FROM dbo.tbl_comanda cmd " +
+                    "JOIN dbo.tbl_agendamento age ON cmd.AgendamentoId = age.AgendamentoId " +
+                    "JOIN dbo.tbl_usuario cli ON age.ClienteId = cli.UsuarioId " +
+                    "JOIN dbo.tbl_usuario col ON age.ColaboradorId = col.UsuarioId " +
+                    "WHERE cmd.Ativo = 1 " +
+                    "AND cmd.Situacao = 0 " +
+                    "AND age.ColaboradorId = :colaboradorId " +
+                    "AND age.DataAgendamento BETWEEN :dataInc AND :dataFim " +
+                    "ORDER BY " +
+                    "age.DataAgendamento DESC";
+
     public static final String QUERY_CAIXAS =
             "SELECT cax.CaixaId " +
                     ",cax.Nome " +

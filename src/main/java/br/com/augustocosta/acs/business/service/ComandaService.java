@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,11 @@ public class ComandaService {
         return convertProjectionToDto(projections);
     }
 
+    public List<dtoComanda> getAllComissoesByAtivo(Integer colaboradorId, LocalDate dataInc, LocalDate dataFim) {
+        List<prjComanda> projections = repository.findComissoesByAtivo(colaboradorId, dataInc, dataFim);
+        return convertProjectionToDto(projections);
+    }
+
     public List<tblComanda> getOpenedActives() {
         return repository.findBySituacaoTrueAndAtivoTrue();
     }
@@ -141,6 +147,7 @@ public class ComandaService {
             caixaMovimentacao.setTipoMovimentacao(tipoMovimentacaoEntrada);
             caixaMovimentacao.setFormaPagamento(formasPagamento);
             caixaMovimentacao.setValorMovimentacao(pagamento.getValorPagamento());
+            caixaMovimentacao.setObservacao("Recebimento de pagto. da comanada: " + dados.getComandaId());
             caixaMovimentacao.setAtivo(true);
             caixaMovimentacao.setDataCriacao(LocalDateTime.now());
             caixaMovimentacao.setDataAlteracao(LocalDateTime.now());
