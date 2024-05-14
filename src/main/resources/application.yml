@@ -1,8 +1,13 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://LENOVO-P50\MSSQLSERVER:1433;database=costacrm;encrypt=false;
-    username: sa
-    password: Woden26@ws
+#    url: jdbc:sqlserver://LENOVO-P50\MSSQLSERVER:1433;database=costacrm;encrypt=false;
+#    username: sa
+#    password: Woden26@ws
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+    url: jdbc:sqlserver://34.95.201.193\MSSQLSERVER:1433;database=costacrm;encrypt=false;
+    username: sqlserver
+    password: $#:P>F:9&#;04k>I
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
