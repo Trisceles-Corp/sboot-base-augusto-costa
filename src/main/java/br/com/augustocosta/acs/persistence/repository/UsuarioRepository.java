@@ -1,6 +1,5 @@
 package br.com.augustocosta.acs.persistence.repository;
 
-import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.persistence.dao.SqlQueries;
 import org.springframework.data.jpa.repository.Query;
 import br.com.augustocosta.acs.integration.entity.tblCargo;
@@ -15,8 +14,7 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<tblUsuario, Integer> {
-    @Query("SELECT e FROM tblEndereco e WHERE e.id = :id")
-    tblUsuario findUsuarioById(Integer id);
+    List<tblUsuario> findByEmail(String email);
     List<tblUsuario> findByNomeOrderByNomeAsc(String nome);
     List<tblUsuario> findBySobrenomeOrderByNomeAsc(String sobrenome);
     List<tblUsuario> findByAtivoTrueOrderByNomeAsc();
