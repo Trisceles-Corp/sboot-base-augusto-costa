@@ -5,7 +5,7 @@ spring:
 #    password: Woden26@ws
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
-    url: jdbc:sqlserver://34.95.201.193\MSSQLSERVER:1433;database=costacrm;encrypt=false;
+    url: jdbc:sqlserver://34.95.201.193\MSSQLSERVER:1433;database=costacrm;encrypt=true;trustServerCertificate=true;
     username: sqlserver
     password: $#:P>F:9&#;04k>I
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver

@@ -15,8 +15,7 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<tblUsuario, Integer> {
-    @Query("SELECT e FROM tblEndereco e WHERE e.id = :id")
-    tblUsuario findUsuarioById(Integer id);
+    List<tblUsuario> findByEmail(String email);
     List<tblUsuario> findByNomeOrderByNomeAsc(String nome);
     List<tblUsuario> findBySobrenomeOrderByNomeAsc(String sobrenome);
     List<tblUsuario> findByAtivoTrueOrderByNomeAsc();
