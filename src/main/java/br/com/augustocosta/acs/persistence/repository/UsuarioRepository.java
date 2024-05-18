@@ -1,6 +1,5 @@
 package br.com.augustocosta.acs.persistence.repository;
 
-import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.persistence.dao.SqlQueries;
 import org.springframework.data.jpa.repository.Query;
 import br.com.augustocosta.acs.integration.entity.tblCargo;
