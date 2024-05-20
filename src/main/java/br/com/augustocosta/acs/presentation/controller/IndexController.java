@@ -2,6 +2,9 @@ package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.UsuarioService;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +19,46 @@ public class IndexController {
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblUsuario", new tblUsuario());
-        return "main";
+        return "index";
     }
 
     @GetMapping
-    public String agendamentoPage() {
+    public String agendamentoPage(HttpServletRequest request, Model model) {
+        // Acessar o cookie
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userId".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        if (userId != null) {
+            tblUsuario usuario = usuarioService.getUsuarioById(Integer.parseInt(userId));
+            model.addAttribute("usuario", usuario);
+        }
         return "index";
     }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        // Invalidar a sessão
+        request.getSession().invalidate();
+
+        // Limpar os cookies
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+
+        return "redirect:/login2";
+    }
+
 }

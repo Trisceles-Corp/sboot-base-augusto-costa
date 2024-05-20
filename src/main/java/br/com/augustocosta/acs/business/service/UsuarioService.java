@@ -48,7 +48,7 @@ public class UsuarioService {
     }
 
     public tblUsuario getUsuarioById(Integer id) {
-        return repository.findUsuarioById(id);
+        return repository.findByUsuarioById(id);
     }
 
     public tblUsuario getByUserId(Integer id) {
@@ -208,6 +208,10 @@ public class UsuarioService {
         return repository.findByEmailOrderByNomeAsc(email)
                 .stream()
                 .anyMatch(user -> user.getSenha().equals(senha) && user.getAtivo());
+    }
+
+    public tblUsuario getValidateUserByEmail(String email) {
+        return repository.findByEmail(email).stream().findFirst().orElse(null);
     }
 
     public tblUsuario convertVo(tblUsuario table, tblEndereco endereco, tblCargo cargo, tblPerfil perfil, dtoUsuario dados)

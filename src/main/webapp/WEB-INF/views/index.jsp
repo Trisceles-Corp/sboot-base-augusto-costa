@@ -21,9 +21,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" >
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/fontawesome5-overrides.min.css">
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
     <!-- Mantenha apenas uma versão do jQuery -->
@@ -58,24 +61,39 @@
             </li>
             <div class="d-none d-sm-block topbar-divider"></div>
             <li class="nav-item dropdown no-arrow">
-                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Alexander Andrade</span><img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar3.jpeg"></a>
-                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" href="#"><i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings</a><a class="dropdown-item" href="#"><i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log</a>
-                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                <div class="nav-item dropdown no-arrow">
+                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                        <span class="d-none d-lg-inline me-2 text-gray-600 small">${usuario.nome} ${usuario.sobrenome}</span>
+                        <img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar3.jpeg">
+                    </a>
+                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/index/logout">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout
+                        </a>
                     </div>
                 </div>
             </li>
-            <div class="d-none d-sm-block topbar-divider"></div>
         </ul>
     </div>
     <div class="sidenav">
         <div class="logo">
-            <img src="${pageContext.request.contextPath}/img/logos/image(5).png" alt="">
+            <img src="${pageContext.request.contextPath}/resources/img/logos/image(5).png" alt="">
         </div>
         <div class="nav-pages">
             <a class="nav-option" id="agenda">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon agenda/agenda-999.png" id="agenda-img">
                         <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/agendamento')" >Agenda</button>
                     </div>
                     <script>
@@ -96,7 +114,7 @@
             <a class="nav-option" id="clientes">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon clientes/cliente-999.png" id="cliente-img">
                         <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/cliente')" >Clientes</button>
                     </div>
                     <script>
@@ -106,11 +124,11 @@
                         const imgCliente = cliente.querySelector("img");
 
                         cliente.addEventListener("mouseover", () => {
-                            imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
+                            imgCliente.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon clientes/cliente-F0DD6C.png");
                         });
 
                         cliente.addEventListener("mouseout", () => {
-                            imgCliente.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
+                            imgCliente.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon clientes/cliente-999.png");
                         });
                     </script>
                 </div>
@@ -118,7 +136,7 @@
             <a class="nav-option" id="estoque">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon estoque/estoque-999.png" id="estoque-img">
                         <span class="button-nav-item">Estoque</span>
                     </div>
                     <div class="contain-sub-option">
@@ -145,14 +163,14 @@
                         const subOptionsEstoque = estoque.querySelectorAll(".sub-options");
 
                         estoque.addEventListener("mouseover", () => {
-                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
+                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon estoque/estoque-F0DD6C.png");
                             for(var i = 0; i < subOptionsEstoque.length; i++){
                                 subOptionsEstoque[i].style.display = "block";
                             }
                         });
 
                         estoque.addEventListener("mouseout", () => {
-                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
+                            imgEstoque.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon estoque/estoque-999.png");
                             for(var i = 0; i < subOptionsEstoque.length; i++){
                                 subOptionsEstoque[i].style.display = "none";
                             }
@@ -163,7 +181,7 @@
             <a class="nav-option" id="financeiro">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png" id="financeiro-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon financeiro/financeiro-999.png" id="financeiro-img">
                         <span class="button-nav-item"> Financeiro</span>
                     </div>
                     <div class="contain-sub-option">
@@ -187,14 +205,14 @@
                         const subOptionsFinanceiro = financeiro.querySelectorAll(".sub-options");
 
                         financeiro.addEventListener("mouseover", () => {
-                            imgFinanceiro.setAttribute("src", "${pageContext.request.contextPath}/img/icon financeiro/financeiro-F0DD6C.png");
+                            imgFinanceiro.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon financeiro/financeiro-F0DD6C.png");
                             for(var i = 0; i < subOptionsFinanceiro.length; i++){
                                 subOptionsFinanceiro[i].style.display = "block";
                             }
                         });
 
                         financeiro.addEventListener("mouseout", () => {
-                            imgFinanceiro.setAttribute("src", "${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png");
+                            imgFinanceiro.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon financeiro/financeiro-999.png");
                             for(var i = 0; i < subOptionsFinanceiro.length; i++){
                                 subOptionsFinanceiro[i].style.display = "none";
                             }
@@ -205,7 +223,7 @@
             <a class="nav-option" id="dashboard">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="dashboard-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon agenda/agenda-999.png" id="dashboard-img">
                         <span class="button-nav-item">Painel</span>
                     </div>
                     <script>
@@ -214,11 +232,11 @@
                         const imgDashboard = dashboard.querySelector("img");
 
                         dashboard.addEventListener("mouseover", () => {
-                            imgDashboard.setAttribute("src", "${pageContext.request.contextPath}/img/icon agenda/agenda-F0DD6C.png");
+                            imgDashboard.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon agenda/agenda-F0DD6C.png");
                         });
 
                         dashboard.addEventListener("mouseout", () => {
-                            imgDashboard.setAttribute("src", "${pageContext.request.contextPath}/img/icon agenda/agenda-999.png");
+                            imgDashboard.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon agenda/agenda-999.png");
                         });
                     </script>
                 </div>
@@ -226,7 +244,7 @@
             <a class="nav-option" id="relatorios">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon agenda/agenda-999.png" id="relatorios-img" alt="">
                         <span class="button-nav-item">Relatórios</span>
                     </div>
                     <script>
@@ -235,11 +253,11 @@
                         const imgRelatorios = relatorios.querySelector("img");
 
                         relatorios.addEventListener("mouseover", () => {
-                            imgRelatorios.setAttribute("src", "${pageContext.request.contextPath}/img/icon agenda/agenda-F0DD6C.png");
+                            imgRelatorios.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon agenda/agenda-F0DD6C.png");
                         });
 
                         relatorios.addEventListener("mouseout", () => {
-                            imgRelatorios.setAttribute("src", "${pageContext.request.contextPath}/img/icon agenda/agenda-999.png");
+                            imgRelatorios.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon agenda/agenda-999.png");
                         });
                     </script>
                 </div>
@@ -247,7 +265,7 @@
             <a class="nav-option" id="config">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img">
+                        <img src="${pageContext.request.contextPath}/resources/img/icon estoque/estoque-999.png" id="config-img" alt="">
                         <span class="button-nav-item">Configurações</span>
                     </div>
                     <div class="contain-sub-option">
@@ -286,14 +304,14 @@
                         const subOptionsConfig = config.querySelectorAll(".sub-options");
 
                         config.addEventListener("mouseover", () => {
-                            imgConfig.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-F0DD6C.png");
+                            imgConfig.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon estoque/estoque-F0DD6C.png");
                             for(var i = 0; i < subOptionsConfig.length; i++){
                                 subOptionsConfig[i].style.display = "block";
                             }
                         });
 
                         config.addEventListener("mouseout", () => {
-                            imgConfig.setAttribute("src", "${pageContext.request.contextPath}/img/icon estoque/estoque-999.png");
+                            imgConfig.setAttribute("src", "${pageContext.request.contextPath}/resources/img/icon estoque/estoque-999.png");
                             for(var i = 0; i < subOptionsConfig.length; i++){
                                 subOptionsConfig[i].style.display = "none";
                             }
@@ -310,5 +328,7 @@
         <p> Copyright @ Trísceles Corp 2024 </p>
     </footer>
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
 </body>
 </html>

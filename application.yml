@@ -5,7 +5,7 @@ spring:
 #    password: Woden26@ws
 #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
-    url: jdbc:sqlserver://34.95.201.193\MSSQLSERVER:1433;database=costacrm;encrypt=false;
+    url: jdbc:sqlserver://34.95.201.193\MSSQLSERVER:1433;database=costacrm;encrypt=true;trustServerCertificate=true;
     username: sqlserver
     password: $#:P>F:9&#;04k>I
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
@@ -25,6 +25,7 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
 
+
 logging:
   level:
     org:
@@ -32,3 +33,16 @@ logging:
         type:
           descriptor:
             sql: trace
+#    root: debug
+
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:acsapp.keystore.p12
+    key-store-password: Woden26@ws
+    key-store-type: PKCS12
+    key-alias: acsapp
+  servlet:
+    session:
+      cookie:
+        secure: true
