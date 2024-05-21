@@ -58,7 +58,7 @@ public class IndexController {
             }
         }
 
-        return "redirect:/login2";
+        return "redirect:/acesso";
     }
 
 }

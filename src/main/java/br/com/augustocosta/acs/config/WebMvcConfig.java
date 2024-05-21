@@ -20,16 +20,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login2/**", "/css/**", "/js/**", "/bootstrap/**", "/fonts/**");
+                .excludePathPatterns("/acesso/**", "/css/**", "/js/**", "/bootstrap/**", "/fonts/**");
     }
 
-//    @Bean
-//    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer() {
-//        return factory -> {
-//            RedirectWebServerFactoryCustomizer customizer = new RedirectWebServerFactoryCustomizer();
-//            customizer.customize(factory);
-//        };
-//    }
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer() {
+        return factory -> {
+            RedirectWebServerFactoryCustomizer customizer = new RedirectWebServerFactoryCustomizer();
+            customizer.customize(factory);
+        };
+    }
 
     static class RedirectWebServerFactoryCustomizer implements WebServerFactoryCustomizer<TomcatServletWebServerFactory> {
         @Override
@@ -41,7 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
             connector.setScheme("http");
             connector.setPort(8080);
-            connector.setSecure(false);
+            connector.setSecure(true);
             connector.setRedirectPort(8443);
             return connector;
         }

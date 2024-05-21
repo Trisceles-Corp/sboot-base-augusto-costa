@@ -113,11 +113,6 @@
 			<version>3.0.1</version>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>br.com.augustocosta</groupId>-->
-<!--			<artifactId>acs</artifactId>-->
-<!--			<version>0.0.1-SNAPSHOT</version>-->
-<!--		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -131,6 +126,20 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>3.5.0</version> <!-- Replace with the latest or a suitable version for your project -->
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.6.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-classpath</goal>
+						</goals>
+						<phase>compile</phase>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

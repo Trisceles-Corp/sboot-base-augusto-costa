@@ -25,7 +25,6 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
 
-
 logging:
   level:
     org:
@@ -36,6 +35,8 @@ logging:
 #    root: debug
 
 server:
+  tomcat:
+    use-native: false
   port: 8443
   ssl:
     key-store: classpath:acsapp.keystore.p12

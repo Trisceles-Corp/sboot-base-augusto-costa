@@ -11,8 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/login2")
-public class LoginController {
+@RequestMapping("/acesso")
+public class AcessoController {
 
     @Autowired
     private UsuarioService usuarioService;
@@ -20,12 +20,12 @@ public class LoginController {
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblUsuario", new tblUsuario());
-        return "login2";
+        return "acesso";
     }
 
     @GetMapping
     public String loginPage() {
-        return "login2";
+        return "acesso";
     }
 
     @PostMapping("/verify")
@@ -49,7 +49,7 @@ public class LoginController {
             return "redirect:/index";
         } else {
             model.addAttribute("loginError", "Invalid email or password.");
-            return "login2";
+            return "acesso";
         }
     }
 }

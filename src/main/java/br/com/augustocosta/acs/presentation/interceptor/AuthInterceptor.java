@@ -24,7 +24,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         if (!isAuthenticated) {
-            response.sendRedirect("/login2/form");
+            response.sendRedirect("/acesso/form");
             return false;
         }
 

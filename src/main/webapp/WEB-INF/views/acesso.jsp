@@ -13,12 +13,12 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/fonts/ionicons.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/Login-Form-Dark.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mloureiro1973-login.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mloureiro1973-login-1.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login-1.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
     </head>
     <body>
         <c:if test="${not empty loginError}">
@@ -31,9 +31,9 @@
             <div>
                 <h2 class="text-center">Augusto Costa Spa</h2>
             </div>
-            <img class="img-fluid profile-img-card" src="${pageContext.request.contextPath}/resources/img/avatars/avatar_2x.png">
+            <img class="img-fluid profile-img-card" src="${pageContext.request.contextPath}/img/avatars/avatar_2x.png">
             <p class="profile-name-card"> </p>
-            <form:form class="form-signin" method="post" modelAttribute="tblUsuario" action="${pageContext.request.contextPath}/login2/verify" >
+            <form:form class="form-signin" method="post" modelAttribute="tblUsuario" action="${pageContext.request.contextPath}/acesso/verify" >
                 <div class="mb-4">
                     <input class="form-control" type="email" id="email" name="email" placeholder="Email" required="required">
                 </div>
@@ -51,6 +51,6 @@
                 </div>
             </form:form>
         </div>
-        <script src="${pageContext.request.contextPath}/resources/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     </body>
 </html>
