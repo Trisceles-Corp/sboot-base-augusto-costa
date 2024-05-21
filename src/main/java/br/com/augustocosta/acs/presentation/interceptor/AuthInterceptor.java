@@ -16,7 +16,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if ("session_id".equals(cookie.getName()) && isValidSession(cookie.getValue())) {
+                if ("JSESSIONID".equals(cookie.getName()) && isValidSession(cookie.getValue())) {
                     isAuthenticated = true;
                     break;
                 }
@@ -24,7 +24,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         if (!isAuthenticated) {
-            response.sendRedirect("/acesso/form");
+            response.sendRedirect("/acesso");
             return false;
         }
 

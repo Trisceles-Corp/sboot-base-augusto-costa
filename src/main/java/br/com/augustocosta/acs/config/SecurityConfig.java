@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,6 +27,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .requiresChannel(channel -> channel
+                        .anyRequest().requiresSecure() // Força HTTPS em todas as requisições
+                )
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
                                 .requestMatchers("/**").hasRole("USER")
@@ -33,8 +37,10 @@ public class SecurityConfig {
                 .formLogin(withDefaults())
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/resources/**", "/css/**", "/js/**", "/fonts/**", "/img/**").permitAll()
+                                .requestMatchers("/resources/**", "/css/**", "/js/**", "/fonts/**", "/img/**", "/acesso", "/acesso/verify").permitAll()
                                 .anyRequest().authenticated()
+                )
+                .logout(LogoutConfigurer::permitAll
                 );
         return http. build();
     }
