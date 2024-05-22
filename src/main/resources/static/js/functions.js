@@ -485,6 +485,23 @@ function visualizarLinha(id, name) {
     document.getElementById("field_Nome").value = name;
 }
 
+function visualizarBloqueio(id, colaboradorId, dataBloqueio, periodoId, diasSemanaId, horaInicial, horaFinal, motivo) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_ColaboradorId").value = colaboradorId;
+    document.getElementById("field_DataBloqueio").value = dataBloqueio;
+    document.getElementById("field_PeriodoId").value = periodoId;
+    document.getElementById("field_DiasSemanaId").value = diasSemanaId;
+    document.getElementById("field_HoraInicial").value = horaInicial;
+    document.getElementById("field_HoraFinal").value = horaFinal;
+    document.getElementById("field_MotivoBloqueio").value = motivo;
+}
+
 function visualizarLocalEstoque(id, name) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {
@@ -1095,5 +1112,62 @@ function definirDatasIniciaisEFinais() {
     if (searchDataInicial && searchDataFinal) {
         searchDataInicial.valueAsDate = primeiroDia;
         searchDataFinal.valueAsDate = ultimoDia;
+    }
+}
+
+function ajustaDiasDaSemana(){
+    const dataBloqueioElement = document.getElementById('field_DataBloqueio');
+    const diaSemanaElement = document.getElementById('field_DiasSemanaId');
+    const dataBloqueio = new Date(dataBloqueioElement.value);
+    var diasemana = 0;
+
+    switch (dataBloqueio.getDay()){
+        case 0:
+            diasemana = 2;
+            break;
+        case 1:
+            diasemana = 3;
+            break;
+        case 2:
+            diasemana = 4;
+            break;
+        case 3:
+            diasemana = 5;
+            break;
+        case 4:
+            diasemana = 6;
+            break;
+        case 5:
+            diasemana = 7;
+            break;
+        case 6:
+            diasemana = 1;
+            break;
+    }
+    diaSemanaElement.value = diasemana;
+}
+
+function insereHorarioBloqueio(){
+    const periodoId = document.getElementById('field_PeriodoId').value;
+    const horaInicial = document.getElementById('field_HoraInicial');
+    const horaFinal = document.getElementById('field_HoraFinal');
+
+    switch (periodoId) {
+        case '2': // Manha
+            horaInicial.value = '09:00';
+            horaFinal.value = '12:30';
+            break;
+        case '3': // Tarde
+            horaInicial.value = '13:00';
+            horaFinal.value = '18:00';
+            break;
+        case '4': // Dia Inteiro
+            horaInicial.value = '09:00';
+            horaFinal.value = '18:00';
+            break;
+        default:
+            horaInicial.value = '';
+            horaFinal.value = '';
+            break;
     }
 }

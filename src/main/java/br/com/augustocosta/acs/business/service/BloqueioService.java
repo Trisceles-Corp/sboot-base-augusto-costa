@@ -23,14 +23,15 @@ public class BloqueioService {
     }
 
     public tblBloqueio create(tblBloqueio table) {
-        table.setDataCriacao(LocalDateTime.now());
-        table.setDataAlteracao(LocalDateTime.now());
-        table.setAtivo(true);
         return repository.save(table);
     }
 
     public List<tblBloqueio> getAll() {
         return repository.findAll();
+    }
+
+    public List<tblBloqueio> getActivesByUser(Integer id) {
+        return repository.findByCriadoPorAndAtivoTrueOrderByDataBloqueioAsc(id);
     }
 
     public Optional<tblBloqueio> getById(Integer id) {
@@ -57,9 +58,9 @@ public class BloqueioService {
         return repository.findByAtivoFalse();
     }
 
-    public tblBloqueio update(Integer id, tblBloqueio dados) {
-        tblBloqueio table = repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Bloqueio não encontrado com id: " + id));
+    public tblBloqueio update(tblBloqueio dados) {
+        tblBloqueio table = repository.findById(dados.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Bloqueio não encontrado com id: " + dados.getId()));
 
         table.setPeriodo(dados.getPeriodo());
         table.setDiasSemana(dados.getDiasSemana());

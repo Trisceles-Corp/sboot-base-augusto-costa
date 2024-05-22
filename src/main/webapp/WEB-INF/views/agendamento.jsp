@@ -37,8 +37,8 @@
             </form:select>
         </div>
         <div class="form-group col-md-2">
-            <form:label path="agendamento.dataAgendamento" class="form-label" for="inputNascimento">Data:<span class="text-danger">*</span></form:label>
-            <form:input  path="agendamento.dataAgendamento" type="date" class="form-control" id="inputNascimento" placeholder="mm-dd-yyyy"  readonly="readonly" required="required" />
+            <form:label path="agendamento.dataAgendamento" class="form-label" for="inputData">Data:<span class="text-danger">*</span></form:label>
+            <form:input  path="agendamento.dataAgendamento" type="date" class="form-control" id="inputData" placeholder="mm-dd-yyyy"  readonly="readonly" required="required" />
         </div>
         <div class="form-group col-md-1">
             <form:label path="agendamento.horaAgendamento" class="form-label" for="field_HoraAgendamento">Hora:<span class="text-danger">*</span></form:label>
