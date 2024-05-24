@@ -78,6 +78,12 @@ function carregarConteudo(url) {
 
             const searchDataInicial = document.getElementById('searchDataInicial');
             const searchDataFinal = document.getElementById('searchDataFinal');
+            const dataGrid = document.getElementById('gridAgendamentoHoje');
+
+            if (dataGrid) {
+                dataGrid.valueAsDate = new Date();
+            }
+
             if (searchDataInicial && searchDataFinal) {
                 definirDatasIniciaisEFinais();
             }
@@ -1108,10 +1114,14 @@ function definirDatasIniciaisEFinais() {
 
     const searchDataInicial = document.getElementById('searchDataInicial');
     const searchDataFinal = document.getElementById('searchDataFinal');
+    const initDataAgenda = document.getElementById('dataAgenda');
 
     if (searchDataInicial && searchDataFinal) {
         searchDataInicial.valueAsDate = primeiroDia;
         searchDataFinal.valueAsDate = ultimoDia;
+    }
+    if (initDataAgenda) {
+        initDataAgenda.valueAsDate = hoje;
     }
 }
 
@@ -1170,4 +1180,86 @@ function insereHorarioBloqueio(){
             horaFinal.value = '';
             break;
     }
+}
+
+function clearGroup(elem) {
+    const group = document.theForm.theGroup;
+    for (let i=0; i<group.length; i++) {
+        if (group[i] !== elem) {
+            group[i].checked = false;
+        }
+    }
+}
+
+function atualizarGridAgendamento(contexto) {
+    const dataAgendaElement = document.getElementById("dataAgenda");
+    let dataAgenda = new Date().toISOString().split('T')[0]; // Data atual como padrão
+    if(dataAgendaElement !== null){ dataAgenda = new Date(dataAgendaElement.value); }
+    const dataFormatada = new Date(dataAgenda).toISOString().split('T')[0];
+
+    fetch(`${contexto}/${dataFormatada}`)
+        .then(response => response.text())
+        .then(data => {
+            atualizarTabelaAgendamentos(data);
+        })
+        .catch(error => console.error('Erro ao buscar agendamentos:', error));
+}
+
+function atualizarTabelaAgendamentos(agendamentos) {
+    console.log("Agendamentos recebidos:", agendamentos);
+
+    const tabela = document.getElementById("tabelaGridAgendamento");
+    const thead = tabela.querySelector('thead');
+    const tbody = tabela.querySelector('tbody');
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    if (!Array.isArray(agendamentos) || agendamentos.length === 0) {
+        return;
+    }
+
+    const headerRow = document.createElement('tr');
+    const horarioHeader = document.createElement('th');
+    horarioHeader.scope = 'col';
+    horarioHeader.classList.add('th-editar');
+    horarioHeader.innerText = 'Horário';
+    headerRow.appendChild(horarioHeader);
+
+    const colaboradores = agendamentos.reduce((acc, agendamento) => {
+        const colaboradorInfo = agendamento.colaboradores || {};
+        Object.keys(colaboradorInfo).forEach(colaborador => {
+            if (!acc.includes(colaborador)) {
+                acc.push(colaborador);
+            }
+        });
+        return acc;
+    }, []);
+
+    console.log("Colaboradores únicos:", colaboradores);
+
+    colaboradores.forEach(colaborador => {
+        const th = document.createElement('th');
+        th.scope = 'col';
+        th.innerText = colaborador;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+
+    agendamentos.forEach(agendamento => {
+        const row = document.createElement('tr');
+        const horarioCell = document.createElement('td');
+        horarioCell.innerText = agendamento.horario;
+        row.appendChild(horarioCell);
+
+        const colaboradorInfo = agendamento.colaboradores || {};
+        colaboradores.forEach(colaborador => {
+            const cell = document.createElement('td');
+            cell.innerText = colaboradorInfo[colaborador] || '';
+            row.appendChild(cell);
+        });
+
+        tbody.appendChild(row);
+    });
 }

@@ -1,16 +1,18 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.dto.dtoAgendamento;
+import br.com.augustocosta.acs.integration.dto.dtoGridAgendamento;
 import br.com.augustocosta.acs.integration.dto.dtoProdutoVenda;
 import br.com.augustocosta.acs.integration.entity.*;
+import br.com.augustocosta.acs.integration.projections.prjGridAgendamento;
 import br.com.augustocosta.acs.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.*;
 import java.util.*;
-import java.time.LocalDateTime;
 
 @Service
 public class AgendamentoService {
@@ -224,4 +226,14 @@ public class AgendamentoService {
         Optional<tblAgendamento> table = repository.findById(id);
         return table.map(tblAgendamento::getAtivo).orElse(false);
     }
+
+    public List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) {
+        List<dtoGridAgendamento> dtos = new ArrayList<>();
+        for(prjGridAgendamento prj : projections) {
+            dtoGridAgendamento dto = new dtoGridAgendamento();
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
 }

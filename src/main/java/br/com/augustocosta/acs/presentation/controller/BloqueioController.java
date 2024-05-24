@@ -30,6 +30,9 @@ public class BloqueioController {
     private PeriodoService periodoService;
 
     @Autowired
+    private HorarioService horarioService;
+
+    @Autowired
     private DiasSemanaService diasSemanaService;
 
     @GetMapping("/form")
@@ -54,6 +57,7 @@ public class BloqueioController {
         if (userId != null) {
             model.addAttribute("userId", userId);
             model.addAttribute("listarBloqueios", service.getActivesByUser(Integer.parseInt(userId)));
+            model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
             model.addAttribute("listarPeriodos", periodoService.getActives());
             model.addAttribute("listarDiasSemana", diasSemanaService.getActives());
             model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
@@ -92,6 +96,7 @@ public class BloqueioController {
         // Atualiza o modelo com os dados necessários para renderizar a view parcial
         model.addAttribute("userId", userId);
         model.addAttribute("listarBloqueios", service.getActivesByUser(Integer.parseInt(userId)));
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
         model.addAttribute("listarPeriodos", periodoService.getActives());
         model.addAttribute("listarDiasSemana", diasSemanaService.getActives());
         model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));

@@ -94,7 +94,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/agendamento')" >Agenda</button>
+                        <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/gridagendamento')" >Agenda</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -321,7 +321,10 @@
             </a>
         </div>
     </div>
-    <div class="content-main p-5" id="mainContent">
+    <div class="content-main p-5" id="gridPage" style="display: none">
+        <jsp:include page="agendamento.jsp" />
+    </div>
+    <div class="content-main p-5" id="mainContent" style="display: block">
 
     </div>
     <footer class="footer">

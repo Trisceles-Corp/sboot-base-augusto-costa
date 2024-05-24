@@ -43,27 +43,8 @@
         <div class="form-group col-md-1">
             <form:label path="agendamento.horaAgendamento" class="form-label" for="field_HoraAgendamento">Hora:<span class="text-danger">*</span></form:label>
             <form:select path="agendamento.horaAgendamento" class="form-control" id="field_HoraAgendamento" required="required">
-                <form:option value="" label="Select"/>
-                <option selected>Select</option>
-                <option value="09:00" label="09:00"></option>
-                <option value="09:30" label="09:30"></option>
-                <option value="10:00" label="10:00"></option>
-                <option value="10:30" label="10:30"></option>
-                <option value="11:00" label="11:00"></option>
-                <option value="11:30" label="11:30"></option>
-                <option value="12:00" label="12:00"></option>
-                <option value="12:30" label="12:30"></option>
-                <option value="13:00" label="13:00"></option>
-                <option value="13:30" label="13:30"></option>
-                <option value="14:00" label="14:00"></option>
-                <option value="14:30" label="14:30"></option>
-                <option value="15:00" label="15:00"></option>
-                <option value="15:30" label="15:30"></option>
-                <option value="16:00" label="16:00"></option>
-                <option value="16:30" label="16:30"></option>
-                <option value="17:00" label="17:00"></option>
-                <option value="17:30" label="17:30"></option>
-                <option value="18:00" label="18:00"></option>
+                <form:option value="" label=" Selecione "/>
+                <form:options items="${listarHorarios}" itemValue="horario" itemLabel="horario"/>
             </form:select>
         </div>
         <div class="form-group col-md-1">
