@@ -126,7 +126,7 @@ public class ProdutoService {
         tblUsuario user = usuarioRepository.getReferenceById(alteradoPor);
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(user);
+        table.setAlteradoPor(id);
 
         repository.save(table);
     }

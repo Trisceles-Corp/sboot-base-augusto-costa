@@ -49,7 +49,7 @@ public class TipoPerfilController {
             service.create(table);
         }
 
-        return "redirect:/tipoperfil";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")

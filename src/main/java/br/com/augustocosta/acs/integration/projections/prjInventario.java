@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.integration.projections;
 
+import java.math.BigDecimal;
 import java.time.*;
 import java.util.*;
 
@@ -10,5 +11,5 @@ public interface prjInventario {
     Integer getCodigoInterno();
     String getDescricaoProduto();
     Integer getQtdProduto();
-    Double getValorProduto();
+    BigDecimal getValorProduto();
 }

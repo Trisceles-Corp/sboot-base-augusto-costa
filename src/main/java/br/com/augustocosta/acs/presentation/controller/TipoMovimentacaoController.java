@@ -49,7 +49,7 @@ public class TipoMovimentacaoController {
             service.create(table);
         }
 
-        return "redirect:/tipomovimentacao";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")

@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,19 +25,19 @@ public class tblComanda {
     private tblAgendamento agendamento;
 
     @Column(name = "ValorServicos")
-    private Double valorServicos = 0.0;
+    private BigDecimal valorServicos = BigDecimal.valueOf(0.0);
 
     @Column(name = "ValorDescontos")
-    private Double valorDescontos = 0.0;
+    private BigDecimal valorDescontos = BigDecimal.valueOf(0.0);
 
     @Column(name = "ValorComissao")
-    private Double valorComissao = 0.0;
+    private BigDecimal valorComissao = BigDecimal.valueOf(0.0);
 
     @Column(name = "ValorProdutos")
-    private Double valorProdutos = 0.0;
+    private BigDecimal valorProdutos = BigDecimal.valueOf(0.0);
 
     @Column(name = "ValorEncargos")
-    private Double valorEncargos = 0.0;
+    private BigDecimal valorEncargos = BigDecimal.valueOf(0.0);
 
     @Column(name = "Situacao")
     private Boolean situacao = true;

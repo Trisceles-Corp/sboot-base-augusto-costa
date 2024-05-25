@@ -64,21 +64,21 @@
                 <div class="nav-item dropdown no-arrow">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
                         <span class="d-none d-lg-inline me-2 text-gray-600 small">${usuario.nome} ${usuario.sobrenome}</span>
-                        <img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar3.jpeg">
+                        <img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar5.jpeg">
                     </a>
                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Perfil
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings
+                            <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Configurações
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#" style="display: none">
                             <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/index/logout">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Sair
                         </a>
                     </div>
                 </div>
@@ -333,5 +333,10 @@
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        carregarConteudo(contextPath + '/gridagendamento');
+    });
+</script>
 </body>
 </html>

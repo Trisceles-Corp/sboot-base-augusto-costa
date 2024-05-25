@@ -90,8 +90,8 @@
                 <c:forEach var="item" items="${listarAgendamentos}">
                     <tr>
                         <td><c:out value="${item.horario}" /></td>
-                        <c:forEach var="colaborador" items="${item.colaboradores.keySet()}">
-                            <td><c:out value="${item.colaboradores[colaborador]}" /></td>
+                        <c:forEach var="colaborador" items="${item.colaboradores}">
+                            <td><c:out value="${colaborador.value}" /></td>
                         </c:forEach>
                     </tr>
                 </c:forEach>
@@ -99,6 +99,13 @@
             </table>
         </div>
     </div>
+</div>
+<div class="row'">
+    <c:if test="${not empty mensagemErro}">
+        <div class="alert alert-danger" role="alert">
+                ${mensagemErro}
+        </div>
+    </c:if>
 </div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {

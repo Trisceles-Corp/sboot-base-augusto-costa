@@ -50,6 +50,6 @@ public class EnderecoController {
             service.create(table);
         }
 
-        return "redirect:/endereco";
+        return "redirect:/index";
     }
 }

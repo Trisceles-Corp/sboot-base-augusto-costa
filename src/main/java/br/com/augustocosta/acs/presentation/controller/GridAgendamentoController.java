@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -27,14 +28,20 @@ public class GridAgendamentoController {
     }
 
     @GetMapping
-    public String listarDependencias(@RequestParam(value = "dataAgenda", required = false) String dataAgendaStr, Model model) throws SQLException {
+    public String listarDependencias(@RequestParam(value = "dataAgenda", required = false) String dataAgendaStr, Model model) {
         LocalDate dataAgenda;
         if (dataAgendaStr == null || dataAgendaStr.isEmpty()) {
             dataAgenda = LocalDate.now();
         } else {
             dataAgenda = LocalDate.parse(dataAgendaStr);
         }
-        model.addAttribute("listarAgendamentos", service.getByGridAgendamento(dataAgenda));
+        List<dtoGridAgendamento> agendamentos = service.getByGridAgendamento(dataAgenda);
+        if (agendamentos.isEmpty()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormatada = dataAgenda.format(formatter);
+            model.addAttribute("mensagemErro", "Não existem agendamentos para a data " + dataFormatada + ".");
+        }
+        model.addAttribute("listarAgendamentos", agendamentos);
         model.addAttribute("dtoAgendamento", new dtoGridAgendamento());
         return "gridagendamento";
     }
@@ -46,5 +53,4 @@ public class GridAgendamentoController {
         List<dtoGridAgendamento> agendamentos = service.getByGridAgendamento(data);
         return ResponseEntity.ok(agendamentos);
     }
-
 }

@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -25,16 +27,16 @@ public class tblServico {
     private LocalTime tempo;
 
     @Column(name = "Valor", nullable = false)
-    private Double valor;
+    private BigDecimal valor;
 
     @Column(name = "Observacao")
     private String observacao;
 
     @Column(name = "Desconto")
-    private Double desconto;
+    private BigDecimal desconto;
 
     @Column(name = "Comissao")
-    private Double comissao;
+    private BigDecimal comissao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
@@ -52,15 +54,15 @@ public class tblServico {
     private Integer alteradoPor;
 
     // Getters personalizados para tratar null como zero
-    public double getValor() {
-        return valor != null ? valor: 0.0;
+    public BigDecimal getValor() {
+        return valor != null ? valor: BigDecimal.valueOf(0.0);
     }
 
-    public double getDesconto() {
-        return desconto != null ? desconto: 0.0;
+    public BigDecimal getDesconto() {
+        return desconto != null ? desconto: BigDecimal.valueOf(0.0);
     }
 
-    public double getComissao() {
-        return comissao != null ? comissao: 0.0;
+    public BigDecimal getComissao() {
+        return comissao != null ? comissao: BigDecimal.valueOf(0.0);
     }
 }

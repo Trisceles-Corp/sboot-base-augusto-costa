@@ -4,6 +4,7 @@ import br.com.augustocosta.acs.integration.entity.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
 import java.time.*;
 import java.util.List;
 
@@ -24,17 +25,17 @@ public class dtoComanda {
     private String nomeCliente;
     private Integer colaboradorId;
     private String nomeColaborador;
-    private Double valorServicos;
-    private Double valorProdutos;
-    private Double valorDescontos;
-    private Double valorComissao;
-    private Double valorEncargos;
-    private Double valorComanda;
+    private BigDecimal valorServicos;
+    private BigDecimal valorProdutos;
+    private BigDecimal valorDescontos;
+    private BigDecimal valorComissao;
+    private BigDecimal valorEncargos;
+    private BigDecimal valorComanda;
     private Integer formaPagamentoId;
     private Integer bandeiraId;
     private Integer parcelas;
-    private Double valorPagamento;
-    private Double valorInserido;
+    private BigDecimal valorPagamento;
+    private BigDecimal valorInserido;
     private Boolean situacao;
     private Boolean ativo;
     private LocalDateTime dataCriacao;

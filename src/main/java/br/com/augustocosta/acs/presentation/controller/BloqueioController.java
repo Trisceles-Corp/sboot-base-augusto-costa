@@ -88,7 +88,7 @@ public class BloqueioController {
         else {
             table.setDataCriacao(LocalDateTime.now());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setCriadoPor(Integer.parseInt(userId));
+            table.setCriadoPor(table.getCriadoPor());
             table.setAlteradoPor(Integer.parseInt(userId));
             service.create(table);
         }
@@ -102,9 +102,7 @@ public class BloqueioController {
         model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
         model.addAttribute("tblBloqueio", new tblBloqueio());
 
-        // Retorna a view parcial
-//        return "bloqueio :: childPage";
-        return "bloqueio";
+        return "redirect:/index";
     }
 
     @PostMapping("/delete/{id}")

@@ -49,7 +49,7 @@ public class PermissoesController {
             service.create(table);
         }
 
-        return "redirect:/permissoes";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")

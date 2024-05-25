@@ -95,7 +95,7 @@ public class AgendamentoController {
     @GetMapping("/listaProdutoAgendamento/{produtoId}")
     @ResponseBody
     public ResponseEntity<tblProduto> listaProdutoAgendamento(@PathVariable("produtoId") Integer produtoId) {
-        tblProduto produto = produtoService.getByProdutoId(produtoId);
+        tblProduto produto = produtoService.getById(produtoId).orElseThrow();
         return ResponseEntity.ok(produto);
     }
 

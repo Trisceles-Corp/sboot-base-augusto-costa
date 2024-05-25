@@ -2,6 +2,7 @@ package br.com.augustocosta.acs.integration.projections;
 
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 
+import java.math.BigDecimal;
 import java.time.*;
 
 public interface prjComanda {
@@ -14,12 +15,12 @@ public interface prjComanda {
     String getNomeCliente();
     Integer getColaboradorId();
     String getNomeColaborador();
-    Double getValorServicos();
-    Double getValorProdutos();
-    Double getValorDescontos();
-    Double getValorComissao();
-    Double getValorEncargos();
-    Double getValorComanda();
+    BigDecimal getValorServicos();
+    BigDecimal getValorProdutos();
+    BigDecimal getValorDescontos();
+    BigDecimal getValorComissao();
+    BigDecimal getValorEncargos();
+    BigDecimal getValorComanda();
     Boolean getSituacao();
     Boolean getAtivo();
     LocalDateTime getDataCriacao();

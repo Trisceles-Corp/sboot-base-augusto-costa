@@ -50,7 +50,7 @@ public class PeriodoController {
             service.create(table);
         }
 
-        return "redirect:/periodo";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")

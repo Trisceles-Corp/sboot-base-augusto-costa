@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -27,7 +29,7 @@ public class tblVenda {
     private tblLocalEstoque localEstoque;
 
     @Column(name = "ValorTotal")
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
     @Column(name = "Estoque")
     private Boolean estoque;

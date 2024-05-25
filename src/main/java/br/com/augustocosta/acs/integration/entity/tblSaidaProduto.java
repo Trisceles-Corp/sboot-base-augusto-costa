@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -25,13 +27,13 @@ public class tblSaidaProduto {
     private tblProduto produto;
 
     @Column(name = "ValorUnitario", nullable = false)
-    private Double valorUnitario;
+    private BigDecimal valorUnitario;
 
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;
 
     @Column(name = "ValorTotal")
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;
