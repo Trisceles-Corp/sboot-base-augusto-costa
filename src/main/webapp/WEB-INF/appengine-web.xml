@@ -10,6 +10,9 @@
         <max-pending-latency>automatic</max-pending-latency>
         <max-concurrent-requests>50</max-concurrent-requests>
     </automatic-scaling>
+    <deployment>
+        <timeout>1200s</timeout>
+    </deployment>
     <staging>
         <enable-jar-classes>true</enable-jar-classes>
     </staging>
