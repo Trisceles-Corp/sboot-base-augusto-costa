@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.dto.dtoGridAgendamento;
+import br.com.augustocosta.acs.integration.entity.tblGridAgendamento;
 import br.com.augustocosta.acs.integration.projections.prjGridAgendamento;
 import br.com.augustocosta.acs.persistence.repository.GridAgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class GridAgendamentoService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public List<tblGridAgendamento> getByDataAgendamento(LocalDate dataAgenda) {
+        return repository.findByDataAgendamento(dataAgenda);
     }
 
     private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) throws SQLException {

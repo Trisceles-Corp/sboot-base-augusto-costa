@@ -2,7 +2,7 @@ package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.GridAgendamentoService;
 import br.com.augustocosta.acs.integration.dto.dtoGridAgendamento;
-import br.com.augustocosta.acs.integration.entity.tblCompraProduto;
+import br.com.augustocosta.acs.integration.entity.tblGridAgendamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,7 @@ public class GridAgendamentoController {
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("dtoAgendamento", new dtoGridAgendamento());
+        model.addAttribute("tblGridAgendamento", new tblGridAgendamento());
         return "gridagendamento";
     }
 
@@ -42,7 +42,7 @@ public class GridAgendamentoController {
             model.addAttribute("mensagemErro", "Não existem agendamentos para a data " + dataFormatada + ".");
         }
         model.addAttribute("listarAgendamentos", agendamentos);
-        model.addAttribute("dtoAgendamento", new dtoGridAgendamento());
+        model.addAttribute("tblGridAgendamento", new tblGridAgendamento());
         return "gridagendamento";
     }
 
