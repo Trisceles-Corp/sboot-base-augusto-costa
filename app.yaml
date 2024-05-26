@@ -17,5 +17,8 @@ resources:
   memory_gb: 1
   disk_size_gb: 10
 
+deployment:
+  timeout: 1200s
+
 env_variables:
   JAVA_TOOL_OPTIONS: '-XX:MaxRAM=256m'
