@@ -10,4 +10,7 @@
         <min-pending-latency>automatic</min-pending-latency>
         <max-pending-latency>automatic</max-pending-latency>
     </automatic-scaling>
+    <staging>
+        <enable-jar-classes>true</enable-jar-classes>
+    </staging>
 </appengine-web-app>

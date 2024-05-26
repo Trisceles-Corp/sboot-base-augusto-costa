@@ -129,6 +129,16 @@
 			</plugin>
 
 			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>2.7.0</version>
+				<configuration>
+					<projectId>steady-thunder-423317-k2</projectId>
+					<version>1</version>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.6.1</version>
