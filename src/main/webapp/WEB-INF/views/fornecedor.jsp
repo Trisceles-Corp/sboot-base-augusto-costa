@@ -33,26 +33,23 @@
 
 <body>
 <div>
-    <div class="headerContainer">
-        <h4 class="headerTitle">Fornecedores</h4>
-        <div class="headerRequired">* campos obrigatórios</div>
-    </div>
     <div class="row" id="linha-botao-pesquisa">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar fornecedor</button>
-<%--        <div class="input-group w-50 m-3">--%>
-<%--            <input type="text" class="form-control" aria-label="Input text com botão dropdown">--%>
-<%--            <div class="input-group-append">--%>
-<%--                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar fornecedor por</button>--%>
-<%--                <div class="dropdown-menu">--%>
-<%--                    <a class="dropdown-item" href="#">CPF / CNPJ</a>--%>
-<%--                    <a class="dropdown-item" href="#">E-mail</a>--%>
-<%--                    <a class="dropdown-item" href="#">Nome</a>--%>
-<%--                    <a class="dropdown-item" href="#">Sobrenome</a>--%>
-<%--                    <a class="dropdown-item" href="#">Telefone</a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <div class="input-group w-50 m-3">
+            <input type="text" class="form-control" aria-label="Input text com botão dropdown">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar fornecedor por</button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">CPF / CNPJ</a>
+                    <a class="dropdown-item" href="#">E-mail</a>
+                    <a class="dropdown-item" href="#">Nome</a>
+                    <a class="dropdown-item" href="#">Sobrenome</a>
+                    <a class="dropdown-item" href="#">Telefone</a>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="itemRequired">* campos obrigatórios</div>
     <!-- formulário de cadastro -->
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoUsuario" action="${pageContext.request.contextPath}/fornecedor/salvar" method="POST">
         <form:hidden path="usuarioId" id="inputUsuarioId"/>
@@ -232,9 +229,9 @@
     </script>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWjxZI3IFlSXwYEg4Gy5zIzNMAygg3IrPQe9CSbkWvFNgqP+a" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWjxZI3IFlSXwYEg4Gy5zIzNMAygg3IrPQe9CSbkWvFNgqP+a" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
 <script>
 

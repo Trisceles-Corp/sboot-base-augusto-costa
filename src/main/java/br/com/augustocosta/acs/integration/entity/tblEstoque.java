@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -18,15 +20,15 @@ public class tblEstoque {
     @Column(name = "EstoqueId")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ProdutoId", nullable = false)
     private tblProduto produto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LocalEstoqueId", nullable = false)
     private tblLocalEstoque localEstoque;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MovimentacaoId", nullable = false)
     private tblMovimentacao movimentacao;
 
@@ -34,7 +36,7 @@ public class tblEstoque {
     private Integer quantidade;
 
     @Column(name = "ValorMovimentacao", nullable = false)
-    private Double valorMovimentacao;
+    private BigDecimal valorMovimentacao;
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo;

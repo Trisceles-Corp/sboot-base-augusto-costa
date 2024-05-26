@@ -1,6 +1,8 @@
 package br.com.augustocosta.acs.integration.dto;
 
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Getter
@@ -14,7 +16,7 @@ public class dtoInventario {
     private Integer codigoInterno;
     private String descricaoProduto;
     private Integer qtdProduto;
-    private Double valorProduto;
+    private BigDecimal valorProduto;
 
     public dtoInventario() {
     }

@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -27,7 +29,7 @@ public class tblServicosAgendamento {
     private tblAgendamento agendamento;
 
     @Column(name = "ValorUnitario", nullable = false)
-    private Double valorUnitario;
+    private BigDecimal valorUnitario;
 
     @Column(name = "Quantidade", nullable = false)
     private Integer quantidade;

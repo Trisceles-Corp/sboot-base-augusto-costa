@@ -47,8 +47,8 @@ public class UsuarioService {
         return repository.findById(id);
     }
 
-    public Optional<tblUsuario> getUsuarioById(Integer id) {
-        return repository.findById(id);
+    public tblUsuario getUsuarioById(Integer id) {
+        return repository.findByUsuarioById(id);
     }
 
     public tblUsuario getByUserId(Integer id) {

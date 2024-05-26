@@ -1,62 +1,62 @@
 package br.com.augustocosta.acs.integration.entity;
 
-import lombok.*;
 import jakarta.persistence.*;
-import java.time.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
-@Table(name = "tbl_produto")
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "tbl_produto")
 public class tblProduto {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ProdutoId")
+    @Column(name = "ProdutoId", nullable = false)
     private Integer id;
 
     @Column(name = "CodigoInterno")
-    private Double codigoInterno;
+    private Integer codigoInterno;
 
     @Column(name = "DescricaoProduto", nullable = false)
     private String descricaoProduto;
 
-    @Column(name = "CodigoBarras", nullable = false)
+    @Column(name = "CodigoBarras", nullable = false, length = 13)
     private String codigoBarras;
 
     @Column(name = "EstoqueMinimo", nullable = false)
     private Integer estoqueMinimo;
 
-    @Column(name = "Custo", nullable = false)
-    private Double custo;
+    @Column(name = "Custo", nullable = false, precision = 18, scale = 2)
+    private BigDecimal custo;
 
-    @Column(name = "ValorVenda", nullable = false)
-    private Double valorVenda;
+    @Column(name = "ValorVenda", nullable = false, precision = 18, scale = 2)
+    private BigDecimal valorVenda;
 
     @Column(name = "Comissao", nullable = false)
-    private Double comissao;
+    private Integer comissao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CategoriaId", nullable = false)
-    private tblCategoria categoria;
-
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "MarcaId", nullable = false)
     private tblMarca marca;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "CategoriaId", nullable = false)
+    private tblCategoria categoria;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "LinhaId", nullable = false)
     private tblLinha linha;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "CaracteristicaId", nullable = false)
     private tblCaracteristica caracteristica;
 
     @Column(name = "Ativo", nullable = false)
-    private Boolean ativo;
+    private Boolean ativo = false;
 
     @Column(name = "DataCriacao", nullable = false)
     private LocalDateTime dataCriacao;
@@ -64,11 +64,10 @@ public class tblProduto {
     @Column(name = "DataAlteracao", nullable = false)
     private LocalDateTime dataAlteracao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CriadoPor", nullable = false)
-    private tblUsuario criadoPor;
+    @Column(name = "CriadoPor", nullable = false)
+    private Integer criadoPor;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "AlteradoPor", nullable = false)
-    private tblUsuario alteradoPor;
+    @Column(name = "AlteradoPor", nullable = false)
+    private Integer alteradoPor;
+
 }

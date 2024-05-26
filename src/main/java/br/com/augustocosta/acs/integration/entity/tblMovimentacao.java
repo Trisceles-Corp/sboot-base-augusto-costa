@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.*;
 
 @Entity
@@ -38,7 +40,7 @@ public class tblMovimentacao {
     private String observacao;
 
     @Column(name = "ValorTotal", nullable = false)
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
     @Column(name = "NrNotaFiscal", nullable = false)
     private Integer nrNotaFiscal;

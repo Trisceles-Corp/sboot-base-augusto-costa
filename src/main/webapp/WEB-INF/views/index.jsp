@@ -5,7 +5,7 @@
   Time: 09:20
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html lang="pt-br">
@@ -64,21 +64,21 @@
                 <div class="nav-item dropdown no-arrow">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
                         <span class="d-none d-lg-inline me-2 text-gray-600 small">${usuario.nome} ${usuario.sobrenome}</span>
-                        <img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar3.jpeg">
+                        <img class="border rounded-circle img-profile" src="${pageContext.request.contextPath}/img/avatars/avatar5.jpeg">
                     </a>
                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Profile
+                            <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Perfil
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Settings
+                            <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Configurações
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#" style="display: none">
                             <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/index/logout">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Sair
                         </a>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="agenda-img">
-                        <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/agendamento')" >Agenda</button>
+                        <button class="button-nav-item" onclick="carregarConteudo(contextPath + '/gridagendamento')" >Agenda</button>
                     </div>
                     <script>
                         /* mudar cor da imagem ao passar o mouse em cima*/
@@ -244,7 +244,7 @@
             <a class="nav-option" id="relatorios">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img">
+                        <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img" alt="">
                         <span class="button-nav-item">Relatórios</span>
                     </div>
                     <script>
@@ -265,7 +265,7 @@
             <a class="nav-option" id="config">
                 <div class="contain-option w-100">
                     <div class="my-2">
-                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img">
+                        <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img" alt="">
                         <span class="button-nav-item">Configurações</span>
                     </div>
                     <div class="contain-sub-option">
@@ -321,7 +321,10 @@
             </a>
         </div>
     </div>
-    <div class="content-main p-5" id="mainContent">
+    <div class="content-main p-5" id="gridPage" style="display: none">
+        <jsp:include page="agendamento.jsp" />
+    </div>
+    <div class="content-main p-5" id="mainContent" style="display: block">
 
     </div>
     <footer class="footer">
@@ -330,5 +333,10 @@
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        carregarConteudo(contextPath + '/gridagendamento');
+    });
+</script>
 </body>
 </html>

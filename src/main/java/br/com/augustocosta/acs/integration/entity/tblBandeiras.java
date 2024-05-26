@@ -2,6 +2,8 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -25,7 +27,7 @@ public class tblBandeiras {
     private Integer maxParcelas = 0;
 
     @Column(name = "JurosParcelas")
-    private Double jurosParcelas = 0.0;
+    private BigDecimal jurosParcelas = BigDecimal.valueOf(0.0);
 
     @Column(name = "Ativo", nullable = false)
     private Boolean ativo = true;

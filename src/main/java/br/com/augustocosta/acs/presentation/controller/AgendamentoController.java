@@ -35,6 +35,9 @@ public class AgendamentoController {
     private UsuarioService usuarioService;
 
     @Autowired
+    private HorarioService horarioService;
+
+    @Autowired
     private SituacaoAgendamentoService situacaoAgendamentoService;
 
     @Autowired
@@ -50,6 +53,7 @@ public class AgendamentoController {
     public String listarDependencias(Model model) {
         model.addAttribute("listarLocaisEstoque", localService.getActives());
         model.addAttribute("listarServiços", servicoService.getActives());
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
         model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(0));
         model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(0));
         model.addAttribute("listarProdutos", produtoService.getActives());
@@ -81,15 +85,6 @@ public class AgendamentoController {
         return "redirect:/index";
     }
 
-    @GetMapping("/novo")
-    public String novoSituacaoAgendamento(Model model) {
-        model.addAttribute("listarLocaisEstoque", localService.getActives());
-        model.addAttribute("listarServiços", servicoService.getActives());
-        model.addAttribute("listarProdutos", produtoService.getActives());
-        model.addAttribute("dtoAgendamento", new dtoAgendamento());
-        return "agendamento";
-    }
-
     @GetMapping("/listaServicoAgendamento/{servicoId}")
     @ResponseBody
     public ResponseEntity<tblServico> listaServicoAgendamento(@PathVariable("servicoId") Integer servicoId) {
@@ -100,7 +95,7 @@ public class AgendamentoController {
     @GetMapping("/listaProdutoAgendamento/{produtoId}")
     @ResponseBody
     public ResponseEntity<tblProduto> listaProdutoAgendamento(@PathVariable("produtoId") Integer produtoId) {
-        tblProduto produto = produtoService.getByProdutoId(produtoId);
+        tblProduto produto = produtoService.getById(produtoId).orElseThrow();
         return ResponseEntity.ok(produto);
     }
 

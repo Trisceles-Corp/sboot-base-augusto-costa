@@ -1,34 +1,31 @@
 package br.com.augustocosta.acs.integration.entity;
 
-import lombok.*;
 import jakarta.persistence.*;
-import java.util.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.*;
 
-@Entity
-@Table(name = "tbl_bloqueio")
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "tbl_bloqueio")
 public class tblBloqueio {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BloqueioId")
+    @Column(name = "BloqueioId", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "PeriodoId", nullable = false)
     private tblPeriodo periodo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DiasSemanaId", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "DiasSemanaId")
     private tblDiasSemana diasSemana;
 
     @Column(name = "DataBloqueio", nullable = false)
-    private Date dataBloqueio;
+    private LocalDate dataBloqueio;
 
     @Column(name = "HoraInicial", nullable = false)
     private LocalTime horaInicial;
@@ -36,10 +33,10 @@ public class tblBloqueio {
     @Column(name = "HoraFinal", nullable = false)
     private LocalTime horaFinal;
 
-    @Column(name = "MotivoBloqueio", nullable = false)
+    @Column(name = "MotivoBloqueio", nullable = false, length = 500)
     private String motivoBloqueio;
 
-    @Column(name = "Ativo", nullable = false)
+    @Column(name = "Ativo", columnDefinition = "tinyint not null")
     private Boolean ativo;
 
     @Column(name = "DataCriacao", nullable = false)
@@ -53,4 +50,5 @@ public class tblBloqueio {
 
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
+
 }

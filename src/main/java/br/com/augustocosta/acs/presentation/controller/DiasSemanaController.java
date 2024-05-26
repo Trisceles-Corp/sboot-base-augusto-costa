@@ -50,7 +50,7 @@ public class DiasSemanaController {
             service.create(table);
         }
 
-        return "redirect:/diasSemana";
+        return "redirect:/index";
     }
 
     @GetMapping("/novo")

@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/index")
 public class IndexController {
@@ -21,7 +19,7 @@ public class IndexController {
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblUsuario", new tblUsuario());
-        return "main";
+        return "index";
     }
 
     @GetMapping
@@ -38,7 +36,7 @@ public class IndexController {
             }
         }
         if (userId != null) {
-            tblUsuario usuario = usuarioService.getUsuarioById(Integer.parseInt(userId)).orElseThrow();
+            tblUsuario usuario = usuarioService.getUsuarioById(Integer.parseInt(userId));
             model.addAttribute("usuario", usuario);
         }
         return "index";
@@ -62,4 +60,5 @@ public class IndexController {
 
         return "redirect:/acesso";
     }
+
 }

@@ -36,17 +36,14 @@ public class AcessoController {
             tblUsuario usuario = usuarioService.getValidateUserByEmail(loginDTO.getEmail());
             Cookie sessionCookie = new Cookie("session_id", "identificador_unico");
             Cookie cookie = new Cookie("userId", String.valueOf(usuario.getId()));
-
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setMaxAge(7 * 24 * 60 * 60); // Expira em 7 dias
+            cookie.setHttpOnly(true); // Importante para prevenir XSS
             cookie.setPath("/");
-            response.addCookie(cookie);
 
             sessionCookie.setHttpOnly(true);
-            sessionCookie.setSecure(false); // Use apenas em conexões HTTPS
+            sessionCookie.setSecure(true); // Use apenas em conexões HTTPS
             sessionCookie.setMaxAge(7 * 24 * 60 * 60); // Expira em 7 dias
-            sessionCookie.setPath("/");
+
+            response.addCookie(cookie);
             response.addCookie(sessionCookie);
 
             return "redirect:/index";

@@ -1,16 +1,18 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.dto.dtoAgendamento;
+import br.com.augustocosta.acs.integration.dto.dtoGridAgendamento;
 import br.com.augustocosta.acs.integration.dto.dtoProdutoVenda;
 import br.com.augustocosta.acs.integration.entity.*;
+import br.com.augustocosta.acs.integration.projections.prjGridAgendamento;
 import br.com.augustocosta.acs.persistence.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.*;
 import java.util.*;
-import java.time.LocalDateTime;
 
 @Service
 public class AgendamentoService {
@@ -41,10 +43,10 @@ public class AgendamentoService {
     @Transactional
     public void create(dtoAgendamento dados) {
         tblAgendamento agendamento = createAgendamento(dados.getAgendamento());
-        final Double[] somaValores = {0.0};
-        final Double[] somaDescontos = {0.0};
-        final Double[] somaComissao = {0.0};
-        final Double[] somaProdutos = {0.0};
+        final BigDecimal[] somaValores = {BigDecimal.valueOf(0.0)};
+        final BigDecimal[] somaDescontos = {BigDecimal.valueOf(0.0)};
+        final BigDecimal[] somaComissao = {BigDecimal.valueOf(0.0)};
+        final BigDecimal[] somaProdutos = {BigDecimal.valueOf(0.0)};
 
         // Processa e salva os serviços associados ao agendamento
         dados.getServico().forEach(servicoDTO -> {
@@ -64,12 +66,12 @@ public class AgendamentoService {
             servicosAgendamentoRepository.save(servicoAgendamento);
 
             // Somatoria valores para abertura da comanda
-            if(servico.getDesconto() == 0.0){ servico.setDesconto(1.0); }
-            if(servico.getComissao() == 0.0){ servico.setComissao(1.0); }
+            if(servico.getDesconto().compareTo(BigDecimal.ZERO) == 0){ servico.setDesconto(BigDecimal.valueOf(1.0)); }
+            if(servico.getComissao().compareTo(BigDecimal.ZERO) == 0){ servico.setComissao(BigDecimal.valueOf(1.0)); }
 
-            somaValores[0] = somaValores[0] + servicoAgendamento.getValorUnitario();
-            somaDescontos[0] = somaDescontos[0] + (servico.getValor() * (servico.getDesconto() / 100));
-            somaComissao[0] = somaComissao[0] + (servico.getValor() * (servico.getComissao() / 100));
+            somaValores[0] = somaValores[0].add(servicoAgendamento.getValorUnitario());
+            somaDescontos[0] = somaDescontos[0].add(servico.getValor().multiply(servico.getDesconto().divide(BigDecimal.valueOf(100))));
+            somaComissao[0] = somaComissao[0].add(servico.getValor().multiply(servico.getComissao().divide(BigDecimal.valueOf(100))));
         });
 
         if(dados.getProduto() != null){
@@ -78,7 +80,7 @@ public class AgendamentoService {
             tblLocalEstoque estoque = localEstoqueRepository.getReferenceById(dados.getLocalEstoqueId());
             venda.setAgendamento(agendamento);
             venda.setLocalEstoque(estoque);
-            venda.setValorTotal(0.0);
+            venda.setValorTotal(BigDecimal.valueOf(0.0));
             venda.setEstoque(false);
             venda.setAtivo(true);
             venda.setDataCriacao(LocalDateTime.now());
@@ -88,13 +90,13 @@ public class AgendamentoService {
             venda = vendaRepository.save(venda);
 
             // Processa e salva os produtos vendidos
-            final Double[] valorTotalVenda = {0.0};
+            final BigDecimal[] valorTotalVenda = {BigDecimal.valueOf(0.0)};
             tblVenda finalVenda = venda;
 
             dados.getProduto().forEach(produtoDTO -> {
                 tblProduto produto = produtoRepository.findById(produtoDTO.getProdutoId()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-                BigDecimal valorUnitario = BigDecimal.valueOf(produto.getValorVenda());
+                BigDecimal valorUnitario = produto.getValorVenda();
                 BigDecimal quantidade = new BigDecimal(produtoDTO.getQuantidade());
                 BigDecimal valorTotal = valorUnitario.multiply(quantidade);
 
@@ -105,7 +107,7 @@ public class AgendamentoService {
                 vendaProduto.setProduto(produto);
                 vendaProduto.setValorUnitario(produto.getValorVenda());
                 vendaProduto.setQuantidade(produtoDTO.getQuantidade());
-                vendaProduto.setValorTotal(valorTotal.doubleValue());
+                vendaProduto.setValorTotal(valorTotal);
                 vendaProduto.setAtivo(true);
                 vendaProduto.setDataCriacao(LocalDateTime.now());
                 vendaProduto.setDataAlteracao(LocalDateTime.now());
@@ -113,7 +115,7 @@ public class AgendamentoService {
                 vendaProduto.setAlteradoPor(1);
                 vendaProdutoRepository.save(vendaProduto);
 
-                valorTotalVenda[0] = valorTotalVenda[0] + vendaProduto.getValorTotal();
+                valorTotalVenda[0] = valorTotalVenda[0].add(vendaProduto.getValorTotal());
             });
 
             // Atualiza o valor total da venda
@@ -129,7 +131,7 @@ public class AgendamentoService {
         comanda.setValorDescontos(somaDescontos[0]);
         comanda.setValorComissao(somaComissao[0]);
         comanda.setValorProdutos(somaProdutos[0]);
-        comanda.setValorEncargos(0.0);
+        comanda.setValorEncargos(BigDecimal.valueOf(0.0));
         comanda.setSituacao(true);
         comanda.setAtivo(true);
         comanda.setDataCriacao(LocalDateTime.now());
@@ -224,4 +226,14 @@ public class AgendamentoService {
         Optional<tblAgendamento> table = repository.findById(id);
         return table.map(tblAgendamento::getAtivo).orElse(false);
     }
+
+    public List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) {
+        List<dtoGridAgendamento> dtos = new ArrayList<>();
+        for(prjGridAgendamento prj : projections) {
+            dtoGridAgendamento dto = new dtoGridAgendamento();
+            dtos.add(dto);
+        }
+        return dtos;
+    }
+
 }

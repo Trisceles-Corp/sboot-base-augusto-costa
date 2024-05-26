@@ -420,4 +420,7 @@ public class SqlQueries {
                     " FROM tbl_caixa c  " +
                     "WHERE CONVERT(DATE, c.DataAbertura) = CONVERT(DATE, GETDATE())";
 
+    public static final String SP_OBTERAGENDA =
+            "EXEC sp_ObterAgendaPorData :dataAgenda";
+
 }

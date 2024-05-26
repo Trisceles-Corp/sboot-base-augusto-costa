@@ -2,11 +2,9 @@ package br.com.augustocosta.acs.persistence.repository;
 
 import br.com.augustocosta.acs.integration.entity.*;
 import br.com.augustocosta.acs.integration.projections.prjInventario;
-import br.com.augustocosta.acs.integration.projections.prjUsuario;
 import br.com.augustocosta.acs.persistence.dao.SqlQueries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
