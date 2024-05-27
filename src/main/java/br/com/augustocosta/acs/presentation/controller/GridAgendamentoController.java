@@ -41,7 +41,7 @@ public class GridAgendamentoController {
             String dataFormatada = dataAgenda.format(formatter);
             model.addAttribute("mensagemErro", "Não existem agendamentos para a data " + dataFormatada + ".");
         }
-        model.addAttribute("listarAgendamentos", agendamentos);
+        model.addAttribute("listarAgendamentos", service.getByGridAgendamento(dataAgenda));
         model.addAttribute("tblGridAgendamento", new tblGridAgendamento());
         return "gridagendamento";
     }

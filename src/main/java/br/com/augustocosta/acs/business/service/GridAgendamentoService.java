@@ -1,15 +1,15 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.dto.dtoGridAgendamento;
-import br.com.augustocosta.acs.integration.entity.tblGridAgendamento;
+import br.com.augustocosta.acs.integration.entity.*;
 import br.com.augustocosta.acs.integration.projections.prjGridAgendamento;
 import br.com.augustocosta.acs.persistence.repository.GridAgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,31 +19,91 @@ public class GridAgendamentoService {
     @Autowired
     private GridAgendamentoRepository repository;
 
+    @Autowired
+    private ServicosAgendamentoService servicosAgendamentoService;
+
+    @Autowired
+    private AgendamentoService agendamentoService;
+
+    @Autowired
+    private ComandaService comandaService;
+
+    @Autowired
+    private ServicoService servicoService;
+
     public List<dtoGridAgendamento> getByGridAgendamento(LocalDate dataAgenda) {
         if (dataAgenda == null) {
             dataAgenda = LocalDate.now();
         }
         try {
-            List<prjGridAgendamento> projections = repository.findByGridAgendamento(dataAgenda);
-            return convertProjectionToDto(projections);
+            List<prjGridAgendamento> projection = repository.findByGridAgendamento(dataAgenda);
+            return convertProjectionToDto(projection);
         } catch (JpaSystemException e) {
             return new ArrayList<>();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
-    public List<tblGridAgendamento> getByDataAgendamento(LocalDate dataAgenda) {
-        return repository.findByDataAgendamento(dataAgenda);
-    }
 
-    private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) throws SQLException {
+    private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> rows) {
         List<dtoGridAgendamento> dtos = new ArrayList<>();
-        for (prjGridAgendamento projection : projections) {
+        for (prjGridAgendamento row : rows) {
+            List<tblServico> servicosAgendamento = servicosAgendamentoService.getServicoByAgendamentoId(row.getAgendametoId());
+            LocalTime tempoTotalServicos = LocalTime.parse("00:00");
+
+            for (tblServico servico : servicosAgendamento) {
+                LocalTime tempoServico = servico.getTempo();
+                tempoTotalServicos = tempoTotalServicos.plusHours(tempoServico.getHour())
+                        .plusMinutes(tempoServico.getMinute());
+            }
+
+            tblAgendamento agendamento = agendamentoService.getById(row.getAgendametoId()).orElseThrow();
+            tblComanda comanda = comandaService.getById(row.getComandaId()).orElseThrow();
+            tblServico servico = servicoService.getById(row.getServicoId()).orElseThrow();
+
+            LocalTime horarioInicial = agendamento.getHoraAgendamento();
+            LocalTime horarioFinal = horarioInicial.plusHours(tempoTotalServicos.getHour())
+                    .plusMinutes(tempoTotalServicos.getMinute());
+
             dtoGridAgendamento dto = new dtoGridAgendamento();
-            dto.setHorario(projection.getHorario());
-            dto.setColaboradores(projection.getColaboradores());
+            dto.setId(row.getGridAgendamentoId());
+            dto.setHorarioIncial(horarioInicial);
+            dto.setHorarioFinal(horarioFinal);
+            dto.setComanda(comanda);
+            dto.setAgendamento(agendamento);
+            dto.setServico(servico);
+            dto.setColaborador(agendamento.getColaborador().getNome());
+            dto.setAtivo(row.getAtivo());
+            dto.setDataCriacao(row.getDataCriacao());
+            dto.setDataAlteracao(row.getDataAlteracao());
+            dto.setCriadoPor(row.getCriadoPor());
+            dto.setAlteradoPor(row.getAlteradoPor());
             dtos.add(dto);
         }
         return dtos;
     }
+
+//    public List<dtoGridAgendamento> getByGridAgendamento(LocalDate dataAgenda) {
+//        if (dataAgenda == null) {
+//            dataAgenda = LocalDate.now();
+//        }
+//        try {
+//            List<prjGridAgendamento> projections = repository.findByGridAgendamento(dataAgenda);
+//            return convertProjectionToDto(projections);
+//        } catch (JpaSystemException e) {
+//            return new ArrayList<>();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+//    private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) throws SQLException {
+//        List<dtoGridAgendamento> dtos = new ArrayList<>();
+//        for (prjGridAgendamento projection : projections) {
+//            dtoGridAgendamento dto = new dtoGridAgendamento();
+//            dto.setHorario(projection.getHorario());
+//            dto.setColaboradores(projection.getColaboradores());
+//            dtos.add(dto);
+//        }
+//        return dtos;
+//    }
+
 }

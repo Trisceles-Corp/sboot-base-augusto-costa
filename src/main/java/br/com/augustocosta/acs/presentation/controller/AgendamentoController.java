@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.dto.dtoAgendamento;
 import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 import br.com.augustocosta.acs.integration.entity.tblProduto;
@@ -66,6 +67,7 @@ public class AgendamentoController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoAgendamento dados) {
+        String userId = Cookies.getUserId();
         tblAgendamento table = dados.getAgendamento();
         table.setAtivo(true);
 
@@ -75,11 +77,11 @@ public class AgendamentoController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(Integer.parseInt(userId));
             service.update(table);
         }
         else {
-            service.create(dados);
+            service.create(dados, Integer.parseInt(userId));
         }
 
         return "redirect:/index";

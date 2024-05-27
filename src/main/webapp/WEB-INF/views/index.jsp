@@ -124,7 +124,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="clientes" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") ? "block" : "none" %>">
+            <a class="nav-option" id="clientes" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") || perfil.equals("7") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
@@ -146,7 +146,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="estoque" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") ? "block" : "none" %>">
+            <a class="nav-option" id="estoque" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") || perfil.equals("7") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
@@ -275,7 +275,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="config" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") ? "block" : "none" %>">
+            <a class="nav-option" id="config" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") || perfil.equals("7") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img" alt="">

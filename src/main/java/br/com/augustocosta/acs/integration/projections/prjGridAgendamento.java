@@ -1,9 +1,15 @@
 package br.com.augustocosta.acs.integration.projections;
 
-import java.sql.SQLException;
-import java.util.Map;
+import java.time.LocalDate;
 
 public interface prjGridAgendamento {
-    String getHorario() throws SQLException;
-    Map<String, String> getColaboradores() throws SQLException;
+    Long getGridAgendamentoId();
+    Integer getComandaId();
+    Integer getAgendametoId();
+    Integer getServicoId();
+    Boolean getAtivo();
+    LocalDate getDataCriacao();
+    LocalDate getDataAlteracao();
+    Integer getCriadoPor();
+    Integer getAlteradoPor();
 }

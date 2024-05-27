@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.UsuarioService;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,16 +25,10 @@ public class IndexController {
 
     @GetMapping
     public String agendamentoPage(HttpServletRequest request, Model model) {
-        Cookie[] cookies = request.getCookies();
-        String userId = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userId".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
+        Cookies.setUserId(request);
+
+        String userId = Cookies.getUserId();
+
         if (userId != null) {
             tblUsuario usuario = usuarioService.getUsuarioById(Integer.parseInt(userId));
             model.addAttribute("usuario", usuario);

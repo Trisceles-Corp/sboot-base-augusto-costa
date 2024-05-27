@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -16,9 +17,9 @@ public interface GridAgendamentoRepository extends JpaRepository<tblGridAgendame
     List<tblGridAgendamento> findByAtivoTrue();
     List<tblGridAgendamento> findByAtivoFalse();
 
-    @Query("SELECT ga FROM tblGridAgendamento ga WHERE ga.agendameto.dataAgendamento = :dataAgendamento")
-    List<tblGridAgendamento> findByDataAgendamento(@Param("dataAgendamento") LocalDate dataAgendamento);
-
-    @Query(value = SqlQueries.SP_OBTERAGENDA, nativeQuery = true)
+    @Query(value = SqlQueries.SP_GRIDAGENDA, nativeQuery = true)
     List<prjGridAgendamento> findByGridAgendamento(@Param("dataAgenda") LocalDate dataAgenda);
+
+//    @Query(value = SqlQueries.SP_OBTERAGENDA, nativeQuery = true)
+//    List<prjGridAgendamento> findByGridAgendamento(@Param("dataAgenda") LocalDate dataAgenda);
 }

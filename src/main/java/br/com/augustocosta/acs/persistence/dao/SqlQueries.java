@@ -6,7 +6,7 @@ public class SqlQueries {
                     "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
-                    "usr.Nome + ' ' + usr.Sobrenome AS NomeCompleto, " +
+                    "CASE WHEN usr.PerfilId <> 4 THEN usr.Nome + ' ' + usr.Sobrenome + ' (' + crg.Nome + ')' ELSE usr.Nome + ' ' + usr.Sobrenome END AS NomeCompleto, " +
                     "usr.Genero, " +
                     "CASE usr.Genero WHEN 'M' THEN 'Masculino' WHEN 'F' THEN 'Feminino' ELSE 'Outros' END GeneroDescricao, " +
                     "usr.DataNascimento, " +
@@ -463,6 +463,12 @@ public class SqlQueries {
             "SELECT COALESCE(MAX(c.NomeIndice),0) " +
                     " FROM tbl_caixa c  " +
                     "WHERE CONVERT(DATE, c.DataAbertura) = CONVERT(DATE, GETDATE())";
+
+    public static final String SP_GRIDAGENDA =
+            "SELECT grd.* " +
+            "  FROM dbo.tbl_gridagendamento grd " +
+            "  JOIN dbo.tbl_agendamento age ON grd.AgendametoId = age.AgendamentoId " +
+            " WHERE age.DataAgendamento = :dataAgenda";
 
     public static final String SP_OBTERAGENDA =
             "EXEC sp_ObterAgendaPorData :dataAgenda";

@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.CaracteristicaService;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblCaracteristica;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class CaracteristicaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblCaracteristica caracteristica) {
+        String userId = Cookies.getUserId();
         caracteristica.setAtivo(true);
 
         if (caracteristica.getId() != null && caracteristica.getId() != 0){
@@ -40,14 +42,14 @@ public class CaracteristicaController {
             caracteristica.setDataCriacao(data.orElseThrow().getDataCriacao());
             caracteristica.setCriadoPor(data.get().getCriadoPor());
             caracteristica.setDataAlteracao(LocalDateTime.now());
-            caracteristica.setAlteradoPor(1);
+            caracteristica.setAlteradoPor(Integer.parseInt(userId));
             service.update(caracteristica.getId(), caracteristica);
         }
         else {
             caracteristica.setDataCriacao(LocalDateTime.now());
-            caracteristica.setCriadoPor(1);
+            caracteristica.setCriadoPor(Integer.parseInt(userId));
             caracteristica.setDataAlteracao(LocalDateTime.now());
-            caracteristica.setAlteradoPor(1);
+            caracteristica.setAlteradoPor(Integer.parseInt(userId));
             service.create(caracteristica);
         }
         return "redirect:/index?origem=caracteristica";
@@ -62,7 +64,8 @@ public class CaracteristicaController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userId = Cookies.getUserId();
+        service.delete(id, Integer.parseInt(userId));
         return "redirect:/index?origem=caracteristica";
     }
 }

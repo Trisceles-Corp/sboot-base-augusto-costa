@@ -73,32 +73,30 @@
             <span style="padding: 10px">Em espera</span>
         </div>
     </div>
-    <script>
-    </script>
-    <div class="panel col-md-10" id="panel-resultado">
-        <div class="row">
-            <table id="tabelaGridAgendamento" class="table table-bordered table-hover table-responsive my-3">
-                <thead class="table-secondary">
-                <tr class="gridHeader">
-                    <th scope="col" class="th-editar">Horário</th>
-                    <c:forEach var="colaborador" items="${listarAgendamentos[0].colaboradores.keySet()}">
-                        <th scope="col">${colaborador}</th>
-                    </c:forEach>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="item" items="${listarAgendamentos}">
-                    <tr>
-                        <td><c:out value="${item.horario}" /></td>
-                        <c:forEach var="colaborador" items="${item.colaboradores}">
-                            <td><c:out value="${colaborador.value}" /></td>
-                        </c:forEach>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<%--    <div class="panel col-md-10" id="panel-resultado">--%>
+<%--        <div class="row">--%>
+<%--            <table id="tabelaGridAgendamento" class="table table-bordered table-hover table-responsive my-3">--%>
+<%--                <thead class="table-secondary">--%>
+<%--                <tr class="gridHeader">--%>
+<%--                    <th scope="col" class="th-editar">Horário</th>--%>
+<%--                    <c:forEach var="colaborador" items="${listarAgendamentos[0].colaboradores.keySet()}">--%>
+<%--                        <th scope="col">${colaborador}</th>--%>
+<%--                    </c:forEach>--%>
+<%--                </tr>--%>
+<%--                </thead>--%>
+<%--                <tbody>--%>
+<%--                <c:forEach var="item" items="${listarAgendamentos}">--%>
+<%--                    <tr>--%>
+<%--                        <td><c:out value="${item.horario}" /></td>--%>
+<%--                        <c:forEach var="colaborador" items="${item.colaboradores}">--%>
+<%--                            <td><c:out value="${colaborador.value}" /></td>--%>
+<%--                        </c:forEach>--%>
+<%--                    </tr>--%>
+<%--                </c:forEach>--%>
+<%--                </tbody>--%>
+<%--            </table>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 </div>
 <div class="row'">
     <c:if test="${not empty mensagemErro}">

@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.CategoriaService;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblCategoria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class CategoriaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblCategoria categoria) {
+        String userId = Cookies.getUserId();
         categoria.setAtivo(true);
         if (categoria.getId() != null && categoria.getId() != 0){
             Optional<tblCategoria> data = service.getById(categoria.getId());
@@ -41,14 +43,14 @@ public class CategoriaController {
             categoria.setDataCriacao(data.orElseThrow().getDataCriacao());
             categoria.setCriadoPor(data.get().getCriadoPor());
             categoria.setDataAlteracao(LocalDateTime.now());
-            categoria.setAlteradoPor(1);
+            categoria.setAlteradoPor(Integer.parseInt(userId));
             service.update(categoria.getId(), categoria);
         }
         else {
             categoria.setDataCriacao(LocalDateTime.now());
-            categoria.setCriadoPor(1);
+            categoria.setCriadoPor(Integer.parseInt(userId));
             categoria.setDataAlteracao(LocalDateTime.now());
-            categoria.setAlteradoPor(1);
+            categoria.setAlteradoPor(Integer.parseInt(userId));
             service.create(categoria);
         }
         return "redirect:/index?origem=categoria";
@@ -56,7 +58,8 @@ public class CategoriaController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id);
+        String userId = Cookies.getUserId();
+        service.delete(id, Integer.parseInt(userId));
         return "redirect:/index?origem=categoria";
     }
 }

@@ -1,12 +1,10 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblBloqueio;
 import br.com.augustocosta.acs.integration.entity.tblPeriodo;
 import br.com.augustocosta.acs.integration.entity.tblDiasSemana;
-import br.com.augustocosta.acs.integration.entity.tblUsuario;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/bloqueio")
@@ -42,18 +39,9 @@ public class BloqueioController {
     }
 
     @GetMapping
-    public String listarDependencias(HttpServletRequest request, Model model) {
-        // Acessar o cookie
-        Cookie[] cookies = request.getCookies();
-        String userId = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userId".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
+    public String listarDependencias(Model model) {
+        String userId = Cookies.getUserId();
+
         if (userId != null) {
             model.addAttribute("userId", userId);
             model.addAttribute("listarBloqueios", service.getActivesByUser(Integer.parseInt(userId)));

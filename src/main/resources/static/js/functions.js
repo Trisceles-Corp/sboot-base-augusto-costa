@@ -1454,7 +1454,6 @@ function verificarSenhas() {
             icon: 'warning',
             title: 'Atenção!',
             text: 'Confirmação de senha divergente!',
-            // footer: '<a href="#">Precisa de ajuda?</a>',
             confirmButtonText: 'Entendi',
             confirmButtonColor: '#3085d6',
         });
