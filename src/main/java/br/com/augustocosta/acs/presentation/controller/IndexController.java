@@ -24,7 +24,6 @@ public class IndexController {
 
     @GetMapping
     public String agendamentoPage(HttpServletRequest request, Model model) {
-        // Acessar o cookie
         Cookie[] cookies = request.getCookies();
         String userId = null;
         if (cookies != null) {
@@ -44,10 +43,7 @@ public class IndexController {
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-        // Invalidar a sessão
         request.getSession().invalidate();
-
-        // Limpar os cookies
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -57,8 +53,6 @@ public class IndexController {
                 response.addCookie(cookie);
             }
         }
-
         return "redirect:/acesso";
     }
-
 }

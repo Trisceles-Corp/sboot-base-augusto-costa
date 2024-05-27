@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.net.URLDecoder" %><%--
   Created by IntelliJ IDEA.
   User: Alexander Andrade
   Date: 02/04/2024
@@ -8,7 +9,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html lang="pt-br">
+<%
+    String perfil = "";
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("perfil")) {
+                String encodedPerfilValue = cookie.getValue();
+                perfil = URLDecoder.decode(encodedPerfilValue, StandardCharsets.UTF_8);
+                break;
+            }
+        }
+    }
+%><html lang="pt-br">
 <head>
 
     <meta charset="utf-8">
@@ -70,7 +83,7 @@
                         <a class="dropdown-item" href="#">
                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Perfil
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#" style="display: none">
                             <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Configurações
                         </a>
                         <a class="dropdown-item" href="#" style="display: none">
@@ -111,7 +124,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="clientes">
+            <a class="nav-option" id="clientes" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
@@ -133,7 +146,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="estoque">
+            <a class="nav-option" id="estoque" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
@@ -178,7 +191,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="financeiro">
+            <a class="nav-option" id="financeiro" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png" id="financeiro-img">
@@ -262,7 +275,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="config">
+            <a class="nav-option" id="config" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img" alt="">
@@ -273,28 +286,16 @@
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/caracteristica')" >Característica</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/categoria')" >Categoria</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/linha')" >Linha</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/marca')" >Marca</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
                         </div>
                     </div>
                     <script>
@@ -319,10 +320,52 @@
                     </script>
                 </div>
             </a>
+            <a class="nav-option" id="admin" style="display: <%= perfil.equals("1") || perfil.equals("2") ? "block" : "none" %>">
+                <div class="contain-option w-100">
+                    <div class="my-2">
+                        <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="admin-img" alt="">
+                        <span class="button-nav-item">Administrativo</span>
+                    </div>
+                    <div class="contain-sub-option">
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/usuario')" >Usuarios</button><br>
+                        </div>
+                    </div>
+                    <script>
+                        /* mudar cor da imagem ao passar o mouse em cima*/
+                        const admin = document.getElementById("admin");
+                        const imgAdmin = admin.querySelector("img");
+                        const subOptionsAdmin = admin.querySelectorAll(".sub-options");
+
+                        admin.addEventListener("mouseover", () => {
+                            imgAdmin.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
+                            for(var i = 0; i < subOptionsAdmin.length; i++){
+                                subOptionsAdmin[i].style.display = "block";
+                            }
+                        });
+
+                        admin.addEventListener("mouseout", () => {
+                            imgAdmin.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
+                            for(var i = 0; i < subOptionsAdmin.length; i++){
+                                subOptionsAdmin[i].style.display = "none";
+                            }
+                        });
+                    </script>
+                </div>
+            </a>
         </div>
-    </div>
-    <div class="content-main p-5" id="gridPage" style="display: none">
-        <jsp:include page="agendamento.jsp" />
     </div>
     <div class="content-main p-5" id="mainContent" style="display: block">
 
@@ -389,6 +432,9 @@
                 break;
             case 'situacaoagendamento':
                 carregarConteudo(contextPath + '/situacaoagendamento');
+                break;
+            case 'usuario':
+                carregarConteudo(contextPath + '/usuario');
                 break;
             default:
                 carregarConteudo(contextPath + '/gridagendamento');

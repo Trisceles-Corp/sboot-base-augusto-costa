@@ -157,6 +157,11 @@ function visualizarCaracteristica(caracteristicaId, descricao) {
     }
     document.getElementById("field_Id").value = caracteristicaId;
     document.getElementById("field_Nome").value = descricao;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarCargo(id, name) {
@@ -168,6 +173,11 @@ function visualizarCargo(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarSituacaoAgendamento(id, name) {
@@ -179,6 +189,11 @@ function visualizarSituacaoAgendamento(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valorTotal, dataCriacao) {
@@ -230,6 +245,11 @@ function atualizarTabelaProdutos(produtos) {
         linha.insertCell(3).innerText = produto.quantidade;
         linha.insertCell(4).innerText = produto.valorTotal;
     });
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTotal, dataCriacao) {
@@ -272,6 +292,11 @@ function atualizarTabelaSaidaProdutos(saidaProdutos) {
         linha.insertCell(2).innerText = saidaProduto.valorUnitario;
         linha.insertCell(3).innerText = saidaProduto.quantidade;
         linha.insertCell(4).innerText = saidaProduto.valorTotal;
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 }
 
@@ -340,6 +365,11 @@ function atualizarTabelaServicosComanda(servicos) {
         linha.insertCell(2).innerText = servico.nome;
         linha.insertCell(3).innerText = servico.valor;
         linha.insertCell(4).innerText = servico.tempo;
+    });
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 }
 
@@ -485,12 +515,22 @@ function visualizarCategoria(categoriaId, nome) {
     }
     document.getElementById("field_Id").value = categoriaId;
     document.getElementById("field_Nome").value = nome;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarDiasSemana(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarLinha(id, name) {
@@ -502,6 +542,11 @@ function visualizarLinha(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarBloqueio(id, colaboradorId, dataBloqueio, periodoId, diasSemanaId, horaInicial, horaFinal, motivo) {
@@ -519,6 +564,11 @@ function visualizarBloqueio(id, colaboradorId, dataBloqueio, periodoId, diasSema
     document.getElementById("field_HoraInicial").value = horaInicial;
     document.getElementById("field_HoraFinal").value = horaFinal;
     document.getElementById("field_MotivoBloqueio").value = motivo;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarLocalEstoque(id, name) {
@@ -530,6 +580,11 @@ function visualizarLocalEstoque(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarMarca(id, name, active) {
@@ -542,6 +597,11 @@ function visualizarMarca(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
     document.getElementById("field_Active").checked = active === 'true';
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 
@@ -549,6 +609,11 @@ function visualizarPeriodo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarPermissoes(id, name, description, active) {
@@ -556,6 +621,11 @@ function visualizarPermissoes(id, name, description, active) {
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Description").value = description;
     document.getElementById("field_Active").checked = active === 'true';
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao) {
@@ -572,12 +642,22 @@ function visualizarServico(id, nome, tempo, valor, desconto, comissao, observaca
     document.getElementById("field_Desconto").value = desconto;
     document.getElementById("field_Comissao").value = comissao;
     document.getElementById("field_Observacao").value = observacao;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarTipo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarPerfil(id, tipoperfilid, name) {
@@ -590,12 +670,22 @@ function visualizarPerfil(id, tipoperfilid, name) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_TipoPerfilId").value = tipoperfilid;
     document.getElementById("field_Nome").value = name;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarDiasSemana(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function confirmarExclusao(event) {
@@ -627,6 +717,11 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Custo").value = custo;
     document.getElementById("field_valorVenda").value = valorVenda;
     document.getElementById("field_Comissao").value = comissao;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagamentoId, colaboradorId, valor, justificativa) {
@@ -648,6 +743,11 @@ function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagam
     document.getElementById("field_ColaboradorId").value = colaboradorId;
     document.getElementById("field_valorMovimentacao").value = valor;
     document.getElementById("field_observacao").value = justificativa;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEmail, dataAbertura, horaAbertura, valorAbertura, valorProvisorio) {
@@ -672,6 +772,11 @@ function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEma
     document.getElementById("field_Email").value = responsavelAberturaEmail;
     document.getElementById("field_ValorAbertura").value = valorAbertura;
     document.getElementById("field_ValorProvisorio").value = valorProvisorio;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
@@ -705,6 +810,53 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     document.getElementById("inputCidade").value = cidade;
     document.getElementById("inputEstado").value = uf;
     document.getElementById("inputObservacao").value = observacao;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+function visualizarUsuario(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, senha, cargo, perfil, observacao) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+
+    document.getElementById("inputUsuarioId").value = usuarioId;
+    document.getElementById("inputEnderecoId").value = enderecoId;
+    document.getElementById("inputCargoId").value = cargoId;
+    document.getElementById("inputPerfilId").value = perfilId;
+    document.getElementById("inputNome").value = nome;
+    document.getElementById("inputSobrenome").value = sobrenome;
+    document.getElementById("inputCpfCnpj").value = cpfCnpj;
+    document.getElementById("inputGenero").value = genero;
+    document.getElementById("inputNascimento").value = dataNascimento;
+    document.getElementById("inputEmail").value = email;
+    document.getElementById("inputProfissao").value = profissao;
+    document.getElementById("inputDDDCel").value = dddCelular;
+    document.getElementById("inputCelular").value = celular;
+    document.getElementById("inputDDDTel").value = dddTelefone;
+    document.getElementById("inputTelefone").value = telefone;
+    document.getElementById("inputCEP").value = cep;
+    document.getElementById("inputlogradouro").value = logradouro;
+    document.getElementById("inputNumero").value = numero;
+    document.getElementById("inputComplemento").value = complemento;
+    document.getElementById("inputBairro").value = bairro;
+    document.getElementById("inputCidade").value = cidade;
+    document.getElementById("inputEstado").value = uf;
+    document.getElementById("inputSenha").value = senha;
+    document.getElementById("inputConfirmarSenha").value = senha;
+    document.getElementById("inputCargoId").value = cargo;
+    document.getElementById("inputPerfilId").value = perfil;
+    document.getElementById("inputObservacao").value = observacao;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
@@ -736,6 +888,11 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
     document.getElementById("inputCidade").value = cidade;
     document.getElementById("inputEstado").value = uf;
     document.getElementById("inputObservacao").value = observacao;
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function adicionarServico() {
