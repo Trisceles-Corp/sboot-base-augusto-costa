@@ -1444,3 +1444,23 @@ function formatarDataCompleta(dataString) {
     const segundos = String(data.getSeconds()).padStart(2, '0');
     return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
 }
+
+function verificarSenhas() {
+    const campoSenha = document.getElementById("inputSenha");
+    const campoConfirmarSenha = document.getElementById("inputConfirmarSenha");
+
+    if (campoSenha.value !== campoConfirmarSenha.value && campoConfirmarSenha.value !== "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Atenção!',
+            text: 'Confirmação de senha divergente!',
+            // footer: '<a href="#">Precisa de ajuda?</a>',
+            confirmButtonText: 'Entendi',
+            confirmButtonColor: '#3085d6',
+        });
+        campoConfirmarSenha.value = "";
+        campoConfirmarSenha.focus();
+        return false;
+    }
+    return true;
+}
