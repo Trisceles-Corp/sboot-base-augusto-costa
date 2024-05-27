@@ -55,13 +55,12 @@ public class FornecedorController {
         else {
             usuarioService.createDto(enderecoService.createDto(dados), dados);
         }
-
-        return "redirect:/index";
+        return "redirect:/index?origem=fornecedor";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         usuarioService.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=fornecedor";
     }
 }

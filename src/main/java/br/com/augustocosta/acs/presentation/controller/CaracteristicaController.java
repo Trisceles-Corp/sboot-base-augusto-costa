@@ -50,8 +50,7 @@ public class CaracteristicaController {
             caracteristica.setAlteradoPor(1);
             service.create(caracteristica);
         }
-
-        return "redirect:/index";
+        return "redirect:/index?origem=caracteristica";
     }
 
     @GetMapping("/novo")
@@ -64,6 +63,6 @@ public class CaracteristicaController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=caracteristica";
     }
 }

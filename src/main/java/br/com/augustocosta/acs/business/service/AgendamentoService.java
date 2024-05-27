@@ -71,7 +71,7 @@ public class AgendamentoService {
 
             somaValores[0] = somaValores[0].add(servicoAgendamento.getValorUnitario());
             somaDescontos[0] = somaDescontos[0].add(servico.getValor().multiply(servico.getDesconto().divide(BigDecimal.valueOf(100))));
-            somaComissao[0] = somaComissao[0].add(servico.getValor().multiply(servico.getComissao().divide(BigDecimal.valueOf(100))));
+            somaComissao[0] = somaComissao[0].add(servico.getValor().subtract(servico.getValor().multiply(servico.getDesconto().divide(BigDecimal.valueOf(100)))).multiply(servico.getComissao().divide(BigDecimal.valueOf(100))));
         });
 
         if(dados.getProduto() != null){

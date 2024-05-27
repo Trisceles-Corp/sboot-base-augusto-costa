@@ -217,6 +217,21 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
         .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
+function atualizarTabelaProdutos(produtos) {
+    const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    tabela.innerHTML = ''; // Limpar tabela existente
+
+    produtos.forEach(produto => {
+        let linha = tabela.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.innerHTML = '...'; // Adicione elementos de ação conforme necessário
+        linha.insertCell(1).innerText = produto.produto.descricaoProduto;
+        linha.insertCell(2).innerText = produto.valorUnitario;
+        linha.insertCell(3).innerText = produto.quantidade;
+        linha.insertCell(4).innerText = produto.valorTotal;
+    });
+}
+
 function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
     if (formCadastro.style.display === "none") {
@@ -241,22 +256,22 @@ function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTota
 
     fetch(`${contexto}/saida/produtos/${id}`)
         .then(response => response.json())
-        .then(data => atualizarTabelaProdutos(data))
-        .catch(error => console.error('Erro ao buscar produtos da compra:', error));
+        .then(data => atualizarTabelaSaidaProdutos(data))
+        .catch(error => console.error('Erro ao buscar saída de produtos: ', error));
 }
 
-function atualizarTabelaProdutos(produtos) {
-    const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
-    tabela.innerHTML = ''; // Limpar tabela existente
+function atualizarTabelaSaidaProdutos(saidaProdutos) {
+    const tabela = document.getElementById("tabelaSaidaProduto").getElementsByTagName('tbody')[0];
+    tabela.innerHTML = '';
 
-    produtos.forEach(produto => {
+    saidaProdutos.forEach(saidaProduto => {
         let linha = tabela.insertRow();
         let celulaAcao = linha.insertCell(0);
         celulaAcao.innerHTML = '...'; // Adicione elementos de ação conforme necessário
-        linha.insertCell(1).innerText = produto.produto.descricaoProduto;
-        linha.insertCell(2).innerText = produto.valorUnitario;
-        linha.insertCell(3).innerText = produto.quantidade;
-        linha.insertCell(4).innerText = produto.valorTotal;
+        linha.insertCell(1).innerText = saidaProduto.produto.descricaoProduto;
+        linha.insertCell(2).innerText = saidaProduto.valorUnitario;
+        linha.insertCell(3).innerText = saidaProduto.quantidade;
+        linha.insertCell(4).innerText = saidaProduto.valorTotal;
     });
 }
 
@@ -410,18 +425,17 @@ function atualizarTabelaComissoes(comissoes) {
     }
 }
 
-function pesquisarMovimentacoes(contexto, firstDay, lastDay) {
+function pesquisarMovimentacoes(contexto) {
+    const searchDataInicial = document.getElementById("searchDataInicial");
+    const searchDataFinal = document.getElementById("searchDataFinal");
+    const firstDay = searchDataInicial.value;
+    const lastDay = searchDataFinal.value;
     const url = `${contexto}/caixamovimentacao/listarMovimentacoes/${firstDay}/${lastDay}`;
-    console.log("URL da requisição: ", url);
+
     fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Falha na resposta do servidor');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => atualizarTabelaMovimentacoes(data))
-        .catch(error => console.error('Erro ao buscar movimentações financeira.', error));
+        .catch(error => console.error('Erro ao buscar movimentações financeiras: ', error));
 }
 
 function atualizarTabelaMovimentacoes(movimentacoes) {
@@ -440,11 +454,12 @@ function atualizarTabelaMovimentacoes(movimentacoes) {
             let linha = tbody.insertRow();
             let celulaAcao = linha.insertCell(0);
             celulaAcao.innerHTML = `<img src="../img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCaixaMovimentacao('${movimento.id}', '${movimento.caixa.id}', '${movimento.tipoMovimentacao.id}', '${movimento.formaPagamento.id}', '${movimento.criadoPor}', '${movimento.valorMovimentacao}', '${movimento.observacao}'); return false;" title="Editar">`;
-            linha.insertCell(1).innerText = movimento.dataCriacao;
+
+            linha.insertCell(1).innerText = formatarDataCompleta(movimento.dataCriacao);
             linha.insertCell(2).innerText = movimento.caixa.nome;
             linha.insertCell(3).innerText = movimento.tipoMovimentacao.descricaoMovimentacao;
             linha.insertCell(4).innerText = movimento.formaPagamento.nome;
-            linha.insertCell(5).innerText = movimento.valorMovimentacao.toFixed(2);
+            linha.insertCell(5).innerText = movimento.valorMovimentacao;
             linha.insertCell(6).innerText = movimento.observacao;
 
             if(movimento.tipoMovimentacao.id === 4){
@@ -453,14 +468,12 @@ function atualizarTabelaMovimentacoes(movimentacoes) {
                 somaSaidas += movimento.valorMovimentacao;
             }
         });
-        console.log("display = block")
-        totalEntradasLabel.value = somaEntradas.toFixed(2);
-        totalSaidasLabel.value = somaSaidas.toFixed(2);
-        tabelaElement.style.display = 'block';
+        tabelaElement.style.display = 'block'
     } else {
-        console.log("display = none")
         tabelaElement.style.display = 'none';
     }
+    totalEntradasLabel.value = somaEntradas.toFixed(2);
+    totalSaidasLabel.value = somaSaidas.toFixed(2);
 }
 
 function visualizarCategoria(categoriaId, nome) {
@@ -1262,4 +1275,15 @@ function atualizarTabelaAgendamentos(agendamentos) {
 
         tbody.appendChild(row);
     });
+}
+
+function formatarDataCompleta(dataString) {
+    const data = new Date(dataString);
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const ano = data.getFullYear();
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+    const segundos = String(data.getSeconds()).padStart(2, '0');
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
 }

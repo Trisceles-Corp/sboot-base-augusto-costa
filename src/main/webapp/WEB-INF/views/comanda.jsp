@@ -269,5 +269,10 @@
         </tbody>
     </table>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        carregarConteudo(contextPath + '/comanda');
+    });
+</script>
 </body>
 </html>

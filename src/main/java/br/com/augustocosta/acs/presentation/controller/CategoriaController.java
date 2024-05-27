@@ -51,13 +51,12 @@ public class CategoriaController {
             categoria.setAlteradoPor(1);
             service.create(categoria);
         }
-
-        return "redirect:/index";
+        return "redirect:/index?origem=categoria";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id);
-        return "redirect:/index";
+        return "redirect:/index?origem=categoria";
     }
 }

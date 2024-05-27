@@ -39,7 +39,7 @@ public class CaixaController {
         else {
             service.create(dados);
         }
-        return "redirect:/index";
+        return "redirect:/index?origem=caixa";
     }
 
     @GetMapping("/novo")
@@ -52,6 +52,6 @@ public class CaixaController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=caixa";
     }
 }

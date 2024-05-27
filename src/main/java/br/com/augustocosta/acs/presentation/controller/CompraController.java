@@ -68,8 +68,7 @@ public class CompraController {
             table.setAlteradoPor(1);
             service.create(table);
         }
-
-        return "redirect:/index";
+        return "redirect:/index?origem=compra";
     }
 
     @GetMapping("/novo")
@@ -84,7 +83,7 @@ public class CompraController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=compra";
     }
 
     @GetMapping("/produtos/{compraId}")

@@ -220,7 +220,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="dashboard">
+            <a class="nav-option" id="dashboard" style="display: none">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="dashboard-img">
@@ -241,7 +241,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="relatorios">
+            <a class="nav-option" id="relatorios" style="display: none">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img" alt="">
@@ -335,7 +335,69 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        carregarConteudo(contextPath + '/gridagendamento');
+        const urlParams = new URLSearchParams(window.location.search);
+        const origem = urlParams.get('origem');
+
+        switch (origem){
+            case 'cliente':
+                carregarConteudo(contextPath + '/cliente');
+                break;
+            case 'produto':
+                carregarConteudo(contextPath + '/produto');
+                break;
+            case 'fornecedor':
+                carregarConteudo(contextPath + '/fornecedor');
+                break;
+            case 'compra':
+                carregarConteudo(contextPath + '/compra');
+                break;
+            case 'saida':
+                carregarConteudo(contextPath + '/saida');
+                break;
+            case 'caixa':
+                carregarConteudo(contextPath + '/caixa');
+                break;
+            case 'comanda':
+                carregarConteudo(contextPath + '/comanda');
+                break;
+            case 'caixamovimentacao':
+                carregarConteudo(contextPath + '/caixamovimentacao');
+                break;
+            case 'caracteristica':
+                carregarConteudo(contextPath + '/caracteristica');
+                break;
+            case 'cargo':
+                carregarConteudo(contextPath + '/cargo');
+                break;
+            case 'categoria':
+                carregarConteudo(contextPath + '/categoria');
+                break;
+            case 'linha':
+                carregarConteudo(contextPath + '/linha');
+                break;
+            case 'localestoque':
+                carregarConteudo(contextPath + '/localestoque');
+                break;
+            case 'marca':
+                carregarConteudo(contextPath + '/marca');
+                break;
+            case 'perfil':
+                carregarConteudo(contextPath + '/perfil');
+                break;
+            case 'servico':
+                carregarConteudo(contextPath + '/servico');
+                break;
+            case 'situacaoagendamento':
+                carregarConteudo(contextPath + '/situacaoagendamento');
+                break;
+            default:
+                carregarConteudo(contextPath + '/gridagendamento');
+                break;
+        }
+        if (origem) {
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
     });
 </script>
 </body>

@@ -50,12 +50,12 @@ public class ClienteController {
             dados.setPerfilId(4);
             usuarioService.createDto(enderecoService.createDto(dados), dados);
         }
-        return "redirect:/index";
+        return "redirect:/index?origem=cliente";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         usuarioService.delete(id, 1);
-        return "redirect:/cliente";
+        return "redirect:/index?origem=cliente";
     }
 }

@@ -33,23 +33,26 @@
 
 <body>
 <div>
+    <div class="headerContainer">
+        <h4 class="headerTitle">Fornecedores</h4>
+        <div class="headerRequired">* campos obrigatórios</div>
+    </div>
     <div class="row" id="linha-botao-pesquisa">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar fornecedor</button>
-        <div class="input-group w-50 m-3">
-            <input type="text" class="form-control" aria-label="Input text com botão dropdown">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar fornecedor por</button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">CPF / CNPJ</a>
-                    <a class="dropdown-item" href="#">E-mail</a>
-                    <a class="dropdown-item" href="#">Nome</a>
-                    <a class="dropdown-item" href="#">Sobrenome</a>
-                    <a class="dropdown-item" href="#">Telefone</a>
-                </div>
-            </div>
-        </div>
+<%--        <div class="input-group w-50 m-3">--%>
+<%--            <input type="text" class="form-control" aria-label="Input text com botão dropdown">--%>
+<%--            <div class="input-group-append">--%>
+<%--                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar fornecedor por</button>--%>
+<%--                <div class="dropdown-menu">--%>
+<%--                    <a class="dropdown-item" href="#">CPF / CNPJ</a>--%>
+<%--                    <a class="dropdown-item" href="#">E-mail</a>--%>
+<%--                    <a class="dropdown-item" href="#">Nome</a>--%>
+<%--                    <a class="dropdown-item" href="#">Sobrenome</a>--%>
+<%--                    <a class="dropdown-item" href="#">Telefone</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
     </div>
-    <div class="itemRequired">* campos obrigatórios</div>
     <!-- formulário de cadastro -->
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoUsuario" action="${pageContext.request.contextPath}/fornecedor/salvar" method="POST">
         <form:hidden path="usuarioId" id="inputUsuarioId"/>

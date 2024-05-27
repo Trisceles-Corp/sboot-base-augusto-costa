@@ -59,13 +59,13 @@ public class CaixaMovimentacaoController {
         else {
             service.create(dados);
         }
-        return "redirect:/index";
+        return "redirect:/index?origem=caixamovimentacao";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=caixamovimentacao";
     }
 
     @GetMapping("/listarMovimentacoes/{firstDay}/{lastDay}")
