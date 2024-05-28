@@ -16,6 +16,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<java.version>21</java.version>
+		<start-class>br.com.augustocosta.acs.AcsApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -119,17 +120,12 @@
 			<version>3.0.1</version>
 		</dependency>
 
-<<<<<<< HEAD
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>spring-cloud-gcp-dependencies</artifactId>
 			<version>5.3.0</version>
 			<type>pom</type>
-			<scope>import</scope>
 		</dependency>
-
-=======
->>>>>>> main
 	</dependencies>
 
 	<build>
@@ -137,6 +133,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>
+						-XX:+EnableDynamicAgentLoading
+						-Djdk.instrument.traceUsage
+						-Xshare:off
+					</jvmArguments>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -146,7 +149,6 @@
 			</plugin>
 
 			<plugin>
-<<<<<<< HEAD
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>2.7.0</version>
@@ -157,8 +159,6 @@
 			</plugin>
 
 			<plugin>
-=======
->>>>>>> main
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.6.1</version>
@@ -185,7 +185,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub alexanderix-aeon Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/alexanderix-aeon/sboot-base-augusto-costa</url>
+			<url>https://maven.pkg.github.com/Trisceles-Corp/sboot-base-augusto-costa</url>
 		</repository>
 	</distributionManagement>
 </project>

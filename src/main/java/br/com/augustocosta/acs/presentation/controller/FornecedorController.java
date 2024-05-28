@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/fornecedor")
@@ -61,10 +59,6 @@ public class FornecedorController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         usuarioService.delete(id, 1);
-<<<<<<< HEAD
         return "redirect:/index?origem=fornecedor";
-=======
-        return "redirect:/index";
->>>>>>> main
     }
 }
