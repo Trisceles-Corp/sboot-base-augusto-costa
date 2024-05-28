@@ -49,8 +49,7 @@ public class LocalEstoqueController {
             table.setAlteradoPor(1);
             service.create(table);
         }
-
-        return "redirect:/index";
+        return "redirect:/index?origem=localestoque";
     }
 
     @GetMapping("/novo")
@@ -63,6 +62,6 @@ public class LocalEstoqueController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=localestoque";
     }
 }

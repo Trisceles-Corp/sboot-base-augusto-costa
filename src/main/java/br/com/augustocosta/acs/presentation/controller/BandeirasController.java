@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblBandeiras;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class BandeirasController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblBandeiras table) {
+        String userId = Cookies.getUserId();
         table.setAtivo(true);
 
         if (table.getId() != null && table.getId() != 0){
@@ -40,14 +42,14 @@ public class BandeirasController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(Integer.parseInt(userId));
             service.update(table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
-            table.setCriadoPor(1);
+            table.setCriadoPor(Integer.parseInt(userId));
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(Integer.parseInt(userId));
             service.create(table);
         }
 

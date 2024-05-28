@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.net.URLDecoder" %><%--
   Created by IntelliJ IDEA.
   User: Alexander Andrade
   Date: 02/04/2024
@@ -8,7 +9,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<html lang="pt-br">
+<%
+    String perfil = "";
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("perfil")) {
+                String encodedPerfilValue = cookie.getValue();
+                perfil = URLDecoder.decode(encodedPerfilValue, StandardCharsets.UTF_8);
+                break;
+            }
+        }
+    }
+%><html lang="pt-br">
 <head>
 
     <meta charset="utf-8">
@@ -70,7 +83,11 @@
                         <a class="dropdown-item" href="#">
                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Perfil
                         </a>
+<<<<<<< HEAD
+                        <a class="dropdown-item" href="#" style="display: none">
+=======
                         <a class="dropdown-item" href="#">
+>>>>>>> main
                             <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Configurações
                         </a>
                         <a class="dropdown-item" href="#" style="display: none">
@@ -111,7 +128,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="clientes">
+            <a class="nav-option" id="clientes" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") || perfil.equals("7") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="cliente-img">
@@ -133,7 +150,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="estoque">
+            <a class="nav-option" id="estoque" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") || perfil.equals("7") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="estoque-img">
@@ -178,7 +195,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="financeiro">
+            <a class="nav-option" id="financeiro" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon financeiro/financeiro-999.png" id="financeiro-img">
@@ -220,7 +237,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="dashboard">
+            <a class="nav-option" id="dashboard" style="display: none">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="dashboard-img">
@@ -241,7 +258,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="relatorios">
+            <a class="nav-option" id="relatorios" style="display: none">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon agenda/agenda-999.png" id="relatorios-img" alt="">
@@ -262,7 +279,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="config">
+            <a class="nav-option" id="config" style="display: <%= perfil.equals("1") || perfil.equals("2") || perfil.equals("3") || perfil.equals("5") || perfil.equals("7") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon estoque/estoque-999.png" id="config-img" alt="">
@@ -273,28 +290,16 @@
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/caracteristica')" >Característica</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/categoria')" >Categoria</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/linha')" >Linha</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/marca')" >Marca</button><br>
                         </div>
                         <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
                             <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/servico')" >Serviços</button><br>
-                        </div>
-                        <div class="sub-options px-5 py-1">
-                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
                         </div>
                     </div>
                     <script>
@@ -319,11 +324,59 @@
                     </script>
                 </div>
             </a>
+            <a class="nav-option" id="admin" style="display: <%= perfil.equals("1") || perfil.equals("2") ? "block" : "none" %>">
+                <div class="contain-option w-100">
+                    <div class="my-2">
+                        <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="admin-img" alt="">
+                        <span class="button-nav-item">Administrativo</span>
+                    </div>
+                    <div class="contain-sub-option">
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/cargo')" >Cargo</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/localestoque')" >Local Estoque</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/perfil')" >Perfil</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/situacaoagendamento')" >Situação</button><br>
+                        </div>
+                        <div class="sub-options px-5 py-1">
+                            <button class="button-nav-option" onclick="carregarConteudo(contextPath + '/usuario')" >Usuarios</button><br>
+                        </div>
+                    </div>
+                    <script>
+                        /* mudar cor da imagem ao passar o mouse em cima*/
+                        const admin = document.getElementById("admin");
+                        const imgAdmin = admin.querySelector("img");
+                        const subOptionsAdmin = admin.querySelectorAll(".sub-options");
+
+                        admin.addEventListener("mouseover", () => {
+                            imgAdmin.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-F0DD6C.png");
+                            for(var i = 0; i < subOptionsAdmin.length; i++){
+                                subOptionsAdmin[i].style.display = "block";
+                            }
+                        });
+
+                        admin.addEventListener("mouseout", () => {
+                            imgAdmin.setAttribute("src", "${pageContext.request.contextPath}/img/icon clientes/cliente-999.png");
+                            for(var i = 0; i < subOptionsAdmin.length; i++){
+                                subOptionsAdmin[i].style.display = "none";
+                            }
+                        });
+                    </script>
+                </div>
+            </a>
         </div>
     </div>
+<<<<<<< HEAD
+=======
     <div class="content-main p-5" id="gridPage" style="display: none">
         <jsp:include page="agendamento.jsp" />
     </div>
+>>>>>>> main
     <div class="content-main p-5" id="mainContent" style="display: block">
 
     </div>
@@ -335,7 +388,76 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+<<<<<<< HEAD
+        const urlParams = new URLSearchParams(window.location.search);
+        const origem = urlParams.get('origem');
+
+        switch (origem){
+            case 'cliente':
+                carregarConteudo(contextPath + '/cliente');
+                break;
+            case 'produto':
+                carregarConteudo(contextPath + '/produto');
+                break;
+            case 'fornecedor':
+                carregarConteudo(contextPath + '/fornecedor');
+                break;
+            case 'compra':
+                carregarConteudo(contextPath + '/compra');
+                break;
+            case 'saida':
+                carregarConteudo(contextPath + '/saida');
+                break;
+            case 'caixa':
+                carregarConteudo(contextPath + '/caixa');
+                break;
+            case 'comanda':
+                carregarConteudo(contextPath + '/comanda');
+                break;
+            case 'caixamovimentacao':
+                carregarConteudo(contextPath + '/caixamovimentacao');
+                break;
+            case 'caracteristica':
+                carregarConteudo(contextPath + '/caracteristica');
+                break;
+            case 'cargo':
+                carregarConteudo(contextPath + '/cargo');
+                break;
+            case 'categoria':
+                carregarConteudo(contextPath + '/categoria');
+                break;
+            case 'linha':
+                carregarConteudo(contextPath + '/linha');
+                break;
+            case 'localestoque':
+                carregarConteudo(contextPath + '/localestoque');
+                break;
+            case 'marca':
+                carregarConteudo(contextPath + '/marca');
+                break;
+            case 'perfil':
+                carregarConteudo(contextPath + '/perfil');
+                break;
+            case 'servico':
+                carregarConteudo(contextPath + '/servico');
+                break;
+            case 'situacaoagendamento':
+                carregarConteudo(contextPath + '/situacaoagendamento');
+                break;
+            case 'usuario':
+                carregarConteudo(contextPath + '/usuario');
+                break;
+            default:
+                carregarConteudo(contextPath + '/gridagendamento');
+                break;
+        }
+        if (origem) {
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+        }
+=======
         carregarConteudo(contextPath + '/gridagendamento');
+>>>>>>> main
     });
 </script>
 </body>

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,8 +66,7 @@ public class SaidaController {
             table.setAlteradoPor(1);
             service.create(table);
         }
-
-        return "redirect:/index";
+        return "redirect:/index?origem=saida";
     }
 
     @GetMapping("/novo")
@@ -81,13 +81,13 @@ public class SaidaController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=saida";
     }
 
     @GetMapping("/produtos/{saidaId}")
     @ResponseBody
     public ResponseEntity<List<tblSaidaProduto>> listarProdutosPorSaida(@PathVariable Integer saidaId) {
-        List<tblSaidaProduto> produtos = saidaProdutoService.getBySaida(saidaId);
-        return ResponseEntity.ok(produtos);
+        List<tblSaidaProduto> saidaProdutos = saidaProdutoService.getBySaida(saidaId);
+        return ResponseEntity.ok(saidaProdutos);
     }
 }

@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.business.service;
 
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.integration.entity.tblCargo;
 import br.com.augustocosta.acs.integration.entity.tblEndereco;
@@ -76,6 +77,11 @@ public class UsuarioService {
         return convertProjectionToDto(projections);
     }
 
+    public List<dtoUsuario> getAllByActive() {
+        List<prjUsuario> projections = repository.findUsersByAllActive();
+        return convertProjectionToDto(projections);
+    }
+
     public List<tblUsuario> getAllBySolicitante() {
         List<prjUsuario> projections = repository.findUsersBySolicitante();
         return convertProjectionToUsuario(projections);
@@ -124,10 +130,11 @@ public class UsuarioService {
 
     @Transactional
     public tblUsuario create(tblUsuario table) {
+        String userId = Cookies.getUserId();
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
-        table.setCriadoPor(1);
-        table.setAlteradoPor(1);
+        table.setCriadoPor(Integer.parseInt(userId));
+        table.setAlteradoPor(Integer.parseInt(userId));
         table.setAtivo(true);
         return repository.save(table);
     }
@@ -179,12 +186,8 @@ public class UsuarioService {
                 .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + dados.getCargoId()));
         tblPerfil perfil = perfilRepository.findById(dados.getPerfilId())
                 .orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado com id: " + dados.getPerfilId()));
-        if (table.getSenha() != null ){
-            dados.setSenha(table.getSenha());
-        }
-        else {
-            dados.setSenha("123456");
-        }
+        if (dados.getSenha() == null && table.getSenha() == null ){ dados.setSenha("123456"); }
+        if (dados.getSenha() == null && table.getSenha() != null ){ dados.setSenha(table.getSenha()); }
         repository.save(convertVo(table, endereco, cargo, perfil, dados));
         return dados;
     }
@@ -216,6 +219,8 @@ public class UsuarioService {
 
     public tblUsuario convertVo(tblUsuario table, tblEndereco endereco, tblCargo cargo, tblPerfil perfil, dtoUsuario dados)
     {
+        String userId = Cookies.getUserId();
+
         if (table.getId() != null && table.getId() != 0){
             table = repository.findById(table.getId())
                     .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrado."));
@@ -225,8 +230,8 @@ public class UsuarioService {
             table.setAtivo(true);
             table.setDataCriacao(LocalDateTime.now());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setCriadoPor(1);
-            table.setAlteradoPor(1);
+            table.setCriadoPor(Integer.parseInt(userId));
+            table.setAlteradoPor(Integer.parseInt(userId));
         }
 
         table.setCpfCnpj(dados.getCpfCnpj());

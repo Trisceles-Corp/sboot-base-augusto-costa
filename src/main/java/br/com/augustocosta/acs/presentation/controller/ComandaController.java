@@ -64,7 +64,7 @@ public class ComandaController {
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoComanda dados) {
         service.update(dados);
-        return "redirect:/index";
+        return "redirect:/index?origem=comanda";
     }
 
     @GetMapping("/novo")
@@ -77,7 +77,7 @@ public class ComandaController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=comanda";
     }
 
     @GetMapping("/servicos/{agendamentoId}")

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appengine-web-app xmlns="https://appengine.google.com/ns/1.0">
+    <application>steady-thunder-423317-k2</application>
+    <version>1</version>
+    <runtime>java21</runtime>
+    <automatic-scaling>
+        <min-idle-instances>automatic</min-idle-instances>
+        <max-idle-instances>automatic</max-idle-instances>
+        <min-pending-latency>automatic</min-pending-latency>
+        <max-pending-latency>automatic</max-pending-latency>
+        <max-concurrent-requests>50</max-concurrent-requests>
+    </automatic-scaling>
+    <deployment>
+        <timeout>1200s</timeout>
+    </deployment>
+    <staging>
+        <enable-jar-classes>true</enable-jar-classes>
+    </staging>
+</appengine-web-app>

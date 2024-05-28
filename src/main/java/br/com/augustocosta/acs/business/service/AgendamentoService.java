@@ -26,9 +26,10 @@ public class AgendamentoService {
     private final ServicoRepository servicoRepository;
     private final LocalEstoqueRepository localEstoqueRepository;
     private final ComandaRepository comandaRepository;
+    private final GridAgendamentoRepository gridAgendamentoRepository;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository repository, ServicosAgendamentoRepository servicosAgendamentoRepository, SituacaoAgendamentoRepository situacaoRepository, VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, ServicoRepository servicoRepository, LocalEstoqueRepository localEstoqueRepository, ComandaRepository comandaRepository) {
+    public AgendamentoService(AgendamentoRepository repository, ServicosAgendamentoRepository servicosAgendamentoRepository, SituacaoAgendamentoRepository situacaoRepository, VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, ServicoRepository servicoRepository, LocalEstoqueRepository localEstoqueRepository, ComandaRepository comandaRepository, GridAgendamentoRepository gridAgendamentoRepository) {
         this.repository = repository;
         this.servicosAgendamentoRepository = servicosAgendamentoRepository;
         this.situacaoRepository = situacaoRepository;
@@ -38,11 +39,17 @@ public class AgendamentoService {
         this.servicoRepository = servicoRepository;
         this.localEstoqueRepository = localEstoqueRepository;
         this.comandaRepository = comandaRepository;
+        this.gridAgendamentoRepository = gridAgendamentoRepository;
     }
 
     @Transactional
+<<<<<<< HEAD
+    public void create(dtoAgendamento dados, Integer userId) {
+        tblAgendamento agendamento = createAgendamento(dados.getAgendamento(), userId);
+=======
     public void create(dtoAgendamento dados) {
         tblAgendamento agendamento = createAgendamento(dados.getAgendamento());
+>>>>>>> main
         final BigDecimal[] somaValores = {BigDecimal.valueOf(0.0)};
         final BigDecimal[] somaDescontos = {BigDecimal.valueOf(0.0)};
         final BigDecimal[] somaComissao = {BigDecimal.valueOf(0.0)};
@@ -61,8 +68,8 @@ public class AgendamentoService {
             servicoAgendamento.setAtivo(true);
             servicoAgendamento.setDataCriacao(LocalDateTime.now());
             servicoAgendamento.setDataAlteracao(LocalDateTime.now());
-            servicoAgendamento.setCriadoPor(1);
-            servicoAgendamento.setAlteradoPor(1);
+            servicoAgendamento.setCriadoPor(userId);
+            servicoAgendamento.setAlteradoPor(userId);
             servicosAgendamentoRepository.save(servicoAgendamento);
 
             // Somatoria valores para abertura da comanda
@@ -71,7 +78,11 @@ public class AgendamentoService {
 
             somaValores[0] = somaValores[0].add(servicoAgendamento.getValorUnitario());
             somaDescontos[0] = somaDescontos[0].add(servico.getValor().multiply(servico.getDesconto().divide(BigDecimal.valueOf(100))));
+<<<<<<< HEAD
+            somaComissao[0] = somaComissao[0].add(servico.getValor().subtract(servico.getValor().multiply(servico.getDesconto().divide(BigDecimal.valueOf(100)))).multiply(servico.getComissao().divide(BigDecimal.valueOf(100))));
+=======
             somaComissao[0] = somaComissao[0].add(servico.getValor().multiply(servico.getComissao().divide(BigDecimal.valueOf(100))));
+>>>>>>> main
         });
 
         if(dados.getProduto() != null){
@@ -85,8 +96,8 @@ public class AgendamentoService {
             venda.setAtivo(true);
             venda.setDataCriacao(LocalDateTime.now());
             venda.setDataAlteracao(LocalDateTime.now());
-            venda.setCriadoPor(1);
-            venda.setAlteradoPor(1);
+            venda.setCriadoPor(userId);
+            venda.setAlteradoPor(userId);
             venda = vendaRepository.save(venda);
 
             // Processa e salva os produtos vendidos
@@ -111,8 +122,8 @@ public class AgendamentoService {
                 vendaProduto.setAtivo(true);
                 vendaProduto.setDataCriacao(LocalDateTime.now());
                 vendaProduto.setDataAlteracao(LocalDateTime.now());
-                vendaProduto.setCriadoPor(1);
-                vendaProduto.setAlteradoPor(1);
+                vendaProduto.setCriadoPor(userId);
+                vendaProduto.setAlteradoPor(userId);
                 vendaProdutoRepository.save(vendaProduto);
 
                 valorTotalVenda[0] = valorTotalVenda[0].add(vendaProduto.getValorTotal());
@@ -136,17 +147,29 @@ public class AgendamentoService {
         comanda.setAtivo(true);
         comanda.setDataCriacao(LocalDateTime.now());
         comanda.setDataAlteracao(LocalDateTime.now());
-        comanda.setCriadoPor(1);
-        comanda.setAlteradoPor(1);
+        comanda.setCriadoPor(userId);
+        comanda.setAlteradoPor(userId);
         comandaRepository.save(comanda);
+
+        // Insere agendamento no grid
+        tblGridAgendamento grid = new tblGridAgendamento();
+        grid.setComanda(comanda);
+        grid.setAgendameto(agendamento);
+        grid.setServico(dados.getServico().getFirst());
+        grid.setAtivo(true);
+        grid.setDataCriacao(LocalDateTime.now());
+        grid.setDataAlteracao(LocalDateTime.now());
+        grid.setCriadoPor(userId);
+        grid.setAlteradoPor(userId);
+        gridAgendamentoRepository.save(grid);
     }
 
-    public tblAgendamento createAgendamento(tblAgendamento table) {
+    public tblAgendamento createAgendamento(tblAgendamento table, Integer userId) {
         table.setAtivo(true);
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
-        table.setCriadoPor(1);
-        table.setAlteradoPor(1);
+        table.setCriadoPor(userId);
+        table.setAlteradoPor(userId);
         return repository.save(table);
     }
 
@@ -235,5 +258,8 @@ public class AgendamentoService {
         }
         return dtos;
     }
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 }

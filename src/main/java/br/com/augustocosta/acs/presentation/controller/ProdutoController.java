@@ -52,12 +52,12 @@ public class ProdutoController {
             table.setAlteradoPor(1);
             service.create(table);
         }
-        return "redirect:/index";
+        return "redirect:/index?origem=produto";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         service.delete(id, 1);
-        return "redirect:/index";
+        return "redirect:/index?origem=produto";
     }
 }
