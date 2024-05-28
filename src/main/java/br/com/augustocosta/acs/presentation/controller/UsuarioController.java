@@ -2,6 +2,7 @@ package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.EnderecoService;
 import br.com.augustocosta.acs.business.service.UsuarioService;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.integration.entity.tblEndereco;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class UsuarioController {
 
     @GetMapping
     public String listarTodos(Model model) {
-        model.addAttribute("listaUsuarios", service.getAllByActive());
+        model.addAttribute("listaUsuarios", service.getActiveByNameAsc());
         model.addAttribute("listaPerfil", service.getAllActivesByPerfil());
         model.addAttribute("listaCargos", service.getAllActivesByCargo());
         model.addAttribute("dtoUsuario", new dtoUsuario());
@@ -50,7 +51,10 @@ public class UsuarioController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index?origem=usuario";
     }
 }

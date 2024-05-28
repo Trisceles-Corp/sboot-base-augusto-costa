@@ -83,11 +83,7 @@
                         <a class="dropdown-item" href="#">
                             <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Perfil
                         </a>
-<<<<<<< HEAD
                         <a class="dropdown-item" href="#" style="display: none">
-=======
-                        <a class="dropdown-item" href="#">
->>>>>>> main
                             <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Configurações
                         </a>
                         <a class="dropdown-item" href="#" style="display: none">
@@ -371,14 +367,7 @@
             </a>
         </div>
     </div>
-<<<<<<< HEAD
-=======
-    <div class="content-main p-5" id="gridPage" style="display: none">
-        <jsp:include page="agendamento.jsp" />
-    </div>
->>>>>>> main
     <div class="content-main p-5" id="mainContent" style="display: block">
-
     </div>
     <footer class="footer">
         <p> Copyright @ Trísceles Corp 2024 </p>
@@ -388,7 +377,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-<<<<<<< HEAD
         const urlParams = new URLSearchParams(window.location.search);
         const origem = urlParams.get('origem');
 
@@ -455,9 +443,6 @@
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
         }
-=======
-        carregarConteudo(contextPath + '/gridagendamento');
->>>>>>> main
     });
 </script>
 </body>

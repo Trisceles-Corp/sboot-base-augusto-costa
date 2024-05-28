@@ -65,13 +65,13 @@ public class CategoriaService {
     }
 
     @Transactional
-    public void delete(Integer id, Integer alteradoPor) {
+    public void delete(Integer id, Integer userID) {
         tblCategoria table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Categoria não encontrado com id: " + id));
 
         table.setAtivo(false);
         table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(alteradoPor);
+        table.setAlteradoPor(userID);
 
         repository.save(table);
     }

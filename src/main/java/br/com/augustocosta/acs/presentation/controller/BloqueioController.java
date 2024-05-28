@@ -41,10 +41,12 @@ public class BloqueioController {
     @GetMapping
     public String listarDependencias(Model model) {
         String userId = Cookies.getUserId();
+        if(userId == null){ userId = "1"; }
+        int activeUserId = Integer.parseInt(userId) ;
 
         if (userId != null) {
             model.addAttribute("userId", userId);
-            model.addAttribute("listarBloqueios", service.getActivesByUser(Integer.parseInt(userId)));
+            model.addAttribute("listarBloqueios", service.getActivesByUser(activeUserId));
             model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
             model.addAttribute("listarPeriodos", periodoService.getActives());
             model.addAttribute("listarDiasSemana", diasSemanaService.getActives());
@@ -56,6 +58,9 @@ public class BloqueioController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblBloqueio table, @RequestParam("userId") String userId, Model model) {
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
         tblPeriodo periodo = periodoService.getById(table.getPeriodo().getId()).orElseThrow();
         tblDiasSemana diasSemana = diasSemanaService.getById(table.getDiasSemana().getId()).orElseThrow();
 
@@ -70,20 +75,19 @@ public class BloqueioController {
             table.setDataCriacao(data.getDataCriacao());
             table.setCriadoPor(data.getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(Integer.parseInt(userId));
+            table.setAlteradoPor(activeUserId);
             service.update(table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
             table.setDataAlteracao(LocalDateTime.now());
             table.setCriadoPor(table.getCriadoPor());
-            table.setAlteradoPor(Integer.parseInt(userId));
+            table.setAlteradoPor(activeUserId);
             service.create(table);
         }
 
-        // Atualiza o modelo com os dados necessários para renderizar a view parcial
         model.addAttribute("userId", userId);
-        model.addAttribute("listarBloqueios", service.getActivesByUser(Integer.parseInt(userId)));
+        model.addAttribute("listarBloqueios", service.getActivesByUser(activeUserId));
         model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
         model.addAttribute("listarPeriodos", periodoService.getActives());
         model.addAttribute("listarDiasSemana", diasSemanaService.getActives());
@@ -95,7 +99,10 @@ public class BloqueioController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index";
     }
 }

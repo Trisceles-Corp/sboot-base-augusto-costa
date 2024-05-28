@@ -78,12 +78,6 @@ function carregarConteudo(url) {
 
             const searchDataInicial = document.getElementById('searchDataInicial');
             const searchDataFinal = document.getElementById('searchDataFinal');
-            const dataGrid = document.getElementById('gridAgendamentoHoje');
-
-            if (dataGrid) {
-                dataGrid.valueAsDate = new Date();
-            }
-
             if (searchDataInicial && searchDataFinal) {
                 definirDatasIniciaisEFinais();
             }
@@ -157,11 +151,6 @@ function visualizarCaracteristica(caracteristicaId, descricao) {
     }
     document.getElementById("field_Id").value = caracteristicaId;
     document.getElementById("field_Nome").value = descricao;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarCargo(id, name) {
@@ -173,11 +162,6 @@ function visualizarCargo(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarSituacaoAgendamento(id, name) {
@@ -189,11 +173,6 @@ function visualizarSituacaoAgendamento(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valorTotal, dataCriacao) {
@@ -232,26 +211,6 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
         .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
-function atualizarTabelaProdutos(produtos) {
-    const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
-    tabela.innerHTML = ''; // Limpar tabela existente
-
-    produtos.forEach(produto => {
-        let linha = tabela.insertRow();
-        let celulaAcao = linha.insertCell(0);
-        celulaAcao.innerHTML = '...'; // Adicione elementos de ação conforme necessário
-        linha.insertCell(1).innerText = produto.produto.descricaoProduto;
-        linha.insertCell(2).innerText = produto.valorUnitario;
-        linha.insertCell(3).innerText = produto.quantidade;
-        linha.insertCell(4).innerText = produto.valorTotal;
-    });
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
 function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
     if (formCadastro.style.display === "none") {
@@ -276,27 +235,22 @@ function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTota
 
     fetch(`${contexto}/saida/produtos/${id}`)
         .then(response => response.json())
-        .then(data => atualizarTabelaSaidaProdutos(data))
-        .catch(error => console.error('Erro ao buscar saída de produtos: ', error));
+        .then(data => atualizarTabelaProdutos(data))
+        .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
-function atualizarTabelaSaidaProdutos(saidaProdutos) {
-    const tabela = document.getElementById("tabelaSaidaProduto").getElementsByTagName('tbody')[0];
-    tabela.innerHTML = '';
+function atualizarTabelaProdutos(produtos) {
+    const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    tabela.innerHTML = ''; // Limpar tabela existente
 
-    saidaProdutos.forEach(saidaProduto => {
+    produtos.forEach(produto => {
         let linha = tabela.insertRow();
         let celulaAcao = linha.insertCell(0);
         celulaAcao.innerHTML = '...'; // Adicione elementos de ação conforme necessário
-        linha.insertCell(1).innerText = saidaProduto.produto.descricaoProduto;
-        linha.insertCell(2).innerText = saidaProduto.valorUnitario;
-        linha.insertCell(3).innerText = saidaProduto.quantidade;
-        linha.insertCell(4).innerText = saidaProduto.valorTotal;
-    });
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+        linha.insertCell(1).innerText = produto.produto.descricaoProduto;
+        linha.insertCell(2).innerText = produto.valorUnitario;
+        linha.insertCell(3).innerText = produto.quantidade;
+        linha.insertCell(4).innerText = produto.valorTotal;
     });
 }
 
@@ -365,11 +319,6 @@ function atualizarTabelaServicosComanda(servicos) {
         linha.insertCell(2).innerText = servico.nome;
         linha.insertCell(3).innerText = servico.valor;
         linha.insertCell(4).innerText = servico.tempo;
-    });
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
     });
 }
 
@@ -455,17 +404,18 @@ function atualizarTabelaComissoes(comissoes) {
     }
 }
 
-function pesquisarMovimentacoes(contexto) {
-    const searchDataInicial = document.getElementById("searchDataInicial");
-    const searchDataFinal = document.getElementById("searchDataFinal");
-    const firstDay = searchDataInicial.value;
-    const lastDay = searchDataFinal.value;
+function pesquisarMovimentacoes(contexto, firstDay, lastDay) {
     const url = `${contexto}/caixamovimentacao/listarMovimentacoes/${firstDay}/${lastDay}`;
-
+    console.log("URL da requisição: ", url);
     fetch(url)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Falha na resposta do servidor');
+            }
+            return response.json();
+        })
         .then(data => atualizarTabelaMovimentacoes(data))
-        .catch(error => console.error('Erro ao buscar movimentações financeiras: ', error));
+        .catch(error => console.error('Erro ao buscar movimentações financeira.', error));
 }
 
 function atualizarTabelaMovimentacoes(movimentacoes) {
@@ -484,12 +434,11 @@ function atualizarTabelaMovimentacoes(movimentacoes) {
             let linha = tbody.insertRow();
             let celulaAcao = linha.insertCell(0);
             celulaAcao.innerHTML = `<img src="../img/icones tabela clientes/escrever-999.png" class="icones-tabela icone-tabela-editar mx-2" onclick="visualizarCaixaMovimentacao('${movimento.id}', '${movimento.caixa.id}', '${movimento.tipoMovimentacao.id}', '${movimento.formaPagamento.id}', '${movimento.criadoPor}', '${movimento.valorMovimentacao}', '${movimento.observacao}'); return false;" title="Editar">`;
-
-            linha.insertCell(1).innerText = formatarDataCompleta(movimento.dataCriacao);
+            linha.insertCell(1).innerText = movimento.dataCriacao;
             linha.insertCell(2).innerText = movimento.caixa.nome;
             linha.insertCell(3).innerText = movimento.tipoMovimentacao.descricaoMovimentacao;
             linha.insertCell(4).innerText = movimento.formaPagamento.nome;
-            linha.insertCell(5).innerText = movimento.valorMovimentacao;
+            linha.insertCell(5).innerText = movimento.valorMovimentacao.toFixed(2);
             linha.insertCell(6).innerText = movimento.observacao;
 
             if(movimento.tipoMovimentacao.id === 4){
@@ -498,12 +447,14 @@ function atualizarTabelaMovimentacoes(movimentacoes) {
                 somaSaidas += movimento.valorMovimentacao;
             }
         });
-        tabelaElement.style.display = 'block'
+        console.log("display = block")
+        totalEntradasLabel.value = somaEntradas.toFixed(2);
+        totalSaidasLabel.value = somaSaidas.toFixed(2);
+        tabelaElement.style.display = 'block';
     } else {
+        console.log("display = none")
         tabelaElement.style.display = 'none';
     }
-    totalEntradasLabel.value = somaEntradas.toFixed(2);
-    totalSaidasLabel.value = somaSaidas.toFixed(2);
 }
 
 function visualizarCategoria(categoriaId, nome) {
@@ -515,22 +466,12 @@ function visualizarCategoria(categoriaId, nome) {
     }
     document.getElementById("field_Id").value = categoriaId;
     document.getElementById("field_Nome").value = nome;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarDiasSemana(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarLinha(id, name) {
@@ -542,33 +483,6 @@ function visualizarLinha(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-function visualizarBloqueio(id, colaboradorId, dataBloqueio, periodoId, diasSemanaId, horaInicial, horaFinal, motivo) {
-    const formClienteCadast = document.getElementById("form-cadastro");
-    if (formClienteCadast.style.display === "none") {
-        formClienteCadast.style.display = "block";
-    } else {
-        formClienteCadast.style.display = "block";
-    }
-    document.getElementById("field_Id").value = id;
-    document.getElementById("field_ColaboradorId").value = colaboradorId;
-    document.getElementById("field_DataBloqueio").value = dataBloqueio;
-    document.getElementById("field_PeriodoId").value = periodoId;
-    document.getElementById("field_DiasSemanaId").value = diasSemanaId;
-    document.getElementById("field_HoraInicial").value = horaInicial;
-    document.getElementById("field_HoraFinal").value = horaFinal;
-    document.getElementById("field_MotivoBloqueio").value = motivo;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarLocalEstoque(id, name) {
@@ -580,11 +494,6 @@ function visualizarLocalEstoque(id, name) {
     }
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarMarca(id, name, active) {
@@ -597,11 +506,6 @@ function visualizarMarca(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
     document.getElementById("field_Active").checked = active === 'true';
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 
@@ -609,11 +513,6 @@ function visualizarPeriodo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarPermissoes(id, name, description, active) {
@@ -621,11 +520,6 @@ function visualizarPermissoes(id, name, description, active) {
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Description").value = description;
     document.getElementById("field_Active").checked = active === 'true';
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarServico(id, nome, tempo, valor, desconto, comissao, observacao) {
@@ -642,22 +536,12 @@ function visualizarServico(id, nome, tempo, valor, desconto, comissao, observaca
     document.getElementById("field_Desconto").value = desconto;
     document.getElementById("field_Comissao").value = comissao;
     document.getElementById("field_Observacao").value = observacao;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarTipo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarPerfil(id, tipoperfilid, name) {
@@ -670,22 +554,12 @@ function visualizarPerfil(id, tipoperfilid, name) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_TipoPerfilId").value = tipoperfilid;
     document.getElementById("field_Nome").value = name;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarDiasSemana(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
     document.getElementById("field_Active").checked = active === 'true';
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function confirmarExclusao(event) {
@@ -717,11 +591,6 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
     document.getElementById("field_Custo").value = custo;
     document.getElementById("field_valorVenda").value = valorVenda;
     document.getElementById("field_Comissao").value = comissao;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagamentoId, colaboradorId, valor, justificativa) {
@@ -743,11 +612,6 @@ function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagam
     document.getElementById("field_ColaboradorId").value = colaboradorId;
     document.getElementById("field_valorMovimentacao").value = valor;
     document.getElementById("field_observacao").value = justificativa;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEmail, dataAbertura, horaAbertura, valorAbertura, valorProvisorio) {
@@ -772,11 +636,6 @@ function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEma
     document.getElementById("field_Email").value = responsavelAberturaEmail;
     document.getElementById("field_ValorAbertura").value = valorAbertura;
     document.getElementById("field_ValorProvisorio").value = valorProvisorio;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
@@ -810,53 +669,6 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     document.getElementById("inputCidade").value = cidade;
     document.getElementById("inputEstado").value = uf;
     document.getElementById("inputObservacao").value = observacao;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
-
-function visualizarUsuario(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, senha, cargo, perfil, observacao) {
-    const formClienteCadast = document.getElementById("form-cadastro");
-    if (formClienteCadast.style.display === "none") {
-        formClienteCadast.style.display = "block";
-    } else {
-        formClienteCadast.style.display = "block";
-    }
-
-    document.getElementById("inputUsuarioId").value = usuarioId;
-    document.getElementById("inputEnderecoId").value = enderecoId;
-    document.getElementById("inputCargoId").value = cargoId;
-    document.getElementById("inputPerfilId").value = perfilId;
-    document.getElementById("inputNome").value = nome;
-    document.getElementById("inputSobrenome").value = sobrenome;
-    document.getElementById("inputCpfCnpj").value = cpfCnpj;
-    document.getElementById("inputGenero").value = genero;
-    document.getElementById("inputNascimento").value = dataNascimento;
-    document.getElementById("inputEmail").value = email;
-    document.getElementById("inputProfissao").value = profissao;
-    document.getElementById("inputDDDCel").value = dddCelular;
-    document.getElementById("inputCelular").value = celular;
-    document.getElementById("inputDDDTel").value = dddTelefone;
-    document.getElementById("inputTelefone").value = telefone;
-    document.getElementById("inputCEP").value = cep;
-    document.getElementById("inputlogradouro").value = logradouro;
-    document.getElementById("inputNumero").value = numero;
-    document.getElementById("inputComplemento").value = complemento;
-    document.getElementById("inputBairro").value = bairro;
-    document.getElementById("inputCidade").value = cidade;
-    document.getElementById("inputEstado").value = uf;
-    document.getElementById("inputSenha").value = senha;
-    document.getElementById("inputConfirmarSenha").value = senha;
-    document.getElementById("inputCargoId").value = cargo;
-    document.getElementById("inputPerfilId").value = perfil;
-    document.getElementById("inputObservacao").value = observacao;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
@@ -888,11 +700,6 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
     document.getElementById("inputCidade").value = cidade;
     document.getElementById("inputEstado").value = uf;
     document.getElementById("inputObservacao").value = observacao;
-
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
 }
 
 function adicionarServico() {
@@ -1284,182 +1091,9 @@ function definirDatasIniciaisEFinais() {
 
     const searchDataInicial = document.getElementById('searchDataInicial');
     const searchDataFinal = document.getElementById('searchDataFinal');
-    const initDataAgenda = document.getElementById('dataAgenda');
 
     if (searchDataInicial && searchDataFinal) {
         searchDataInicial.valueAsDate = primeiroDia;
         searchDataFinal.valueAsDate = ultimoDia;
     }
-    if (initDataAgenda) {
-        initDataAgenda.valueAsDate = hoje;
-    }
-}
-
-function ajustaDiasDaSemana(){
-    const dataBloqueioElement = document.getElementById('field_DataBloqueio');
-    const diaSemanaElement = document.getElementById('field_DiasSemanaId');
-    const dataBloqueio = new Date(dataBloqueioElement.value);
-    var diasemana = 0;
-
-    switch (dataBloqueio.getDay()){
-        case 0:
-            diasemana = 2;
-            break;
-        case 1:
-            diasemana = 3;
-            break;
-        case 2:
-            diasemana = 4;
-            break;
-        case 3:
-            diasemana = 5;
-            break;
-        case 4:
-            diasemana = 6;
-            break;
-        case 5:
-            diasemana = 7;
-            break;
-        case 6:
-            diasemana = 1;
-            break;
-    }
-    diaSemanaElement.value = diasemana;
-}
-
-function insereHorarioBloqueio(){
-    const periodoId = document.getElementById('field_PeriodoId').value;
-    const horaInicial = document.getElementById('field_HoraInicial');
-    const horaFinal = document.getElementById('field_HoraFinal');
-
-    switch (periodoId) {
-        case '2': // Manha
-            horaInicial.value = '09:00';
-            horaFinal.value = '12:30';
-            break;
-        case '3': // Tarde
-            horaInicial.value = '13:00';
-            horaFinal.value = '18:00';
-            break;
-        case '4': // Dia Inteiro
-            horaInicial.value = '09:00';
-            horaFinal.value = '18:00';
-            break;
-        default:
-            horaInicial.value = '';
-            horaFinal.value = '';
-            break;
-    }
-}
-
-function clearGroup(elem) {
-    const group = document.theForm.theGroup;
-    for (let i=0; i<group.length; i++) {
-        if (group[i] !== elem) {
-            group[i].checked = false;
-        }
-    }
-}
-
-function atualizarGridAgendamento(contexto) {
-    const dataAgendaElement = document.getElementById("dataAgenda");
-    let dataAgenda = new Date().toISOString().split('T')[0]; // Data atual como padrão
-    if(dataAgendaElement !== null){ dataAgenda = new Date(dataAgendaElement.value); }
-    const dataFormatada = new Date(dataAgenda).toISOString().split('T')[0];
-
-    fetch(`${contexto}/${dataFormatada}`)
-        .then(response => response.text())
-        .then(data => {
-            atualizarTabelaAgendamentos(data);
-        })
-        .catch(error => console.error('Erro ao buscar agendamentos:', error));
-}
-
-function atualizarTabelaAgendamentos(agendamentos) {
-    console.log("Agendamentos recebidos:", agendamentos);
-
-    const tabela = document.getElementById("tabelaGridAgendamento");
-    const thead = tabela.querySelector('thead');
-    const tbody = tabela.querySelector('tbody');
-
-    thead.innerHTML = '';
-    tbody.innerHTML = '';
-
-    if (!Array.isArray(agendamentos) || agendamentos.length === 0) {
-        return;
-    }
-
-    const headerRow = document.createElement('tr');
-    const horarioHeader = document.createElement('th');
-    horarioHeader.scope = 'col';
-    horarioHeader.classList.add('th-editar');
-    horarioHeader.innerText = 'Horário';
-    headerRow.appendChild(horarioHeader);
-
-    const colaboradores = agendamentos.reduce((acc, agendamento) => {
-        const colaboradorInfo = agendamento.colaboradores || {};
-        Object.keys(colaboradorInfo).forEach(colaborador => {
-            if (!acc.includes(colaborador)) {
-                acc.push(colaborador);
-            }
-        });
-        return acc;
-    }, []);
-
-    console.log("Colaboradores únicos:", colaboradores);
-
-    colaboradores.forEach(colaborador => {
-        const th = document.createElement('th');
-        th.scope = 'col';
-        th.innerText = colaborador;
-        headerRow.appendChild(th);
-    });
-
-    thead.appendChild(headerRow);
-
-    agendamentos.forEach(agendamento => {
-        const row = document.createElement('tr');
-        const horarioCell = document.createElement('td');
-        horarioCell.innerText = agendamento.horario;
-        row.appendChild(horarioCell);
-
-        const colaboradorInfo = agendamento.colaboradores || {};
-        colaboradores.forEach(colaborador => {
-            const cell = document.createElement('td');
-            cell.innerText = colaboradorInfo[colaborador] || '';
-            row.appendChild(cell);
-        });
-
-        tbody.appendChild(row);
-    });
-}
-
-function formatarDataCompleta(dataString) {
-    const data = new Date(dataString);
-    const dia = String(data.getDate()).padStart(2, '0');
-    const mes = String(data.getMonth() + 1).padStart(2, '0');
-    const ano = data.getFullYear();
-    const horas = String(data.getHours()).padStart(2, '0');
-    const minutos = String(data.getMinutes()).padStart(2, '0');
-    const segundos = String(data.getSeconds()).padStart(2, '0');
-    return `${dia}/${mes}/${ano} ${horas}:${minutos}:${segundos}`;
-}
-
-function verificarSenhas() {
-    const campoSenha = document.getElementById("inputSenha");
-    const campoConfirmarSenha = document.getElementById("inputConfirmarSenha");
-
-    if (campoSenha.value !== campoConfirmarSenha.value && campoConfirmarSenha.value !== "") {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Atenção!',
-            text: 'Confirmação de senha divergente!',
-            confirmButtonText: 'Entendi',
-            confirmButtonColor: '#3085d6',
-        });
-        campoConfirmarSenha.value = "";
-        campoConfirmarSenha.focus();
-        return false;
-    }
-    return true;
 }

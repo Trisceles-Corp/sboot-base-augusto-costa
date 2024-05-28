@@ -1,29 +1,8 @@
-.color-box { width: 15px; height: 15px; display: inline-block; }
-.blue { background-color: blue; border-radius: 3px }
-.green { background-color: green; border-radius: 3px }
-.red { background-color: red; border-radius: 3px }
-.orange { background-color: orange; border-radius: 3px}
-.yellow { background-color: yellow; border-radius: 3px}
-
-.cores{
-    display: flex;
-}
-.desc{
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.input-date-agenda{
-    color: var(--cor-cinza);
-    text-align: center;
-    border-radius: 5px;
-    border: 1px solid #bbb;
-}
-
-.botoes-agenda{
-    float: right;
-}
+.color-box { width: 10px; height: 10px; display: inline-block; }
+.blue { background-color: blue; }
+.green { background-color: green; }
+.red { background-color: red; }
+.yellow { background-color: yellow; }
 
 .content {
     position: absolute ;
@@ -443,7 +422,7 @@ a.nav-option{
 }
 
 .table tbody tr{
-    padding: 0 !important;
+    padding: 0px !important;
 }
 
 .cel-img-tabela-clientes{
@@ -453,7 +432,6 @@ a.nav-option{
 .th-editar{
     text-align: center;
 }
-
 /*--------------------------------------------------------------------------------------------------------------------------------*/
 /*------------------------------------------------------------ footer ------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------------------*/

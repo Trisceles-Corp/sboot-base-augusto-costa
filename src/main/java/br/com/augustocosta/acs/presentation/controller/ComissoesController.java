@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.presentation.controller;
 
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.business.service.*;
 import br.com.augustocosta.acs.integration.dto.dtoComanda;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,18 @@ public class ComissoesController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoComanda dados) {
-        return "redirect:/index";
+
+        return "redirect:/index?origem=comissoes";
     }
 
     @GetMapping("/novo")
     public String novoSituacaoAgendamento(Model model) {
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
         LocalDate firstDayOfMonth = LocalDate.now().withDayOfMonth(1);
         LocalDate lastDayOfMonth = LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
-        model.addAttribute("listarComissoes", service.getAllComissoesByAtivo(1, LocalDate.now(), LocalDate.now()));
+        model.addAttribute("listarComissoes", service.getAllComissoesByAtivo(activeUserId, firstDayOfMonth, lastDayOfMonth));
         model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
         model.addAttribute("dtoComanda", new dtoComanda());
         return "comissoes";
@@ -56,8 +61,11 @@ public class ComissoesController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
-        return "redirect:/index";
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
+        return "redirect:/index?origem=comissoes";
     }
 
     @GetMapping("/listarComissoes/{colaboradorId}/{firstDay}/{lastDay}")

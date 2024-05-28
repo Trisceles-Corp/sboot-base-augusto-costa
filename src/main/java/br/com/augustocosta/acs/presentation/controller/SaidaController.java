@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.presentation.controller;
 
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.business.service.*;
 import br.com.augustocosta.acs.integration.entity.tblSaida;
 import br.com.augustocosta.acs.integration.entity.tblSaidaProduto;
@@ -10,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +48,9 @@ public class SaidaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblSaida table) {
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
         table.setAtivo(true);
 
         if (table.getId() != null && table.getId() != 0){
@@ -56,14 +59,14 @@ public class SaidaController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(activeUserId);
             service.update(table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
-            table.setCriadoPor(1);
+            table.setCriadoPor(activeUserId);
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(activeUserId);
             service.create(table);
         }
         return "redirect:/index?origem=saida";
@@ -80,7 +83,10 @@ public class SaidaController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index?origem=saida";
     }
 

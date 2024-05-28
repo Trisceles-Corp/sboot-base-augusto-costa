@@ -34,7 +34,9 @@ public class CaracteristicaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblCaracteristica caracteristica) {
-        String userId = Cookies.getUserId();
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
         caracteristica.setAtivo(true);
 
         if (caracteristica.getId() != null && caracteristica.getId() != 0){
@@ -42,16 +44,17 @@ public class CaracteristicaController {
             caracteristica.setDataCriacao(data.orElseThrow().getDataCriacao());
             caracteristica.setCriadoPor(data.get().getCriadoPor());
             caracteristica.setDataAlteracao(LocalDateTime.now());
-            caracteristica.setAlteradoPor(Integer.parseInt(userId));
+            caracteristica.setAlteradoPor(activeUserId);
             service.update(caracteristica.getId(), caracteristica);
         }
         else {
             caracteristica.setDataCriacao(LocalDateTime.now());
-            caracteristica.setCriadoPor(Integer.parseInt(userId));
+            caracteristica.setCriadoPor(activeUserId);
             caracteristica.setDataAlteracao(LocalDateTime.now());
-            caracteristica.setAlteradoPor(Integer.parseInt(userId));
+            caracteristica.setAlteradoPor(activeUserId);
             service.create(caracteristica);
         }
+
         return "redirect:/index?origem=caracteristica";
     }
 
@@ -64,8 +67,10 @@ public class CaracteristicaController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        String userId = Cookies.getUserId();
-        service.delete(id, Integer.parseInt(userId));
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index?origem=caracteristica";
     }
 }

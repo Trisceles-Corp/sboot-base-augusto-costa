@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.presentation.controller;
 
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.business.service.SituacaoCompraService;
 import br.com.augustocosta.acs.integration.entity.tblSituacaoCompra;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,10 @@ public class SituacaoCompraController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblSituacaoCompra table) {
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+
         table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblSituacaoCompra> data = service.getById(table.getId());
@@ -39,19 +44,18 @@ public class SituacaoCompraController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(activeUserId);
             service.update(table.getId(), table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
-            table.setCriadoPor(1);
+            table.setCriadoPor(activeUserId);
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(activeUserId);
             service.create(table);
         }
-
-        return "redirect:/index";
-    }
+        return "redirect:/index?origem=situacaocompra";
+   }
 
     @GetMapping("/novo")
     public String novoSituacaoAgendamento(Model model) {
@@ -62,7 +66,10 @@ public class SituacaoCompraController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
-        return "redirect:/index";
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
+        return "redirect:/index?origem=situacaocompra";
     }
 }

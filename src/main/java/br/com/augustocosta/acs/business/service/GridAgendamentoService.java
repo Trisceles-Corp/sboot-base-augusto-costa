@@ -37,6 +37,9 @@ public class GridAgendamentoService {
         }
         try {
             List<prjGridAgendamento> projection = repository.findByGridAgendamento(dataAgenda);
+            if(projection.size() <= 1){
+                return new ArrayList<>();
+            }
             return convertProjectionToDto(projection);
         } catch (JpaSystemException e) {
             return new ArrayList<>();

@@ -65,6 +65,6 @@ public class tblCaixa {
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
 
-//    @OneToMany(mappedBy = "caixa")
-//    private Set<tblCaixaMovimentacao> tblCaixamovimentacaos = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "caixa")
+    private Set<tblCaixaMovimentacao> tblCaixamovimentacaos = new LinkedHashSet<>();
 }

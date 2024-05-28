@@ -33,7 +33,9 @@ public class BandeirasController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblBandeiras table) {
-        String userId = Cookies.getUserId();
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
         table.setAtivo(true);
 
         if (table.getId() != null && table.getId() != 0){
@@ -42,18 +44,18 @@ public class BandeirasController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(Integer.parseInt(userId));
+            table.setAlteradoPor(activeUserId);
             service.update(table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
-            table.setCriadoPor(Integer.parseInt(userId));
+            table.setCriadoPor(activeUserId);
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(Integer.parseInt(userId));
+            table.setAlteradoPor(activeUserId);
             service.create(table);
         }
 
-        return "redirect:/index";
+        return "redirect:/index?origem=bandeiras";
     }
 
     @GetMapping("/novo")
@@ -65,7 +67,10 @@ public class BandeirasController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
-        return "redirect:/index";
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
+        return "redirect:/index?origem=bandeiras";
     }
 }

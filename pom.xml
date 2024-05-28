@@ -16,7 +16,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<java.version>21</java.version>
-		<start-class>br.com.augustocosta.acs.AcsApplication</start-class>
+		<start-class>br.com.augustocosta.acs.Application</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
