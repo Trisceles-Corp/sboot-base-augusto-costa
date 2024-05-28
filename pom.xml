@@ -16,6 +16,7 @@
 	<packaging>war</packaging>
 	<properties>
 		<java.version>21</java.version>
+		<start-class>br.com.augustocosta.acs.AcsApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -124,7 +125,6 @@
 			<artifactId>spring-cloud-gcp-dependencies</artifactId>
 			<version>5.3.0</version>
 			<type>pom</type>
-			<scope>import</scope>
 		</dependency>
 
 	</dependencies>
@@ -134,6 +134,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<jvmArguments>
+						-XX:+EnableDynamicAgentLoading
+						-Djdk.instrument.traceUsage
+						-Xshare:off
+					</jvmArguments>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -179,7 +186,7 @@
 		<repository>
 			<id>github</id>
 			<name>GitHub alexanderix-aeon Apache Maven Packages</name>
-			<url>https://maven.pkg.github.com/alexanderix-aeon/sboot-base-augusto-costa</url>
+			<url>https://maven.pkg.github.com/Trisceles-Corp/sboot-base-augusto-costa</url>
 		</repository>
 	</distributionManagement>
 </project>
