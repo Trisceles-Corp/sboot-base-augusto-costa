@@ -6,10 +6,7 @@
 }
 
 .nav.navbar-nav.main-nav {
-  list-style: disc outside;
-  list-style-type: disc;
-  list-style-position: outside;
-  list-style-image: initial;
+  list-style: disc outside initial;
   width: 100%;
   padding: 0;
   margin: 0;

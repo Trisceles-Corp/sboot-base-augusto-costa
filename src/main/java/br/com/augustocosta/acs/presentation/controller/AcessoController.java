@@ -10,10 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+=======
+>>>>>>> main
 @Controller
 @RequestMapping("/acesso")
 public class AcessoController {
@@ -21,11 +24,14 @@ public class AcessoController {
     @Autowired
     private UsuarioService usuarioService;
 
+<<<<<<< HEAD
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showLoginPage() {
         return "acesso";
     }
 
+=======
+>>>>>>> main
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
         model.addAttribute("tblUsuario", new tblUsuario());
@@ -38,18 +44,38 @@ public class AcessoController {
     }
 
     @PostMapping("/verify")
+<<<<<<< HEAD
     public String login(@ModelAttribute("loginDTO") dtoLogin loginDTO, HttpServletResponse response, Model model) {
+=======
+    public String login(dtoLogin loginDTO, HttpServletResponse response, Model model) {
+>>>>>>> main
         boolean isValidUser = usuarioService.validateLogin(loginDTO.getEmail(), loginDTO.getSenha());
 
         if (isValidUser) {
             tblUsuario usuario = usuarioService.getValidateUserByEmail(loginDTO.getEmail());
+<<<<<<< HEAD
             createAndSetCookies(response, usuario);
+=======
+            Cookie sessionCookie = new Cookie("session_id", "identificador_unico");
+            Cookie cookie = new Cookie("userId", String.valueOf(usuario.getId()));
+            cookie.setHttpOnly(true); // Importante para prevenir XSS
+            cookie.setPath("/");
+
+            sessionCookie.setHttpOnly(true);
+            sessionCookie.setSecure(true); // Use apenas em conexões HTTPS
+            sessionCookie.setMaxAge(7 * 24 * 60 * 60); // Expira em 7 dias
+
+            response.addCookie(cookie);
+            response.addCookie(sessionCookie);
+
+>>>>>>> main
             return "redirect:/index";
         } else {
             model.addAttribute("loginError", "Invalid email or password.");
             return "acesso";
         }
     }
+<<<<<<< HEAD
 
     private void createAndSetCookies(HttpServletResponse response, tblUsuario usuario) {
         String sessionId = UUID.randomUUID().toString();
@@ -74,3 +100,6 @@ public class AcessoController {
         response.addCookie(perfilCookie);
         response.addCookie(sessionCookie);
     }}
+=======
+}
+>>>>>>> main
