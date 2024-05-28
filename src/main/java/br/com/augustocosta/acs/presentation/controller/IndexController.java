@@ -25,24 +25,8 @@ public class IndexController {
 
     @GetMapping
     public String agendamentoPage(HttpServletRequest request, Model model) {
-<<<<<<< HEAD
         Cookies.setUserId(request);
-
         String userId = Cookies.getUserId();
-
-=======
-        // Acessar o cookie
-        Cookie[] cookies = request.getCookies();
-        String userId = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userId".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
->>>>>>> main
         if (userId != null) {
             tblUsuario usuario = usuarioService.getUsuarioById(Integer.parseInt(userId));
             model.addAttribute("usuario", usuario);
@@ -52,14 +36,9 @@ public class IndexController {
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
-<<<<<<< HEAD
         request.getSession().invalidate();
-=======
-        // Invalidar a sessão
         request.getSession().invalidate();
 
-        // Limpar os cookies
->>>>>>> main
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -69,13 +48,6 @@ public class IndexController {
                 response.addCookie(cookie);
             }
         }
-<<<<<<< HEAD
         return "redirect:/acesso";
     }
-=======
-
-        return "redirect:/acesso";
-    }
-
->>>>>>> main
 }
