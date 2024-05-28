@@ -91,6 +91,7 @@ public class tblUsuario {
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "responsavelAbertura")
-//    private Set<tblCaixa> tblCaixa = new LinkedHashSet<>();
+    @OneToMany(mappedBy = "responsavelAbertura")
+    private Set<tblCaixa> tblCaixa = new LinkedHashSet<>();
+
 }

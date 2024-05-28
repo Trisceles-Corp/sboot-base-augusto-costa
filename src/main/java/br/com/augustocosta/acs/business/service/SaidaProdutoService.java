@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,14 +41,8 @@ public class SaidaProdutoService {
     }
 
     public List<tblSaidaProduto> getBySaida(Integer saidaId) {
-        if(saidaId == 0){
-            tblSaida saida = saidaRepository.getReferenceById(saidaId);
-            return repository.findBySaida(saida);
-        }
-        else {
-            tblSaida saida = saidaRepository.findById(saidaId).orElseThrow();
-            return repository.findBySaida(saida);
-        }
+        tblSaida saida = saidaRepository.getReferenceById(saidaId);
+        return repository.findBySaida(saida);
     }
 
     public List<tblSaidaProduto> getAll() {

@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -67,7 +66,10 @@ public class AgendamentoController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoAgendamento dados) {
-        String userId = Cookies.getUserId();
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        Integer activeUserId = Integer.parseInt(userCookie) ;
+
         tblAgendamento table = dados.getAgendamento();
         table.setAtivo(true);
 
@@ -77,11 +79,11 @@ public class AgendamentoController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(Integer.parseInt(userId));
+            table.setAlteradoPor(activeUserId);
             service.update(table);
         }
         else {
-            service.create(dados, Integer.parseInt(userId));
+            service.create(dados, activeUserId);
         }
 
         return "redirect:/index";
@@ -103,7 +105,10 @@ public class AgendamentoController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        Integer activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index";
     }
 }

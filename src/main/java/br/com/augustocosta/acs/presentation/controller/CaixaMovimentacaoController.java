@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.*;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblCaixaMovimentacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -64,7 +65,10 @@ public class CaixaMovimentacaoController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index?origem=caixamovimentacao";
     }
 

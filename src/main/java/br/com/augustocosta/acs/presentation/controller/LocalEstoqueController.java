@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.presentation.controller;
 
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.business.service.LocalEstoqueService;
 import br.com.augustocosta.acs.integration.entity.tblLocalEstoque;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class LocalEstoqueController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute tblLocalEstoque table) {
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
         table.setAtivo(true);
         if (table.getId() != null && table.getId() != 0){
             Optional<tblLocalEstoque> data = service.getById(table.getId());
@@ -39,14 +43,14 @@ public class LocalEstoqueController {
             table.setDataCriacao(data.orElseThrow().getDataCriacao());
             table.setCriadoPor(data.get().getCriadoPor());
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(activeUserId);
             service.update(table.getId(), table);
         }
         else {
             table.setDataCriacao(LocalDateTime.now());
-            table.setCriadoPor(1);
+            table.setCriadoPor(activeUserId);
             table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(1);
+            table.setAlteradoPor(activeUserId);
             service.create(table);
         }
         return "redirect:/index?origem=localestoque";
@@ -61,7 +65,10 @@ public class LocalEstoqueController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        service.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.delete(id, activeUserId);
         return "redirect:/index?origem=localestoque";
     }
 }

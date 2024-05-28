@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.presentation.controller;
 
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.business.service.EnderecoService;
 import br.com.augustocosta.acs.business.service.UsuarioService;
 import br.com.augustocosta.acs.integration.dto.dtoUsuario;
@@ -55,7 +56,10 @@ public class ClienteController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
-        usuarioService.delete(id, 1);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        usuarioService.delete(id, activeUserId);
         return "redirect:/index?origem=cliente";
     }
 }

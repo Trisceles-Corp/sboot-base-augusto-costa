@@ -41,19 +41,6 @@
     </div>
     <div class="row" id="linha-botao-pesquisa">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar Usuário</button>
-        <%--            <div class="input-group w-50 m-3">--%>
-        <%--                <input type="text" class="form-control" aria-label="Input text com botão dropdown">--%>
-        <%--                <div class="input-group-append">--%>
-        <%--                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar cliente por</button>--%>
-        <%--                    <div class="dropdown-menu">--%>
-        <%--                        <a class="dropdown-item" href="#">CPF / CNPJ</a>--%>
-        <%--                        <a class="dropdown-item" href="#">E-mail</a>--%>
-        <%--                        <a class="dropdown-item" href="#">Nome</a>--%>
-        <%--                        <a class="dropdown-item" href="#">Sobrenome</a>--%>
-        <%--                        <a class="dropdown-item" href="#">Telefone</a>--%>
-        <%--                    </div>--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
     </div>
     <!-- formulário de cadastro -->
     <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoUsuario" action="${pageContext.request.contextPath}/usuario/salvar" method="POST">

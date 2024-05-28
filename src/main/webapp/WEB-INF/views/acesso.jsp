@@ -43,21 +43,12 @@
                 <div class="mb-3">
                     <button class="btn btn-primary btn-lg d-block btn-signin w-100" id="btnLogin" name="login" type="submit">Log In</button>
                 </div>
-<<<<<<< HEAD
-<%--                <div class="mb-3">--%>
-<%--                    <a class="forgot-password" href="#">Recuperar senha?</a>--%>
-<%--                </div>--%>
-<%--                <div class="mb-3">--%>
-<%--                    <a class="forgot" href="${pageContext.request.contextPath}/cliente">Novo usuário? Cadastre-se!</a>--%>
-<%--                </div>--%>
-=======
                 <div class="mb-3">
                     <a class="forgot-password" href="#">Recuperar senha?</a>
                 </div>
                 <div class="mb-3">
                     <a class="forgot" href="${pageContext.request.contextPath}/caminhoParaCadastro">Novo usuário? Cadastre-se!</a>
                 </div>
->>>>>>> main
             </form:form>
         </div>
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
