@@ -464,12 +464,15 @@ public class SqlQueries {
                     " FROM tbl_caixa c  " +
                     "WHERE CONVERT(DATE, c.DataAbertura) = CONVERT(DATE, GETDATE())";
 
+<<<<<<< HEAD
     public static final String SP_GRIDAGENDA =
             "SELECT grd.* " +
             "  FROM dbo.tbl_gridagendamento grd " +
             "  JOIN dbo.tbl_agendamento age ON grd.AgendametoId = age.AgendamentoId " +
             " WHERE age.DataAgendamento = :dataAgenda";
 
+=======
+>>>>>>> main
     public static final String SP_OBTERAGENDA =
             "EXEC sp_ObterAgendaPorData :dataAgenda";
 

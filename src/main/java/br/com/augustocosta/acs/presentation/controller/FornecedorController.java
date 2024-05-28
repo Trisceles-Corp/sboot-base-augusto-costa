@@ -61,6 +61,10 @@ public class FornecedorController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         usuarioService.delete(id, 1);
+<<<<<<< HEAD
         return "redirect:/index?origem=fornecedor";
+=======
+        return "redirect:/index";
+>>>>>>> main
     }
 }

@@ -119,6 +119,7 @@
 			<version>3.0.1</version>
 		</dependency>
 
+<<<<<<< HEAD
 		<dependency>
 			<groupId>com.google.cloud</groupId>
 			<artifactId>spring-cloud-gcp-dependencies</artifactId>
@@ -127,6 +128,8 @@
 			<scope>import</scope>
 		</dependency>
 
+=======
+>>>>>>> main
 	</dependencies>
 
 	<build>
@@ -143,6 +146,7 @@
 			</plugin>
 
 			<plugin>
+<<<<<<< HEAD
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>2.7.0</version>
@@ -153,6 +157,8 @@
 			</plugin>
 
 			<plugin>
+=======
+>>>>>>> main
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>3.6.1</version>
