@@ -146,7 +146,8 @@ public class AgendamentoService {
         tblGridAgendamento grid = new tblGridAgendamento();
         grid.setComanda(comanda);
         grid.setAgendameto(agendamento);
-        grid.setServico(dados.getServico().getFirst());
+        grid.setServico(dados.getServico().get(0));
+//        grid.setServico(dados.getServico().getFirst());
         grid.setAtivo(true);
         grid.setDataCriacao(LocalDateTime.now());
         grid.setDataAlteracao(LocalDateTime.now());

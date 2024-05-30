@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Google App Engine Deployment" type="gcp-app-engine-deploy" factoryName="Google App Engine Deployment" server-name="Google App Engine">
     <deployment type="appengine-artifact-source" name="acs:war exploded" project="steady-thunder-423317-k2" version="auto">
-      <settings cloudProjectName="steady-thunder-423317-k2" environment="APP_ENGINE_STANDARD" googleUsername="alexanderixaeon@gmail.com" promote="true" stagedArtifactName="" stopPreviousVersion="true" userSpecifiedArtifactPath="D:\IdeaProjects\sboot-base-augusto-costa\target\acs-0.0.1-SNAPSHOT.war" version="" />
+      <settings cloudProjectName="steady-thunder-423317-k2" deployAllConfigs="true" environment="APP_ENGINE_STANDARD" googleUsername="alexanderixaeon@gmail.com" promote="true" stagedArtifactName="" stopPreviousVersion="true" userSpecifiedArtifactPath="D:\IdeaProjects\sboot-base-augusto-costa\target\acs-0.0.1-SNAPSHOT.war" version="" />
     </deployment>
     <method v="2">
       <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="package" />
