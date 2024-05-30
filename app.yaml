@@ -3,6 +3,8 @@ env: flex
 
 runtime_config:
   jdk: openjdk8
+  server: jetty9
+  artifact: target/acs-0.0.1-SNAPSHOT.war
 
 handlers:
   - url: /.*
