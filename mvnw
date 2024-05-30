@@ -165,7 +165,7 @@ concat_lines() {
     # enabled. Otherwise, we may read lines that are delimited with
     # \r\n and produce $'-Xarg\r' rather than -Xarg due to word
     # splitting rules.
-    tr -s '\r\n' ' ' < "$1"
+    tr -s '\n' ' ' < "$1"
   fi
 }
 
