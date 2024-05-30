@@ -13,12 +13,16 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <meta name="google-signin-client_id" content="steady-thunder-423317-k2.apps.googleusercontent.com">
+
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login-1.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
     </head>
     <body>
         <c:if test="${not empty loginError}">
@@ -43,10 +47,11 @@
                 <div class="mb-3">
                     <button class="btn btn-primary btn-lg d-block btn-signin w-100" id="btnLogin" name="login" type="submit">Log In</button>
                 </div>
-                <div class="mb-3">
+                <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>
+                <div class="mb-3" style="display: none">
                     <a class="forgot-password" href="#">Recuperar senha?</a>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3" style="display: none">
                     <a class="forgot" href="${pageContext.request.contextPath}/caminhoParaCadastro">Novo usuário? Cadastre-se!</a>
                 </div>
             </form:form>
