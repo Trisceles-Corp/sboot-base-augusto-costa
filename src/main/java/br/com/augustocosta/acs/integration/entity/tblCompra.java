@@ -2,6 +2,7 @@ package br.com.augustocosta.acs.integration.entity;
 
 import lombok.*;
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class tblCompra {
     @JoinColumn(name = "SituacaoCompraId", nullable = false)
     private tblSituacaoCompra situacaoCompra;
 
+    @ColumnDefault("0")
     @Column(name = "ValorTotal")
     private BigDecimal valorTotal;
 

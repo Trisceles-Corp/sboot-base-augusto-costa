@@ -13,5 +13,6 @@ public interface CompraRepository extends JpaRepository<tblCompra , Integer> {
     List<tblCompra> findByLocalEstoque(tblLocalEstoque localEstqoue);
     List<tblCompra> findBySituacaoCompra(tblSituacaoCompra situacaoCompra);
     List<tblCompra > findByAtivoTrue();
+    List<tblCompra > findByAtivoTrueAndEstoqueFalse();
     List<tblCompra > findByAtivoFalse();
 }
