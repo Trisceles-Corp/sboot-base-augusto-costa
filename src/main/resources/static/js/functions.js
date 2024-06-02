@@ -772,6 +772,41 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     document.getElementById("inputObservacao").value = observacao;
 }
 
+function visualizarUsuario(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
+
+    document.getElementById("inputUsuarioId").value = usuarioId;
+    document.getElementById("inputEnderecoId").value = enderecoId;
+    document.getElementById("inputCargoId").value = cargoId;
+    document.getElementById("inputPerfilId").value = perfilId;
+    document.getElementById("inputNome").value = nome;
+    document.getElementById("inputSobrenome").value = sobrenome;
+    document.getElementById("inputCpfCnpj").value = cpfCnpj;
+    document.getElementById("inputGenero").value = genero;
+    document.getElementById("inputNascimento").value = dataNascimento;
+    document.getElementById("inputEmail").value = email;
+    document.getElementById("inputProfissao").value = profissao;
+    document.getElementById("inputDDDCel").value = dddCelular;
+    document.getElementById("inputCelular").value = celular;
+    document.getElementById("inputDDDTel").value = dddTelefone;
+    document.getElementById("inputTelefone").value = telefone;
+    document.getElementById("inputCEP").value = cep;
+    document.getElementById("inputlogradouro").value = logradouro;
+    document.getElementById("inputNumero").value = numero;
+    document.getElementById("inputComplemento").value = complemento;
+    document.getElementById("inputBairro").value = bairro;
+    document.getElementById("inputCidade").value = cidade;
+    document.getElementById("inputEstado").value = uf;
+    document.getElementById("inputObservacao").value = observacao;
+}
+
 function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
     const formClienteCadast = document.getElementById("form-cadastro");
     if (formClienteCadast.style.display === "none") {

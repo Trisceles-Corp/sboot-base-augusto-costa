@@ -57,8 +57,6 @@ public class IndexController {
                 response.addCookie(cookie);
             }
         }
-
         return "redirect:/acesso";
     }
-
 }

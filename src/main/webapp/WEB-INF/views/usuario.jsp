@@ -207,7 +207,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="dtoUsuario" items="${listaUsuarios}">
+        <c:forEach var="dtoUsuario" items="${listaColaboradores}">
             <tr>
                 <td class="cel-img-tabela-usuarios">
                     <form action="${pageContext.request.contextPath}/usuario/delete/${dtoUsuario.usuarioId}" method="POST">
