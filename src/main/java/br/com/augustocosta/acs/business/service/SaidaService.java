@@ -58,6 +58,10 @@ public class SaidaService {
         return repository.findByAtivoTrue();
     }
 
+    public List<tblSaida> getActivesEstoqueFalse() {
+        return repository.findByAtivoTrueAndEstoqueFalse();
+    }
+
     public List<tblSaida> getInactives() {
         return repository.findByAtivoFalse();
     }
@@ -112,6 +116,11 @@ public class SaidaService {
         table.setAlteradoPor(alteradoPor);
 
         repository.save(table);
+    }
+
+    @Transactional
+    public void getCommitSaidaProdutos(Integer saidaId) {
+        repository.findByCommitSaidaProdutos(saidaId);
     }
 
     public boolean isAtivo(Integer id) {

@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Produto</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />

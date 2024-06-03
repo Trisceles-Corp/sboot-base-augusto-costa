@@ -266,6 +266,8 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
 
 function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
+    const botaoFinalizar = document.getElementById("finalizar-cadastro");
+
     if (formCadastro.style.display === "none") {
         formCadastro.style.display = "block";
     } else {
@@ -379,7 +381,7 @@ function atualizarTabelaProdutosSaida(produtos) {
         let linha = tbody.insertRow();
         let celulaAcao = linha.insertCell(0);
         celulaAcao.className = 'cel-img-tabela-clientes';
-        celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover">';
+        celulaAcao.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
         linha.insertCell(1).innerText = produto.produto.id;
         linha.insertCell(2).innerText = produto.produto.descricaoProduto;
         linha.insertCell(3).innerText = produto.valorUnitario.toFixed(2);
@@ -1473,6 +1475,31 @@ function finalizarCompra(contexto, compraId) {
             .catch(error => {
                 console.error('Erro:', error);
                 alert("Erro ao finalizar a compra.");
+            });
+    }
+}
+
+function finalizarSaida(contexto, saidaId) {
+    const url = `${contexto}/saida/finalizar/${saidaId}`;
+    if (confirm("Deseja finalizar a saída?")) {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Saida finalizada com sucesso!");
+                    window.location.href = `${contexto}/index?origem=saida`;
+                } else {
+                    alert("Erro ao finalizar a saída.");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert("Erro ao finalizar a saída.");
             });
     }
 }

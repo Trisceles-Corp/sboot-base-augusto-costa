@@ -6,7 +6,7 @@ public class SqlQueries {
                     "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
-                    "CASE WHEN usr.PerfilId = 5 THEN usr.Nome + ' ' + usr.Sobrenome + '(' + crg.Nome + ')' ELSE usr.Nome + ' ' + usr.Sobrenome END AS NomeCompleto, " +
+                    "CASE WHEN usr.PerfilId NOT IN (4,6) THEN usr.Nome + ' ' + usr.Sobrenome + '(' + crg.Nome + ')' ELSE usr.Nome + ' ' + usr.Sobrenome END AS NomeCompleto, " +
                     "usr.Genero, " +
                     "CASE usr.Genero WHEN 'M' THEN 'Masculino' WHEN 'F' THEN 'Feminino' ELSE 'Outros' END GeneroDescricao, " +
                     "usr.DataNascimento, " +
@@ -50,7 +50,7 @@ public class SqlQueries {
                     "usr.CpfCnpj, " +
                     "usr.Nome, " +
                     "usr.Sobrenome, " +
-                    "CASE WHEN usr.PerfilId = 5 THEN usr.Nome + ' ' + usr.Sobrenome + '(' + crg.Nome + ')' ELSE usr.Nome + ' ' + usr.Sobrenome END AS NomeCompleto, " +
+                    "CASE WHEN usr.PerfilId NOT IN (4,6) THEN usr.Nome + ' ' + usr.Sobrenome + '(' + crg.Nome + ')' ELSE usr.Nome + ' ' + usr.Sobrenome END AS NomeCompleto, " +
                     "usr.Genero, " +
                     "CASE usr.Genero WHEN 'M' THEN 'Masculino' WHEN 'F' THEN 'Feminino' ELSE 'Outros' END GeneroDescricao, " +
                     "usr.DataNascimento, " +

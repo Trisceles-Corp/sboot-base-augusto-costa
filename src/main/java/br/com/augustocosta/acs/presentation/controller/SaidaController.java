@@ -41,7 +41,7 @@ public class SaidaController {
 
     @GetMapping
     public String listarSaidas(Model model) {
-        model.addAttribute("listarSaidas", service.getActives());
+        model.addAttribute("listarSaidas", service.getActivesEstoqueFalse());
         model.addAttribute("listarProdutos", produtoService.getActives());
         model.addAttribute("listarSaidaProdutos", saidaProdutoService.getBySaida(0));
         model.addAttribute("listarLocalEstoque", localService.getActiveByNameAsc());
@@ -90,6 +90,12 @@ public class SaidaController {
         return "redirect:/index?origem=saida";
     }
 
+    @PostMapping("/finalizar/{id}")
+    public String finalizar(@PathVariable Integer id) {
+        service.getCommitSaidaProdutos(id);
+        return "redirect:/index?origem=saida";
+    }
+
     @GetMapping("/produtos/{saidaId}")
     @ResponseBody
     public ResponseEntity<List<tblSaidaProduto>> listarProdutosPorSaida(@PathVariable Integer saidaId) {
@@ -103,5 +109,4 @@ public class SaidaController {
         tblProduto produto = produtoService.getById(produtoId).orElseThrow();
         return ResponseEntity.ok(produto);
     }
-
 }

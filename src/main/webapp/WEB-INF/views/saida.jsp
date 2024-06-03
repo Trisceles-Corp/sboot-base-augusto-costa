@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>Augusto Costa</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
@@ -114,6 +115,7 @@
         <div class="mt-2">
             <button type="submit" class="btn btn-primary" id="salvar-cadastro" onclick="coletarDadosFormularioSaidas(); document.getElementById('form-cadastro').submit();">Salvar</button>
             <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+            <button type="button" class="btn btn-success m-1" id="finalizar-cadastro" onclick="finalizarSaida('${pageContext.request.contextPath}', document.getElementById('field_Id').value)">Finalizar</button>
         </div>
     </form:form>
 </div>
