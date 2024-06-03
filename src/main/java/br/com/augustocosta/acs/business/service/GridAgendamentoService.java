@@ -49,7 +49,7 @@ public class GridAgendamentoService {
     private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> rows) {
         List<dtoGridAgendamento> dtos = new ArrayList<>();
         for (prjGridAgendamento row : rows) {
-            List<tblServico> servicosAgendamento = servicosAgendamentoService.getServicoByAgendamentoId(row.getAgendametoId());
+            List<tblServico> servicosAgendamento = servicosAgendamentoService.getServicoByAgendamentoId(row.getAgendamentoId());
             LocalTime tempoTotalServicos = LocalTime.parse("00:00");
 
             for (tblServico servico : servicosAgendamento) {
@@ -58,7 +58,7 @@ public class GridAgendamentoService {
                         .plusMinutes(tempoServico.getMinute());
             }
 
-            tblAgendamento agendamento = agendamentoService.getById(row.getAgendametoId()).orElseThrow();
+            tblAgendamento agendamento = agendamentoService.getById(row.getAgendamentoId()).orElseThrow();
             tblComanda comanda = comandaService.getById(row.getComandaId()).orElseThrow();
             tblServico servico = servicoService.getById(row.getServicoId()).orElseThrow();
 
@@ -74,6 +74,7 @@ public class GridAgendamentoService {
             dto.setAgendamento(agendamento);
             dto.setServico(servico);
             dto.setColaborador(agendamento.getColaborador().getNome());
+            dto.setSituacao(row.getSituacao());
             dto.setAtivo(row.getAtivo());
             dto.setDataCriacao(row.getDataCriacao());
             dto.setDataAlteracao(row.getDataAlteracao());

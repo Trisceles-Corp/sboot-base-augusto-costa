@@ -73,31 +73,132 @@
             <span style="padding: 10px">Em espera</span>
         </div>
     </div>
-<%--    <div class="panel col-md-10" id="panel-resultado">--%>
-<%--        <div class="row">--%>
-<%--            <table id="tabelaGridAgendamento" class="table table-bordered table-hover table-responsive my-3">--%>
-<%--                <thead class="table-secondary">--%>
-<%--                <tr class="gridHeader">--%>
-<%--                    <th scope="col" class="th-editar">Horário</th>--%>
-<%--                    <c:forEach var="colaborador" items="${listarAgendamentos[0].colaboradores.keySet()}">--%>
-<%--                        <th scope="col">${colaborador}</th>--%>
-<%--                    </c:forEach>--%>
-<%--                </tr>--%>
-<%--                </thead>--%>
-<%--                <tbody>--%>
-<%--                <c:forEach var="item" items="${listarAgendamentos}">--%>
-<%--                    <tr>--%>
-<%--                        <td><c:out value="${item.horario}" /></td>--%>
-<%--                        <c:forEach var="colaborador" items="${item.colaboradores}">--%>
-<%--                            <td><c:out value="${colaborador.value}" /></td>--%>
-<%--                        </c:forEach>--%>
-<%--                    </tr>--%>
-<%--                </c:forEach>--%>
-<%--                </tbody>--%>
-<%--            </table>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-</div>
+    <div class="panel col-md-10" id="panel-resultado">
+        <div class="row">
+            <table id="tabelaGridAgendamento" class="table table-bordered table-hover table-responsive my-3">
+                <thead class="table-secondary">
+                <tr class="gridHeader">
+                    <th scope="col" class="th-editar">Horário</th>
+                    <c:forEach var="agendamento" items="${listarAgendamentos}">
+                        <th scope="col">${agendamento.colaborador}</th>
+                    </c:forEach>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="hora" begin="9" end="18">
+                    <tr>
+                        <td>${hora}:00</td>
+                        <c:forEach var="agendamento" items="${listarAgendamentos}">
+                            <c:choose>
+                                <c:when test="${agendamento.horarioIncial.hour == hora || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)}">
+                                    <c:choose>
+                                        <c:when test="${agendamento.situacao == 'Agendado'}">
+                                            <td class="bg-success">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Aberta'}">
+                                            <td class="bg-danger">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Em espera'}">
+                                            <td class="bg-warning">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Finalizado'}">
+                                            <td class="bg-primary">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Bloqueio'}">
+                                            <td class="bg-secondary">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </tr>
+                    <tr>
+                        <td>${hora}:30</td>
+                        <c:forEach var="agendamento" items="${listarAgendamentos}">
+                            <c:choose>
+                                <c:when test="${agendamento.horarioIncial.hour == hora && agendamento.horarioIncial.minute == 30 || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) || (agendamento.horarioIncial.hour == hora && agendamento.horarioFinal.minute > 30)}">
+                                    <c:choose>
+                                        <c:when test="${agendamento.situacao == 'Agendado'}">
+                                            <td class="bg-success">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Aberta'}">
+                                            <td class="bg-danger">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Em espera'}">
+                                            <td class="bg-warning">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Finalizado'}">
+                                            <td class="bg-primary">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                        <c:when test="${agendamento.situacao == 'Bloqueio'}">
+                                            <td class="bg-secondary">
+                                                <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                </a>
+                                            </td>
+                                        </c:when>
+                                    </c:choose>
+                                </c:when>
+                                <c:otherwise>
+                                    <td></td>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div></div>
 <div class="row'">
     <c:if test="${not empty mensagemErro}">
         <div class="alert alert-danger" role="alert">

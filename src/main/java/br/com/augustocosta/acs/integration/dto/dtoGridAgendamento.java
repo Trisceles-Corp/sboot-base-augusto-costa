@@ -19,6 +19,7 @@ public class dtoGridAgendamento {
     private tblComanda comanda;
     private tblAgendamento agendamento;
     private tblServico servico;
+    private String situacao;
     private Boolean ativo;
     private LocalDate dataCriacao;
     private LocalDate dataAlteracao;

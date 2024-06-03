@@ -43,6 +43,16 @@ public class AgendamentoService {
     }
 
     @Transactional
+    public tblAgendamento update(tblAgendamento dados) {
+        tblGridAgendamento grid = gridAgendamentoRepository.findByAgendamento(dados);
+        grid.setSituacao(dados.getSituacao().getNome());
+        grid.setDataAlteracao(LocalDateTime.now());
+        grid.setAlteradoPor(dados.getAlteradoPor());
+        gridAgendamentoRepository.save(grid);
+        return repository.save(dados);
+    }
+
+    @Transactional
     public void create(dtoAgendamento dados, Integer userId) {
         tblAgendamento agendamento = createAgendamento(dados.getAgendamento(), userId);
         final BigDecimal[] somaValores = {BigDecimal.valueOf(0.0)};
@@ -144,10 +154,12 @@ public class AgendamentoService {
 
         // Insere agendamento no grid
         tblGridAgendamento grid = new tblGridAgendamento();
+        String situacao = situacaoRepository.findById(agendamento.getSituacao().getId()).orElseThrow().getNome();
+
         grid.setComanda(comanda);
-        grid.setAgendameto(agendamento);
+        grid.setAgendamento(agendamento);
         grid.setServico(dados.getServico().get(0));
-//        grid.setServico(dados.getServico().getFirst());
+        grid.setSituacao(situacao);
         grid.setAtivo(true);
         grid.setDataCriacao(LocalDateTime.now());
         grid.setDataAlteracao(LocalDateTime.now());
@@ -220,10 +232,6 @@ public class AgendamentoService {
             });
         }
         return ret;
-    }
-
-    public tblAgendamento update(tblAgendamento dados) {
-        return repository.save(dados);
     }
 
     public void delete(Integer id, int alteradoPor) {

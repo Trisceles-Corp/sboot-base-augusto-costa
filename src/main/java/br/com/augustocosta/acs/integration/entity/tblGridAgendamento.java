@@ -22,12 +22,15 @@ public class tblGridAgendamento {
     private tblComanda comanda;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "AgendametoId", nullable = false)
-    private tblAgendamento agendameto;
+    @JoinColumn(name = "AgendamentoId", nullable = false)
+    private tblAgendamento agendamento;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ServicoId", nullable = false)
     private tblServico servico;
+
+    @Column(name = "Situacao")
+    private String situacao;
 
     @ColumnDefault("1")
     @Column(name = "Ativo", nullable = false)

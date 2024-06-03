@@ -462,7 +462,7 @@ public class SqlQueries {
     public static final String SP_GRIDAGENDA =
             "SELECT * " +
             "FROM dbo.tbl_gridagendamento grd " +
-            "JOIN dbo.tbl_agendamento age ON grd.AgendametoId = age.AgendamentoId " +
+            "JOIN dbo.tbl_agendamento age ON grd.AgendamentoId = age.AgendamentoId " +
             "WHERE age.DataAgendamento = :dataAgenda";
 
     public static final String QUERY_MAXINDICECAIXA =
