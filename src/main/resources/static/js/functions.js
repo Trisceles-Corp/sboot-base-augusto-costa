@@ -36,6 +36,7 @@ function toggleFormCadastro() {
     const situacaoCompra = document.getElementById("field_SituacaoCompraId");
     const localEstoque = document.getElementById("field_LocalEstoqueId");
     const tabela = document.getElementById("tabelaDadosProdutos");
+    const inserir = document.getElementById("div-inserir");
 
     if (formCadastro.style.display === "none") {
         formCadastro.style.display = "block";
@@ -57,6 +58,15 @@ function toggleFormCadastro() {
         // Limpar o conteúdo existente do thead e tbody
         thead.innerHTML = '';
         tbody.innerHTML = '';
+    }
+
+    if(inserir !== null){
+        if(inserir.display === "none" ){
+            inserir.display = "inline"
+        }
+        else{
+            inserir.display = "inline"
+        }
     }
 }
 
@@ -214,13 +224,16 @@ function visualizarSituacaoAgendamento(id, name) {
 function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
     const botaoSalvar = document.getElementById("salvar-cadastro");
+    const botaoFinalizar = document.getElementById("finalizar-cadastro");
+    const situacaoCompraIdNumerico = Number(situacaoCompraId);
+    const botaoinserir = document.getElementById("buttonCompras");
 
     if (formCadastro.style.display === "none") {
         formCadastro.style.display = "block";
     } else {
         formCadastro.style.display = "block";
     }
-    const situacaoCompraIdNumerico = Number(situacaoCompraId);
+
     const dataCriacaoDate = new Date(dataCriacao);
     const dataFormatada = dataCriacaoDate.toLocaleDateString('pt-BR', {
         day: '2-digit',
@@ -234,6 +247,8 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
     document.getElementById("field_LocalEstoqueId").disabled = !camposHabilitados;
     document.getElementById("field_SituacaoCompraId").disabled = !camposHabilitados;
     botaoSalvar.disabled = !camposHabilitados;
+    botaoinserir.disabled = !camposHabilitados;
+    botaoFinalizar.disabled = camposHabilitados;
 
     document.getElementById("field_Id").value = id;
     document.getElementById("field_LocalEstoqueId").value = localEstoqueId;
@@ -245,7 +260,7 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
 
     fetch(`${contexto}/compra/produtos/${id}`)
         .then(response => response.json())
-        .then(data => atualizarTabelaProdutosCompra(data))
+        .then(data => atualizarTabelaProdutosCompra(data,situacaoCompraId))
         .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
@@ -275,7 +290,7 @@ function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTota
 
     fetch(`${contexto}/saida/produtos/${id}`)
         .then(response => response.json())
-        .then(data => atualizarTabelaProdutos(data))
+        .then(data => atualizarTabelaProdutosSaida(data))
         .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
@@ -300,7 +315,47 @@ function atualizarTabelaProdutos(produtos) {
     });
 }
 
-function atualizarTabelaProdutosCompra(produtos) {
+function atualizarTabelaProdutosCompra(produtos, situacaoCompraId) {
+    const tabela = document.getElementById("tabelaDadosProdutos");
+    const thead = tabela.getElementsByTagName('thead')[0];
+    const tbody = tabela.getElementsByTagName('tbody')[0];
+    const situacaoCompraIdNumerico = Number(situacaoCompraId);
+
+    // Limpar o conteúdo existente do thead e tbody
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    // Criar o cabeçalho da tabela
+    let cabecalho = thead.insertRow();
+    cabecalho.className = 'gridHeader';
+    cabecalho.insertCell(0).outerHTML = '<th scope="col" class="th-editar">Ações</th>';
+    cabecalho.insertCell(1).outerHTML = '<th scope="col">Id Produto</th>';
+    cabecalho.insertCell(2).outerHTML = '<th scope="col">Produto</th>';
+    cabecalho.insertCell(3).outerHTML = '<th scope="col">Valor Unitário</th>';
+    cabecalho.insertCell(4).outerHTML = '<th scope="col">Quantidade</th>';
+    cabecalho.insertCell(5).outerHTML = '<th scope="col">Total Produto</th>';
+
+    // Preencher o corpo da tabela com os dados dos produtos
+    produtos.forEach(produto => {
+        let linha = tbody.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.className = 'cel-img-tabela-clientes';
+
+        if(situacaoCompraIdNumerico === 1){
+            celulaAcao.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+        } else{
+            celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover">';
+        }
+
+        linha.insertCell(1).innerText = produto.produto.id;
+        linha.insertCell(2).innerText = produto.produto.descricaoProduto;
+        linha.insertCell(3).innerText = produto.valorUnitario.toFixed(2);
+        linha.insertCell(4).innerText = produto.quantidade;
+        linha.insertCell(5).innerText = produto.valorTotal.toFixed(2);
+    });
+}
+
+function atualizarTabelaProdutosSaida(produtos) {
     const tabela = document.getElementById("tabelaDadosProdutos");
     const thead = tabela.getElementsByTagName('thead')[0];
     const tbody = tabela.getElementsByTagName('tbody')[0];
@@ -487,7 +542,6 @@ function atualizarTabelaComissoes(comissoes) {
 
 function pesquisarMovimentacoes(contexto, firstDay, lastDay) {
     const url = `${contexto}/caixamovimentacao/listarMovimentacoes/${firstDay}/${lastDay}`;
-    console.log("URL da requisição: ", url);
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -860,6 +914,19 @@ function adicionarCompraProduto() {
     buscarDadosCompraProdutos(produtoId);
 }
 
+function adicionarSaidaProduto() {
+    const produtoId = document.getElementById("field_ProdutoId").value;
+    const table = document.getElementById("tabelaDadosProdutos");
+
+    if (table.style.display === "none") {
+        table.style.display = "block";
+    } else {
+        table.style.display = "block";
+    }
+
+    buscarDadosSaidaProdutos(produtoId);
+}
+
 function adicionarProduto() {
     const produtoId = document.getElementById("field_ProdutoId").value;
     const table = document.getElementById("tabelaDadosProdutos");
@@ -927,6 +994,19 @@ function buscarDadosCompraProdutos(produtoId) {
         type: 'GET',
         success: function(response) {
             atualizarGridCompraProdutos(response);
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados dos produtos: ", error);
+        }
+    });
+}
+
+function buscarDadosSaidaProdutos(produtoId) {
+    $.ajax({
+        url: '/saida/listaSaidaProdutos/' + produtoId,
+        type: 'GET',
+        success: function(response) {
+            atualizarGridSaidaProdutos(response);
         },
         error: function(error) {
             console.log("Erro ao buscar dados dos produtos: ", error);
@@ -1004,6 +1084,32 @@ function atualizarGridProdutos(produto) {
 }
 
 function atualizarGridCompraProdutos(produto) {
+    var quantidadeInput = document.getElementById("field_Quantidade");
+    var quantidade = parseInt(quantidadeInput.value, 10); // Converte para número, base 10
+
+    if (isNaN(quantidade) || quantidade === null || quantidade === "" || quantidade < 1) {
+        quantidade = 1;
+        quantidadeInput.value = 1;
+    }
+
+    var tabelaProdutos = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaProdutos.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaId = novaLinha.insertCell(1);
+    var celulaProduto = novaLinha.insertCell(2);
+    var celulaValor = novaLinha.insertCell(3);
+    var celulaQuantidade = novaLinha.insertCell(4);
+    var celulaTotal = novaLinha.insertCell(5);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaId.innerHTML = produto.id;
+    celulaProduto.innerHTML = produto.descricaoProduto;
+    celulaValor.innerHTML = produto.valorVenda.toFixed(2);
+    celulaQuantidade.innerHTML = quantidade;
+    celulaTotal.innerHTML = (produto.valorVenda * quantidade).toFixed(2);
+}
+
+function atualizarGridSaidaProdutos(produto) {
     var quantidadeInput = document.getElementById("field_Quantidade");
     var quantidade = parseInt(quantidadeInput.value, 10); // Converte para número, base 10
 
@@ -1199,6 +1305,28 @@ function coletarDadosFormularioCompras() {
     });
 }
 
+function coletarDadosFormularioSaidas() {
+    var produtos = [];
+    document.querySelectorAll("#tabelaDadosProdutos tbody tr").forEach(function(row) {
+        var produtoId = row.cells[1] ? row.cells[1].textContent : '';
+        var descricaoProduto = row.cells[2] ? row.cells[2].textContent : '';
+        var valorUnitario = row.cells[3] ? row.cells[3].textContent : '';
+        var quantidade = row.cells[4] ? row.cells[4].textContent : '';
+        var valorTotal = row.cells[5] ? row.cells[5].textContent : '';
+        if (produtoId) {
+            produtos.push({produtoId: produtoId, descricaoProduto: descricaoProduto, valorUnitario: valorUnitario, quantidade: quantidade, valorTotal: valorTotal});
+        }
+    });
+    var form = document.getElementById("form-cadastro");
+    produtos.forEach(function(produto, index) {
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].produto.id`, produto.produtoId));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].produto.descricaoProduto`, produto.descricaoProduto));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].valorUnitario`, produto.valorUnitario));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].quantidade`, produto.quantidade));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].valorTotal`, produto.valorTotal));
+    });
+}
+
 function coletarDadosPagamentos() {
     var pagamentos = [];
     document.querySelectorAll("#tabelaDadosPagamentos tbody tr").forEach(function(row) {
@@ -1322,4 +1450,29 @@ function signOut() {
     auth2.signOut().then(function () {
         console.log('User signed out.');
     });
+}
+
+function finalizarCompra(contexto, compraId) {
+    const url = `${contexto}/compra/finalizar/${compraId}`;
+    if (confirm("Deseja finalizar a compra?")) {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Compra finalizada com sucesso!");
+                    window.location.href = `${contexto}/index?origem=compra`;
+                } else {
+                    alert("Erro ao finalizar a compra.");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert("Erro ao finalizar a compra.");
+            });
+    }
 }

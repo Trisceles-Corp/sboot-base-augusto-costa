@@ -459,18 +459,24 @@ public class SqlQueries {
                     "WHERE cax.Ativo = 1 " +
                     "ORDER BY cax.Nome";
 
-    public static final String QUERY_MAXINDICECAIXA =
+    public static final String SP_GRIDAGENDA =
             "SELECT * " +
             "FROM dbo.tbl_gridagendamento grd " +
             "JOIN dbo.tbl_agendamento age ON grd.AgendametoId = age.AgendamentoId " +
             "WHERE age.DataAgendamento = :dataAgenda";
 
-    public static final String SP_GRIDAGENDA =
+    public static final String QUERY_MAXINDICECAIXA =
             "SELECT COALESCE(MAX(c.NomeIndice),0) " +
                     " FROM tbl_caixa c  " +
                     "WHERE CONVERT(DATE, c.DataAbertura) = CONVERT(DATE, GETDATE())";
 
     public static final String SP_OBTERAGENDA =
             "EXEC sp_ObterAgendaPorData :dataAgenda";
+
+    public static final String SP_EFETIVACOMPRAPRODUTOS =
+            "EXEC spCompraProdutoEfetivacao :compraId";
+
+    public static final String SP_EFETIVASAIDAPRODUTOS =
+            "EXEC spSaidaProdutoEfetivacao :saidaId";
 
 }

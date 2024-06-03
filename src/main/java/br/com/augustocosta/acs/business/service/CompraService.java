@@ -119,6 +119,11 @@ public class CompraService {
     }
 
     @Transactional
+    public void getCommitCompraProdutos(Integer compraId) {
+        repository.findByCommitCompraProdutos(compraId);
+    }
+
+    @Transactional
     public void delete(Integer id, int alteradoPor) {
         tblCompra table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Cargo não encontrado com id: " + id));

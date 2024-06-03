@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/compra")
@@ -40,11 +41,15 @@ public class CompraController {
 
     @GetMapping
     public String listarCompras(Model model) {
+        List<tblSituacaoCompra> listarSituacao = situacaoService.getActiveByNameAsc();
+        List<tblSituacaoCompra> listarSituacaoFiltrada = listarSituacao.stream()
+                .filter(situacao -> situacao.getId() != 3)
+                .collect(Collectors.toList());
+        model.addAttribute("listarSituacao", listarSituacaoFiltrada);
         model.addAttribute("listarCompra", service.getActiveEstoqueFalse());
         model.addAttribute("listarProdutos", produtoService.getActives());
         model.addAttribute("listarCompraProdutos", compraProdutoService.getByCompra(0));
         model.addAttribute("listarLocalEstoque", localService.getActiveByNameAsc());
-        model.addAttribute("listarSituacao", situacaoService.getActiveByNameAsc());
         model.addAttribute("dtoCompra", new dtoCompra());
         return "compra";
     }
@@ -56,8 +61,13 @@ public class CompraController {
         if(userCookie == null){ userCookie = "1"; }
         int activeUserId = Integer.parseInt(userCookie) ;
 
+        tblLocalEstoque localEstoque = localService.getById(dados.getLocalEstoqueId()).orElseThrow();
+        tblSituacaoCompra situacaoCompra = situacaoService.getById(dados.getSituacaoCompraId()).orElseThrow();
+
         if (dados.getId() != null && dados.getId() != 0){
             tblCompra table = service.getById(dados.getId()).orElseThrow();
+            table.setLocalEstoque(localEstoque);
+            table.setSituacaoCompra(situacaoCompra);
             table.setAtivo(true);
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(activeUserId);
@@ -65,8 +75,6 @@ public class CompraController {
         }
         else {
             tblCompra table = new tblCompra();
-            tblLocalEstoque localEstoque = localService.getById(dados.getLocalEstoqueId()).orElseThrow();
-            tblSituacaoCompra situacaoCompra = situacaoService.getById(dados.getSituacaoCompraId()).orElseThrow();
             table.setLocalEstoque(localEstoque);
             table.setSituacaoCompra(situacaoCompra);
             table.setValorTotal(dados.getValorTotal());
@@ -86,6 +94,12 @@ public class CompraController {
         if(userCookie == null){ userCookie = "1"; }
         int activeUserId = Integer.parseInt(userCookie) ;
         service.delete(id, activeUserId);
+        return "redirect:/index?origem=compra";
+    }
+
+    @PostMapping("/finalizar/{id}")
+    public String finalizar(@PathVariable Integer id) {
+        service.getCommitCompraProdutos(id);
         return "redirect:/index?origem=compra";
     }
 

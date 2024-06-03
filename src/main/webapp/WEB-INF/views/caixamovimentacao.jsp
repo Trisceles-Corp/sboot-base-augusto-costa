@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label  class="form-label" for="btn-pesquisa">Pesquisa:</label>
-                    <button type="button" class="form-control btn btn-primary" id="btn-pesquisa" onclick="pesquisarMovimentacoes('${pageContext.request.contextPath}'); return false;">Buscar</button>
+                    <button type="button" class="form-control btn btn-primary" id="btn-pesquisa" onclick="pesquisarMovimentacoes('${pageContext.request.contextPath}', document.getElementById('searchDataInicial').value, document.getElementById('searchDataFinal').value); return false;">Buscar</button>
                 </div>
             </div>
         </div>

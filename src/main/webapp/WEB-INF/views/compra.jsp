@@ -11,6 +11,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
     <title>Augusto Costa</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/fonts/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
@@ -61,7 +62,7 @@
                 <form:input path="dataCriacao" class="form-control" type="text" id="field_DataCriacao" disabled="true" />
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="div-inserir">
             <div class="form-group col-md-4">
                 <form:label path="produtoId" class="form-label" for="field_ProdutoId">Produto:</form:label>
                 <form:select path="produtoId" class="form-control" id="field_ProdutoId">
@@ -114,6 +115,7 @@
         <div class="mt-2">
             <button type="button" class="btn btn-primary" id="salvar-cadastro" onclick="coletarDadosFormularioCompras(); document.getElementById('form-cadastro').submit();">Salvar</button>
             <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+            <button type="button" class="btn btn-success m-1" id="finalizar-cadastro" onclick="finalizarCompra('${pageContext.request.contextPath}', document.getElementById('field_Id').value)">Finalizar</button>
         </div>
     </form:form>
 </div>
