@@ -19,11 +19,13 @@ public class tblCompraProduto {
     private CompraProduto id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CompraId", nullable = false)
+    @MapsId("CompraId")
+    @JoinColumn(name = "CompraId", nullable = false, referencedColumnName = "CompraId")
     private tblCompra compra;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ProdutoId", nullable = false)
+    @MapsId("ProdutoId")
+    @JoinColumn(name = "ProdutoId", nullable = false, referencedColumnName = "ProdutoId")
     private tblProduto produto;
 
     @Column(name = "ValorUnitario", nullable = false)

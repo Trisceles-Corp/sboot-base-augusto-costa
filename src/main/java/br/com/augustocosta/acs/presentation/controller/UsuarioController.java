@@ -28,6 +28,7 @@ public class UsuarioController {
 
     @GetMapping
     public String listarTodos(Model model) {
+        model.addAttribute("listaColaboradores", service.getAllByColaborador());
         model.addAttribute("listaUsuarios", service.getActiveByNameAsc());
         model.addAttribute("listaPerfil", service.getAllActivesByPerfil());
         model.addAttribute("listaCargos", service.getAllActivesByCargo());

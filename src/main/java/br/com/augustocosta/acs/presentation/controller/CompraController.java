@@ -1,12 +1,9 @@
 package br.com.augustocosta.acs.presentation.controller;
 
+import br.com.augustocosta.acs.business.service.*;
 import br.com.augustocosta.acs.business.util.Cookies;
-import br.com.augustocosta.acs.business.service.CompraProdutoService;
-import br.com.augustocosta.acs.business.service.CompraService;
-import br.com.augustocosta.acs.business.service.LocalEstoqueService;
-import br.com.augustocosta.acs.business.service.SituacaoCompraService;
-import br.com.augustocosta.acs.integration.entity.tblCompraProduto;
-import br.com.augustocosta.acs.integration.entity.tblCompra;
+import br.com.augustocosta.acs.integration.dto.dtoCompra;
+import br.com.augustocosta.acs.integration.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/compra")
@@ -30,59 +28,64 @@ public class CompraController {
     private LocalEstoqueService localService;
 
     @Autowired
+    private ProdutoService produtoService;
+
+    @Autowired
     private SituacaoCompraService situacaoService;
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("tblCompra", new tblCompra());
-        model.addAttribute("tblCompraProduto", new tblCompraProduto());
+        model.addAttribute("dtoCompra", new dtoCompra());
         return "compra";
     }
 
     @GetMapping
     public String listarCompras(Model model) {
-        model.addAttribute("listarCompra", service.getActives());
+        List<tblSituacaoCompra> listarSituacao = situacaoService.getActiveByNameAsc();
+        List<tblSituacaoCompra> listarSituacaoFiltrada = listarSituacao.stream()
+                .filter(situacao -> situacao.getId() != 3)
+                .collect(Collectors.toList());
+        model.addAttribute("listarSituacao", listarSituacaoFiltrada);
+        model.addAttribute("listarCompra", service.getActiveEstoqueFalse());
+        model.addAttribute("listarProdutos", produtoService.getActives());
         model.addAttribute("listarCompraProdutos", compraProdutoService.getByCompra(0));
         model.addAttribute("listarLocalEstoque", localService.getActiveByNameAsc());
-        model.addAttribute("listarSituacao", situacaoService.getActiveByNameAsc());
-        model.addAttribute("tblCompra", new tblCompra());
-        model.addAttribute("tblCompraProduto", new tblCompraProduto());
+        model.addAttribute("dtoCompra", new dtoCompra());
         return "compra";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblCompra table) {
+    public String salvar(@ModelAttribute dtoCompra dados) {
+        List<tblCompraProduto> tableCompras = dados.getCompraProdutos();
         String userCookie = Cookies.getUserId();
         if(userCookie == null){ userCookie = "1"; }
         int activeUserId = Integer.parseInt(userCookie) ;
-        table.setAtivo(true);
-        if (table.getId() != null && table.getId() != 0){
-            Optional<tblCompra> data = service.getById(table.getId());
-            table.setAtivo(table.getAtivo());
-            table.setDataCriacao(data.orElseThrow().getDataCriacao());
-            table.setCriadoPor(data.get().getCriadoPor());
+
+        tblLocalEstoque localEstoque = localService.getById(dados.getLocalEstoqueId()).orElseThrow();
+        tblSituacaoCompra situacaoCompra = situacaoService.getById(dados.getSituacaoCompraId()).orElseThrow();
+
+        if (dados.getId() != null && dados.getId() != 0){
+            tblCompra table = service.getById(dados.getId()).orElseThrow();
+            table.setLocalEstoque(localEstoque);
+            table.setSituacaoCompra(situacaoCompra);
+            table.setAtivo(true);
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(activeUserId);
-            service.update(table);
+            service.update(table, tableCompras);
         }
         else {
+            tblCompra table = new tblCompra();
+            table.setLocalEstoque(localEstoque);
+            table.setSituacaoCompra(situacaoCompra);
+            table.setValorTotal(dados.getValorTotal());
+            table.setEstoque(false);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(activeUserId);
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(activeUserId);
-            service.create(table);
+            service.create(table, tableCompras);
         }
-
         return "redirect:/index?origem=compra";
-    }
-
-    @GetMapping("/novo")
-    public String novoSituacaoAgendamento(Model model) {
-        model.addAttribute("listarCompra", service.getActives());
-        model.addAttribute("listarCompraProdutos", compraProdutoService.getActives());
-        model.addAttribute("tblCompra", new tblCompra());
-        model.addAttribute("tblCompraProduto", new tblCompraProduto());
-        return "compra";
     }
 
     @PostMapping("/delete/{id}")
@@ -94,10 +97,24 @@ public class CompraController {
         return "redirect:/index?origem=compra";
     }
 
+    @PostMapping("/finalizar/{id}")
+    public String finalizar(@PathVariable Integer id) {
+        service.getCommitCompraProdutos(id);
+        return "redirect:/index?origem=compra";
+    }
+
     @GetMapping("/produtos/{compraId}")
     @ResponseBody
     public ResponseEntity<List<tblCompraProduto>> listarProdutosPorCompra(@PathVariable Integer compraId) {
         List<tblCompraProduto> produtos = compraProdutoService.getByCompra(compraId);
         return ResponseEntity.ok(produtos);
     }
+
+    @GetMapping("/listaCompraProdutos/{produtoId}")
+    @ResponseBody
+    public ResponseEntity<tblProduto> listaCompraProdutos(@PathVariable("produtoId") Integer produtoId) {
+        tblProduto produto = produtoService.getById(produtoId).orElseThrow();
+        return ResponseEntity.ok(produto);
+    }
+
 }

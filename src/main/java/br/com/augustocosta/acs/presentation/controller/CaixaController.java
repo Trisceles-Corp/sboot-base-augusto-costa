@@ -27,7 +27,7 @@ public class CaixaController {
     @GetMapping
     public String listarDependencias(Model model) {
         model.addAttribute("listarCaixas", service.getAllByAtivo());
-        model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
+        model.addAttribute("listarColaboradores", usuarioService.getAllByColaborador());
         model.addAttribute("dtoCaixa", new dtoCaixa());
         return "caixa";
     }

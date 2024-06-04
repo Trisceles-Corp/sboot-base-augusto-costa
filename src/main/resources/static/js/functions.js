@@ -21,12 +21,52 @@ function converteMinutosParaHora(minutos) {
     var mins = minutos % 60;
     return String(horas).padStart(2, '0') + ":" + String(mins).padStart(2, '0');
 }
+
+// function toggleFormCadastro() {
+//     const formCadastro = document.getElementById("form-cadastro");
+//     if (formCadastro.style.display === "block") {
+//         formCadastro.style.display = "none";
+//     } else {
+//         formCadastro.style.display = "block";
+//     }
+// }
+
 function toggleFormCadastro() {
     const formCadastro = document.getElementById("form-cadastro");
-    if (formCadastro.style.display === "block") {
-        formCadastro.style.display = "none";
+    const situacaoCompra = document.getElementById("field_SituacaoCompraId");
+    const localEstoque = document.getElementById("field_LocalEstoqueId");
+    const tabela = document.getElementById("tabelaDadosProdutos");
+    const inserir = document.getElementById("div-inserir");
+
+    if (formCadastro.style.display === "none") {
+        formCadastro.style.display = "block";
     } else {
         formCadastro.style.display = "block";
+    }
+
+    if(situacaoCompra !== null){
+        situacaoCompra.value = 1;
+    }
+
+    if(localEstoque !== null){
+        localEstoque.value = 1;
+    }
+
+    if(tabela !== null){
+        const thead = tabela.getElementsByTagName('thead')[0];
+        const tbody = tabela.getElementsByTagName('tbody')[0];
+        // Limpar o conteúdo existente do thead e tbody
+        thead.innerHTML = '';
+        tbody.innerHTML = '';
+    }
+
+    if(inserir !== null){
+        if(inserir.display === "none" ){
+            inserir.display = "inline"
+        }
+        else{
+            inserir.display = "inline"
+        }
     }
 }
 
@@ -70,6 +110,7 @@ function toggleCloseCadastro() {
 }
 
 function carregarConteudo(url) {
+    console.log(url);
     fetch(url)
         .then(response => response.text())
         .then(data => {
@@ -120,6 +161,31 @@ function verificarValoresMovimentacaoAntesDeSalvar() {
     }
 }
 
+function verificarCamposAgendamentoAntesDeSalvar() {
+    var camposObrigatorios = [
+        "field_ClienteId",
+        "field_ColaboradorId",
+        "inputData",
+        "field_HoraAgendamento",
+        "field_ServicoId",
+        "field_SituacaoId"
+    ];
+
+    for (var i = 0; i < camposObrigatorios.length; i++) {
+        var campo = document.getElementById(camposObrigatorios[i]);
+        if (campo.value === "") {
+            campo.focus();
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Por favor, preencha todos os campos obrigatórios.',
+            });
+            return false;
+        }
+    }
+    return true;
+}
+
 function verificarValoresPagamentosAntesDeSalvar() {
     const valorComandaInput = document.getElementById('field_valorComanda');
     const valorTotalPgtoInput = document.getElementById('field_valorTotalPgto');
@@ -149,6 +215,8 @@ function visualizarCaracteristica(caracteristicaId, descricao) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = caracteristicaId;
     document.getElementById("field_Nome").value = descricao;
 }
@@ -160,6 +228,8 @@ function visualizarCargo(id, name) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
 }
@@ -171,6 +241,8 @@ function visualizarSituacaoAgendamento(id, name) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
 }
@@ -178,13 +250,16 @@ function visualizarSituacaoAgendamento(id, name) {
 function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
     const botaoSalvar = document.getElementById("salvar-cadastro");
+    const botaoFinalizar = document.getElementById("finalizar-cadastro");
+    const situacaoCompraIdNumerico = Number(situacaoCompraId);
+    const botaoinserir = document.getElementById("buttonCompras");
 
     if (formCadastro.style.display === "none") {
         formCadastro.style.display = "block";
     } else {
         formCadastro.style.display = "block";
     }
-    const situacaoCompraIdNumerico = Number(situacaoCompraId);
+
     const dataCriacaoDate = new Date(dataCriacao);
     const dataFormatada = dataCriacaoDate.toLocaleDateString('pt-BR', {
         day: '2-digit',
@@ -198,6 +273,8 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
     document.getElementById("field_LocalEstoqueId").disabled = !camposHabilitados;
     document.getElementById("field_SituacaoCompraId").disabled = !camposHabilitados;
     botaoSalvar.disabled = !camposHabilitados;
+    botaoinserir.disabled = !camposHabilitados;
+    botaoFinalizar.disabled = camposHabilitados;
 
     document.getElementById("field_Id").value = id;
     document.getElementById("field_LocalEstoqueId").value = localEstoqueId;
@@ -205,14 +282,18 @@ function visualizarCompras(contexto, id, localEstoqueId, situacaoCompraId, valor
     document.getElementById("field_ValorTotal").value = valorTotal;
     document.getElementById("field_DataCriacao").value = dataFormatada;
 
+    window.scrollTo(0, 0);
+
     fetch(`${contexto}/compra/produtos/${id}`)
         .then(response => response.json())
-        .then(data => atualizarTabelaProdutos(data))
+        .then(data => atualizarTabelaProdutosCompra(data,situacaoCompraId))
         .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
 function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTotal, dataCriacao) {
     const formCadastro = document.getElementById("form-cadastro");
+    const botaoFinalizar = document.getElementById("finalizar-cadastro");
+
     if (formCadastro.style.display === "none") {
         formCadastro.style.display = "block";
     } else {
@@ -233,15 +314,23 @@ function visualizarSaidas(contexto, id, localEstoqueId, solicitanteId, valorTota
     document.getElementById("field_ValorTotal").value = valorTotal;
     document.getElementById("field_DataCriacao").value = dataFormatada;
 
+    window.scrollTo(0, 0);
+
     fetch(`${contexto}/saida/produtos/${id}`)
         .then(response => response.json())
-        .then(data => atualizarTabelaProdutos(data))
+        .then(data => atualizarTabelaProdutosSaida(data))
         .catch(error => console.error('Erro ao buscar produtos da compra:', error));
 }
 
 function atualizarTabelaProdutos(produtos) {
     const tabela = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
     tabela.innerHTML = ''; // Limpar tabela existente
+
+    if (tabela.style.display === "none") {
+        tabela.style.display = "block";
+    } else {
+        tabela.style.display = "block";
+    }
 
     produtos.forEach(produto => {
         let linha = tabela.insertRow();
@@ -252,6 +341,179 @@ function atualizarTabelaProdutos(produtos) {
         linha.insertCell(3).innerText = produto.quantidade;
         linha.insertCell(4).innerText = produto.valorTotal;
     });
+}
+
+function atualizarTabelaProdutosCompra(produtos, situacaoCompraId) {
+    const tabela = document.getElementById("tabelaDadosProdutos");
+    const thead = tabela.getElementsByTagName('thead')[0];
+    const tbody = tabela.getElementsByTagName('tbody')[0];
+    const situacaoCompraIdNumerico = Number(situacaoCompraId);
+
+    // Limpar o conteúdo existente do thead e tbody
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    // Criar o cabeçalho da tabela
+    let cabecalho = thead.insertRow();
+    cabecalho.className = 'gridHeader';
+    cabecalho.insertCell(0).outerHTML = '<th scope="col" class="th-editar">Ações</th>';
+    cabecalho.insertCell(1).outerHTML = '<th scope="col">Id Produto</th>';
+    cabecalho.insertCell(2).outerHTML = '<th scope="col">Produto</th>';
+    cabecalho.insertCell(3).outerHTML = '<th scope="col">Valor Unitário</th>';
+    cabecalho.insertCell(4).outerHTML = '<th scope="col">Quantidade</th>';
+    cabecalho.insertCell(5).outerHTML = '<th scope="col">Total Produto</th>';
+
+    // Preencher o corpo da tabela com os dados dos produtos
+    produtos.forEach(produto => {
+        let linha = tbody.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.className = 'cel-img-tabela-clientes';
+
+        if(situacaoCompraIdNumerico === 1){
+            celulaAcao.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+        } else{
+            celulaAcao.innerHTML = '<img src="../img/icon%20estoque/estoque-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover">';
+        }
+
+        linha.insertCell(1).innerText = produto.produto.id;
+        linha.insertCell(2).innerText = produto.produto.descricaoProduto;
+        linha.insertCell(3).innerText = produto.valorUnitario.toFixed(2);
+        linha.insertCell(4).innerText = produto.quantidade;
+        linha.insertCell(5).innerText = produto.valorTotal.toFixed(2);
+    });
+}
+
+function atualizarTabelaProdutosSaida(produtos) {
+    const tabela = document.getElementById("tabelaDadosProdutos");
+    const thead = tabela.getElementsByTagName('thead')[0];
+    const tbody = tabela.getElementsByTagName('tbody')[0];
+
+    // Limpar o conteúdo existente do thead e tbody
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    // Criar o cabeçalho da tabela
+    let cabecalho = thead.insertRow();
+    cabecalho.className = 'gridHeader';
+    cabecalho.insertCell(0).outerHTML = '<th scope="col" class="th-editar">Ações</th>';
+    cabecalho.insertCell(1).outerHTML = '<th scope="col">Id Produto</th>';
+    cabecalho.insertCell(2).outerHTML = '<th scope="col">Produto</th>';
+    cabecalho.insertCell(3).outerHTML = '<th scope="col">Valor Unitário</th>';
+    cabecalho.insertCell(4).outerHTML = '<th scope="col">Quantidade</th>';
+    cabecalho.insertCell(5).outerHTML = '<th scope="col">Total Produto</th>';
+
+    // Preencher o corpo da tabela com os dados dos produtos
+    produtos.forEach(produto => {
+        let linha = tbody.insertRow();
+        let celulaAcao = linha.insertCell(0);
+        celulaAcao.className = 'cel-img-tabela-clientes';
+        celulaAcao.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+        linha.insertCell(1).innerText = produto.produto.id;
+        linha.insertCell(2).innerText = produto.produto.descricaoProduto;
+        linha.insertCell(3).innerText = produto.valorUnitario.toFixed(2);
+        linha.insertCell(4).innerText = produto.quantidade;
+        linha.insertCell(5).innerText = produto.valorTotal.toFixed(2);
+    });
+}
+
+function atualizarGridAgendamentos(contexto, dataAgenda) {
+    const tabela = document.getElementById("tabelaGridAgendamento");
+    const thead = tabela.getElementsByTagName('thead')[0];
+    const tbody = tabela.getElementsByTagName('tbody')[0];
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    let cabecalho = thead.insertRow();
+    cabecalho.className = 'gridHeader';
+    cabecalho.insertCell(0).outerHTML = '<th scope="col" class="th-editar">Horário</th>';
+
+    fetch(`${contexto}/agendamentos/${dataAgenda}`)
+        .then(response => response.json())
+        .then(agendamentos => {
+            agendamentos.forEach(agendamento => {
+                cabecalho.insertCell().outerHTML = `<th scope="col">${agendamento.colaborador}</th>`;
+            });
+
+            for (let hora = 9; hora <= 18; hora++) {
+                let linha = tbody.insertRow();
+                linha.insertCell(0).innerText = `${hora}:00`;
+
+                agendamentos.forEach(agendamento => {
+                    let celula = linha.insertCell();
+
+                    if (agendamento.horarioIncial.hour === hora || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)) {
+                        let classeCSS = '';
+                        let conteudo = '';
+
+                        switch (agendamento.situacao) {
+                            case 'Agendado':
+                                classeCSS = 'bg-success';
+                                break;
+                            case 'Aberta':
+                                classeCSS = 'bg-danger';
+                                break;
+                            case 'Em espera':
+                                classeCSS = 'bg-warning';
+                                break;
+                            case 'Finalizada':
+                                classeCSS = 'bg-primary';
+                                break;
+                            case 'Bloqueio':
+                                classeCSS = 'bg-secondary';
+                                break;
+                        }
+
+                        conteudo = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">${agendamento.agendamento.cliente.nome}<br>${agendamento.servico.nome}</a>`;
+
+                        celula.className = classeCSS;
+                        celula.innerHTML = conteudo;
+                    } else {
+                        celula.innerHTML = '';
+                    }
+                });
+
+                linha = tbody.insertRow();
+                linha.insertCell(0).innerText = `${hora}:30`;
+
+                agendamentos.forEach(agendamento => {
+                    let celula = linha.insertCell();
+
+                    if (agendamento.horarioIncial.hour === hora && agendamento.horarioIncial.minute === 30 ||
+                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) ||
+                        (agendamento.horarioIncial.hour === hora && agendamento.horarioFinal.minute > 30)) {
+                        let classeCSS = '';
+                        let conteudo = '';
+
+                        switch (agendamento.situacao) {
+                            case 'Agendado':
+                                classeCSS = 'bg-success';
+                                break;
+                            case 'Aberta':
+                                classeCSS = 'bg-danger';
+                                break;
+                            case 'Em espera':
+                                classeCSS = 'bg-warning';
+                                break;
+                            case 'Finalizada':
+                                classeCSS = 'bg-primary';
+                                break;
+                            case 'Bloqueio':
+                                classeCSS = 'bg-secondary';
+                                break;
+                        }
+
+                        conteudo = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">${agendamento.agendamento.cliente.nome}<br>${agendamento.servico.nome}</a>`;
+
+                        celula.className = classeCSS;
+                        celula.innerHTML = conteudo;
+                    } else {
+                        celula.innerHTML = '';
+                    }
+                });
+            }
+        })
+        .catch(error => console.error('Erro ao buscar agendamentos:', error));
 }
 
 function visualizarComanda(contexto, id, agendamentoId, clienteId, colaboradorId, dataAgendamento, horaAgendamento, valorServicos, valorProdutos, valorDescontos, valorComanda, situacao) {
@@ -295,6 +557,8 @@ function visualizarComanda(contexto, id, agendamentoId, clienteId, colaboradorId
     document.getElementById("field_valorDescontos").value = valorDescontos;
     document.getElementById("field_valorComanda").value = valorComanda;
     document.getElementById("field_situacaoId").value = situacao;
+
+    window.scrollTo(0, 0);
 
     fetch(`${contexto}/comanda/servicos/${agendamentoId}`)
         .then(response => response.json())
@@ -406,7 +670,6 @@ function atualizarTabelaComissoes(comissoes) {
 
 function pesquisarMovimentacoes(contexto, firstDay, lastDay) {
     const url = `${contexto}/caixamovimentacao/listarMovimentacoes/${firstDay}/${lastDay}`;
-    console.log("URL da requisição: ", url);
     fetch(url)
         .then(response => {
             if (!response.ok) {
@@ -464,6 +727,8 @@ function visualizarCategoria(categoriaId, nome) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = categoriaId;
     document.getElementById("field_Nome").value = nome;
 }
@@ -481,6 +746,8 @@ function visualizarLinha(id, name) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
 }
@@ -492,6 +759,8 @@ function visualizarLocalEstoque(id, name) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
 }
@@ -503,6 +772,8 @@ function visualizarMarca(id, name, active) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = name;
     document.getElementById("field_Active").checked = active === 'true';
@@ -529,6 +800,8 @@ function visualizarServico(id, nome, tempo, valor, desconto, comissao, observaca
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Nome").value = nome;
     document.getElementById("field_Tempo").value = tempo;
@@ -551,6 +824,8 @@ function visualizarPerfil(id, tipoperfilid, name) {
     } else {
         formClienteCadast.style.display = "block";
     }
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_TipoPerfilId").value = tipoperfilid;
     document.getElementById("field_Nome").value = name;
@@ -579,6 +854,8 @@ function visualizarProduto(id, codigoInterno, nome, codigoBarras, marcaId, categ
         formClienteCadast.style.display = "block";
     }
 
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_CodigoInterno").value = codigoInterno;
     document.getElementById("field_Name").value = nome;
@@ -605,6 +882,8 @@ function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagam
     console.log(caixaId);
     console.log(colaboradorId);
 
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_CaixaId").value = caixaId;
     document.getElementById("field_TipoMovimentacaoId").value = tipoMovimentacaoId;
@@ -628,6 +907,8 @@ function visualizarCaixa(id, nome, responsavelAberturaId, responsavelAberturaEma
     respFechamentoElement.readOnly=false;
     respAberturaElement.readOnly = true;
     valorAberturaElement.readOnly = true;
+    window.scrollTo(0, 0);
+
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = nome;
     document.getElementById("field_DataAbertura").value = dataAbertura;
@@ -645,6 +926,43 @@ function visualizarCliente(usuarioId, enderecoId, cargoId, perfilId, nome, sobre
     } else {
         formClienteCadast.style.display = "block";
     }
+
+    window.scrollTo(0, 0);
+
+    document.getElementById("inputUsuarioId").value = usuarioId;
+    document.getElementById("inputEnderecoId").value = enderecoId;
+    document.getElementById("inputCargoId").value = cargoId;
+    document.getElementById("inputPerfilId").value = perfilId;
+    document.getElementById("inputNome").value = nome;
+    document.getElementById("inputSobrenome").value = sobrenome;
+    document.getElementById("inputCpfCnpj").value = cpfCnpj;
+    document.getElementById("inputGenero").value = genero;
+    document.getElementById("inputNascimento").value = dataNascimento;
+    document.getElementById("inputEmail").value = email;
+    document.getElementById("inputProfissao").value = profissao;
+    document.getElementById("inputDDDCel").value = dddCelular;
+    document.getElementById("inputCelular").value = celular;
+    document.getElementById("inputDDDTel").value = dddTelefone;
+    document.getElementById("inputTelefone").value = telefone;
+    document.getElementById("inputCEP").value = cep;
+    document.getElementById("inputlogradouro").value = logradouro;
+    document.getElementById("inputNumero").value = numero;
+    document.getElementById("inputComplemento").value = complemento;
+    document.getElementById("inputBairro").value = bairro;
+    document.getElementById("inputCidade").value = cidade;
+    document.getElementById("inputEstado").value = uf;
+    document.getElementById("inputObservacao").value = observacao;
+}
+
+function visualizarUsuario(usuarioId, enderecoId, cargoId, perfilId, nome, sobrenome, cpfCnpj, genero, dataNascimento, email, profissao, dddCelular, celular, dddTelefone, telefone, cep, logradouro, numero, complemento, bairro, cidade, uf, observacao) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+
+    window.scrollTo(0, 0);
 
     document.getElementById("inputUsuarioId").value = usuarioId;
     document.getElementById("inputEnderecoId").value = enderecoId;
@@ -679,6 +997,8 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
         formClienteCadast.style.display = "block";
     }
 
+    window.scrollTo(0, 0);
+
     document.getElementById("inputUsuarioId").value = usuarioId;
     document.getElementById("inputEnderecoId").value = enderecoId;
     document.getElementById("inputCargoId").value = cargoId;
@@ -707,6 +1027,32 @@ function adicionarServico() {
     const table = document.getElementById("tabelaDadosServicos");
     table.style.display = "block";
     buscarDadosServicos(servicoId);
+}
+
+function adicionarCompraProduto() {
+    const produtoId = document.getElementById("field_ProdutoId").value;
+    const table = document.getElementById("tabelaDadosProdutos");
+
+    if (table.style.display === "none") {
+        table.style.display = "block";
+    } else {
+        table.style.display = "block";
+    }
+
+    buscarDadosCompraProdutos(produtoId);
+}
+
+function adicionarSaidaProduto() {
+    const produtoId = document.getElementById("field_ProdutoId").value;
+    const table = document.getElementById("tabelaDadosProdutos");
+
+    if (table.style.display === "none") {
+        table.style.display = "block";
+    } else {
+        table.style.display = "block";
+    }
+
+    buscarDadosSaidaProdutos(produtoId);
 }
 
 function adicionarProduto() {
@@ -763,6 +1109,32 @@ function buscarDadosProdutos(produtoId) {
         type: 'GET',
         success: function(response) {
             atualizarGridProdutos(response);
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados dos produtos: ", error);
+        }
+    });
+}
+
+function buscarDadosCompraProdutos(produtoId) {
+    $.ajax({
+        url: '/compra/listaCompraProdutos/' + produtoId,
+        type: 'GET',
+        success: function(response) {
+            atualizarGridCompraProdutos(response);
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados dos produtos: ", error);
+        }
+    });
+}
+
+function buscarDadosSaidaProdutos(produtoId) {
+    $.ajax({
+        url: '/saida/listaSaidaProdutos/' + produtoId,
+        type: 'GET',
+        success: function(response) {
+            atualizarGridSaidaProdutos(response);
         },
         error: function(error) {
             console.log("Erro ao buscar dados dos produtos: ", error);
@@ -837,6 +1209,58 @@ function atualizarGridProdutos(produto) {
     celulaLinha.innerHTML = produto.linha.descricaoLinha;
     celulaPreco.innerHTML = produto.valorVenda;
     celulaQuantidade.innerHTML = quantidade;
+}
+
+function atualizarGridCompraProdutos(produto) {
+    var quantidadeInput = document.getElementById("field_Quantidade");
+    var quantidade = parseInt(quantidadeInput.value, 10); // Converte para número, base 10
+
+    if (isNaN(quantidade) || quantidade === null || quantidade === "" || quantidade < 1) {
+        quantidade = 1;
+        quantidadeInput.value = 1;
+    }
+
+    var tabelaProdutos = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaProdutos.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaId = novaLinha.insertCell(1);
+    var celulaProduto = novaLinha.insertCell(2);
+    var celulaValor = novaLinha.insertCell(3);
+    var celulaQuantidade = novaLinha.insertCell(4);
+    var celulaTotal = novaLinha.insertCell(5);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaId.innerHTML = produto.id;
+    celulaProduto.innerHTML = produto.descricaoProduto;
+    celulaValor.innerHTML = produto.valorVenda.toFixed(2);
+    celulaQuantidade.innerHTML = quantidade;
+    celulaTotal.innerHTML = (produto.valorVenda * quantidade).toFixed(2);
+}
+
+function atualizarGridSaidaProdutos(produto) {
+    var quantidadeInput = document.getElementById("field_Quantidade");
+    var quantidade = parseInt(quantidadeInput.value, 10); // Converte para número, base 10
+
+    if (isNaN(quantidade) || quantidade === null || quantidade === "" || quantidade < 1) {
+        quantidade = 1;
+        quantidadeInput.value = 1;
+    }
+
+    var tabelaProdutos = document.getElementById("tabelaDadosProdutos").getElementsByTagName('tbody')[0];
+    var novaLinha = tabelaProdutos.insertRow();
+    var celulaExcluir = novaLinha.insertCell(0);
+    var celulaId = novaLinha.insertCell(1);
+    var celulaProduto = novaLinha.insertCell(2);
+    var celulaValor = novaLinha.insertCell(3);
+    var celulaQuantidade = novaLinha.insertCell(4);
+    var celulaTotal = novaLinha.insertCell(5);
+
+    celulaExcluir.innerHTML = '<a href="#" onclick="removerProduto(this)"><img src="../img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Remover"></a>';
+    celulaId.innerHTML = produto.id;
+    celulaProduto.innerHTML = produto.descricaoProduto;
+    celulaValor.innerHTML = produto.valorVenda.toFixed(2);
+    celulaQuantidade.innerHTML = quantidade;
+    celulaTotal.innerHTML = (produto.valorVenda * quantidade).toFixed(2);
 }
 
 function atualizarGridPagamentos(formaPagamento, bandeira) {
@@ -987,6 +1411,50 @@ function coletarDadosFormulario() {
     });
 }
 
+function coletarDadosFormularioCompras() {
+    var produtos = [];
+    document.querySelectorAll("#tabelaDadosProdutos tbody tr").forEach(function(row) {
+        var produtoId = row.cells[1] ? row.cells[1].textContent : '';
+        var descricaoProduto = row.cells[2] ? row.cells[2].textContent : '';
+        var valorUnitario = row.cells[3] ? row.cells[3].textContent : '';
+        var quantidade = row.cells[4] ? row.cells[4].textContent : '';
+        var valorTotal = row.cells[5] ? row.cells[5].textContent : '';
+        if (produtoId) {
+            produtos.push({produtoId: produtoId, descricaoProduto: descricaoProduto, valorUnitario: valorUnitario, quantidade: quantidade, valorTotal: valorTotal});
+        }
+    });
+    var form = document.getElementById("form-cadastro");
+    produtos.forEach(function(produto, index) {
+        form.appendChild(criarCampoOculto(`compraProdutos[${index}].produto.id`, produto.produtoId));
+        form.appendChild(criarCampoOculto(`compraProdutos[${index}].produto.descricaoProduto`, produto.descricaoProduto));
+        form.appendChild(criarCampoOculto(`compraProdutos[${index}].valorUnitario`, produto.valorUnitario));
+        form.appendChild(criarCampoOculto(`compraProdutos[${index}].quantidade`, produto.quantidade));
+        form.appendChild(criarCampoOculto(`compraProdutos[${index}].valorTotal`, produto.valorTotal));
+    });
+}
+
+function coletarDadosFormularioSaidas() {
+    var produtos = [];
+    document.querySelectorAll("#tabelaDadosProdutos tbody tr").forEach(function(row) {
+        var produtoId = row.cells[1] ? row.cells[1].textContent : '';
+        var descricaoProduto = row.cells[2] ? row.cells[2].textContent : '';
+        var valorUnitario = row.cells[3] ? row.cells[3].textContent : '';
+        var quantidade = row.cells[4] ? row.cells[4].textContent : '';
+        var valorTotal = row.cells[5] ? row.cells[5].textContent : '';
+        if (produtoId) {
+            produtos.push({produtoId: produtoId, descricaoProduto: descricaoProduto, valorUnitario: valorUnitario, quantidade: quantidade, valorTotal: valorTotal});
+        }
+    });
+    var form = document.getElementById("form-cadastro");
+    produtos.forEach(function(produto, index) {
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].produto.id`, produto.produtoId));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].produto.descricaoProduto`, produto.descricaoProduto));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].valorUnitario`, produto.valorUnitario));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].quantidade`, produto.quantidade));
+        form.appendChild(criarCampoOculto(`saidaProdutos[${index}].valorTotal`, produto.valorTotal));
+    });
+}
+
 function coletarDadosPagamentos() {
     var pagamentos = [];
     document.querySelectorAll("#tabelaDadosPagamentos tbody tr").forEach(function(row) {
@@ -1109,5 +1577,64 @@ function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         console.log('User signed out.');
+    });
+}
+
+function finalizarCompra(contexto, compraId) {
+    const url = `${contexto}/compra/finalizar/${compraId}`;
+    if (confirm("Deseja finalizar a compra?")) {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Compra finalizada com sucesso!");
+                    window.location.href = `${contexto}/index?origem=compra`;
+                } else {
+                    alert("Erro ao finalizar a compra.");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert("Erro ao finalizar a compra.");
+            });
+    }
+}
+
+function finalizarSaida(contexto, saidaId) {
+    const url = `${contexto}/saida/finalizar/${saidaId}`;
+    if (confirm("Deseja finalizar a saída?")) {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Saida finalizada com sucesso!");
+                    window.location.href = `${contexto}/index?origem=saida`;
+                } else {
+                    alert("Erro ao finalizar a saída.");
+                }
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert("Erro ao finalizar a saída.");
+            });
+    }
+}
+
+function clearGroup(checkbox) {
+    var checkboxes = document.getElementsByName('theGroup');
+    checkboxes.forEach(function(currentCheckbox) {
+        if (currentCheckbox !== checkbox) {
+            currentCheckbox.checked = false;
+        }
     });
 }

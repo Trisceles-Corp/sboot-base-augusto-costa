@@ -13,6 +13,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="_csrf" content="${_csrf.token}"/>
     <title>Augusto Costa</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/icons/favicon.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
@@ -207,7 +208,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="dtoUsuario" items="${listaUsuarios}">
+        <c:forEach var="dtoUsuario" items="${listaColaboradores}">
             <tr>
                 <td class="cel-img-tabela-usuarios">
                     <form action="${pageContext.request.contextPath}/usuario/delete/${dtoUsuario.usuarioId}" method="POST">

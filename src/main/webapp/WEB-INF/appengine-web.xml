@@ -2,7 +2,7 @@
 <appengine-web-app xmlns="https://appengine.google.com/ns/1.0">
     <application>steady-thunder-423317-k2</application>
     <version>1</version>
-    <runtime>java21</runtime>
+    <runtime>java11</runtime>
     <automatic-scaling>
         <min-idle-instances>automatic</min-idle-instances>
         <max-idle-instances>automatic</max-idle-instances>

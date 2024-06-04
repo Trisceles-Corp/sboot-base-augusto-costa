@@ -2,8 +2,8 @@ package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.business.service.*;
-import br.com.augustocosta.acs.integration.entity.tblSaida;
-import br.com.augustocosta.acs.integration.entity.tblSaidaProduto;
+import br.com.augustocosta.acs.integration.dto.dtoSaida;
+import br.com.augustocosta.acs.integration.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +25,9 @@ public class SaidaController {
     private SaidaProdutoService saidaProdutoService;
 
     @Autowired
+    private ProdutoService produtoService;
+
+    @Autowired
     private LocalEstoqueService localService;
 
     @Autowired
@@ -32,53 +35,50 @@ public class SaidaController {
 
     @GetMapping("/form")
     public String mostrarFormulario(Model model) {
-        model.addAttribute("tblSaida", new tblSaida());
+        model.addAttribute("dtoSaida", new dtoSaida());
         return "saida";
     }
 
     @GetMapping
     public String listarSaidas(Model model) {
-        model.addAttribute("listarSaidas", service.getActives());
+        model.addAttribute("listarSaidas", service.getActivesEstoqueFalse());
+        model.addAttribute("listarProdutos", produtoService.getActives());
         model.addAttribute("listarSaidaProdutos", saidaProdutoService.getBySaida(0));
         model.addAttribute("listarLocalEstoque", localService.getActiveByNameAsc());
         model.addAttribute("listarSolicitante", usuarioService.getAllBySolicitante());
-        model.addAttribute("tblSaida", new tblSaida());
+        model.addAttribute("dtoSaida", new dtoSaida());
         return "saida";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblSaida table) {
+    public String salvar(@ModelAttribute dtoSaida dados) {
+        List<tblSaidaProduto> tableSaidas = dados.getSaidaProdutos();
         String userCookie = Cookies.getUserId();
         if(userCookie == null){ userCookie = "1"; }
         int activeUserId = Integer.parseInt(userCookie) ;
-        table.setAtivo(true);
 
-        if (table.getId() != null && table.getId() != 0){
-            Optional<tblSaida> data = service.getById(table.getId());
-            table.setAtivo(table.getAtivo());
-            table.setDataCriacao(data.orElseThrow().getDataCriacao());
-            table.setCriadoPor(data.get().getCriadoPor());
+        if (dados.getId() != null && dados.getId() != 0){
+            tblSaida table = service.getById(dados.getId()).orElseThrow();
+            table.setAtivo(true);
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(activeUserId);
-            service.update(table);
+            service.update(table, tableSaidas);
         }
         else {
+            tblSaida table = new tblSaida();
+            tblLocalEstoque localEstoque = localService.getById(dados.getLocalEstoqueId()).orElseThrow();
+            tblUsuario solicitante = usuarioService.getById(dados.getSolicitanteId()).orElseThrow();
+            table.setLocalEstoque(localEstoque);
+            table.setSolicitante(solicitante);
+            table.setValorTotal(dados.getValorTotal());
+            table.setEstoque(false);
             table.setDataCriacao(LocalDateTime.now());
             table.setCriadoPor(activeUserId);
             table.setDataAlteracao(LocalDateTime.now());
             table.setAlteradoPor(activeUserId);
-            service.create(table);
+            service.create(table, tableSaidas);
         }
         return "redirect:/index?origem=saida";
-    }
-
-    @GetMapping("/novo")
-    public String novoSituacaoAgendamento(Model model) {
-        model.addAttribute("listarSaidas", service.getActives());
-        model.addAttribute("listarLocalEstoque", localService.getActiveByNameAsc());
-        model.addAttribute("listarSolicitante", usuarioService.getAllBySolicitante());
-        model.addAttribute("tblSaida", new tblSaida());
-        return "saida";
     }
 
     @PostMapping("/delete/{id}")
@@ -90,10 +90,23 @@ public class SaidaController {
         return "redirect:/index?origem=saida";
     }
 
+    @PostMapping("/finalizar/{id}")
+    public String finalizar(@PathVariable Integer id) {
+        service.getCommitSaidaProdutos(id);
+        return "redirect:/index?origem=saida";
+    }
+
     @GetMapping("/produtos/{saidaId}")
     @ResponseBody
     public ResponseEntity<List<tblSaidaProduto>> listarProdutosPorSaida(@PathVariable Integer saidaId) {
-        List<tblSaidaProduto> saidaProdutos = saidaProdutoService.getBySaida(saidaId);
-        return ResponseEntity.ok(saidaProdutos);
+        List<tblSaidaProduto> produtos = saidaProdutoService.getBySaida(saidaId);
+        return ResponseEntity.ok(produtos);
+    }
+
+    @GetMapping("/listaSaidaProdutos/{produtoId}")
+    @ResponseBody
+    public ResponseEntity<tblProduto> listaSaidaProdutos(@PathVariable("produtoId") Integer produtoId) {
+        tblProduto produto = produtoService.getById(produtoId).orElseThrow();
+        return ResponseEntity.ok(produto);
     }
 }

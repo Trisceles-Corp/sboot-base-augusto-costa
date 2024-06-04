@@ -76,6 +76,11 @@ public class UsuarioService {
         return convertProjectionToDto(projections);
     }
 
+    public List<dtoUsuario> getAllByColaborador() {
+        List<prjUsuario> projections = repository.findUsersByColaborador();
+        return convertProjectionToDto(projections);
+    }
+
     public List<tblUsuario> getAllBySolicitante() {
         List<prjUsuario> projections = repository.findUsersBySolicitante();
         return convertProjectionToUsuario(projections);

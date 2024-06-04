@@ -5,8 +5,9 @@ import java.time.LocalDate;
 public interface prjGridAgendamento {
     Long getGridAgendamentoId();
     Integer getComandaId();
-    Integer getAgendametoId();
+    Integer getAgendamentoId();
     Integer getServicoId();
+    String getSituacao();
     Boolean getAtivo();
     LocalDate getDataCriacao();
     LocalDate getDataAlteracao();

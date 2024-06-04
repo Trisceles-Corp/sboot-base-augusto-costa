@@ -32,9 +32,10 @@ public class ComandaService {
     private final MovimentacaoRepository movimentacaoRepository;
     private final VendaProdutoRepository vendaProdutoRepository;
     private final EstoqueRepository estoqueRepository;
+    private final GridAgendamentoRepository gridAgendamentoRepository;
 
     @Autowired
-    public ComandaService(ComandaRepository repository, AgendamentoRepository agendamentoRepository, FormasPagamentoRepository formasPagamentoRepository, BandeirasRepository bandeirasRepository, ComandaPagamentoRepository comandaPagamentoRepository, CaixaMovimentacaoRepository caixaMovimentacaoRepository, CaixaRepository caixaRepository, TipoMovimentacaoRepository tipoMovimentacaoRepository, SituacaoAgendamentoRepository situacaoAgendamentoRepository, VendaRepository vendaRepository, MovimentacaoRepository movimentacaoRepository, VendaProdutoRepository vendaProdutoRepository, EstoqueRepository estoqueRepository) {
+    public ComandaService(ComandaRepository repository, AgendamentoRepository agendamentoRepository, FormasPagamentoRepository formasPagamentoRepository, BandeirasRepository bandeirasRepository, ComandaPagamentoRepository comandaPagamentoRepository, CaixaMovimentacaoRepository caixaMovimentacaoRepository, CaixaRepository caixaRepository, TipoMovimentacaoRepository tipoMovimentacaoRepository, SituacaoAgendamentoRepository situacaoAgendamentoRepository, VendaRepository vendaRepository, MovimentacaoRepository movimentacaoRepository, VendaProdutoRepository vendaProdutoRepository, EstoqueRepository estoqueRepository, GridAgendamentoRepository gridAgendamentoRepository) {
         this.repository = repository;
         this.agendamentoRepository = agendamentoRepository;
         this.formasPagamentoRepository = formasPagamentoRepository;
@@ -48,6 +49,7 @@ public class ComandaService {
         this.movimentacaoRepository = movimentacaoRepository;
         this.vendaProdutoRepository = vendaProdutoRepository;
         this.estoqueRepository = estoqueRepository;
+        this.gridAgendamentoRepository = gridAgendamentoRepository;
     }
     @Autowired
     private EntityManager entityManager;
@@ -112,7 +114,7 @@ public class ComandaService {
     }
 
     @Transactional
-    public void update(dtoComanda dados) throws IllegalArgumentException {
+    public void update(dtoComanda dados, Integer activeUserId) throws IllegalArgumentException {
         if (dados.getPagamentos() == null || CollectionUtils.isEmpty(dados.getPagamentos())) {
             throw new IllegalArgumentException("Nenhum pagamento informado para a comanda.");
         }
@@ -135,8 +137,8 @@ public class ComandaService {
             comandaPagamento.setAtivo(true);
             comandaPagamento.setDataCriacao(LocalDateTime.now());
             comandaPagamento.setDataAlteracao(LocalDateTime.now());
-            comandaPagamento.setCriadoPor(1);
-            comandaPagamento.setAlteradoPor(1);
+            comandaPagamento.setCriadoPor(activeUserId);
+            comandaPagamento.setAlteradoPor(activeUserId);
             comandaPagamentoRepository.save(comandaPagamento);
 
             // Processa e salva os caixa
@@ -151,24 +153,31 @@ public class ComandaService {
             caixaMovimentacao.setAtivo(true);
             caixaMovimentacao.setDataCriacao(LocalDateTime.now());
             caixaMovimentacao.setDataAlteracao(LocalDateTime.now());
-            caixaMovimentacao.setCriadoPor(1);
-            caixaMovimentacao.setAlteradoPor(1);
+            caixaMovimentacao.setCriadoPor(activeUserId);
+            caixaMovimentacao.setAlteradoPor(activeUserId);
             caixaMovimentacaoRepository.save(caixaMovimentacao);
         });
 
         // Processa e salva os comanda
         comanda.setSituacao(false);
         comanda.setDataAlteracao(LocalDateTime.now());
-        comanda.setAlteradoPor(1);
+        comanda.setAlteradoPor(activeUserId);
         repository.save(comanda);
 
         // Processo e salva agendamento
-        tblSituacaoAgendamento situacaoAgendamento = findSituacaoAgendamentoByNome("Finalizado");
+        tblSituacaoAgendamento situacaoAgendamento = findSituacaoAgendamentoByNome("Finalizada");
         tblAgendamento agendamento = agendamentoRepository.findById(dados.getAgendamentoId()).orElseThrow(() -> new RuntimeException("Agendamento não encontrado"));
         agendamento.setSituacao(situacaoAgendamento);
         agendamento.setDataAlteracao(LocalDateTime.now());
-        agendamento.setAlteradoPor(1);
+        agendamento.setAlteradoPor(activeUserId);
         agendamentoRepository.save(agendamento);
+
+        // Processa Grid Agendamento
+        tblGridAgendamento grid = gridAgendamentoRepository.findByAgendamento(agendamento);
+        grid.setSituacao(situacaoAgendamento.getNome());
+        grid.setDataAlteracao(LocalDateTime.now());
+        grid.setAlteradoPor(activeUserId);
+        gridAgendamentoRepository.save(grid);
 
         // Processa e salva venda produtos quando existir
         tblVenda venda = vendaRepository.findByAgendamentoId(agendamento.getId());
@@ -191,8 +200,8 @@ public class ComandaService {
             movimentacao.setAtivo(true);
             movimentacao.setDataCriacao(LocalDateTime.now());
             movimentacao.setDataAlteracao(LocalDateTime.now());
-            movimentacao.setCriadoPor(1);
-            movimentacao.setAlteradoPor(1);
+            movimentacao.setCriadoPor(activeUserId);
+            movimentacao.setAlteradoPor(activeUserId);
             movimentacaoRepository.save(movimentacao);
 
             // Processa e salva estoque
@@ -207,8 +216,8 @@ public class ComandaService {
                estoque.setAtivo(true);
                estoque.setDataCriacao(LocalDateTime.now());
                estoque.setDataAlteracao(LocalDateTime.now());
-               estoque.setCriadoPor(1);
-               estoque.setAlteradoPor(1);
+               estoque.setCriadoPor(activeUserId);
+               estoque.setAlteradoPor(activeUserId);
                estoqueRepository.save(estoque);
             });
         }

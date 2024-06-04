@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,6 +19,18 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Value("${spring.security.user.name}")
+    private String userName;
+
+    @Value("${spring.security.user.password}")
+    private String userPassword;
+
+    @Value("${spring.security.admin.name}")
+    private String adminName;
+
+    @Value("${spring.security.admin.password}")
+    private String adminPassword;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,19 +55,19 @@ public class SecurityConfig {
                 )
                 .logout(LogoutConfigurer::permitAll
                 );
-        return http. build();
+        return http.build();
     }
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder encoder) {
         UserDetails user = User.builder()
-                .username("user")
-                .password(encoder.encode("APmay7nFZdtx"))
+                .username(userName)
+                .password(encoder.encode(userPassword))
                 .roles("USER")
                 .build();
         UserDetails admin = User.builder()
-                .username("admin")
-                .password(encoder.encode("$#:P>F:9&#;04k>I"))
+                .username(adminName)
+                .password(encoder.encode(adminPassword))
                 .roles("ADMIN", "USER")
                 .build();
         return new InMemoryUserDetailsManager(user, admin);

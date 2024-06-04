@@ -90,12 +90,12 @@
                             <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity log
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" onclick="signOut();">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Sair
-                        </a>
-<%--                        <a class="dropdown-item" href="${pageContext.request.contextPath}/index/logout">--%>
+<%--                        <a class="dropdown-item" href="#" onclick="signOut();">--%>
 <%--                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Sair--%>
 <%--                        </a>--%>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/index/logout">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Sair
+                        </a>
                     </div>
                 </div>
             </li>
@@ -384,6 +384,12 @@
         const origem = urlParams.get('origem');
 
         switch (origem){
+            case 'agendamento':
+                carregarConteudo(contextPath + '/agendamento');
+                break;
+            case 'bloqueio':
+                carregarConteudo(contextPath + '/bloqueio');
+                break;
             case 'cliente':
                 carregarConteudo(contextPath + '/cliente');
                 break;

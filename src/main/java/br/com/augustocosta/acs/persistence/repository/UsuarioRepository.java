@@ -33,6 +33,8 @@ public interface UsuarioRepository extends JpaRepository<tblUsuario, Integer> {
     List<tblUsuario> findByAtivoFalse();
     @Query(value = SqlQueries.QUERY_USUARIO_BY_PERFIL, nativeQuery = true)
     List<prjUsuario> findUsersByPerfilId(@Param("perfilId") Integer perfilId);
+    @Query(value = SqlQueries.QUERY_USUARIO_BY_COLABORADOR, nativeQuery = true)
+    List<prjUsuario> findUsersByColaborador();
     @Query(value = SqlQueries.QUERY_USUARIO_SOLICITANTE, nativeQuery = true)
     List<prjUsuario> findUsersBySolicitante();
     @Query(value = SqlQueries.QUERY_USUARIO_BY_PERFIL_CPF, nativeQuery = true)

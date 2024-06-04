@@ -1,5 +1,6 @@
 package br.com.augustocosta.acs.persistence.repository;
 
+import br.com.augustocosta.acs.integration.entity.tblAgendamento;
 import br.com.augustocosta.acs.integration.entity.tblGridAgendamento;
 import br.com.augustocosta.acs.integration.projections.prjGridAgendamento;
 import br.com.augustocosta.acs.persistence.dao.SqlQueries;
@@ -15,6 +16,7 @@ import java.util.List;
 public interface GridAgendamentoRepository extends JpaRepository<tblGridAgendamento, Integer> {
     List<tblGridAgendamento> findByAtivoTrue();
     List<tblGridAgendamento> findByAtivoFalse();
+    tblGridAgendamento findByAgendamento(tblAgendamento agendamento);
 
     @Query(value = SqlQueries.SP_GRIDAGENDA, nativeQuery = true)
     List<prjGridAgendamento> findByGridAgendamento(@Param("dataAgenda") LocalDate dataAgenda);

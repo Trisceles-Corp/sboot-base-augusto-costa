@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
@@ -39,7 +40,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label  class="form-label" for="btn-pesquisa">Pesquisa:</label>
-                    <button type="button" class="form-control btn btn-primary" id="btn-pesquisa" onclick="pesquisarMovimentacoes('${pageContext.request.contextPath}'); return false;">Buscar</button>
+                    <button type="button" class="form-control btn btn-primary" id="btn-pesquisa" onclick="pesquisarMovimentacoes('${pageContext.request.contextPath}', document.getElementById('searchDataInicial').value, document.getElementById('searchDataFinal').value); return false;">Buscar</button>
                 </div>
             </div>
         </div>
