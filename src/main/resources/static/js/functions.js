@@ -110,6 +110,7 @@ function toggleCloseCadastro() {
 }
 
 function carregarConteudo(url) {
+    console.log(url);
     fetch(url)
         .then(response => response.text())
         .then(data => {
@@ -158,6 +159,31 @@ function verificarValoresMovimentacaoAntesDeSalvar() {
         coletarDadosPagamentos();
         return true;
     }
+}
+
+function verificarCamposAgendamentoAntesDeSalvar() {
+    var camposObrigatorios = [
+        "field_ClienteId",
+        "field_ColaboradorId",
+        "inputData",
+        "field_HoraAgendamento",
+        "field_ServicoId",
+        "field_SituacaoId"
+    ];
+
+    for (var i = 0; i < camposObrigatorios.length; i++) {
+        var campo = document.getElementById(camposObrigatorios[i]);
+        if (campo.value === "") {
+            campo.focus();
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Por favor, preencha todos os campos obrigatórios.',
+            });
+            return false;
+        }
+    }
+    return true;
 }
 
 function verificarValoresPagamentosAntesDeSalvar() {
@@ -430,7 +456,7 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                             case 'Em espera':
                                 classeCSS = 'bg-warning';
                                 break;
-                            case 'Finalizado':
+                            case 'Finalizada':
                                 classeCSS = 'bg-primary';
                                 break;
                             case 'Bloqueio':
@@ -469,7 +495,7 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                             case 'Em espera':
                                 classeCSS = 'bg-warning';
                                 break;
-                            case 'Finalizado':
+                            case 'Finalizada':
                                 classeCSS = 'bg-primary';
                                 break;
                             case 'Bloqueio':

@@ -94,7 +94,7 @@ public class BloqueioController {
         model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
         model.addAttribute("tblBloqueio", new tblBloqueio());
 
-        return "redirect:/index";
+        return "redirect:/index?origem=bloqueio";
     }
 
     @PostMapping("/delete/{id}")
@@ -103,6 +103,6 @@ public class BloqueioController {
         if(userCookie == null){ userCookie = "1"; }
         int activeUserId = Integer.parseInt(userCookie) ;
         service.delete(id, activeUserId);
-        return "redirect:/index";
+        return "redirect:/index?origem=bloqueio";
     }
 }

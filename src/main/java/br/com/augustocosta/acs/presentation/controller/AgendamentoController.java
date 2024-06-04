@@ -3,9 +3,7 @@ package br.com.augustocosta.acs.presentation.controller;
 import br.com.augustocosta.acs.business.service.*;
 import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.dto.dtoAgendamento;
-import br.com.augustocosta.acs.integration.entity.tblAgendamento;
-import br.com.augustocosta.acs.integration.entity.tblProduto;
-import br.com.augustocosta.acs.integration.entity.tblServico;
+import br.com.augustocosta.acs.integration.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -74,19 +72,47 @@ public class AgendamentoController {
         table.setAtivo(true);
 
         if (table.getId() != null && table.getId() != 0){
-            Optional<tblAgendamento> data = service.getById(table.getId());
-            table.setAtivo(table.getAtivo());
-            table.setDataCriacao(data.orElseThrow().getDataCriacao());
-            table.setCriadoPor(data.get().getCriadoPor());
-            table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(activeUserId);
-            service.update(table);
+            tblAgendamento data = service.getById(table.getId()).orElseThrow();
+            tblSituacaoAgendamento situacao = situacaoAgendamentoService.getById(table.getSituacao().getId()).orElseThrow();
+            tblUsuario cliente = usuarioService.getById(table.getCliente().getId()).orElseThrow();
+            tblUsuario colaborador = usuarioService.getById(table.getColaborador().getId()).orElseThrow();
+            data.setCliente(cliente);
+            data.setColaborador(colaborador);
+            data.setSituacao(situacao);
+            data.setDataAlteracao(LocalDateTime.now());
+            data.setAlteradoPor(activeUserId);
+            service.update(data);
         }
         else {
             service.create(dados, activeUserId);
         }
 
-        return "redirect:/index";
+        return "redirect:/index?origem=agendamento";
+    }
+
+    @GetMapping("/{id}")
+    public String mostrarAgendamento(@PathVariable("id") Integer agendamentoId, Model model) {
+        Optional<tblAgendamento> agendamento = service.getById(agendamentoId);
+        if (agendamento.isPresent()) {
+            dtoAgendamento dto = new dtoAgendamento();
+            dto.setAgendamento(agendamento.get());
+            model.addAttribute("dtoAgendamento", dto);
+
+            // Adicione os outros atributos necessários para a página de agendamento
+            model.addAttribute("listarLocaisEstoque", localService.getActives());
+            model.addAttribute("listarServiços", servicoService.getActives());
+            model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
+            model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(agendamentoId));
+            model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(agendamentoId));
+            model.addAttribute("listarProdutos", produtoService.getActives());
+            model.addAttribute("listarClientes", usuarioService.getAllByPerfil(4));
+            model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
+            model.addAttribute("listarSituacao", situacaoAgendamentoService.getActives());
+
+            return "agendamento";
+        } else {
+            return "redirect:/agendamento";
+        }
     }
 
     @GetMapping("/listaServicoAgendamento/{servicoId}")
@@ -109,6 +135,6 @@ public class AgendamentoController {
         if(userCookie == null){ userCookie = "1"; }
         Integer activeUserId = Integer.parseInt(userCookie) ;
         service.delete(id, activeUserId);
-        return "redirect:/index";
+        return "redirect:/index?origem=agendamento";
     }
 }

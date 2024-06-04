@@ -64,7 +64,10 @@ public class ComandaController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoComanda dados) {
-        service.update(dados);
+        String userCookie = Cookies.getUserId();
+        if(userCookie == null){ userCookie = "1"; }
+        int activeUserId = Integer.parseInt(userCookie) ;
+        service.update(dados, activeUserId);
         return "redirect:/index?origem=comanda";
     }
 

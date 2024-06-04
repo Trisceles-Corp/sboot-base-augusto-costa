@@ -93,7 +93,7 @@
                                 <c:forEach var="agendamento" items="${agendamentosPorColaborador.get(colaborador)}">
                                     <c:if test="${agendamento.horarioIncial.hour == hora || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)}">
                                         <div class="agendamento">
-                                            <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                            <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamento.agendamento.id}')">
                                             <span class="situacao-${agendamento.situacao}">
                                                 ${agendamento.agendamento.cliente.nome}<br>
                                                 ${agendamento.servico.nome}
@@ -112,7 +112,7 @@
                                 <c:forEach var="agendamento" items="${agendamentosPorColaborador.get(colaborador)}">
                                     <c:if test="${agendamento.horarioIncial.hour == hora && agendamento.horarioIncial.minute != 30 || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) || (agendamento.horarioIncial.hour == hora && agendamento.horarioFinal.minute > 30)}">
                                         <div class="agendamento">
-                                            <a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">
+                                            <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamento.agendamento.id}')">
                                             <span class="situacao-${agendamento.situacao}">
                                                 ${agendamento.agendamento.cliente.nome}<br>
                                                 ${agendamento.servico.nome}

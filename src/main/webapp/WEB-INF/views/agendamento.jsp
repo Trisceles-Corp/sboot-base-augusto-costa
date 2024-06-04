@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/form-styles.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
 
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
@@ -20,12 +21,12 @@
         <div class="headerRequired">* campos obrigatórios</div>
     </div>
     <!-- formulário de cadastro -->
-    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" style="display: block">
+    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" onsubmit="return verificarCamposAgendamentoAntesDeSalvar()" style="display: block">
         <form:hidden path="agendamento.id" id="field_Id"/>
     <div class="row">
         <div class="form-group col-md-4">
             <form:label path="agendamento.cliente.id" class="form-label" for="field_ClienteId">Cliente:<span class="text-danger">*</span></form:label>
-            <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required">
+            <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required" >
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarClientes}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
@@ -95,7 +96,8 @@
             </div>
         </div>
         <div class="row" id="tabelaServicos">
-            <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3" style="display: none">
+            <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3"  style="display: ${not empty listarServiçosAgendamento ? 'block' : 'none'}">
+                <!-- Restante do código da tabela tabelaDadosServicos -->
                 <thead class="table-secondary">
                 <tr class="gridHeader">
                     <th scope="col" class="th-editar">Ações</th>
@@ -127,7 +129,7 @@
         </div>
 
         <div class="row" id="tabelaProduto" >
-            <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3" style="display: none">
+            <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3" style="display: ${not empty listarProdutosAgendamento ? 'block' : 'none'}">
                 <thead class="table-secondary">
                 <tr class="gridHeader">
                     <th scope="col" class="th-editar">Ações</th>

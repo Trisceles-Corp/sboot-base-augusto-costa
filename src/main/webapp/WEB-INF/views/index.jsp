@@ -384,6 +384,12 @@
         const origem = urlParams.get('origem');
 
         switch (origem){
+            case 'agendamento':
+                carregarConteudo(contextPath + '/agendamento');
+                break;
+            case 'bloqueio':
+                carregarConteudo(contextPath + '/bloqueio');
+                break;
             case 'cliente':
                 carregarConteudo(contextPath + '/cliente');
                 break;
