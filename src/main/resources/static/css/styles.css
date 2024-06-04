@@ -3,6 +3,7 @@
 .green { background-color: green; }
 .red { background-color: red; }
 .yellow { background-color: yellow; }
+.orange { background-color: orange}
 
 .content {
     position: absolute ;
@@ -443,4 +444,29 @@ footer{
     height: 40px;
     width: calc(100% - 250px);
     text-align: center;
+}
+
+.situacao-Agendado {
+    color: #28a745; /* Verde */
+    font-weight: bold;
+}
+
+.situacao-Aberta {
+    color: #dc3545; /* Vermelho */
+    font-weight: bold;
+}
+
+.situacao-Em.espera {
+    color: #ffc107; /* Laranja */
+    font-weight: bold;
+}
+
+.situacao-Finalizado {
+    color: #007bff; /* Azul */
+    font-weight: bold;
+}
+
+.situacao-Bloqueio {
+    color: #6c757d; /* Cinza */
+    font-weight: bold;
 }

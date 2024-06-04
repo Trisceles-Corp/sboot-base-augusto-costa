@@ -390,6 +390,106 @@ function atualizarTabelaProdutosSaida(produtos) {
     });
 }
 
+function atualizarGridAgendamentos(contexto, dataAgenda) {
+    const tabela = document.getElementById("tabelaGridAgendamento");
+    const thead = tabela.getElementsByTagName('thead')[0];
+    const tbody = tabela.getElementsByTagName('tbody')[0];
+
+    thead.innerHTML = '';
+    tbody.innerHTML = '';
+
+    let cabecalho = thead.insertRow();
+    cabecalho.className = 'gridHeader';
+    cabecalho.insertCell(0).outerHTML = '<th scope="col" class="th-editar">Horário</th>';
+
+    fetch(`${contexto}/agendamentos/${dataAgenda}`)
+        .then(response => response.json())
+        .then(agendamentos => {
+            agendamentos.forEach(agendamento => {
+                cabecalho.insertCell().outerHTML = `<th scope="col">${agendamento.colaborador}</th>`;
+            });
+
+            for (let hora = 9; hora <= 18; hora++) {
+                let linha = tbody.insertRow();
+                linha.insertCell(0).innerText = `${hora}:00`;
+
+                agendamentos.forEach(agendamento => {
+                    let celula = linha.insertCell();
+
+                    if (agendamento.horarioIncial.hour === hora || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)) {
+                        let classeCSS = '';
+                        let conteudo = '';
+
+                        switch (agendamento.situacao) {
+                            case 'Agendado':
+                                classeCSS = 'bg-success';
+                                break;
+                            case 'Aberta':
+                                classeCSS = 'bg-danger';
+                                break;
+                            case 'Em espera':
+                                classeCSS = 'bg-warning';
+                                break;
+                            case 'Finalizado':
+                                classeCSS = 'bg-primary';
+                                break;
+                            case 'Bloqueio':
+                                classeCSS = 'bg-secondary';
+                                break;
+                        }
+
+                        conteudo = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">${agendamento.agendamento.cliente.nome}<br>${agendamento.servico.nome}</a>`;
+
+                        celula.className = classeCSS;
+                        celula.innerHTML = conteudo;
+                    } else {
+                        celula.innerHTML = '';
+                    }
+                });
+
+                linha = tbody.insertRow();
+                linha.insertCell(0).innerText = `${hora}:30`;
+
+                agendamentos.forEach(agendamento => {
+                    let celula = linha.insertCell();
+
+                    if (agendamento.horarioIncial.hour === hora && agendamento.horarioIncial.minute === 30 ||
+                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) ||
+                        (agendamento.horarioIncial.hour === hora && agendamento.horarioFinal.minute > 30)) {
+                        let classeCSS = '';
+                        let conteudo = '';
+
+                        switch (agendamento.situacao) {
+                            case 'Agendado':
+                                classeCSS = 'bg-success';
+                                break;
+                            case 'Aberta':
+                                classeCSS = 'bg-danger';
+                                break;
+                            case 'Em espera':
+                                classeCSS = 'bg-warning';
+                                break;
+                            case 'Finalizado':
+                                classeCSS = 'bg-primary';
+                                break;
+                            case 'Bloqueio':
+                                classeCSS = 'bg-secondary';
+                                break;
+                        }
+
+                        conteudo = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">${agendamento.agendamento.cliente.nome}<br>${agendamento.servico.nome}</a>`;
+
+                        celula.className = classeCSS;
+                        celula.innerHTML = conteudo;
+                    } else {
+                        celula.innerHTML = '';
+                    }
+                });
+            }
+        })
+        .catch(error => console.error('Erro ao buscar agendamentos:', error));
+}
+
 function visualizarComanda(contexto, id, agendamentoId, clienteId, colaboradorId, dataAgendamento, horaAgendamento, valorServicos, valorProdutos, valorDescontos, valorComanda, situacao) {
     const formCadastro = document.getElementById("form-cadastro");
     const tabelaProduto = document.getElementById("tabelaDadosProdutos");
@@ -1502,4 +1602,13 @@ function finalizarSaida(contexto, saidaId) {
                 alert("Erro ao finalizar a saída.");
             });
     }
+}
+
+function clearGroup(checkbox) {
+    var checkboxes = document.getElementsByName('theGroup');
+    checkboxes.forEach(function(currentCheckbox) {
+        if (currentCheckbox !== checkbox) {
+            currentCheckbox.checked = false;
+        }
+    });
 }
