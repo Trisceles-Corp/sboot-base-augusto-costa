@@ -110,7 +110,6 @@ function toggleCloseCadastro() {
 }
 
 function carregarConteudo(url) {
-    console.log(url);
     fetch(url)
         .then(response => response.text())
         .then(data => {
@@ -668,17 +667,30 @@ function atualizarTabelaComissoes(comissoes) {
     }
 }
 
-function pesquisarMovimentacoes(contexto, firstDay, lastDay) {
+function pesquisarMovimentacoes(contexto) {
+    const firstDayInput = document.getElementById('searchDataInicial');
+    const lastDayInput = document.getElementById('searchDataFinal')
+
+    let today = new Date();
+    let firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    let lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    if(firstDayInput !== null && lastDayInput !== null){
+        firstDay = firstDayInput.value;
+        lastDay = lastDayInput.value;
+    }
+
     const url = `${contexto}/caixamovimentacao/listarMovimentacoes/${firstDay}/${lastDay}`;
     fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Falha na resposta do servidor');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => atualizarTabelaMovimentacoes(data))
-        .catch(error => console.error('Erro ao buscar movimentações financeira.', error));
+        .catch(error => {
+            if (error instanceof SyntaxError) {
+                console.error('Erro ao fazer parse do JSON:', error);
+            } else {
+                console.error('Erro ao buscar movimentações financeiras:', error);
+            }
+        });
 }
 
 function atualizarTabelaMovimentacoes(movimentacoes) {
@@ -710,12 +722,10 @@ function atualizarTabelaMovimentacoes(movimentacoes) {
                 somaSaidas += movimento.valorMovimentacao;
             }
         });
-        console.log("display = block")
         totalEntradasLabel.value = somaEntradas.toFixed(2);
         totalSaidasLabel.value = somaSaidas.toFixed(2);
         tabelaElement.style.display = 'block';
     } else {
-        console.log("display = none")
         tabelaElement.style.display = 'none';
     }
 }
@@ -878,9 +888,6 @@ function visualizarCaixaMovimentacao(id, caixaId, tipoMovimentacaoId, formaPagam
     } else {
         formClienteCadast.style.display = "block";
     }
-
-    console.log(caixaId);
-    console.log(colaboradorId);
 
     window.scrollTo(0, 0);
 

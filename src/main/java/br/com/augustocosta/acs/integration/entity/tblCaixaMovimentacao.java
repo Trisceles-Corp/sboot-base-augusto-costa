@@ -55,5 +55,4 @@ public class tblCaixaMovimentacao {
 
     @Column(name = "AlteradoPor", nullable = false)
     private Integer alteradoPor;
-
 }

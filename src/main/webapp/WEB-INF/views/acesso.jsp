@@ -47,7 +47,7 @@
                 <div class="mb-3">
                     <button class="btn btn-primary btn-lg d-block btn-signin w-100" id="btnLogin" name="login" type="submit">Log In</button>
                 </div>
-                <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>
+<%--                <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>--%>
                 <div class="mb-3" style="display: none">
                     <a class="forgot-password" href="#">Recuperar senha?</a>
                 </div>
