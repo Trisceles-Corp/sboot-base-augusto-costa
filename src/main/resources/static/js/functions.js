@@ -430,22 +430,32 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
     fetch(`${contexto}/agendamentos/${dataAgenda}`)
         .then(response => response.json())
         .then(agendamentos => {
-            agendamentos.forEach(agendamento => {
-                cabecalho.insertCell().outerHTML = `<th scope="col">${agendamento.colaborador}</th>`;
-            });
+            // Agrupar agendamentos por colaborador
+            const agendamentosPorColaborador = agendamentos.reduce((acc, agendamento) => {
+                if (!acc[agendamento.colaborador]) {
+                    acc[agendamento.colaborador] = [];
+                    cabecalho.insertCell().outerHTML = `<th scope="col">${agendamento.colaborador}</th>`;
+                }
+                acc[agendamento.colaborador].push(agendamento);
+                return acc;
+            }, {});
 
             for (let hora = 9; hora <= 18; hora++) {
-                let linha = tbody.insertRow();
-                linha.insertCell(0).innerText = `${hora}:00`;
+                let linhaHora = tbody.insertRow();
+                linhaHora.insertCell(0).innerText = `${hora}:00`;
 
-                agendamentos.forEach(agendamento => {
-                    let celula = linha.insertCell();
+                Object.keys(agendamentosPorColaborador).forEach(colaborador => {
+                    let celula = linhaHora.insertCell();
+                    let agendamentosColaborador = agendamentosPorColaborador[colaborador];
 
-                    if (agendamento.horarioIncial.hour === hora || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)) {
+                    let agendamentoEncontrado = agendamentosColaborador.find(agendamento =>
+                        agendamento.horarioIncial.hour === hora ||
+                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)
+                    );
+
+                    if (agendamentoEncontrado) {
                         let classeCSS = '';
-                        let conteudo = '';
-
-                        switch (agendamento.situacao) {
+                        switch (agendamentoEncontrado.situacao) {
                             case 'Agendado':
                                 classeCSS = 'bg-success';
                                 break;
@@ -463,28 +473,29 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                                 break;
                         }
 
-                        conteudo = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">${agendamento.agendamento.cliente.nome}<br>${agendamento.servico.nome}</a>`;
-
                         celula.className = classeCSS;
-                        celula.innerHTML = conteudo;
+                        celula.innerHTML = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamentoEncontrado.id}')">${agendamentoEncontrado.agendamento.cliente.nome}<br>${agendamentoEncontrado.servico.nome}</a>`;
                     } else {
                         celula.innerHTML = '';
                     }
                 });
 
-                linha = tbody.insertRow();
-                linha.insertCell(0).innerText = `${hora}:30`;
+                let linhaMeiaHora = tbody.insertRow();
+                linhaMeiaHora.insertCell(0).innerText = `${hora}:30`;
 
-                agendamentos.forEach(agendamento => {
-                    let celula = linha.insertCell();
+                Object.keys(agendamentosPorColaborador).forEach(colaborador => {
+                    let celula = linhaMeiaHora.insertCell();
+                    let agendamentosColaborador = agendamentosPorColaborador[colaborador];
 
-                    if (agendamento.horarioIncial.hour === hora && agendamento.horarioIncial.minute === 30 ||
+                    let agendamentoEncontrado = agendamentosColaborador.find(agendamento =>
+                        (agendamento.horarioIncial.hour === hora && agendamento.horarioIncial.minute === 30) ||
                         (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) ||
-                        (agendamento.horarioIncial.hour === hora && agendamento.horarioFinal.minute > 30)) {
-                        let classeCSS = '';
-                        let conteudo = '';
+                        (agendamento.horarioIncial.hour === hora && agendamento.horarioFinal.minute > 30)
+                    );
 
-                        switch (agendamento.situacao) {
+                    if (agendamentoEncontrado) {
+                        let classeCSS = '';
+                        switch (agendamentoEncontrado.situacao) {
                             case 'Agendado':
                                 classeCSS = 'bg-success';
                                 break;
@@ -502,10 +513,8 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                                 break;
                         }
 
-                        conteudo = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamento.id}')">${agendamento.agendamento.cliente.nome}<br>${agendamento.servico.nome}</a>`;
-
                         celula.className = classeCSS;
-                        celula.innerHTML = conteudo;
+                        celula.innerHTML = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamentoEncontrado.id}')">${agendamentoEncontrado.agendamento.cliente.nome}<br>${agendamentoEncontrado.servico.nome}</a>`;
                     } else {
                         celula.innerHTML = '';
                     }

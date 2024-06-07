@@ -138,6 +138,7 @@
 		<profile>
 			<id>gcp</id>
 			<build>
+				<finalName>acs-0.0.1-SNAPSHOT</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.springframework.boot</groupId>

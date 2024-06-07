@@ -1,6 +1,21 @@
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.net.URLDecoder" %>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%
+    String perfil = "";
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("perfil")) {
+                String encodedPerfilValue = cookie.getValue();
+                perfil = URLDecoder.decode(encodedPerfilValue, StandardCharsets.UTF_8);
+                break;
+            }
+        }
+    }
+%>
 <html>
 <head>
     <title>Agendamento</title>

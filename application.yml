@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: gcp
+
   datasource:
 #    url: jdbc:sqlserver://LENOVO-P50\MSSQLSERVER:1433;database=costacrm;encrypt=false;
 #    username: sa
@@ -9,6 +12,7 @@ spring:
     username: sqlserver
     password: $#:P>F:9&#;04k>I
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    connectionProperties: cloudSqlInstance=steady-thunder-423317-k2:southamerica-east1:dbacsggl01
 
   jpa:
     open-in-view: false
