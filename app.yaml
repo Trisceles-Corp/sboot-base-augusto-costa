@@ -3,7 +3,7 @@ env: flex
 
 runtime_config:
   jdk: openjdk8
-  server: jetty9
+  server: jetty
   artifact: target/acs-0.0.1-SNAPSHOT.war
 
 handlers:
@@ -15,8 +15,8 @@ manual_scaling:
   instances: 1
 
 resources:
-  cpu: 1
-  memory_gb: 1
+  cpu: 2
+  memory_gb: 4
   disk_size_gb: 10
 
 inbound_services:
@@ -24,6 +24,7 @@ inbound_services:
 
 env_variables:
   JAVA_TOOL_OPTIONS: '-XX:MaxRAM=256m'
+  SPRING_PROFILES_ACTIVE: "gcp"
   SPRING_SECURITY_USER_NAME: "user"
   SPRING_SECURITY_USER_PASSWORD: "APmay7nFZdtx"
   SPRING_SECURITY_ADMIN_NAME: "admin"

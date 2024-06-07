@@ -21,12 +21,15 @@
             }
         }
     }
-%><html lang="pt-br">
+%>
+<html lang="pt-br">
 <head>
+    <title>Augusto Costa</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Augusto Costa</title>
+    <meta name="google-signin-client_id" content="947740812371-gkpiej5vkt568frb95i4vqtf40e3l89d.apps.googleusercontent.com">
+
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/icons/favicon.ico">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,6 +46,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
     <!-- Mantenha apenas uma versão do jQuery -->
+    <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>

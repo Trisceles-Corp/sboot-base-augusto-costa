@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.nio.charset.StandardCharsets" %>
+<%@ page import="java.net.URLDecoder" %><%--
   Created by IntelliJ IDEA.
   User: Alexander Andrade
   Date: 23/05/2024
@@ -10,6 +11,20 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <%
+    String perfil = "";
+    Cookie[] cookies = request.getCookies();
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("perfil")) {
+                String encodedPerfilValue = cookie.getValue();
+                perfil = URLDecoder.decode(encodedPerfilValue, StandardCharsets.UTF_8);
+                break;
+            }
+        }
+    }
+%>
+
 <html>
 <head>
     <title>Augusto Costa</title>
@@ -27,7 +42,7 @@
     <div class="col-md-10">
         <div class="botoes-agenda">
             <button type="button" class="btn btn-outline-primary" onclick="carregarConteudo(contextPath + '/agendamento')" id="btn-agendar">Agendar cliente</button>
-            <button type="button" class="btn btn-outline-secondary" onclick="carregarConteudo(contextPath + '/bloqueio')" id="btn-bloqueio">Bloquear horário</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="carregarConteudo(contextPath + '/bloqueio')" id="btn-bloqueio" style="display: <%= perfil.equals("4") ? "none" : "inline-block" %>">Bloquear horário</button>
         </div>
     </div>
 </div>
@@ -48,7 +63,7 @@
                     <span style="padding: 10px">Manicures</span>
                 </div>
                 <div class="form-group col-md-12">
-                    <input class="form-check-input" type="checkbox" id="Todos" name="theGroup" value="option2" onClick="clearGroup(this);">
+                    <input class="form-check-input" type="checkbox" id="Todos" name="theGroup" value="option2" checked="checked" onClick="clearGroup(this);">
                     <span style="padding: 10px">Todos</span>
                 </div>
             </form>

@@ -76,8 +76,11 @@ public class AgendamentoController {
             tblSituacaoAgendamento situacao = situacaoAgendamentoService.getById(table.getSituacao().getId()).orElseThrow();
             tblUsuario cliente = usuarioService.getById(table.getCliente().getId()).orElseThrow();
             tblUsuario colaborador = usuarioService.getById(table.getColaborador().getId()).orElseThrow();
-            data.setCliente(cliente);
-            data.setColaborador(colaborador);
+            data.setCliente(table.getCliente());
+            data.setColaborador(table.getColaborador());
+            data.setDataAgendamento(table.getDataAgendamento());
+            data.setHoraAgendamento(table.getHoraAgendamento());
+            data.setDuracao(table.getDuracao());
             data.setSituacao(situacao);
             data.setDataAlteracao(LocalDateTime.now());
             data.setAlteradoPor(activeUserId);
