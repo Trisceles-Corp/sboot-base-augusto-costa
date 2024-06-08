@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'alexanderixaeon/trisceles-acs:latest'
+        DOCKER_IMAGE = 'augusto-costa-acs:latest'
     }
 
     options {
-        timeout(time: 2, unit: 'HOURS')
+        timeout(time: 2, unit: 'HOURS') // Aumenta o tempo limite para 2 horas
     }
 
     stages {
@@ -20,9 +20,11 @@ pipeline {
             steps {
                 echo 'Iniciando a construção da imagem (Docker)'
                 script {
+                    // Verifica se o Docker está instalado e em execução
                     sh 'docker --version'
                     sh 'docker info'
 
+                    // Constrói a imagem Docker
                     dockerapp = docker.build(DOCKER_IMAGE, '-f ./Dockerfile ./')
                 }
             }
