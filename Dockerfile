@@ -9,7 +9,7 @@
 ################################################################################
 
 # Create a stage for resolving and downloading dependencies.
-FROM maven:3.8.4-openjdk-17 as deps
+FROM maven:3.8.4-openjdk-21 as deps
 
 WORKDIR /build
 
@@ -21,6 +21,7 @@ RUN chmod +x mvnw
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.m2 so that subsequent builds don't have to
 # re-download packages.
+COPY pom.xml .
 RUN --mount=type=bind,source=pom.xml,target=pom.xml \
     --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -DskipTests
 
