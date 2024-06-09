@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'augusto-costa-acs'
-        DOCKER_REGISTRY = 'hub.docker.com'
+        DOCKER_REGISTRY = 'registry.hub.docker.com'
         DOCKER_REPO = 'alexanderixaeon/augusto-costa-acs'
     }
 
