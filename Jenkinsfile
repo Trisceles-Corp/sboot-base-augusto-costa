@@ -35,8 +35,7 @@ pipeline {
                 echo 'Pushing image.'
                 script {
                     docker.withRegistry("https://${DOCKER_REGISTRY}", 'dockerhub') {
-                        sh "docker tag ${DOCKER_IMAGE}:${env.BUILD_ID} ${DOCKER_REPO}:${env.BUILD_ID}"
-                        sh "docker push ${DOCKER_REPO}:${env.BUILD_ID}"
+                        dockerapp.push("${DOCKER_REPO}:${env.BUILD_ID}")
                     }
                 }
             }
