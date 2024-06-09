@@ -35,26 +35,11 @@ pipeline {
                 echo 'Pushing image.'
                 script {
                     docker.withRegistry("https://${DOCKER_REGISTRY}", 'dockerhub') {
-                        dockerapp.push("${DOCKER_REPO}:${env.BUILD_ID}")
+                        sh "docker tag ${DOCKER_IMAGE}:${env.BUILD_ID} ${DOCKER_REPO}:${env.BUILD_ID}"
+                        sh "docker push ${DOCKER_REPO}:${env.BUILD_ID}"
                     }
                 }
             }
         }
-
-//         stage('Run Container') {
-//             steps {
-//                 script {
-//                     docker.image(DOCKER_IMAGE).inside {
-//                         sh 'echo "Container is running"'
-//                     }
-//                 }
-//             }
-//         }
     }
-
-//     post {
-//         always {
-//             cleanWs()
-//         }
-//     }
 }
