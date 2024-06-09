@@ -6,7 +6,7 @@ pipeline {
     }
 
     options {
-        timeout(time: 2, unit: 'HOURS') // Aumenta o tempo limite para 2 horas
+        timeout(time: 2, unit: 'HOURS')
     }
 
     stages {
@@ -20,12 +20,21 @@ pipeline {
             steps {
                 echo 'Iniciando a construção da imagem (Docker)'
                 script {
-                    // Verifica se o Docker está instalado e em execução
                     sh 'docker --version'
                     sh 'docker info'
 
-                    // Constrói a imagem Docker
                     dockerapp = docker.build(DOCKER_IMAGE:${env.BUILD_ID}, '-f ./Dockerfile ./')
+                }
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                echo 'Pushing image.'
+                script{
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+                    dockerapp.push('latest')
+                    dockerapp.push('${env.BUILD_ID}')
                 }
             }
         }
@@ -41,9 +50,9 @@ pipeline {
 //         }
     }
 
-    post {
-        always {
-            cleanWs()
-        }
-    }
+//     post {
+//         always {
+//             cleanWs()
+//         }
+//     }
 }
