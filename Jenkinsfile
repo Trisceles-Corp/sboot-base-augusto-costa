@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'trisceles-acs'
+        DOCKER_IMAGE = 'trisceles-acs:${env.BUILD_ID}'
     }
 
     options {
@@ -23,7 +23,7 @@ pipeline {
                     sh 'docker --version'
                     sh 'docker info'
 
-                    dockerapp = docker.build(DOCKER_IMAGE:${env.BUILD_ID}, '-f ./Dockerfile ./')
+                    dockerapp = docker.build(DOCKER_IMAGE, '-f ./Dockerfile ./')
                 }
             }
         }
