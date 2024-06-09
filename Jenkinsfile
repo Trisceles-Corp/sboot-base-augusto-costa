@@ -23,21 +23,21 @@ pipeline {
                     sh 'docker --version'
                     sh 'docker info'
 
-                    dockerapp = docker.build(DOCKER_IMAGE:${env.BUILD_ID}, '-f ./Dockerfile ./')
+                    dockerapp = docker.build(DOCKER_IMAGE, '-f ./Dockerfile ./')
                 }
             }
         }
 
-        stage('Push Image') {
-            steps {
-                echo 'Pushing image.'
-                script{
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
-                    dockerapp.push('latest')
-                    dockerapp.push('${env.BUILD_ID}')
-                }
-            }
-        }
+//         stage('Push Image') {
+//             steps {
+//                 echo 'Pushing image.'
+//                 script{
+//                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub')
+//                     dockerapp.push('latest')
+//                     dockerapp.push('${env.BUILD_ID}')
+//                 }
+//             }
+//         }
 
 //         stage('Run Container') {
 //             steps {
