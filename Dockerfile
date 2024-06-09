@@ -55,3 +55,4 @@ COPY --from=package /build/target/app.war /app.war
 EXPOSE 8443
 
 ENTRYPOINT ["java", "-jar", "/app.war"]
+CMD ["--help"]

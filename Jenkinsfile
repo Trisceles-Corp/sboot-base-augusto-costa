@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'augusto-costa-acs:latest'
+        DOCKER_IMAGE = 'trisceles-acs'
     }
 
     options {
