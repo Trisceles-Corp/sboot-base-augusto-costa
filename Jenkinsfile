@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'augusto-costa-acs'
-        DOCKER_REGISTRY = 'registry.hub.docker.com'
+        DOCKER_REGISTRY = 'index.docker.io/v1/'
         DOCKER_REPO = 'alexanderixaeon/augusto-costa-acs'
     }
 
@@ -36,6 +36,7 @@ pipeline {
                 script {
                     docker.withRegistry("https://${DOCKER_REGISTRY}", 'dockerhub') {
                         sh "docker tag ${DOCKER_IMAGE}:${env.BUILD_ID} ${DOCKER_REPO}:${env.BUILD_ID}"
+                        sh "docker images"
                         sh "docker push ${DOCKER_REPO}:${env.BUILD_ID}"
                     }
                 }
