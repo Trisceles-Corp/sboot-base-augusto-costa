@@ -2,7 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'trisceles-acs'
+        DOCKER_IMAGE = 'augusto-costa-acs'
+        DOCKER_REGISTRY = 'https://index.docker.io/v1/'
+        DOCKER_REPO = 'alexanderixaeon/augusto-costa-acs'
     }
 
     options {
@@ -32,8 +34,9 @@ pipeline {
             steps {
                 echo 'Pushing image.'
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                        dockerapp.push("${env.BUILD_ID}")
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", 'dockerhub') {
+                        sh "docker tag ${DOCKER_IMAGE}:${env.BUILD_ID} ${DOCKER_REPO}:${env.BUILD_ID}"
+                        sh "docker push ${DOCKER_REPO}:${env.BUILD_ID}"
                     }
                 }
             }
