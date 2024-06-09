@@ -25,20 +25,20 @@ pipeline {
                     sh 'docker info'
 
                     // Constrói a imagem Docker
-                    dockerapp = docker.build(DOCKER_IMAGE, '-f ./Dockerfile ./')
+                    dockerapp = docker.build(DOCKER_IMAGE:${env.BUILD_ID}, '-f ./Dockerfile ./')
                 }
             }
         }
 
-        stage('Run Container') {
-            steps {
-                script {
-                    docker.image(DOCKER_IMAGE).inside {
-                        sh 'echo "Container is running"'
-                    }
-                }
-            }
-        }
+//         stage('Run Container') {
+//             steps {
+//                 script {
+//                     docker.image(DOCKER_IMAGE).inside {
+//                         sh 'echo "Container is running"'
+//                     }
+//                 }
+//             }
+//         }
     }
 
     post {
