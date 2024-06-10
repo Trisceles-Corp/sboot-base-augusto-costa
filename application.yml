@@ -10,7 +10,7 @@ spring:
 
     url: jdbc:sqlserver://34.95.201.193\MSSQLSERVER:1433;database=costacrm;encrypt=true;trustServerCertificate=true;
     username: sqlserver
-    password: $#:P>F:9&#;04k>I
+    password: ${{ secrets.SQLSERVER_KEY }}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     connectionProperties: cloudSqlInstance=steady-thunder-423317-k2:southamerica-east1:dbacsggl01
 
