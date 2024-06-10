@@ -42,5 +42,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to EC2') {
+            steps {
+                echo 'Deploying to EC2.'
+                script {
+                    sh """
+                    docker pull ${DOCKER_REPO}:${env.BUILD_ID}
+                    docker stop \$(docker ps -q --filter ancestor=${DOCKER_REPO})
+                    docker run -d -p 8443:8443 ${DOCKER_REPO}:${env.BUILD_ID}
+                    """
+                }
+            }
+        }
     }
 }
