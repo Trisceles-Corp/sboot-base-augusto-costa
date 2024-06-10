@@ -16,7 +16,7 @@ RUN chmod +x mvnw
 # Leverage a cache mount to /root/.m2 so that subsequent builds don't have to
 # re-download packages.
 COPY pom.xml .
-RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -DskipTests
+RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline -DskipTests -P gcp
 
 ################################################################################
 
@@ -28,8 +28,18 @@ WORKDIR /build
 COPY ./src src/
 COPY pom.xml .
 RUN --mount=type=cache,target=/root/.m2 \
-    mvn package -DskipTests && \
+    mvn package -DskipTests -P gcp && \
     mv target/acs-0.0.1-SNAPSHOT.war target/app.war
+
+################################################################################
+
+# Create a stage for verifying the contents of the WAR file using a JDK image.
+FROM openjdk:17-jdk-slim as verify
+
+COPY --from=package /build/target/app.war /app.war
+
+# Verify the contents of the WAR file
+RUN jar tf /app.war | grep "org/springframework/boot/loader/launch/WarLauncher.class"
 
 ################################################################################
 
@@ -49,10 +59,12 @@ RUN adduser \
     appuser
 USER appuser
 
-# Copy the executable from the "package" stage.
-COPY --from=package /build/target/app.war /app.war
+# Copy the executable from the "verify" stage.
+COPY --from=verify /app.war /app.war
+
+# Copy the keystore file
+COPY src/main/resources/acsapp.keystore.p12 /app/resources/acsapp.keystore.p12
 
 EXPOSE 8443
 
 ENTRYPOINT ["java", "-jar", "/app.war"]
-CMD ["java -jar /app.war"]
