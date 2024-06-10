@@ -31,6 +31,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-loader</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
 			<version>1.26.2</version>
@@ -219,6 +225,20 @@
 								<phase>compile</phase>
 							</execution>
 						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>3.4.0</version>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Main-Class>org.springframework.boot.loader.launch.WarLauncher</Main-Class>
+									<Start-Class>br.com.augustocosta.acs.Application</Start-Class>
+								</manifestEntries>
+							</archive>
+						</configuration>
 					</plugin>
 
 					<plugin>
