@@ -49,7 +49,10 @@ pipeline {
                 script {
                     sh """
                     docker pull ${DOCKER_REPO}:${env.BUILD_ID}
-                    docker stop \$(docker ps -q --filter ancestor=${DOCKER_REPO})
+                    CONTAINER_IDS=\$(docker ps -q --filter ancestor=${DOCKER_REPO})
+                    if [ ! -z "\$CONTAINER_IDS" ]; then
+                        docker stop \$CONTAINER_IDS
+                    fi
                     docker run -d -p 8443:8443 ${DOCKER_REPO}:${env.BUILD_ID}
                     """
                 }
