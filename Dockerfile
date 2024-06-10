@@ -29,7 +29,8 @@ COPY ./src src/
 COPY pom.xml .
 RUN --mount=type=cache,target=/root/.m2 \
     mvn package -DskipTests && \
-    mv target/acs-0.0.1-SNAPSHOT.war target/app.war
+    mv target/acs-0.0.1-SNAPSHOT.war target/app.war && \
+    ls -l target/
 
 ################################################################################
 

@@ -26,6 +26,12 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-loader</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-maven-plugin</artifactId>
 			<version>3.2.2</version>
 		</dependency>
@@ -188,6 +194,20 @@
 								-Djdk.instrument.traceUsage
 								-Xshare:off
 							</jvmArguments>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>3.4.0</version>
+						<configuration>
+							<archive>
+								<manifestEntries>
+									<Main-Class>org.springframework.boot.loader.launch.WarLauncher</Main-Class>
+									<Start-Class>br.com.augustocosta.acs.Application</Start-Class>
+								</manifestEntries>
+							</archive>
 						</configuration>
 					</plugin>
 

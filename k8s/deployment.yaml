@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: augusto-costa-acs-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: augusto-costa-acs
+  template:
+    metadata:
+      labels:
+        app: augusto-costa-acs
+    spec:
+      containers:
+        - name: augusto-costa-acs
+          image: alexanderixaeon/augusto-costa-acs:latest
+          ports:
+            - containerPort: 8080
