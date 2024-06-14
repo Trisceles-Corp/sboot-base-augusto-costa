@@ -109,6 +109,21 @@ function toggleCloseCadastro() {
     formCadastro.reset();
 }
 
+function toggleCloseCadastroFornecedor() {
+    const formCadastro = document.getElementById("form-cadastro");
+    document.getElementById("inputUsuarioId").value = null;
+    document.getElementById("inputEnderecoId").value = null;
+    document.getElementById("inputCargoId").value = null;
+    document.getElementById("inputPerfilId").value = null;
+
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
+    } else {
+        formCadastro.style.display = "none";
+    }
+    formCadastro.reset();
+}
+
 function carregarConteudo(url) {
     fetch(url)
         .then(response => response.text())
