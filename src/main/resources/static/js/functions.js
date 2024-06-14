@@ -161,6 +161,23 @@ function verificarValoresMovimentacaoAntesDeSalvar() {
 }
 
 function verificarCamposAgendamentoAntesDeSalvar() {
+    const table = document.getElementById('tabelaDadosServicos');
+    const tbody = table.getElementsByTagName('tbody')[0];
+
+    console.log(table);
+    console.log(tbody);
+
+    if (tbody.rows.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Aviso',
+            text: 'Adicione o serviço para criar o agendamento, serviço obrigatório.',
+        });
+        return false;
+    }
+
+    coletarDadosFormulario();
+
     var camposObrigatorios = [
         "field_ClienteId",
         "field_ColaboradorId",
@@ -1039,9 +1056,19 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
 }
 
 function adicionarServico() {
+    const btnSalvar = document.getElementById("buttonSalvar").value;
     const servicoId = document.getElementById("field_ServicoId").value;
     const table = document.getElementById("tabelaDadosServicos");
+    const tbody = table.getElementsByTagName('tbody')[0];
+
     table.style.display = "block";
+
+    if (tbody.rows.length === 0) {
+        btnSalvar.disabled = true;
+    } else {
+        btnSalvar.disabled = false;
+    }
+
     buscarDadosServicos(servicoId);
 }
 

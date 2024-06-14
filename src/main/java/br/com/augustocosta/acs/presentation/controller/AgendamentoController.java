@@ -68,6 +68,10 @@ public class AgendamentoController {
         if(userCookie == null){ userCookie = "1"; }
         Integer activeUserId = Integer.parseInt(userCookie) ;
 
+        if(dados.getServico() == null || dados.getServico().size() == 0){
+            return "redirect:/index?origem=agendamento";
+        }
+
         tblAgendamento table = dados.getAgendamento();
         table.setAtivo(true);
 

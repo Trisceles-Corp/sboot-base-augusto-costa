@@ -180,7 +180,7 @@
         </div>
 
         <div class="mt-2">
-            <button type="button" class="btn btn-primary" onclick="coletarDadosFormulario(); document.getElementById('form-cadastro').submit();">Salvar</button>
+            <button type="submit" class="btn btn-primary" id="buttonSalvar">Salvar</button>
         </div>
         </form:form>
     </div>
