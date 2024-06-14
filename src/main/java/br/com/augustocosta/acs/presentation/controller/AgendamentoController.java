@@ -94,7 +94,7 @@ public class AgendamentoController {
             service.create(dados, activeUserId);
         }
 
-        return "redirect:/index?origem=agendamento";
+        return "redirect:/index?origem=gridagendamento";
     }
 
     @GetMapping("/{id}")
