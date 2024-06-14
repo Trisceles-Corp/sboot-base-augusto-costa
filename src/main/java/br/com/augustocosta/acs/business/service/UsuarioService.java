@@ -115,6 +115,10 @@ public class UsuarioService {
         return repository.findByCargoOrderByNomeAsc(cargo);
     }
 
+    public List<tblUsuario> getByCpfCnpj(String cpfCnpj) {
+        return repository.findByCpfCnpj(cpfCnpj);
+    }
+
     public List<tblUsuario> getByPerfil(tblPerfil perfil) {
         return repository.findByPerfilOrderByNomeAsc(perfil);
     }

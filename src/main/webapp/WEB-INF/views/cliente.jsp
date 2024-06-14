@@ -20,10 +20,14 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
     <!-- Mantenha apenas uma versão do jQuery -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+    <script>
+        const contextPath = "${pageContext.request.contextPath}";
+    </script>
 </head>
 
 <body>
@@ -52,7 +56,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="cpfCnpj" class="form-label" for="inputCpfCnpj">CPF / CNPJ:<span class="text-danger">*</span></form:label>
-                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" maxlength="18" required="required" />
+                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" onchange="verificarCPF(contextPath);" maxlength="14" required="required" />
                 </div>
                 <div class="form-group col-md-1">
                     <form:label path="genero" class="form-label" for="inputGenero">Gênero:<span class="text-danger">*</span></form:label>

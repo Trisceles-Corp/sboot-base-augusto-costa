@@ -22,15 +22,6 @@ function converteMinutosParaHora(minutos) {
     return String(horas).padStart(2, '0') + ":" + String(mins).padStart(2, '0');
 }
 
-// function toggleFormCadastro() {
-//     const formCadastro = document.getElementById("form-cadastro");
-//     if (formCadastro.style.display === "block") {
-//         formCadastro.style.display = "none";
-//     } else {
-//         formCadastro.style.display = "block";
-//     }
-// }
-
 function toggleFormCadastro() {
     const formCadastro = document.getElementById("form-cadastro");
     const situacaoCompra = document.getElementById("field_SituacaoCompraId");
@@ -178,9 +169,6 @@ function verificarValoresMovimentacaoAntesDeSalvar() {
 function verificarCamposAgendamentoAntesDeSalvar() {
     const table = document.getElementById('tabelaDadosServicos');
     const tbody = table.getElementsByTagName('tbody')[0];
-
-    console.log(table);
-    console.log(tbody);
 
     if (tbody.rows.length === 0) {
         Swal.fire({
@@ -1689,10 +1677,34 @@ function finalizarSaida(contexto, saidaId) {
 }
 
 function clearGroup(checkbox) {
-    var checkboxes = document.getElementsByName('theGroup');
+    let checkboxes = document.getElementsByName('theGroup');
     checkboxes.forEach(function(currentCheckbox) {
         if (currentCheckbox !== checkbox) {
             currentCheckbox.checked = false;
+        }
+    });
+}
+
+function verificarCPF(contexto) {
+    const inputCpfCnpj = document.getElementById('inputCpfCnpj');
+    let cpfCnpj = inputCpfCnpj.value.replace(/\D/g, '');
+    const url = `${contexto}/cliente/verificarCpfCnpj/`;
+
+    $.ajax({
+        url: url + cpfCnpj,
+        type: 'GET',
+        success: function(response) {
+            if (response) {
+                inputCpfCnpj.value = '';
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Aviso',
+                    text: 'CPF/CNPJ já cadastrado.',
+                });
+            }
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados do CPF/CNPJ: ", error);
         }
     });
 }
