@@ -27,9 +27,10 @@ public class AgendamentoService {
     private final LocalEstoqueRepository localEstoqueRepository;
     private final ComandaRepository comandaRepository;
     private final GridAgendamentoRepository gridAgendamentoRepository;
+    private final BloqueioRepository bloqueioRepository;
 
     @Autowired
-    public AgendamentoService(AgendamentoRepository repository, ServicosAgendamentoRepository servicosAgendamentoRepository, SituacaoAgendamentoRepository situacaoRepository, VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, ServicoRepository servicoRepository, LocalEstoqueRepository localEstoqueRepository, ComandaRepository comandaRepository, GridAgendamentoRepository gridAgendamentoRepository) {
+    public AgendamentoService(AgendamentoRepository repository, ServicosAgendamentoRepository servicosAgendamentoRepository, SituacaoAgendamentoRepository situacaoRepository, VendaRepository vendaRepository, VendaProdutoRepository vendaProdutoRepository, ProdutoRepository produtoRepository, ServicoRepository servicoRepository, LocalEstoqueRepository localEstoqueRepository, ComandaRepository comandaRepository, GridAgendamentoRepository gridAgendamentoRepository, BloqueioRepository bloqueioRepository) {
         this.repository = repository;
         this.servicosAgendamentoRepository = servicosAgendamentoRepository;
         this.situacaoRepository = situacaoRepository;
@@ -40,11 +41,16 @@ public class AgendamentoService {
         this.localEstoqueRepository = localEstoqueRepository;
         this.comandaRepository = comandaRepository;
         this.gridAgendamentoRepository = gridAgendamentoRepository;
+        this.bloqueioRepository = bloqueioRepository;
     }
 
     @Transactional
     public tblAgendamento update(tblAgendamento dados) {
         tblGridAgendamento grid = gridAgendamentoRepository.findByAgendamento(dados);
+        if(grid.getBloqueio() == null){
+            tblBloqueio bloqueio = bloqueioRepository.findById(1).orElseThrow();
+            grid.setBloqueio(bloqueio);
+        }
         grid.setSituacao(dados.getSituacao().getNome());
         grid.setDataAlteracao(LocalDateTime.now());
         grid.setAlteradoPor(dados.getAlteradoPor());
@@ -154,10 +160,13 @@ public class AgendamentoService {
 
         // Insere agendamento no grid
         tblGridAgendamento grid = new tblGridAgendamento();
+        tblBloqueio bloqueio = bloqueioRepository.findById(1).orElseThrow();
         String situacao = situacaoRepository.findById(agendamento.getSituacao().getId()).orElseThrow().getNome();
+
 
         grid.setComanda(comanda);
         grid.setAgendamento(agendamento);
+        grid.setBloqueio(bloqueio);
         grid.setServico(dados.getServico().get(0));
         grid.setSituacao(situacao);
         grid.setAtivo(true);

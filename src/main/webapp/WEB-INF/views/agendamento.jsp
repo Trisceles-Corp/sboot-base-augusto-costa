@@ -71,8 +71,8 @@
     </div>
     <div class="row">
         <div class="form-group col-md-3">
-            <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:<span class="text-danger">*</span></form:label>
-            <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId" required="required">
+            <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:</form:label>
+            <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarServiços}" itemValue="id" itemLabel="nome"/>
             </form:select>

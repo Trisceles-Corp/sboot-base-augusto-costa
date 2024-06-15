@@ -108,12 +108,22 @@
                                 <c:forEach var="agendamento" items="${agendamentosPorColaborador.get(colaborador)}">
                                     <c:if test="${agendamento.horarioIncial.hour == hora || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)}">
                                         <div class="agendamento">
-                                            <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamento.agendamento.id}')">
-                                            <span class="situacao-${agendamento.situacao}">
-                                                ${agendamento.agendamento.cliente.nome}<br>
-                                                ${agendamento.servico.nome}
-                                            </span>
-                                            </a>
+                                            <c:choose>
+                                                <c:when test="${agendamento.situacao != 'Bloqueio'}">
+                                                    <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamento.agendamento.id}')">
+                                                        <span class="situacao-${agendamento.situacao}">
+                                                            ${agendamento.agendamento.cliente.nome}<br>
+                                                            ${agendamento.servico.nome}
+                                                        </span>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="situacao-${agendamento.situacao}">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                    </span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </c:if>
                                 </c:forEach>
@@ -127,12 +137,22 @@
                                 <c:forEach var="agendamento" items="${agendamentosPorColaborador.get(colaborador)}">
                                     <c:if test="${agendamento.horarioIncial.hour == hora && agendamento.horarioIncial.minute != 30 || (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) || (agendamento.horarioIncial.hour == hora && agendamento.horarioFinal.minute > 30)}">
                                         <div class="agendamento">
-                                            <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamento.agendamento.id}')">
-                                            <span class="situacao-${agendamento.situacao}">
-                                                ${agendamento.agendamento.cliente.nome}<br>
-                                                ${agendamento.servico.nome}
-                                            </span>
-                                            </a>
+                                            <c:choose>
+                                                <c:when test="${agendamento.situacao != 'Bloqueio'}">
+                                                    <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamento.agendamento.id}')">
+                                                        <span class="situacao-${agendamento.situacao}">
+                                                            ${agendamento.agendamento.cliente.nome}<br>
+                                                            ${agendamento.servico.nome}
+                                                        </span>
+                                                    </a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <span class="situacao-${agendamento.situacao}">
+                                                        ${agendamento.agendamento.cliente.nome}<br>
+                                                        ${agendamento.servico.nome}
+                                                    </span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </c:if>
                                 </c:forEach>

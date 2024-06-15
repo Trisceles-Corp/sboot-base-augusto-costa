@@ -327,7 +327,7 @@
                     </script>
                 </div>
             </a>
-            <a class="nav-option" id="admin" style="display: <%= perfil.equals("1") || perfil.equals("2") ? "block" : "none" %>">
+            <a class="nav-option" id="admin" style="display: <%= perfil.equals("1") ? "block" : "none" %>">
                 <div class="contain-option w-100">
                     <div class="my-2">
                         <img src="${pageContext.request.contextPath}/img/icon clientes/cliente-999.png" id="admin-img" alt="">

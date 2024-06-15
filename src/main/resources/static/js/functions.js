@@ -186,7 +186,6 @@ function verificarCamposAgendamentoAntesDeSalvar() {
         "field_ColaboradorId",
         "inputData",
         "field_HoraAgendamento",
-        "field_ServicoId",
         "field_SituacaoId"
     ];
 
