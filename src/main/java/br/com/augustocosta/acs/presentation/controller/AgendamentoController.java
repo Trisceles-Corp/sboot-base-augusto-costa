@@ -10,8 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/agendamento")
@@ -48,10 +51,18 @@ public class AgendamentoController {
     }
 
     @GetMapping
-    public String listarDependencias(Model model) {
+    public String listarDependencias(@RequestParam(value = "inputData", required = false) String dataAgendaStr, Model model) {
+        Date dataAgenda;
+        if (dataAgendaStr == null || dataAgendaStr.isEmpty()) {
+            dataAgenda = new Date();
+        } else {
+            LocalDate inputDate = LocalDate.parse(dataAgendaStr);
+            dataAgenda = Date.from(inputDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        }
+
         model.addAttribute("listarLocaisEstoque", localService.getActives());
         model.addAttribute("listarServiços", servicoService.getActives());
-        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioColaborador(dataAgenda, 0));
         model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(0));
         model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(0));
         model.addAttribute("listarProdutos", produtoService.getActives());
@@ -99,27 +110,23 @@ public class AgendamentoController {
 
     @GetMapping("/{id}")
     public String mostrarAgendamento(@PathVariable("id") Integer agendamentoId, Model model) {
-        Optional<tblAgendamento> agendamento = service.getById(agendamentoId);
-        if (agendamento.isPresent()) {
-            dtoAgendamento dto = new dtoAgendamento();
-            dto.setAgendamento(agendamento.get());
-            model.addAttribute("dtoAgendamento", dto);
+        tblAgendamento agendamento = service.getById(agendamentoId).orElseThrow();
+        dtoAgendamento dto = new dtoAgendamento();
+        dto.setAgendamento(agendamento);
+        model.addAttribute("dtoAgendamento", dto);
 
-            // Adicione os outros atributos necessários para a página de agendamento
-            model.addAttribute("listarLocaisEstoque", localService.getActives());
-            model.addAttribute("listarServiços", servicoService.getActives());
-            model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
-            model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(agendamentoId));
-            model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(agendamentoId));
-            model.addAttribute("listarProdutos", produtoService.getActives());
-            model.addAttribute("listarClientes", usuarioService.getAllByPerfil(4));
-            model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
-            model.addAttribute("listarSituacao", situacaoAgendamentoService.getActives());
+        // Adicione os outros atributos necessários para a página de agendamento
+        model.addAttribute("listarLocaisEstoque", localService.getActives());
+        model.addAttribute("listarServiços", servicoService.getActives());
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioColaborador(agendamento.getDataAgendamento(), agendamento.getColaborador().getId()));
+        model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(agendamentoId));
+        model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(agendamentoId));
+        model.addAttribute("listarProdutos", produtoService.getActives());
+        model.addAttribute("listarClientes", usuarioService.getAllByPerfil(4));
+        model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
+        model.addAttribute("listarSituacao", situacaoAgendamentoService.getActives());
 
-            return "agendamento";
-        } else {
-            return "redirect:/agendamento";
-        }
+        return "agendamento";
     }
 
     @GetMapping("/listaServicoAgendamento/{servicoId}")

@@ -48,7 +48,7 @@
         </div>
         <div class="form-group col-md-4">
             <form:label path="agendamento.colaborador.id" class="form-label" for="field_ColaboradorId">Colaborador:<span class="text-danger">*</span></form:label>
-            <form:select path="agendamento.colaborador.id" class="form-control" id="field_ColaboradorId" required="required">
+            <form:select path="agendamento.colaborador.id" class="form-control" id="field_ColaboradorId" onchange="bloquearHorarios()" required="required">
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarColaboradores}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
