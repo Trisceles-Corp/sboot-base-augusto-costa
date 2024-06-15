@@ -22,15 +22,6 @@ function converteMinutosParaHora(minutos) {
     return String(horas).padStart(2, '0') + ":" + String(mins).padStart(2, '0');
 }
 
-// function toggleFormCadastro() {
-//     const formCadastro = document.getElementById("form-cadastro");
-//     if (formCadastro.style.display === "block") {
-//         formCadastro.style.display = "none";
-//     } else {
-//         formCadastro.style.display = "block";
-//     }
-// }
-
 function toggleFormCadastro() {
     const formCadastro = document.getElementById("form-cadastro");
     const situacaoCompra = document.getElementById("field_SituacaoCompraId");
@@ -109,6 +100,21 @@ function toggleCloseCadastro() {
     formCadastro.reset();
 }
 
+function toggleCloseCadastroFornecedor() {
+    const formCadastro = document.getElementById("form-cadastro");
+    document.getElementById("inputUsuarioId").value = null;
+    document.getElementById("inputEnderecoId").value = null;
+    document.getElementById("inputCargoId").value = null;
+    document.getElementById("inputPerfilId").value = null;
+
+    if (formCadastro.style.display === "block") {
+        formCadastro.style.display = "none";
+    } else {
+        formCadastro.style.display = "none";
+    }
+    formCadastro.reset();
+}
+
 function carregarConteudo(url) {
     fetch(url)
         .then(response => response.text())
@@ -161,12 +167,25 @@ function verificarValoresMovimentacaoAntesDeSalvar() {
 }
 
 function verificarCamposAgendamentoAntesDeSalvar() {
+    const table = document.getElementById('tabelaDadosServicos');
+    const tbody = table.getElementsByTagName('tbody')[0];
+
+    if (tbody.rows.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Aviso',
+            text: 'Adicione o serviço para criar o agendamento, serviço obrigatório.',
+        });
+        return false;
+    }
+
+    coletarDadosFormulario();
+
     var camposObrigatorios = [
         "field_ClienteId",
         "field_ColaboradorId",
         "inputData",
         "field_HoraAgendamento",
-        "field_ServicoId",
         "field_SituacaoId"
     ];
 
@@ -1039,9 +1058,19 @@ function visualizarFornecedor(usuarioId, enderecoId, cargoId, perfilId, nome, so
 }
 
 function adicionarServico() {
+    const btnSalvar = document.getElementById("buttonSalvar").value;
     const servicoId = document.getElementById("field_ServicoId").value;
     const table = document.getElementById("tabelaDadosServicos");
+    const tbody = table.getElementsByTagName('tbody')[0];
+
     table.style.display = "block";
+
+    if (tbody.rows.length === 0) {
+        btnSalvar.disabled = true;
+    } else {
+        btnSalvar.disabled = false;
+    }
+
     buscarDadosServicos(servicoId);
 }
 
@@ -1647,10 +1676,34 @@ function finalizarSaida(contexto, saidaId) {
 }
 
 function clearGroup(checkbox) {
-    var checkboxes = document.getElementsByName('theGroup');
+    let checkboxes = document.getElementsByName('theGroup');
     checkboxes.forEach(function(currentCheckbox) {
         if (currentCheckbox !== checkbox) {
             currentCheckbox.checked = false;
+        }
+    });
+}
+
+function verificarCPF(contexto) {
+    const inputCpfCnpj = document.getElementById('inputCpfCnpj');
+    let cpfCnpj = inputCpfCnpj.value.replace(/\D/g, '');
+    const url = `${contexto}/cliente/verificarCpfCnpj/`;
+
+    $.ajax({
+        url: url + cpfCnpj,
+        type: 'GET',
+        success: function(response) {
+            if (response) {
+                inputCpfCnpj.value = '';
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Aviso',
+                    text: 'CPF/CNPJ já cadastrado.',
+                });
+            }
+        },
+        error: function(error) {
+            console.log("Erro ao buscar dados do CPF/CNPJ: ", error);
         }
     });
 }

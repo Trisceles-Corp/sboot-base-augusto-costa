@@ -22,6 +22,7 @@ public interface UsuarioRepository extends JpaRepository<tblUsuario, Integer> {
     tblUsuario findByUsuarioById(Integer id);
 
     List<tblUsuario> findByEmail(String email);
+    List<tblUsuario> findByCpfCnpj(String cpfCnpj);
     List<tblUsuario> findByNomeOrderByNomeAsc(String nome);
     List<tblUsuario> findBySobrenomeOrderByNomeAsc(String sobrenome);
     List<tblUsuario> findByAtivoTrueOrderByNomeAsc();

@@ -26,6 +26,10 @@ public class tblGridAgendamento {
     private tblAgendamento agendamento;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "BloqueioId")
+    private tblBloqueio bloqueio;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "ServicoId", nullable = false)
     private tblServico servico;
 

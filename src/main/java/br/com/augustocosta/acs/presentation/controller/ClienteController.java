@@ -5,10 +5,15 @@ import br.com.augustocosta.acs.business.service.EnderecoService;
 import br.com.augustocosta.acs.business.service.UsuarioService;
 import br.com.augustocosta.acs.integration.dto.dtoUsuario;
 import br.com.augustocosta.acs.integration.entity.tblEndereco;
+import br.com.augustocosta.acs.integration.entity.tblFormasPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cliente")
@@ -37,6 +42,12 @@ public class ClienteController {
 
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute dtoUsuario dados) {
+        String cpfCnpj = dados.getCpfCnpj().replaceAll("\\D", "");
+
+        if (usuarioService.getByCpfCnpj(cpfCnpj).size() >= 1){
+
+        }
+        dados.setCpfCnpj(cpfCnpj);
         dados.setDdiCelular(55);
         dados.setDdiTelefone(55);
         dados.setCargoId(1);
@@ -52,6 +63,12 @@ public class ClienteController {
             usuarioService.createDto(enderecoService.createDto(dados), dados);
         }
         return "redirect:/index?origem=cliente";
+    }
+
+    @GetMapping("/verificarCpfCnpj/{cpfCnpj}")
+    public ResponseEntity<Boolean>  verificarCpfCnpj(@PathVariable String cpfCnpj) {
+        boolean exists = usuarioService.getByCpfCnpj(cpfCnpj).size() >= 1;
+        return ResponseEntity.ok(exists);
     }
 
     @PostMapping("/delete/{id}")

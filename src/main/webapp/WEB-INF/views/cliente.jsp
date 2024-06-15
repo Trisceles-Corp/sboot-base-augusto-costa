@@ -20,10 +20,14 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 
     <!-- Mantenha apenas uma versão do jQuery -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 
+    <script>
+        const contextPath = "${pageContext.request.contextPath}";
+    </script>
 </head>
 
 <body>
@@ -34,19 +38,6 @@
         </div>
         <div class="row" id="linha-botao-pesquisa">
             <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar cliente</button>
-<%--            <div class="input-group w-50 m-3">--%>
-<%--                <input type="text" class="form-control" aria-label="Input text com botão dropdown">--%>
-<%--                <div class="input-group-append">--%>
-<%--                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pesquisar cliente por</button>--%>
-<%--                    <div class="dropdown-menu">--%>
-<%--                        <a class="dropdown-item" href="#">CPF / CNPJ</a>--%>
-<%--                        <a class="dropdown-item" href="#">E-mail</a>--%>
-<%--                        <a class="dropdown-item" href="#">Nome</a>--%>
-<%--                        <a class="dropdown-item" href="#">Sobrenome</a>--%>
-<%--                        <a class="dropdown-item" href="#">Telefone</a>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
         </div>
         <!-- formulário de cadastro -->
         <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoUsuario" action="${pageContext.request.contextPath}/cliente/salvar" method="POST">
@@ -65,7 +56,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="cpfCnpj" class="form-label" for="inputCpfCnpj">CPF / CNPJ:<span class="text-danger">*</span></form:label>
-                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" maxlength="18" required="required" />
+                    <form:input path="cpfCnpj" type="text" class="form-control" id="inputCpfCnpj" onchange="verificarCPF(contextPath);" maxlength="14" required="required" />
                 </div>
                 <div class="form-group col-md-1">
                     <form:label path="genero" class="form-label" for="inputGenero">Gênero:<span class="text-danger">*</span></form:label>
@@ -174,7 +165,7 @@
             </div>
             <div class="mt-2">
                 <button type="submit" class="btn btn-primary ">Salvar</button>
-                <button type="button" class="btn btn-danger  m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
+                <button type="button" class="btn btn-danger  m-1" id="cancelar-cadastro" onclick="toggleCloseCadastroFornecedor()">Cancelar</button>
             </div>
         </form:form>
 

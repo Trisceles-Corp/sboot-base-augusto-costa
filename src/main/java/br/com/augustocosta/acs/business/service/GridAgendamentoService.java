@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class GridAgendamentoService {
@@ -51,6 +52,7 @@ public class GridAgendamentoService {
         for (prjGridAgendamento row : rows) {
             List<tblServico> servicosAgendamento = servicosAgendamentoService.getServicoByAgendamentoId(row.getAgendamentoId());
             LocalTime tempoTotalServicos = LocalTime.parse("00:00");
+            LocalTime horarioFinal = LocalTime.parse("00:00");
 
             for (tblServico servico : servicosAgendamento) {
                 LocalTime tempoServico = servico.getTempo();
@@ -63,8 +65,15 @@ public class GridAgendamentoService {
             tblServico servico = servicoService.getById(row.getServicoId()).orElseThrow();
 
             LocalTime horarioInicial = agendamento.getHoraAgendamento();
-            LocalTime horarioFinal = horarioInicial.plusHours(tempoTotalServicos.getHour())
-                    .plusMinutes(tempoTotalServicos.getMinute());
+
+            if(!Objects.equals(row.getSituacao(), "Bloqueio")){
+                horarioFinal = horarioInicial.plusHours(tempoTotalServicos.getHour())
+                        .plusMinutes(tempoTotalServicos.getMinute());
+            }
+            else {
+                horarioFinal = horarioInicial.plusHours(agendamento.getDuracao().getHour())
+                        .plusMinutes(agendamento.getDuracao().getMinute());
+            }
 
             dtoGridAgendamento dto = new dtoGridAgendamento();
             dto.setId(row.getGridAgendamentoId());
@@ -84,30 +93,4 @@ public class GridAgendamentoService {
         }
         return dtos;
     }
-
-//    public List<dtoGridAgendamento> getByGridAgendamento(LocalDate dataAgenda) {
-//        if (dataAgenda == null) {
-//            dataAgenda = LocalDate.now();
-//        }
-//        try {
-//            List<prjGridAgendamento> projections = repository.findByGridAgendamento(dataAgenda);
-//            return convertProjectionToDto(projections);
-//        } catch (JpaSystemException e) {
-//            return new ArrayList<>();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-//    private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) throws SQLException {
-//        List<dtoGridAgendamento> dtos = new ArrayList<>();
-//        for (prjGridAgendamento projection : projections) {
-//            dtoGridAgendamento dto = new dtoGridAgendamento();
-//            dto.setHorario(projection.getHorario());
-//            dto.setColaboradores(projection.getColaboradores());
-//            dtos.add(dto);
-//        }
-//        return dtos;
-//    }
-
 }

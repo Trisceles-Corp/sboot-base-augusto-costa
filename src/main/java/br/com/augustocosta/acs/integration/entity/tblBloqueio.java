@@ -3,8 +3,10 @@ package br.com.augustocosta.acs.integration.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,7 +27,8 @@ public class tblBloqueio {
     private tblDiasSemana diasSemana;
 
     @Column(name = "DataBloqueio", nullable = false)
-    private LocalDate dataBloqueio;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date dataBloqueio;
 
     @Column(name = "HoraInicial", nullable = false)
     private LocalTime horaInicial;
