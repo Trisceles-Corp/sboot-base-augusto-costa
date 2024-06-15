@@ -84,30 +84,4 @@ public class GridAgendamentoService {
         }
         return dtos;
     }
-
-//    public List<dtoGridAgendamento> getByGridAgendamento(LocalDate dataAgenda) {
-//        if (dataAgenda == null) {
-//            dataAgenda = LocalDate.now();
-//        }
-//        try {
-//            List<prjGridAgendamento> projections = repository.findByGridAgendamento(dataAgenda);
-//            return convertProjectionToDto(projections);
-//        } catch (JpaSystemException e) {
-//            return new ArrayList<>();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-//    private List<dtoGridAgendamento> convertProjectionToDto(List<prjGridAgendamento> projections) throws SQLException {
-//        List<dtoGridAgendamento> dtos = new ArrayList<>();
-//        for (prjGridAgendamento projection : projections) {
-//            dtoGridAgendamento dto = new dtoGridAgendamento();
-//            dto.setHorario(projection.getHorario());
-//            dto.setColaboradores(projection.getColaboradores());
-//            dtos.add(dto);
-//        }
-//        return dtos;
-//    }
-
 }

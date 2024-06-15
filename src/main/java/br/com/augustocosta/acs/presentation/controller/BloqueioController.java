@@ -83,7 +83,7 @@ public class BloqueioController {
             table.setDataAlteracao(LocalDateTime.now());
             table.setCriadoPor(table.getCriadoPor());
             table.setAlteradoPor(activeUserId);
-            service.create(table);
+            service.create(table, activeUserId);
         }
 
         model.addAttribute("userId", userId);
@@ -94,7 +94,7 @@ public class BloqueioController {
         model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
         model.addAttribute("tblBloqueio", new tblBloqueio());
 
-        return "redirect:/index?origem=bloqueio";
+        return "redirect:/index?origem=gridAgendamento";
     }
 
     @PostMapping("/delete/{id}")
