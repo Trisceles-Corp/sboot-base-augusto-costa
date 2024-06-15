@@ -1,14 +1,14 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblHorario;
+import br.com.augustocosta.acs.integration.projections.prjHorario;
 import br.com.augustocosta.acs.persistence.repository.HorarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
+
+import java.time.*;
+import java.util.*;
 
 @Service
 public class HorarioService {
@@ -34,6 +34,11 @@ public class HorarioService {
 
     public List<tblHorario> getActiveByHorarioAsc() {
         return repository.findByAtivoTrueOrderByHorarioAsc();
+    }
+
+    public List<tblHorario> getActiveByHorarioColaborador(Date dataAgenda, Integer colaboradorId) {
+        List<prjHorario> projections = repository.findByHorarioColaborador(dataAgenda, colaboradorId);
+        return convertProjectionToTable(projections);
     }
 
     public List<tblHorario> getAll() {
@@ -77,4 +82,21 @@ public class HorarioService {
         Optional<tblHorario> table = repository.findById(id);
         return table.map(tblHorario::getAtivo).orElse(false);
     }
+
+    public List<tblHorario> convertProjectionToTable(List<prjHorario> projections) {
+        List<tblHorario> table = new ArrayList<>();
+        for(prjHorario prj : projections) {
+            tblHorario row = new tblHorario();
+            row.setId(prj.getHorarioId());
+            row.setHorario(prj.getHorario());
+            row.setAtivo(prj.getAtivo());
+            row.setDataCriacao(prj.getDataCriacao());
+            row.setDataAlteracao(prj.getDataAlteracao());
+            row.setCriadoPor(prj.getCriadoPor());
+            row.setAlteradoPor(prj.getAlteradoPor());
+            table.add(row);
+        }
+        return table;
+    }
+
 }

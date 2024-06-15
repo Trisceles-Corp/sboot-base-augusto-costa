@@ -473,6 +473,9 @@ public class SqlQueries {
     public static final String SP_OBTERAGENDA =
             "EXEC sp_ObterAgendaPorData :dataAgenda";
 
+    public static final String SP_HORARIOSLIVRESCOLABORADOR =
+            "EXEC sp_AgendaLivreColaborador :dataAgenda, :colaboradorId";
+
     public static final String SP_EFETIVACOMPRAPRODUTOS =
             "EXEC spCompraProdutoEfetivacao :compraId";
 

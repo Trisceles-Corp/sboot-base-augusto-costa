@@ -1074,6 +1074,12 @@ function adicionarServico() {
     buscarDadosServicos(servicoId);
 }
 
+function bloquearHorarios(){
+    const colaborador = document.getElementById("field_ColaboradorId");
+    const horario = document.getElementById("field_HoraAgendamento");
+
+}
+
 function adicionarCompraProduto() {
     const produtoId = document.getElementById("field_ProdutoId").value;
     const table = document.getElementById("tabelaDadosProdutos");
