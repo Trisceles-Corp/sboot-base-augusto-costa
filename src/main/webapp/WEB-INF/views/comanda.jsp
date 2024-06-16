@@ -229,7 +229,6 @@
         </div>
         <div class="row">
             <div class="mt-2">
-<%--                <button type="button" class="btn btn-primary" onclick="coletarDadosPagamentos(); document.getElementById('form-cadastro').submit();">Fechar Comanda</button>--%>
                 <button type="submit" class="btn btn-primary" id="salvar-cadastro">Fechar Comanda</button>
                 <button type="button" class="btn btn-danger m-1" id="cancelar-cadastro" onclick="toggleCloseCadastro()">Cancelar</button>
             </div>

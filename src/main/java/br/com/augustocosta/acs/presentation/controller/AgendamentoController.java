@@ -118,7 +118,7 @@ public class AgendamentoController {
         // Adicione os outros atributos necessários para a página de agendamento
         model.addAttribute("listarLocaisEstoque", localService.getActives());
         model.addAttribute("listarServiços", servicoService.getActives());
-        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioColaborador(agendamento.getDataAgendamento(), agendamento.getColaborador().getId()));
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
         model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(agendamentoId));
         model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(agendamentoId));
         model.addAttribute("listarProdutos", produtoService.getActives());

@@ -33,9 +33,10 @@ public class ComandaService {
     private final VendaProdutoRepository vendaProdutoRepository;
     private final EstoqueRepository estoqueRepository;
     private final GridAgendamentoRepository gridAgendamentoRepository;
+    private final BloqueioRepository bloqueioRepository;
 
     @Autowired
-    public ComandaService(ComandaRepository repository, AgendamentoRepository agendamentoRepository, FormasPagamentoRepository formasPagamentoRepository, BandeirasRepository bandeirasRepository, ComandaPagamentoRepository comandaPagamentoRepository, CaixaMovimentacaoRepository caixaMovimentacaoRepository, CaixaRepository caixaRepository, TipoMovimentacaoRepository tipoMovimentacaoRepository, SituacaoAgendamentoRepository situacaoAgendamentoRepository, VendaRepository vendaRepository, MovimentacaoRepository movimentacaoRepository, VendaProdutoRepository vendaProdutoRepository, EstoqueRepository estoqueRepository, GridAgendamentoRepository gridAgendamentoRepository) {
+    public ComandaService(ComandaRepository repository, AgendamentoRepository agendamentoRepository, FormasPagamentoRepository formasPagamentoRepository, BandeirasRepository bandeirasRepository, ComandaPagamentoRepository comandaPagamentoRepository, CaixaMovimentacaoRepository caixaMovimentacaoRepository, CaixaRepository caixaRepository, TipoMovimentacaoRepository tipoMovimentacaoRepository, SituacaoAgendamentoRepository situacaoAgendamentoRepository, VendaRepository vendaRepository, MovimentacaoRepository movimentacaoRepository, VendaProdutoRepository vendaProdutoRepository, EstoqueRepository estoqueRepository, GridAgendamentoRepository gridAgendamentoRepository, BloqueioRepository bloqueioRepository) {
         this.repository = repository;
         this.agendamentoRepository = agendamentoRepository;
         this.formasPagamentoRepository = formasPagamentoRepository;
@@ -50,6 +51,7 @@ public class ComandaService {
         this.vendaProdutoRepository = vendaProdutoRepository;
         this.estoqueRepository = estoqueRepository;
         this.gridAgendamentoRepository = gridAgendamentoRepository;
+        this.bloqueioRepository = bloqueioRepository;
     }
     @Autowired
     private EntityManager entityManager;
@@ -174,6 +176,10 @@ public class ComandaService {
 
         // Processa Grid Agendamento
         tblGridAgendamento grid = gridAgendamentoRepository.findByAgendamento(agendamento);
+        if(grid.getBloqueio() == null){
+            tblBloqueio bloqueio = bloqueioRepository.findById(1).orElseThrow();
+            grid.setBloqueio(bloqueio);
+        }
         grid.setSituacao(situacaoAgendamento.getNome());
         grid.setDataAlteracao(LocalDateTime.now());
         grid.setAlteradoPor(activeUserId);

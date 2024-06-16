@@ -48,29 +48,28 @@
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="diasSemana" class="form-label" for="field_DiasSemanaId">Dia da Semana:<span class="text-danger">*</span></form:label>
-                    <form:select path="diasSemana" class="form-control" id="field_DiasSemanaId" required="required" >
+                    <form:select path="diasSemana" class="form-control" id="field_DiasSemanaId" required="required" readonly="readonly" >
                         <form:option value="" label=" Selecione "/>
                         <form:options items="${listarDiasSemana}" itemValue="id" itemLabel="diasSemana"/>
                     </form:select>
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="periodo" class="form-label" for="field_PeriodoId">Periodo:<span class="text-danger">*</span></form:label>
-                    <form:select path="periodo" class="form-control" id="field_PeriodoId" onchange="insereHorarioBloqueio()" required="required">
+                    <form:select path="periodo" class="form-control" id="field_PeriodoId" onchange="ajustaHorarioPeriodo()" required="required">
                         <form:option value="" label=" Selecione "/>
                         <form:options items="${listarPeriodos}" itemValue="id" itemLabel="nome"/>
                     </form:select>
                 </div>
                 <div class="form-group col-md-1">
                     <form:label path="horaInicial" class="form-label" for="field_HoraInicial">Início:<span class="text-danger">*</span></form:label>
-                    <form:select path="horaInicial" class="form-control" id="field_HoraInicial" required="required" >
-                        <form:option value="" label="Select"/>
+                    <form:select path="horaInicial" class="form-control" id="field_HoraInicial" required="required" readonly="readonly">
                         <form:option value="" label=" Selecione "/>
                         <form:options items="${listarHorarios}" itemValue="horario" itemLabel="horario"/>
                     </form:select>
                 </div>
                 <div class="form-group col-md-1">
                     <form:label path="horaFinal" class="form-label" for="field_HoraFinal">Fim:<span class="text-danger">*</span></form:label>
-                    <form:select path="horaFinal" class="form-control" id="field_HoraFinal" required="required" >
+                    <form:select path="horaFinal" class="form-control" id="field_HoraFinal" required="required" readonly="readonly">
                         <form:option value="" label=" Selecione "/>
                         <form:options items="${listarHorarios}" itemValue="horario" itemLabel="horario"/>
                     </form:select>

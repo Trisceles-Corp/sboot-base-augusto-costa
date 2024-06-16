@@ -1713,3 +1713,74 @@ function verificarCPF(contexto) {
         }
     });
 }
+
+function ajustaHorarioPeriodo(){
+    const fieldPeriodoId = document.getElementById('field_PeriodoId');
+    const fieldHoraInicial = document.getElementById('field_HoraInicial');
+    const fieldHoraFinal = document.getElementById('field_HoraFinal');
+
+    if(fieldPeriodoId !== null){
+        const periodo = fieldPeriodoId.value;
+        fieldHoraInicial.readOnly = true;
+        fieldHoraFinal.readOnly = true;
+        switch (periodo){
+            case "2":
+                fieldHoraInicial.value = "09:00";
+                fieldHoraFinal.value = "12:00";
+                break;
+            case "3":
+                fieldHoraInicial.value = "13:00";
+                fieldHoraFinal.value = "18:00";
+                break;
+            case "4":
+                fieldHoraInicial.value = "09:00";
+                fieldHoraFinal.value = "18:00";
+                break;
+            default:
+                fieldHoraInicial.value = "";
+                fieldHoraFinal.value = "";
+                fieldHoraInicial.readOnly = false;
+                fieldHoraFinal.readOnly = false;
+                break;
+        }
+    }
+    console.log(fieldHoraInicial.value);
+    console.log(fieldHoraFinal.value);
+}
+
+function ajustaDiasDaSemana() {
+    const dataBloqueio = document.getElementById('field_DataBloqueio').value;
+    const diasDaSemana = document.getElementById('field_DiasSemanaId');
+
+    if (dataBloqueio) {
+        const data = new Date(dataBloqueio);
+        const diaSemana = data.getDay();
+        let diaCorreto = 0;
+        switch (diaSemana){
+            case 0:
+                diaCorreto = 2;
+                break;
+            case 1:
+                diaCorreto = 3;
+                break;
+            case 2:
+                diaCorreto = 4;
+                break;
+            case 3:
+                diaCorreto = 5;
+                break;
+            case 4:
+                diaCorreto = 6;
+                break;
+            case 5:
+                diaCorreto = 7;
+                break;
+            case 6:
+                diaCorreto = 1;
+                break;
+        }
+        console.log(diaSemana);
+        console.log(diaCorreto);
+        diasDaSemana.value = diaCorreto;
+    }
+}
