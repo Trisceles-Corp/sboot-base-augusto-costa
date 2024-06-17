@@ -380,6 +380,7 @@ public class SqlQueries {
                     "JOIN dbo.tbl_usuario col ON age.ColaboradorId = col.UsuarioId " +
                     "WHERE cmd.Ativo = 1 " +
                     "AND cmd.Situacao = 1 " +
+                    "AND age.SituacaoId = 2 " +
                     "ORDER BY " +
                     "age.DataAgendamento DESC";
 

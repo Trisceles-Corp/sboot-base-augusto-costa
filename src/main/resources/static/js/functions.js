@@ -449,6 +449,8 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
     fetch(`${contexto}/agendamentos/${dataAgenda}`)
         .then(response => response.json())
         .then(agendamentos => {
+            console.log(agendamentos); // Verificar os dados retornados
+
             // Agrupar agendamentos por colaborador
             const agendamentosPorColaborador = agendamentos.reduce((acc, agendamento) => {
                 if (!acc[agendamento.colaborador]) {
@@ -468,32 +470,27 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                     let agendamentosColaborador = agendamentosPorColaborador[colaborador];
 
                     let agendamentoEncontrado = agendamentosColaborador.find(agendamento =>
-                        agendamento.horarioIncial.hour === hora ||
-                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)
+                        parseInt(agendamento.horarioIncial.split(':')[0]) === hora ||
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) < hora && parseInt(agendamento.horarioFinal.split(':')[0]) > hora)
                     );
 
                     if (agendamentoEncontrado) {
-                        let classeCSS = '';
-                        switch (agendamentoEncontrado.situacao) {
-                            case 'Agendado':
-                                classeCSS = 'bg-success';
-                                break;
-                            case 'Aberta':
-                                classeCSS = 'bg-danger';
-                                break;
-                            case 'Em espera':
-                                classeCSS = 'bg-warning';
-                                break;
-                            case 'Finalizada':
-                                classeCSS = 'bg-primary';
-                                break;
-                            case 'Bloqueio':
-                                classeCSS = 'bg-secondary';
-                                break;
-                        }
-
-                        celula.className = classeCSS;
-                        celula.innerHTML = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamentoEncontrado.id}')">${agendamentoEncontrado.agendamento.cliente.nome}<br>${agendamentoEncontrado.servico.nome}</a>`;
+                        celula.innerHTML = `
+                            <div class="agendamento">
+                                ${agendamentoEncontrado.situacao !== 'Bloqueio' ? `
+                                    <a href="#" onclick="carregarConteudo('${contexto}/agendamento/${agendamentoEncontrado.id}')">
+                                        <span class="situacao-${agendamentoEncontrado.situacao}">
+                                            ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                            ${agendamentoEncontrado.servico.nome}
+                                        </span>
+                                    </a>
+                                ` : `
+                                    <span class="situacao-${agendamentoEncontrado.situacao}">
+                                        ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                        ${agendamentoEncontrado.servico.nome}
+                                    </span>
+                                `}
+                            </div>`;
                     } else {
                         celula.innerHTML = '';
                     }
@@ -507,33 +504,28 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                     let agendamentosColaborador = agendamentosPorColaborador[colaborador];
 
                     let agendamentoEncontrado = agendamentosColaborador.find(agendamento =>
-                        (agendamento.horarioIncial.hour === hora && agendamento.horarioIncial.minute === 30) ||
-                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) ||
-                        (agendamento.horarioIncial.hour === hora && agendamento.horarioFinal.minute > 30)
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) === hora && parseInt(agendamento.horarioIncial.split(':')[1]) === 30) ||
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) < hora && parseInt(agendamento.horarioFinal.split(':')[0]) > hora) ||
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) === hora && parseInt(agendamento.horarioFinal.split(':')[1]) > 30)
                     );
 
                     if (agendamentoEncontrado) {
-                        let classeCSS = '';
-                        switch (agendamentoEncontrado.situacao) {
-                            case 'Agendado':
-                                classeCSS = 'bg-success';
-                                break;
-                            case 'Aberta':
-                                classeCSS = 'bg-danger';
-                                break;
-                            case 'Em espera':
-                                classeCSS = 'bg-warning';
-                                break;
-                            case 'Finalizada':
-                                classeCSS = 'bg-primary';
-                                break;
-                            case 'Bloqueio':
-                                classeCSS = 'bg-secondary';
-                                break;
-                        }
-
-                        celula.className = classeCSS;
-                        celula.innerHTML = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamentoEncontrado.id}')">${agendamentoEncontrado.agendamento.cliente.nome}<br>${agendamentoEncontrado.servico.nome}</a>`;
+                        celula.innerHTML = `
+                            <div class="agendamento">
+                                ${agendamentoEncontrado.situacao !== 'Bloqueio' ? `
+                                    <a href="#" onclick="carregarConteudo('${contexto}/agendamento/${agendamentoEncontrado.id}')">
+                                        <span class="situacao-${agendamentoEncontrado.situacao}">
+                                            ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                            ${agendamentoEncontrado.servico.nome}
+                                        </span>
+                                    </a>
+                                ` : `
+                                    <span class="situacao-${agendamentoEncontrado.situacao}">
+                                        ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                        ${agendamentoEncontrado.servico.nome}
+                                    </span>
+                                `}
+                            </div>`;
                     } else {
                         celula.innerHTML = '';
                     }
