@@ -1074,10 +1074,37 @@ function adicionarServico() {
     buscarDadosServicos(servicoId);
 }
 
-function bloquearHorarios(){
-    const colaborador = document.getElementById("field_ColaboradorId");
-    const horario = document.getElementById("field_HoraAgendamento");
+function horariosDisponiveis(contexto) {
+    const inputDataAgenda = document.getElementById("inputData");
+    const inputColaborador = document.getElementById("field_ColaboradorId").value;
+    const inputHorario = document.getElementById("field_HoraAgendamento");
 
+    let dataAgenda = inputDataAgenda.value;
+    if (dataAgenda == null || dataAgenda === "") {
+        dataAgenda = new Date().toISOString().split('T')[0];
+    } else {
+        dataAgenda = new Date(dataAgenda).toISOString().split('T')[0];
+    }
+
+    if (dataAgenda && inputColaborador) {
+        fetch(`${contexto}/agendamento/horarios/${dataAgenda}/${inputColaborador}`)
+            .then(response => response.json())
+            .then(data => {
+                while (inputHorario.options.length > 1) {
+                    inputHorario.remove(1);
+                }
+
+                data.forEach(horario => {
+                    const option = document.createElement("option");
+                    // Formata o horário para remover os segundos
+                    const horarioFormatado = horario.horario.substring(0, 5);
+                    option.value = horarioFormatado;
+                    option.text = horarioFormatado;
+                    inputHorario.add(option);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar horários:', error));
+    }
 }
 
 function adicionarCompraProduto() {
