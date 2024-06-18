@@ -37,7 +37,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
-<div class="row mx-0 my-2" style="width: 100%">
+<div class="row mx-0 my-2" id="dvHeader" >
     <input type="date" class="input-date-agenda col-md-2 p-1" id="dataAgenda" onchange="atualizarGridAgendamentos(contextPath + '/gridagendamento', this.value)" placeholder="mm-dd-yyyy" >
     <div class="col-md-10">
         <div class="botoes-agenda">
@@ -46,8 +46,8 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="panel col-md-2" id="panel-pesquisa">
+<div class="row" id="dvGrid">
+    <div class="panelGrid col-md-2" id="panel-pesquisa">
         <div class="form-group col-md-12">
             <form class="form-group col-md-12" name="theForm">
                 <div class="form-group col-md-12">
@@ -88,7 +88,7 @@
             <span style="padding: 10px">Finalizada</span>
         </div>
     </div>
-    <div class="panel col-md-10" id="panel-resultado">
+    <div class="panelGrid col-md-10" id="panel-resultado">
         <div class="row">
             <table id="tabelaGridAgendamento" class="table table-bordered table-hover table-responsive my-3">
                 <thead class="table-secondary">
@@ -163,7 +163,8 @@
                 </tbody>
             </table>
         </div>
-    </div></div>
+    </div>
+</div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
         let today = new Date().toISOString().split('T')[0];

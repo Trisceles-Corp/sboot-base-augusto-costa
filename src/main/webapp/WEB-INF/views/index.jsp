@@ -373,12 +373,16 @@
                 </div>
             </a>
         </div>
+        <div id="clock" class="clock"></div>
     </div>
     <div class="content-main p-5" id="mainContent" style="display: block">
     </div>
     <footer class="footer">
         <p> Copyright @ Trísceles Corp 2024 </p>
     </footer>
+</div>
+<div id="loading" class="loading">
+    <img src="${pageContext.request.contextPath}/img/gifs/loader-9342.gif" alt="Loading...">
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/theme.js"></script>
@@ -456,6 +460,19 @@
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
         }
+
+        // Atualiza o relógio a cada segundo
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                showLoading();
+                setTimeout(() => {
+                    hideLoading();
+                }, 8000);
+            });
+        });
     });
 </script>
 </body>
