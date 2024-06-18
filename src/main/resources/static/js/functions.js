@@ -841,6 +841,37 @@ function visualizarServico(id, nome, tempo, valor, desconto, comissao, observaca
     document.getElementById("field_Observacao").value = observacao;
 }
 
+function visualizarBloqueio(id, colaboradorId, dataBloqueio, diaSemanaId, periodoId, horaInicial, horaFinal, motivo) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+    window.scrollTo(0, 0);
+
+    const formattedDate = formatDateForInput(dataBloqueio);
+
+    console.log(formattedDate);
+
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_ColaboradorId").value = colaboradorId;
+    document.getElementById("field_DataBloqueio").value = formattedDate;
+    document.getElementById("field_DiasSemanaId").value = diaSemanaId;
+    document.getElementById("field_PeriodoId").value = periodoId;
+    document.getElementById("field_HoraInicial").value = horaInicial;
+    document.getElementById("field_HoraFinal").value = horaFinal;
+    document.getElementById("field_MotivoBloqueio").value = motivo;
+}
+
+function formatDateForInput(dateString) {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+}
+
 function visualizarTipo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;

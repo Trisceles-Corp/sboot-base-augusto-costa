@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="dataBloqueio" class="form-label" for="field_DataBloqueio">Data:<span class="text-danger">*</span></form:label>
-                    <form:input  path="dataBloqueio" type="date" class="form-control" id="field_DataBloqueio" onchange="ajustaDiasDaSemana()" placeholder="mm-dd-yyyy"  readonly="readonly" required="required" />
+                    <form:input path="dataBloqueio" type="date" class="form-control" id="field_DataBloqueio" onchange="ajustaDiasDaSemana()" required="required" />
                 </div>
                 <div class="form-group col-md-2">
                     <form:label path="diasSemana" class="form-label" for="field_DiasSemanaId">Dia da Semana:<span class="text-danger">*</span></form:label>

@@ -37,15 +37,15 @@
         <div class="row">
             <div class="form-group col-md-4">
                 <form:label path="descricaoProduto" class="form-label" for="field_Name">Nome:<span class="text-danger">*</span></form:label>
-                <form:input path="descricaoProduto" class="form-control" type="text" id="field_Name" required="required" />
+                <form:input path="descricaoProduto" class="form-control" type="text" id="field_Name" maxlength="100" required="required" />
             </div>
             <div class="form-group col-md-1">
                 <form:label path="codigoInterno" class="form-label" for="field_CodigoInterno">Codigo:<span class="text-danger">*</span></form:label>
-                <form:input path="codigoInterno" class="form-control" type="text" id="field_CodigoInterno" required="required"/>
+                <form:input path="codigoInterno" class="form-control" type="text" id="field_CodigoInterno" maxlength="6" required="required"/>
             </div>
             <div class="form-group col-md-2">
                 <form:label path="codigoBarras" class="form-label" for="field_CodigoBarras">Bar Code:<span class="text-danger">*</span></form:label>
-                <form:input path="codigoBarras" class="form-control" type="text" id="field_CodigoBarras" required="required" />
+                <form:input path="codigoBarras" class="form-control" type="text" id="field_CodigoBarras" maxlength="13" required="required" />
             </div>
             <div class="form-group col-md-1">
                 <form:label path="custo" class="form-label" for="field_Custo">Custo:<span class="text-danger">*</span></form:label>

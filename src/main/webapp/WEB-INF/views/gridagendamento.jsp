@@ -163,13 +163,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div></div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
-        var today = new Date().toISOString().split('T')[0];
-        document.getElementById("dataAgenda").value = today;
+        let today = new Date().toISOString().split('T')[0];
+        document.getElementById("dataAgenda").value = formatDateForInput(today);
     });
 </script>
 </body>
