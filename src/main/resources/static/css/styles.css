@@ -19,7 +19,7 @@
     grid-area: main;
     flex: 1;
     overflow-y: auto; /* Permite rolagem vertical */
-    padding-top: 70px;
+    padding: 40px 15px 15px 10px;
     bottom: 40px;
 }
 
@@ -339,7 +339,7 @@ contain-option-button-active{
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    height: 73.5vh;
+    height: 74vh;
 }
 
 .panel{
@@ -450,7 +450,7 @@ a.nav-option{
 }
 
 .table tbody tr{
-    padding: 0px !important;
+    padding: 0 !important;
 }
 
 .cel-img-tabela-clientes{

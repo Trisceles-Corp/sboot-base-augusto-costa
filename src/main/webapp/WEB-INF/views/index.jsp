@@ -375,7 +375,7 @@
         </div>
         <div id="clock" class="clock"></div>
     </div>
-    <div class="content-main p-5" id="mainContent" style="display: block">
+    <div class="content-main" id="mainContent" style="display: block">
     </div>
     <footer class="footer">
         <p> Copyright @ Trísceles Corp 2024 </p>
