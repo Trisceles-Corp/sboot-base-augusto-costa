@@ -50,15 +50,15 @@
     <div class="panelGrid col-md-2" id="panel-pesquisa">
         <div class="form-group col-md-12">
             <form class="form-group col-md-12" name="theForm">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" style="display: none">
                     <input class="form-check-input" type="checkbox" id="barbeiros" name="theGroup"  value="option2" onClick="clearGroup(this);">
                     <span style="padding: 10px">Barbeiros</span>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" style="display: none">
                     <input class="form-check-input" type="checkbox" id="cabeleireiros" name="theGroup" value="option2" onClick="clearGroup(this);">
                     <span style="padding: 10px">Cabeleireiros</span>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" style="display: none">
                     <input class="form-check-input" type="checkbox" id="manicures" name="theGroup" value="option2" onClick="clearGroup(this);">
                     <span style="padding: 10px">Manicures</span>
                 </div>
