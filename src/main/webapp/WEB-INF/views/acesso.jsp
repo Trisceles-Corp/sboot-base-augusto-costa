@@ -10,52 +10,54 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <meta name="google-signin-client_id" content="947740812371-gkpiej5vkt568frb95i4vqtf40e3l89d.apps.googleusercontent.com">
+<head>
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="google-signin-client_id" content="947740812371-gkpiej5vkt568frb95i4vqtf40e3l89d.apps.googleusercontent.com">
 
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login-1.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/fonts/ionicons.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/Login-Form-Dark.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mloureiro1973-login-1.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css" />
 
-        <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
-    </head>
-    <body>
-        <c:if test="${not empty loginError}">
-            <div class="alert alert-danger" role="alert">
-                    ${loginError}
-            </div>
-        </c:if>
+    <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+<body class="background-image">
+<c:if test="${not empty loginError}">
+    <div class="alert alert-danger" role="alert">
+            ${loginError}
+    </div>
+</c:if>
 
-        <div class="login-card">
-            <div>
-                <h2 class="text-center">Augusto Costa Spa</h2>
-            </div>
-            <img class="img-fluid profile-img-card" src="${pageContext.request.contextPath}/img/avatars/avatar0.jpeg">
-            <p class="profile-name-card"> </p>
-            <form:form class="form-signin" method="post" modelAttribute="tblUsuario" action="${pageContext.request.contextPath}/acesso/verify" >
-                <div class="mb-4">
-                    <input class="form-control" type="email" id="email" name="email" placeholder="Email" required="required">
-                </div>
-                <div class="mb-4">
-                    <input class="form-control" type="password" id="senha" name="senha" placeholder="Senha" required="required">
-                </div>
-                <div class="mb-3">
-                    <button class="btn btn-primary btn-lg d-block btn-signin w-100" id="btnLogin" name="login" type="submit">Log In</button>
-                </div>
-<%--                <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>--%>
-                <div class="mb-3" style="display: none">
-                    <a class="forgot-password" href="#">Recuperar senha?</a>
-                </div>
-                <div class="mb-3" style="display: none">
-                    <a class="forgot" href="${pageContext.request.contextPath}/caminhoParaCadastro">Novo usuário? Cadastre-se!</a>
-                </div>
-            </form:form>
+<div class="login-container">
+    <div class="login-card">
+        <div>
+            <h2 class="text-center">Augusto Costa Spa</h2>
         </div>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-    </body>
+        <img class="img-fluid profile-img-card" src="${pageContext.request.contextPath}/img/avatars/avatar0.jpeg">
+        <p class="profile-name-card"> </p>
+        <form:form class="form-signin" method="post" modelAttribute="tblUsuario" action="${pageContext.request.contextPath}/acesso/verify">
+            <div class="mb-4">
+                <input class="form-control" type="email" id="email" name="email" placeholder="Email" required="required">
+            </div>
+            <div class="mb-4">
+                <input class="form-control" type="password" id="senha" name="senha" placeholder="Senha" required="required">
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary btn-lg d-block btn-signin w-100" id="btnLogin" name="login" type="submit">Log In</button>
+            </div>
+            <%--                <div class="g-signin2 mb-3" data-onsuccess="onSignIn"></div>--%>
+            <div class="mb-3" style="display: none">
+                <a class="forgot-password" href="#">Recuperar senha?</a>
+            </div>
+            <div class="mb-3" style="display: none">
+                <a class="forgot" href="${pageContext.request.contextPath}/caminhoParaCadastro">Novo usuário? Cadastre-se!</a>
+            </div>
+        </form:form>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+</body>
 </html>
