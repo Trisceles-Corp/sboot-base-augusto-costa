@@ -315,15 +315,15 @@ public class SqlQueries {
                     "Order By 5";
 
     public static final String QUERY_INVENTARIO =
-            "SELECT loc.LocalEstoqueId " +
-                    ",loc.DescricaoLocal " +
+            "SELECT COALESCE(loc.LocalEstoqueId,1) AS LocalEstoqueId " +
+                    ",COALESCE(loc.DescricaoLocal, 'Loja') AS DescricaoLocal " +
                     ",produto.ProdutoId " +
                     ",produto.CodigoInterno " +
                     ",produto.DescricaoProduto " +
-                    ",entrada.QtdProduto - (CASE WHEN saida.QtdProduto IS NULL THEN 0 ELSE saida.QtdProduto END) AS QtdProduto " +
-                    ",entrada.ValorProduto - (CASE WHEN saida.ValorProduto IS NULL THEN 0 ELSE saida.ValorProduto END) AS ValorProduto " +
+                    ",COALESCE(entrada.QtdProduto - (CASE WHEN saida.QtdProduto IS NULL THEN 0 ELSE saida.QtdProduto END),0) AS QtdProduto " +
+                    ",COALESCE(entrada.ValorProduto - (CASE WHEN saida.ValorProduto IS NULL THEN 0 ELSE saida.ValorProduto END),0) AS ValorProduto " +
                     "FROM dbo.tbl_produto produto " +
-                    "JOIN ( " +
+                    "LEFT JOIN ( " +
                     "SELECT etq.LocalEstoqueId " +
                     ",etq.ProdutoId " +
                     ",SUM(etq.Quantidade) AS QtdProduto " +
@@ -343,7 +343,7 @@ public class SqlQueries {
                     "WHERE mov.TipoMovimentacaoId <> (SELECT TipoMovimentacaoID FROM dbo.tbl_tipomovimentacao WHERE DescricaoMovimentacao = 'Entrada') " +
                     "GROUP BY etq.LocalEstoqueId,etq.ProdutoId " +
                     ") saida ON (entrada.ProdutoId = saida.ProdutoId AND entrada.LocalEstoqueId = saida.LocalEstoqueId) " +
-                    "JOIN dbo.tbl_localestoque loc ON entrada.LocalEstoqueId = loc.LocalEstoqueId " +
+                    "LEFT JOIN dbo.tbl_localestoque loc ON entrada.LocalEstoqueId = loc.LocalEstoqueId " +
                     "ORDER BY loc.DescricaoLocal, produto.DescricaoProduto";
 
     public static final String QUERY_USUARIO_SOLICITANTE =
