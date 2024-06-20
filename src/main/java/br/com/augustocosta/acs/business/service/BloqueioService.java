@@ -90,7 +90,7 @@ public class BloqueioService {
     }
 
     @Transactional
-    public tblBloqueio update(tblBloqueio dados) {
+    public tblBloqueio update(tblBloqueio dados, Integer userId) {
         tblBloqueio table = repository.findById(dados.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Bloqueio não encontrado com id: " + dados.getId()));
 
@@ -102,8 +102,16 @@ public class BloqueioService {
         table.setMotivoBloqueio(dados.getMotivoBloqueio());
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
-        table.setAlteradoPor(dados.getAlteradoPor());
+        table.setAlteradoPor(userId);
 
+        tblGridAgendamento grid = gridAgendamentoRepository.findByBloqueio(table);
+        if(grid != null){
+            tblAgendamento agendamento = agendamentoRepository.findById(grid.getAgendamento().getId()).orElseThrow();
+            agendamento.setHoraAgendamento(table.getHoraInicial());
+            agendamento.setDataAlteracao(LocalDateTime.now());
+            agendamento.setAlteradoPor(userId);
+            agendamentoRepository.save(agendamento);
+        }
         return repository.save(table);
     }
 
@@ -129,6 +137,7 @@ public class BloqueioService {
         table.setAtivo(true);
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
+        table.setCriadoPor(userId);
         table.setAlteradoPor(userId);
         return repository.save(table);
     }

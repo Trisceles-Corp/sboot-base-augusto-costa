@@ -26,7 +26,7 @@
     <div class="itemHeader">
         <h4>Situação Compra</h4>
     </div>
-    <div class="row" id="linha-botao-cadastro">
+    <div class="row p-3" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
     </div>
 

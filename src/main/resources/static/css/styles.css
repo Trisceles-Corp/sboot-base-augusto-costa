@@ -17,17 +17,11 @@
 
 .content-main {
     grid-area: main;
-    padding-top: 70px;
+    flex: 1;
+    overflow-y: auto; /* Permite rolagem vertical */
+    padding: 40px 15px 15px 10px;
     bottom: 40px;
 }
-
-/*.p-5 {*/
-/*    padding: 3rem !important;*/
-/*    padding-top: 3rem !important;*/
-/*    padding-right: 3rem !important;*/
-/*    padding-bottom: 3rem !important;*/
-/*    padding-left: 3rem !important;*/
-/*}*/
 
 .pgHeader{
     padding: 10px;
@@ -274,9 +268,33 @@ contain-option-button-active{
     /*border-top-right-radius:20px ;*/
     border-bottom-right-radius: 20px;
     padding-top: 20px;
+    /*position: fixed;*/
     position: fixed;
     height: 100vh;
     width: 250px;
+}
+
+.clock {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+.loading {
+    display: none; /* Inicialmente escondido */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.loading img {
+    width: 50px;
+    height: 50px;
 }
 
 .button-nav-option {
@@ -313,6 +331,15 @@ contain-option-button-active{
 
 .button-nav-item:hover {
     color: var(--cor-amarelo);
+}
+
+.panelGrid{
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    height: 74vh;
 }
 
 .panel{
@@ -423,7 +450,7 @@ a.nav-option{
 }
 
 .table tbody tr{
-    padding: 0px !important;
+    padding: 0 !important;
 }
 
 .cel-img-tabela-clientes{
@@ -470,3 +497,4 @@ footer{
     color: #6c757d; /* Cinza */
     font-weight: bold;
 }
+

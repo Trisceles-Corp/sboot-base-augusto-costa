@@ -1,6 +1,7 @@
 package br.com.augustocosta.acs.presentation.controller;
 
 import br.com.augustocosta.acs.business.service.UsuarioService;
+import br.com.augustocosta.acs.business.util.Cookies;
 import br.com.augustocosta.acs.integration.entity.tblUsuario;
 import br.com.augustocosta.acs.integration.dto.dtoLogin;
 import jakarta.servlet.http.Cookie;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/acesso")
@@ -44,17 +45,6 @@ public class AcessoController {
         if (isValidUser) {
             tblUsuario usuario = usuarioService.getValidateUserByEmail(loginDTO.getEmail());
             createAndSetCookies(response, usuario);
-            Cookie sessionCookie = new Cookie("session_id", "identificador_unico");
-            Cookie cookie = new Cookie("userId", String.valueOf(usuario.getId()));
-            cookie.setHttpOnly(true); // Importante para prevenir XSS
-            cookie.setPath("/");
-
-            sessionCookie.setHttpOnly(true);
-            sessionCookie.setSecure(true); // Use apenas em conexões HTTPS
-            sessionCookie.setMaxAge(7 * 24 * 60 * 60); // Expira em 7 dias
-
-            response.addCookie(cookie);
-            response.addCookie(sessionCookie);
 
             return "redirect:/index";
         } else {
@@ -85,5 +75,7 @@ public class AcessoController {
         response.addCookie(userIdCookie);
         response.addCookie(perfilCookie);
         response.addCookie(sessionCookie);
+
+        Cookies.addUserIdCookie(response, String.valueOf(usuario.getId()));
     }
 }

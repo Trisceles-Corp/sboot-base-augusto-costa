@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @Controller
@@ -33,34 +34,36 @@ public class BloqueioController {
     private DiasSemanaService diasSemanaService;
 
     @GetMapping("/form")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormulario(Model model, HttpServletRequest request) {
+        Cookies.setUserId(request);
         model.addAttribute("tblBloqueio", new tblBloqueio());
         return "bloqueio";
     }
 
     @GetMapping
-    public String listarDependencias(Model model) {
+    public String listarDependencias(Model model, HttpServletRequest request) {
+        Cookies.setUserId(request);
         String userId = Cookies.getUserId();
         if(userId == null){ userId = "1"; }
-        int activeUserId = Integer.parseInt(userId) ;
+        int activeUserId = Integer.parseInt(userId);
 
-        if (userId != null) {
-            model.addAttribute("userId", userId);
-            model.addAttribute("listarBloqueios", service.getActivesByUser(activeUserId));
-            model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
-            model.addAttribute("listarPeriodos", periodoService.getActives());
-            model.addAttribute("listarDiasSemana", diasSemanaService.getActives());
-            model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
-            model.addAttribute("tblBloqueio", new tblBloqueio());
-        }
+        model.addAttribute("userId", userId);
+        model.addAttribute("listarBloqueios", service.getActivesByUser(activeUserId));
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
+        model.addAttribute("listarPeriodos", periodoService.getActives());
+        model.addAttribute("listarDiasSemana", diasSemanaService.getActives());
+        model.addAttribute("listarColaboradores", usuarioService.getAllByPerfil(5));
+        model.addAttribute("tblBloqueio", new tblBloqueio());
+
         return "bloqueio";
     }
 
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute tblBloqueio table, @RequestParam("userId") String userId, Model model) {
+    public String salvar(@ModelAttribute tblBloqueio table, HttpServletRequest request, Model model) {
+        Cookies.setUserId(request);
         String userCookie = Cookies.getUserId();
         if(userCookie == null){ userCookie = "1"; }
-        int activeUserId = Integer.parseInt(userCookie) ;
+        int activeUserId = Integer.parseInt(userCookie);
         tblPeriodo periodo = periodoService.getById(table.getPeriodo().getId()).orElseThrow();
         tblDiasSemana diasSemana = diasSemanaService.getById(table.getDiasSemana().getId()).orElseThrow();
 
@@ -69,24 +72,13 @@ public class BloqueioController {
         table.setDiasSemana(diasSemana);
 
         if (table.getId() != null && table.getId() != 0){
-            tblBloqueio data = service.getById(table.getId()).orElseThrow();
-
-            table.setAtivo(table.getAtivo());
-            table.setDataCriacao(data.getDataCriacao());
-            table.setCriadoPor(data.getCriadoPor());
-            table.setDataAlteracao(LocalDateTime.now());
-            table.setAlteradoPor(activeUserId);
-            service.update(table);
+            service.update(table, activeUserId);
         }
         else {
-            table.setDataCriacao(LocalDateTime.now());
-            table.setDataAlteracao(LocalDateTime.now());
-            table.setCriadoPor(table.getCriadoPor());
-            table.setAlteradoPor(activeUserId);
             service.create(table, activeUserId);
         }
 
-        model.addAttribute("userId", userId);
+        model.addAttribute("userId", userCookie);
         model.addAttribute("listarBloqueios", service.getActivesByUser(activeUserId));
         model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
         model.addAttribute("listarPeriodos", periodoService.getActives());
@@ -98,10 +90,11 @@ public class BloqueioController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id, HttpServletRequest request) {
+        Cookies.setUserId(request);
         String userCookie = Cookies.getUserId();
         if(userCookie == null){ userCookie = "1"; }
-        int activeUserId = Integer.parseInt(userCookie) ;
+        int activeUserId = Integer.parseInt(userCookie);
         service.delete(id, activeUserId);
         return "redirect:/index?origem=bloqueio";
     }

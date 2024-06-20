@@ -27,7 +27,7 @@
         <h4 class="headerTitle">Perfil Usuários</h4>
         <div class="headerRequired">* campos obrigatórios</div>
     </div>
-    <div class="row" id="perfil-botao-cadastro">
+    <div class="row p-3" id="perfil-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2" id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar</button>
     </div>
 

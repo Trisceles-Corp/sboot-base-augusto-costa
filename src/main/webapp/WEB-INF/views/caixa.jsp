@@ -27,7 +27,7 @@
         <h4 class="headerTitle">Caixas Abertos</h4>
         <div class="headerRequired">* campos obrigatórios</div>
     </div>
-    <div class="row" style="padding: 15px" id="linha-botao-cadastro">
+    <div class="row p-3" style="padding: 15px" id="linha-botao-cadastro">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastroCaixa()">Abrir Caixa</button>
     </div>
     <!-- formulário de cadastro -->

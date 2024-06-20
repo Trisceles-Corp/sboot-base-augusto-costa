@@ -1,8 +1,6 @@
 package br.com.augustocosta.acs.business.service;
 
 import br.com.augustocosta.acs.integration.entity.tblMarca;
-import br.com.augustocosta.acs.integration.entity.tblCategoria;
-import br.com.augustocosta.acs.persistence.repository.CategoriaRepository;
 import br.com.augustocosta.acs.persistence.repository.MarcaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static br.com.augustocosta.acs.business.util.StringUtil.cleanString;
 
 @Service
 public class MarcaService {
@@ -23,6 +23,7 @@ public class MarcaService {
 
     @Transactional
     public tblMarca create(tblMarca table) {
+        table.setDescricaoMarca(cleanString(table.getDescricaoMarca()));
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAtivo(true);
@@ -58,7 +59,7 @@ public class MarcaService {
         tblMarca table = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado com id: " + id));
 
-        table.setDescricaoMarca(dados.getDescricaoMarca());
+        table.setDescricaoMarca(cleanString(dados.getDescricaoMarca()));
         table.setAtivo(dados.getAtivo());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAlteradoPor(dados.getAlteradoPor());

@@ -37,7 +37,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/functions.js"></script>
 </head>
 <body>
-<div class="row mx-0 my-2" style="width: 100%">
+<div class="row mx-0 my-2" id="dvHeader" >
     <input type="date" class="input-date-agenda col-md-2 p-1" id="dataAgenda" onchange="atualizarGridAgendamentos(contextPath + '/gridagendamento', this.value)" placeholder="mm-dd-yyyy" >
     <div class="col-md-10">
         <div class="botoes-agenda">
@@ -46,19 +46,19 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="panel col-md-2" id="panel-pesquisa">
+<div class="row" id="dvGrid">
+    <div class="panelGrid col-md-2" id="panel-pesquisa">
         <div class="form-group col-md-12">
             <form class="form-group col-md-12" name="theForm">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" style="display: none">
                     <input class="form-check-input" type="checkbox" id="barbeiros" name="theGroup"  value="option2" onClick="clearGroup(this);">
                     <span style="padding: 10px">Barbeiros</span>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" style="display: none">
                     <input class="form-check-input" type="checkbox" id="cabeleireiros" name="theGroup" value="option2" onClick="clearGroup(this);">
                     <span style="padding: 10px">Cabeleireiros</span>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" style="display: none">
                     <input class="form-check-input" type="checkbox" id="manicures" name="theGroup" value="option2" onClick="clearGroup(this);">
                     <span style="padding: 10px">Manicures</span>
                 </div>
@@ -88,7 +88,7 @@
             <span style="padding: 10px">Finalizada</span>
         </div>
     </div>
-    <div class="panel col-md-10" id="panel-resultado">
+    <div class="panelGrid col-md-10" id="panel-resultado">
         <div class="row">
             <table id="tabelaGridAgendamento" class="table table-bordered table-hover table-responsive my-3">
                 <thead class="table-secondary">
@@ -163,13 +163,12 @@
                 </tbody>
             </table>
         </div>
-
-
-    </div></div>
+    </div>
+</div>
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function() {
-        var today = new Date().toISOString().split('T')[0];
-        document.getElementById("dataAgenda").value = today;
+        let today = new Date().toISOString().split('T')[0];
+        document.getElementById("dataAgenda").value = formatDateForInput(today);
     });
 </script>
 </body>

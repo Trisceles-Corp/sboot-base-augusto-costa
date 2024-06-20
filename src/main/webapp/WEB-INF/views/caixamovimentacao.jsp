@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="row" id="linha-botao-cadastro" style="padding: 20px">
+    <div class="row p-3" id="linha-botao-cadastro" style="padding: 20px">
         <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Novo Registro</button>
     </div>
 

@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/agendamento")
@@ -118,7 +119,7 @@ public class AgendamentoController {
         // Adicione os outros atributos necessários para a página de agendamento
         model.addAttribute("listarLocaisEstoque", localService.getActives());
         model.addAttribute("listarServiços", servicoService.getActives());
-        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioColaborador(agendamento.getDataAgendamento(), agendamento.getColaborador().getId()));
+        model.addAttribute("listarHorarios", horarioService.getActiveByHorarioAsc());
         model.addAttribute("listarServiçosAgendamento", servicoAgendamentoService.getServicoByAgendamentoId(agendamentoId));
         model.addAttribute("listarProdutosAgendamento", service.getProdutoByAgendamentoId(agendamentoId));
         model.addAttribute("listarProdutos", produtoService.getActives());
@@ -127,6 +128,13 @@ public class AgendamentoController {
         model.addAttribute("listarSituacao", situacaoAgendamentoService.getActives());
 
         return "agendamento";
+    }
+
+    @GetMapping("/horarios/{dataAgenda}/{colaboradorId}")
+    @ResponseBody
+    public List<tblHorario> getHorariosDisponiveis(@PathVariable("dataAgenda") String dataAgendaStr, @PathVariable("colaboradorId") Integer colaboradorId) {
+        Date dataAgenda = Date.from(LocalDate.parse(dataAgendaStr).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        return horarioService.getActiveByHorarioColaborador(dataAgenda, colaboradorId);
     }
 
     @GetMapping("/listaServicoAgendamento/{servicoId}")

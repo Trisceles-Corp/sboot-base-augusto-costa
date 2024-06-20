@@ -449,6 +449,8 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
     fetch(`${contexto}/agendamentos/${dataAgenda}`)
         .then(response => response.json())
         .then(agendamentos => {
+            console.log(agendamentos); // Verificar os dados retornados
+
             // Agrupar agendamentos por colaborador
             const agendamentosPorColaborador = agendamentos.reduce((acc, agendamento) => {
                 if (!acc[agendamento.colaborador]) {
@@ -468,32 +470,27 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                     let agendamentosColaborador = agendamentosPorColaborador[colaborador];
 
                     let agendamentoEncontrado = agendamentosColaborador.find(agendamento =>
-                        agendamento.horarioIncial.hour === hora ||
-                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora)
+                        parseInt(agendamento.horarioIncial.split(':')[0]) === hora ||
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) < hora && parseInt(agendamento.horarioFinal.split(':')[0]) > hora)
                     );
 
                     if (agendamentoEncontrado) {
-                        let classeCSS = '';
-                        switch (agendamentoEncontrado.situacao) {
-                            case 'Agendado':
-                                classeCSS = 'bg-success';
-                                break;
-                            case 'Aberta':
-                                classeCSS = 'bg-danger';
-                                break;
-                            case 'Em espera':
-                                classeCSS = 'bg-warning';
-                                break;
-                            case 'Finalizada':
-                                classeCSS = 'bg-primary';
-                                break;
-                            case 'Bloqueio':
-                                classeCSS = 'bg-secondary';
-                                break;
-                        }
-
-                        celula.className = classeCSS;
-                        celula.innerHTML = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamentoEncontrado.id}')">${agendamentoEncontrado.agendamento.cliente.nome}<br>${agendamentoEncontrado.servico.nome}</a>`;
+                        celula.innerHTML = `
+                            <div class="agendamento">
+                                ${agendamentoEncontrado.situacao !== 'Bloqueio' ? `
+                                    <a href="#" onclick="carregarConteudo('${contexto}/agendamento/${agendamentoEncontrado.id}')">
+                                        <span class="situacao-${agendamentoEncontrado.situacao}">
+                                            ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                            ${agendamentoEncontrado.servico.nome}
+                                        </span>
+                                    </a>
+                                ` : `
+                                    <span class="situacao-${agendamentoEncontrado.situacao}">
+                                        ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                        ${agendamentoEncontrado.servico.nome}
+                                    </span>
+                                `}
+                            </div>`;
                     } else {
                         celula.innerHTML = '';
                     }
@@ -507,33 +504,28 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                     let agendamentosColaborador = agendamentosPorColaborador[colaborador];
 
                     let agendamentoEncontrado = agendamentosColaborador.find(agendamento =>
-                        (agendamento.horarioIncial.hour === hora && agendamento.horarioIncial.minute === 30) ||
-                        (agendamento.horarioIncial.hour < hora && agendamento.horarioFinal.hour > hora) ||
-                        (agendamento.horarioIncial.hour === hora && agendamento.horarioFinal.minute > 30)
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) === hora && parseInt(agendamento.horarioIncial.split(':')[1]) === 30) ||
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) < hora && parseInt(agendamento.horarioFinal.split(':')[0]) > hora) ||
+                        (parseInt(agendamento.horarioIncial.split(':')[0]) === hora && parseInt(agendamento.horarioFinal.split(':')[1]) > 30)
                     );
 
                     if (agendamentoEncontrado) {
-                        let classeCSS = '';
-                        switch (agendamentoEncontrado.situacao) {
-                            case 'Agendado':
-                                classeCSS = 'bg-success';
-                                break;
-                            case 'Aberta':
-                                classeCSS = 'bg-danger';
-                                break;
-                            case 'Em espera':
-                                classeCSS = 'bg-warning';
-                                break;
-                            case 'Finalizada':
-                                classeCSS = 'bg-primary';
-                                break;
-                            case 'Bloqueio':
-                                classeCSS = 'bg-secondary';
-                                break;
-                        }
-
-                        celula.className = classeCSS;
-                        celula.innerHTML = `<a href="#" onclick="carregarConteudo(contextPath + '/agendamento?id=${agendamentoEncontrado.id}')">${agendamentoEncontrado.agendamento.cliente.nome}<br>${agendamentoEncontrado.servico.nome}</a>`;
+                        celula.innerHTML = `
+                            <div class="agendamento">
+                                ${agendamentoEncontrado.situacao !== 'Bloqueio' ? `
+                                    <a href="#" onclick="carregarConteudo('${contexto}/agendamento/${agendamentoEncontrado.id}')">
+                                        <span class="situacao-${agendamentoEncontrado.situacao}">
+                                            ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                            ${agendamentoEncontrado.servico.nome}
+                                        </span>
+                                    </a>
+                                ` : `
+                                    <span class="situacao-${agendamentoEncontrado.situacao}">
+                                        ${agendamentoEncontrado.agendamento.cliente.nome}<br>
+                                        ${agendamentoEncontrado.servico.nome}
+                                    </span>
+                                `}
+                            </div>`;
                     } else {
                         celula.innerHTML = '';
                     }
@@ -849,6 +841,37 @@ function visualizarServico(id, nome, tempo, valor, desconto, comissao, observaca
     document.getElementById("field_Observacao").value = observacao;
 }
 
+function visualizarBloqueio(id, colaboradorId, dataBloqueio, diaSemanaId, periodoId, horaInicial, horaFinal, motivo) {
+    const formClienteCadast = document.getElementById("form-cadastro");
+    if (formClienteCadast.style.display === "none") {
+        formClienteCadast.style.display = "block";
+    } else {
+        formClienteCadast.style.display = "block";
+    }
+    window.scrollTo(0, 0);
+
+    const formattedDate = formatDateForInput(dataBloqueio);
+
+    console.log(formattedDate);
+
+    document.getElementById("field_Id").value = id;
+    document.getElementById("field_ColaboradorId").value = colaboradorId;
+    document.getElementById("field_DataBloqueio").value = formattedDate;
+    document.getElementById("field_DiasSemanaId").value = diaSemanaId;
+    document.getElementById("field_PeriodoId").value = periodoId;
+    document.getElementById("field_HoraInicial").value = horaInicial;
+    document.getElementById("field_HoraFinal").value = horaFinal;
+    document.getElementById("field_MotivoBloqueio").value = motivo;
+}
+
+function formatDateForInput(dateString) {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+}
+
 function visualizarTipo(id, name, active) {
     document.getElementById("field_Id").value = id;
     document.getElementById("field_Name").value = name;
@@ -1074,10 +1097,37 @@ function adicionarServico() {
     buscarDadosServicos(servicoId);
 }
 
-function bloquearHorarios(){
-    const colaborador = document.getElementById("field_ColaboradorId");
-    const horario = document.getElementById("field_HoraAgendamento");
+function horariosDisponiveis(contexto) {
+    const inputDataAgenda = document.getElementById("inputData");
+    const inputColaborador = document.getElementById("field_ColaboradorId").value;
+    const inputHorario = document.getElementById("field_HoraAgendamento");
 
+    let dataAgenda = inputDataAgenda.value;
+    if (dataAgenda == null || dataAgenda === "") {
+        dataAgenda = new Date().toISOString().split('T')[0];
+    } else {
+        dataAgenda = new Date(dataAgenda).toISOString().split('T')[0];
+    }
+
+    if (dataAgenda && inputColaborador) {
+        fetch(`${contexto}/agendamento/horarios/${dataAgenda}/${inputColaborador}`)
+            .then(response => response.json())
+            .then(data => {
+                while (inputHorario.options.length > 1) {
+                    inputHorario.remove(1);
+                }
+
+                data.forEach(horario => {
+                    const option = document.createElement("option");
+                    // Formata o horário para remover os segundos
+                    const horarioFormatado = horario.horario.substring(0, 5);
+                    option.value = horarioFormatado;
+                    option.text = horarioFormatado;
+                    inputHorario.add(option);
+                });
+            })
+            .catch(error => console.error('Erro ao buscar horários:', error));
+    }
 }
 
 function adicionarCompraProduto() {
@@ -1712,4 +1762,92 @@ function verificarCPF(contexto) {
             console.log("Erro ao buscar dados do CPF/CNPJ: ", error);
         }
     });
+}
+
+function ajustaHorarioPeriodo(){
+    const fieldPeriodoId = document.getElementById('field_PeriodoId');
+    const fieldHoraInicial = document.getElementById('field_HoraInicial');
+    const fieldHoraFinal = document.getElementById('field_HoraFinal');
+
+    if(fieldPeriodoId !== null){
+        const periodo = fieldPeriodoId.value;
+        fieldHoraInicial.readOnly = true;
+        fieldHoraFinal.readOnly = true;
+        switch (periodo){
+            case "2":
+                fieldHoraInicial.value = "09:00";
+                fieldHoraFinal.value = "12:00";
+                break;
+            case "3":
+                fieldHoraInicial.value = "13:00";
+                fieldHoraFinal.value = "18:00";
+                break;
+            case "4":
+                fieldHoraInicial.value = "09:00";
+                fieldHoraFinal.value = "18:00";
+                break;
+            default:
+                fieldHoraInicial.value = "";
+                fieldHoraFinal.value = "";
+                fieldHoraInicial.readOnly = false;
+                fieldHoraFinal.readOnly = false;
+                break;
+        }
+    }
+    console.log(fieldHoraInicial.value);
+    console.log(fieldHoraFinal.value);
+}
+
+function ajustaDiasDaSemana() {
+    const dataBloqueio = document.getElementById('field_DataBloqueio').value;
+    const diasDaSemana = document.getElementById('field_DiasSemanaId');
+
+    if (dataBloqueio) {
+        const data = new Date(dataBloqueio);
+        const diaSemana = data.getDay();
+        let diaCorreto = 0;
+        switch (diaSemana){
+            case 0:
+                diaCorreto = 2;
+                break;
+            case 1:
+                diaCorreto = 3;
+                break;
+            case 2:
+                diaCorreto = 4;
+                break;
+            case 3:
+                diaCorreto = 5;
+                break;
+            case 4:
+                diaCorreto = 6;
+                break;
+            case 5:
+                diaCorreto = 7;
+                break;
+            case 6:
+                diaCorreto = 1;
+                break;
+        }
+        console.log(diaSemana);
+        console.log(diaCorreto);
+        diasDaSemana.value = diaCorreto;
+    }
+}
+
+function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timeString = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('clock').textContent = timeString;
+}
+
+function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+}
+
+function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
 }

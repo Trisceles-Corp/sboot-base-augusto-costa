@@ -2,6 +2,7 @@ package br.com.augustocosta.acs.business.util;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 
 public class Cookies {
@@ -18,5 +19,13 @@ public class Cookies {
                 }
             }
         }
+    }
+
+    public static void addUserIdCookie(HttpServletResponse response, String userId) {
+        Cookie cookie = new Cookie("userId", userId);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24 * 7);
+        cookie.setHttpOnly(true);
+        response.addCookie(cookie);
     }
 }
