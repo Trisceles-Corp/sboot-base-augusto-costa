@@ -36,7 +36,7 @@
             <h4 class="headerTitle">Clientes</h4>
             <div class="headerRequired">* campos obrigatórios</div>
         </div>
-        <div class="row" id="linha-botao-pesquisa">
+        <div class="row p-3" id="linha-botao-pesquisa">
             <button type="button" class="btn-cadastrar btn btn-outline-primary col-md-2 " id="btn-cadastrar" onclick="toggleFormCadastro()">Cadastrar cliente</button>
         </div>
         <!-- formulário de cadastro -->

@@ -344,7 +344,7 @@ public class SqlQueries {
                     "GROUP BY etq.LocalEstoqueId,etq.ProdutoId " +
                     ") saida ON (entrada.ProdutoId = saida.ProdutoId AND entrada.LocalEstoqueId = saida.LocalEstoqueId) " +
                     "LEFT JOIN dbo.tbl_localestoque loc ON entrada.LocalEstoqueId = loc.LocalEstoqueId " +
-                    "ORDER BY loc.DescricaoLocal, produto.DescricaoProduto";
+                    "ORDER BY produto.DescricaoProduto";
 
     public static final String QUERY_USUARIO_SOLICITANTE =
             "SELECT usr.* " +

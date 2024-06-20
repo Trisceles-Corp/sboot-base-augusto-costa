@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static br.com.augustocosta.acs.business.util.StringUtil.cleanString;
+
 @Service
 public class ProdutoService {
 
@@ -36,6 +38,7 @@ public class ProdutoService {
     }
 
     public tblProduto create(tblProduto table) {
+        table.setDescricaoProduto(cleanString(table.getDescricaoProduto()));
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
         table.setAtivo(true);
@@ -103,7 +106,7 @@ public class ProdutoService {
                 .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado com id: " + id));
 
         table.setCodigoInterno(dados.getCodigoInterno());
-        table.setDescricaoProduto(dados.getDescricaoProduto());
+        table.setDescricaoProduto(cleanString(dados.getDescricaoProduto()));
         table.setCodigoBarras(dados.getCodigoBarras());
         table.setEstoqueMinimo(dados.getEstoqueMinimo());
         table.setCusto(dados.getCusto());

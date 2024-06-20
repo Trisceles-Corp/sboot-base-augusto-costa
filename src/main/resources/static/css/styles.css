@@ -269,7 +269,7 @@ contain-option-button-active{
     border-bottom-right-radius: 20px;
     padding-top: 20px;
     /*position: fixed;*/
-    position: relative;
+    position: fixed;
     height: 100vh;
     width: 250px;
 }
