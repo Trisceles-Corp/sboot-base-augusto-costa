@@ -478,7 +478,7 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                         celula.innerHTML = `
                             <div class="agendamento">
                                 ${agendamentoEncontrado.situacao !== 'Bloqueio' ? `
-                                    <a href="#" onclick="carregarConteudo('${contexto}/agendamento/${agendamentoEncontrado.id}')">
+                                    <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamentoEncontrado.agendamento.id}')">
                                         <span class="situacao-${agendamentoEncontrado.situacao}">
                                             ${agendamentoEncontrado.agendamento.cliente.nome}<br>
                                             ${agendamentoEncontrado.servico.nome}
@@ -513,7 +513,7 @@ function atualizarGridAgendamentos(contexto, dataAgenda) {
                         celula.innerHTML = `
                             <div class="agendamento">
                                 ${agendamentoEncontrado.situacao !== 'Bloqueio' ? `
-                                    <a href="#" onclick="carregarConteudo('${contexto}/agendamento/${agendamentoEncontrado.id}')">
+                                    <a href="#" onclick="carregarConteudo(contextPath + '/agendamento/${agendamentoEncontrado.agendamento.id}')">
                                         <span class="situacao-${agendamentoEncontrado.situacao}">
                                             ${agendamentoEncontrado.agendamento.cliente.nome}<br>
                                             ${agendamentoEncontrado.servico.nome}

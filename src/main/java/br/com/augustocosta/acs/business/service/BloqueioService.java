@@ -137,7 +137,7 @@ public class BloqueioService {
         table.setAtivo(true);
         table.setDataCriacao(LocalDateTime.now());
         table.setDataAlteracao(LocalDateTime.now());
-        table.setCriadoPor(userId);
+        table.setCriadoPor(table.getCriadoPor());
         table.setAlteradoPor(userId);
         return repository.save(table);
     }
