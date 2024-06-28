@@ -34,18 +34,17 @@
     </script>
 </head>
 <body>
-<div>
-    <div class="headerContainer">
-        <h4 class="headerTitle">Agendamento</h4>
-        <div class="headerRequired">* campos obrigatórios</div>
-    </div>
-    <!-- formulário de cadastro -->
-    <form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" onsubmit="return verificarCamposAgendamentoAntesDeSalvar()" style="display: block">
-        <form:hidden path="agendamento.id" id="field_Id"/>
+<div class="headerContainer">
+    <h4 class="headerTitle">Agendamento</h4>
+    <div class="headerRequired">* campos obrigatórios</div>
+</div>
+<!-- formulário de cadastro -->
+<form:form class="form-cadastro my-2" id="form-cadastro" modelAttribute="dtoAgendamento" action="${pageContext.request.contextPath}/agendamento/salvar" method="POST" onsubmit="return verificarCamposAgendamentoAntesDeSalvar()" style="display: block">
+    <form:hidden path="agendamento.id" id="field_Id"/>
     <div class="row">
         <div class="form-group col-md-4">
             <form:label path="agendamento.cliente.id" class="form-label" for="field_ClienteId">Cliente:<span class="text-danger">*</span></form:label>
-            <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required" >
+            <form:select path="agendamento.cliente.id" class="form-control" id="field_ClienteId" required="required"  >
                 <form:option value="" label=" Selecione "/>
                 <form:options items="${listarClientes}" itemValue="usuarioId" itemLabel="nomeCompleto"/>
             </form:select>
@@ -73,7 +72,7 @@
             <form:input path="agendamento.duracao" type="text" class="form-control" id="field_Duracao" readonly="true"/>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="div-Inserts">
         <div class="form-group col-md-3">
             <form:label path="servicosAgendamento.servico.id" class="form-label" for="field_ServicoId">Serviço:</form:label>
             <form:select path="servicosAgendamento.servico.id" class="form-control" id="field_ServicoId">
@@ -106,88 +105,91 @@
             <label class="form-label" for="buttonProduto">Adicionar:</label>
             <button type="button" class="btn btn-outline-secondary" id="buttonProduto" onclick="adicionarProduto()">+</button>
         </div>
-        <div class="row">
-            <div class="form-group col-md-2">
-                <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:<span class="text-danger">*</span></form:label>
-                <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId" required="required">
-                    <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
-                </form:select>
-            </div>
-        </div>
-        <div class="row" id="tabelaServicos">
-            <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3"  style="display: ${not empty listarServiçosAgendamento ? 'block' : 'none'}">
-                <!-- Restante do código da tabela tabelaDadosServicos -->
-                <thead class="table-secondary">
-                <tr class="gridHeader">
-                    <th scope="col" class="th-editar">Ações</th>
-                    <th scope="col">Id</th>
-                    <th scope="col">Serviço</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Duração</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="servico" items="${listarServiçosAgendamento}">
-                    <tr>
-                        <td class="cel-img-tabela-clientes">
-                            <form action="${pageContext.request.contextPath}/saida/delete/${servico.id}" method="POST">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${servico.id}')">
-                                    <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
-                                </a>
-                            </form>
-                        </td>
-                        <td><c:out value="${servico.id}" /></td>
-                        <td><c:out value="${servico.nome}" /></td>
-                        <td><c:out value="${servico.valor}" /></td>
-                        <td><c:out value="${servico.tempo}" /></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row" id="tabelaProduto" >
-            <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3" style="display: ${not empty listarProdutosAgendamento ? 'block' : 'none'}">
-                <thead class="table-secondary">
-                <tr class="gridHeader">
-                    <th scope="col" class="th-editar">Ações</th>
-                    <th scope="col">Id</th>
-                    <th scope="col">Produto</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Linha</th>
-                    <th scope="col">Preço</th>
-                    <th scope="col">Quantidade</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="saidaProduto" items="${listarProdutosAgendamento}">
-                    <tr>
-                        <td class="cel-img-tabela-clientes">
-                            <form action="${pageContext.request.contextPath}/saida/delete/${saidaProduto.produtoId}" method="POST">
-                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${saidaProduto.produtoId}')">
-                                    <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
-                                </a>
-                            </form>
-                        </td>
-                        <td><c:out value="${saidaProduto.produtoId}" /></td>
-                        <td><c:out value="${saidaProduto.nome}" /></td>
-                        <td><c:out value="${saidaProduto.marca}" /></td>
-                        <td><c:out value="${saidaProduto.linha}" /></td>
-                        <td><c:out value="${saidaProduto.preco}" /></td>
-                        <td><c:out value="${saidaProduto.quantidade}" /></td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="mt-2">
-            <button type="submit" class="btn btn-primary" id="buttonSalvar">Salvar</button>
-        </div>
-        </form:form>
     </div>
-</div>
+    <div class="row">
+        <div class="form-group col-md-2">
+            <form:label path="agendamento.situacao.id" class="form-label" for="field_SituacaoId">Situação:<span class="text-danger">*</span></form:label>
+            <form:select path="agendamento.situacao.id" class="form-control" id="field_SituacaoId" required="required">
+                <form:options items="${listarSituacao}" itemValue="id" itemLabel="nome"/>
+            </form:select>
+        </div>
+    </div>
+    <div class="row" id="tabelaServicos">
+        <table id="tabelaDadosServicos" class="table table-bordered table-hover table-responsive my-3"  style="display: ${not empty listarServiçosAgendamento ? 'block' : 'none'}">
+            <!-- Restante do código da tabela tabelaDadosServicos -->
+            <thead class="table-secondary">
+            <tr class="gridHeader">
+                <th scope="col" class="th-editar">Ações</th>
+                <th scope="col">Id</th>
+                <th scope="col">Serviço</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Duração</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="servico" items="${listarServiçosAgendamento}">
+                <tr>
+                    <td class="cel-img-tabela-clientes">
+                        <form action="${pageContext.request.contextPath}/saida/delete/${servico.id}" method="POST">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${servico.id}')">
+                                <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                            </a>
+                        </form>
+                    </td>
+                    <td><c:out value="${servico.id}" /></td>
+                    <td><c:out value="${servico.nome}" /></td>
+                    <td><c:out value="${servico.valor}" /></td>
+                    <td><c:out value="${servico.tempo}" /></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" id="tabelaProduto" >
+        <table id="tabelaDadosProdutos" class="table table-bordered table-hover table-responsive my-3" style="display: ${not empty listarProdutosAgendamento ? 'block' : 'none'}">
+            <thead class="table-secondary">
+            <tr class="gridHeader">
+                <th scope="col" class="th-editar">Ações</th>
+                <th scope="col">Id</th>
+                <th scope="col">Produto</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Linha</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Quantidade</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach var="saidaProduto" items="${listarProdutosAgendamento}">
+                <tr>
+                    <td class="cel-img-tabela-clientes">
+                        <form action="${pageContext.request.contextPath}/saida/delete/${saidaProduto.produtoId}" method="POST">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <a href="#" onclick="confirmarExclusao(event, '${pageContext.request.contextPath}/saida/delete/${saidaProduto.produtoId}')">
+                                <img src="${pageContext.request.contextPath}/img/icones tabela clientes/lixeira-999.png" class="icones-tabela icone-tabela-excluir mx-2" title="Excluir">
+                            </a>
+                        </form>
+                    </td>
+                    <td><c:out value="${saidaProduto.produtoId}" /></td>
+                    <td><c:out value="${saidaProduto.nome}" /></td>
+                    <td><c:out value="${saidaProduto.marca}" /></td>
+                    <td><c:out value="${saidaProduto.linha}" /></td>
+                    <td><c:out value="${saidaProduto.preco}" /></td>
+                    <td><c:out value="${saidaProduto.quantidade}" /></td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-2">
+        <button type="submit" class="btn btn-primary" id="buttonSalvar">Salvar</button>
+    </div>
+</form:form>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        AgendamentoReadOnly();
+    });
+</script>
 </body>
 </html>

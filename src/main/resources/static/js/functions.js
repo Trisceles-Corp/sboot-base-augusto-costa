@@ -121,7 +121,7 @@ function carregarConteudo(url) {
         .then(data => {
             const mainContent = document.getElementById("mainContent");
             mainContent.innerHTML = data;
-
+            AgendamentoReadOnly();
             const searchDataInicial = document.getElementById('searchDataInicial');
             const searchDataFinal = document.getElementById('searchDataFinal');
             if (searchDataInicial && searchDataFinal) {
@@ -129,11 +129,6 @@ function carregarConteudo(url) {
             }
         })
         .catch(error => console.error('Erro ao carregar a página secundária:', error));
-}
-
-function refreshPage() {
-    // Recarrega a página atual
-    location.reload();
 }
 
 function verificarNomeAntesDeSalvar() {
@@ -1850,4 +1845,38 @@ function showLoading() {
 
 function hideLoading() {
     document.getElementById('loading').style.display = 'none';
+}
+
+function AgendamentoReadOnly(){
+    const cliente = document.getElementById("field_ClienteId");
+    const colaborador = document.getElementById("field_ColaboradorId");
+    const dataAgendamento = document.getElementById("inputData");
+    const horaAgendamento = document.getElementById("field_HoraAgendamento");
+    const situacaoField = document.getElementById("field_SituacaoId");
+    const divInsert = document.getElementById("div-Inserts");
+    const buttonSalvar = document.getElementById("buttonSalvar");
+    console.log("Oi !");
+    if (situacaoField && situacaoField.value === "4") {
+        if (cliente) {
+            cliente.disabled = "true";
+        }
+        if (colaborador) {
+            colaborador.disabled = "true";
+        }
+        if (dataAgendamento) {
+            dataAgendamento.disabled = "true";
+        }
+        if (horaAgendamento) {
+            horaAgendamento.disabled = "true";
+        }
+        if (situacaoField) {
+            situacaoField.disabled = "true";
+        }
+        if (divInsert) {
+            divInsert.style.display = "none";
+        }
+        if (buttonSalvar) {
+            buttonSalvar.style.display = "none";
+        }
+    }
 }
