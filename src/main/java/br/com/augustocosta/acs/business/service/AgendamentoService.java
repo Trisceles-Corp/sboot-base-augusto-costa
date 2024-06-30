@@ -45,17 +45,101 @@ public class AgendamentoService {
     }
 
     @Transactional
-    public tblAgendamento update(tblAgendamento dados) {
-        tblGridAgendamento grid = gridAgendamentoRepository.findByAgendamento(dados);
+    public tblAgendamento update(dtoAgendamento dados, Integer userId) {
+        final BigDecimal[] somaProdutos = {BigDecimal.valueOf(0.0)};
+        tblGridAgendamento grid = gridAgendamentoRepository.findByAgendamento(dados.getAgendamento());
+        tblAgendamento data = repository.findById(dados.getAgendamento().getId()).orElseThrow();
+        tblSituacaoAgendamento situacao = situacaoRepository.findById(dados.getAgendamento().getSituacao().getId()).orElseThrow();
+
+        data.setCliente(dados.getAgendamento().getCliente());
+        data.setColaborador(dados.getAgendamento().getColaborador());
+        data.setDataAgendamento(dados.getAgendamento().getDataAgendamento());
+        data.setHoraAgendamento(dados.getAgendamento().getHoraAgendamento());
+        data.setDuracao(dados.getAgendamento().getDuracao());
+        data.setSituacao(situacao);
+        data.setDataAlteracao(LocalDateTime.now());
+        data.setAlteradoPor(userId);
+
         if(grid.getBloqueio() == null){
             tblBloqueio bloqueio = bloqueioRepository.findById(1).orElseThrow();
             grid.setBloqueio(bloqueio);
         }
-        grid.setSituacao(dados.getSituacao().getNome());
+        grid.setSituacao(situacao.getNome());
         grid.setDataAlteracao(LocalDateTime.now());
-        grid.setAlteradoPor(dados.getAlteradoPor());
+        grid.setAlteradoPor(userId);
         gridAgendamentoRepository.save(grid);
-        return repository.save(dados);
+
+        if(dados.getProduto() != null){
+            // Cria a venda automaticamente vinculada ao agendamento
+            tblVenda venda = vendaRepository.findByAgendamentoId(dados.getAgendamento().getId());
+            tblLocalEstoque estoque = localEstoqueRepository.getReferenceById(dados.getLocalEstoqueId());
+
+            if(venda == null){
+                venda = new tblVenda();
+                venda.setAgendamento(data);
+                venda.setLocalEstoque(estoque);
+                venda.setValorTotal(BigDecimal.valueOf(0.0));
+                venda.setEstoque(false);
+                venda.setAtivo(true);
+                venda.setDataCriacao(LocalDateTime.now());
+                venda.setDataAlteracao(LocalDateTime.now());
+                venda.setCriadoPor(userId);
+                venda.setAlteradoPor(userId);
+                venda = vendaRepository.save(venda);
+            }
+            else {
+                // Limpar tabela de venda de produtos.
+                List<tblVendaProduto> vendaProdutos = vendaProdutoRepository.findByVenda(venda);
+                vendaProdutoRepository.deleteAll(vendaProdutos);
+            }
+
+            // Processa e salva os produtos vendidos
+            final BigDecimal[] valorTotalVenda = {BigDecimal.valueOf(0.0)};
+            tblVenda finalVenda = venda;
+
+            dados.getProduto().forEach(produtoDTO -> {
+                tblProduto produto = produtoRepository.findById(produtoDTO.getProdutoId()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+
+                BigDecimal valorUnitario = produto.getValorVenda();
+                BigDecimal quantidade = new BigDecimal(produtoDTO.getQuantidade());
+                BigDecimal valorTotal = valorUnitario.multiply(quantidade);
+
+                VendaProduto id = new VendaProduto(finalVenda.getId(), produto.getId());
+                tblVendaProduto vendaProduto = new tblVendaProduto();
+                vendaProduto.setId(id);
+                vendaProduto.setVenda(finalVenda);
+                vendaProduto.setProduto(produto);
+                vendaProduto.setValorUnitario(produto.getValorVenda());
+                vendaProduto.setQuantidade(produtoDTO.getQuantidade());
+                vendaProduto.setValorTotal(valorTotal);
+                vendaProduto.setAtivo(true);
+                vendaProduto.setDataCriacao(LocalDateTime.now());
+                vendaProduto.setDataAlteracao(LocalDateTime.now());
+                vendaProduto.setCriadoPor(userId);
+                vendaProduto.setAlteradoPor(userId);
+                vendaProdutoRepository.save(vendaProduto);
+
+                valorTotalVenda[0] = valorTotalVenda[0].add(vendaProduto.getValorTotal());
+            });
+
+            // Atualiza o valor total da venda
+            somaProdutos[0] = valorTotalVenda[0];
+            venda.setValorTotal(valorTotalVenda[0]);
+            venda.setLocalEstoque(estoque);
+            venda.setDataAlteracao(LocalDateTime.now());
+            venda.setAlteradoPor(userId);
+            vendaRepository.save(venda);
+
+            tblComanda comanda = comandaRepository.findByAgendamento(data);
+            if(comanda != null){
+                comanda.setValorProdutos(somaProdutos[0]);
+                comanda.setDataAlteracao(LocalDateTime.now());
+                comanda.setAlteradoPor(userId);
+                comandaRepository.save(comanda);
+            }
+        }
+
+        return repository.save(data);
     }
 
     @Transactional

@@ -88,19 +88,7 @@ public class AgendamentoController {
         table.setAtivo(true);
 
         if (table.getId() != null && table.getId() != 0){
-            tblAgendamento data = service.getById(table.getId()).orElseThrow();
-            tblSituacaoAgendamento situacao = situacaoAgendamentoService.getById(table.getSituacao().getId()).orElseThrow();
-            tblUsuario cliente = usuarioService.getById(table.getCliente().getId()).orElseThrow();
-            tblUsuario colaborador = usuarioService.getById(table.getColaborador().getId()).orElseThrow();
-            data.setCliente(table.getCliente());
-            data.setColaborador(table.getColaborador());
-            data.setDataAgendamento(table.getDataAgendamento());
-            data.setHoraAgendamento(table.getHoraAgendamento());
-            data.setDuracao(table.getDuracao());
-            data.setSituacao(situacao);
-            data.setDataAlteracao(LocalDateTime.now());
-            data.setAlteradoPor(activeUserId);
-            service.update(data);
+            service.update(dados, activeUserId);
         }
         else {
             service.create(dados, activeUserId);

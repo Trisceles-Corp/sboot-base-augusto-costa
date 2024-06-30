@@ -56,6 +56,7 @@ public class SaidaController {
         String userCookie = Cookies.getUserId();
         if(userCookie == null){ userCookie = "1"; }
         int activeUserId = Integer.parseInt(userCookie) ;
+        if(dados.getSolicitanteId()== null){dados.setSolicitanteId(1);}
 
         if (dados.getId() != null && dados.getId() != 0){
             tblSaida table = service.getById(dados.getId()).orElseThrow();

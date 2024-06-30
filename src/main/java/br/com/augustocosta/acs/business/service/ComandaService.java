@@ -85,7 +85,7 @@ public class ComandaService {
         return repository.getReferenceById(id);
     }
 
-    public List<tblComanda> getByAgendamento(tblAgendamento agendamento) {
+    public tblComanda getByAgendamento(tblAgendamento agendamento) {
         return repository.findByAgendamento(agendamento);
     }
 

@@ -28,7 +28,7 @@ DRIBBBLE: https://dribbble.com/shots/4330167-404-Page-Lost-In-Space
                         <h1>${errorTitle}</h1>
                         <h2>Error Code: ${errorCode}</h2>
                         <h2 style="text-align: center">${errorMessage}</h2>
-                        <a href="${pageContext.request.contextPath}/main" class="btn-go-home">Retornar</a>
+                        <a href="${pageContext.request.contextPath}/index" class="btn-go-home">Retornar</a>
                     </div>
                     <div class="objects">
                         <img class="object_rocket" src="${pageContext.request.contextPath}/img/muppers/rocket.svg" width="40px">

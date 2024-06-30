@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface ComandaRepository extends JpaRepository<tblComanda , Integer> {
-    List<tblComanda> findByAgendamento(tblAgendamento agendamento);
+    tblComanda findByAgendamento(tblAgendamento agendamento);
     List<tblComanda> findByAtivoTrue();
     List<tblComanda> findByAtivoFalse();
     List<tblComanda> findBySituacaoTrueAndAtivoTrue();
